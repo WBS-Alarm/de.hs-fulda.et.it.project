@@ -1,0 +1,177 @@
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{xspace}
+\usepackage[normalem]{ulem}
+\usepackage{graphicx}
+\usepackage{color}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% In diesem Abschnitt gibst du deine persönlichen Daten sowie den Kontext deiner Arbeit an
+% das \xspace am Ende der Einträge muss vorhanden bleiben. Es regelt das Whitespace-
+% handling
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% persönliche Daten
+\newcommand{\beteiligte}{Achim Rose, Tim Wieder, Sebastian Seeger\xspace}
+\newcommand{\emailadresse}{achim.rose@et.hs-fulda.de\\tim.wieder@et.hs-fulda.de\\sebastian.seeger@et.hs-fulda.de\xspace}
+%\newcommand{\matrikelnummer}{541608\xspace}
+
+% Arbeitsspezifische Daten
+\newcommand{\project}{\textbf{T:KvJfE}}
+\newcommand{\titel}{\project\xspace}
+\newcommand{\untertitel}{IT=Projekt im Rahmen des Studiengangs\xspace}
+\newcommand{\modulname}{IT-Projekt\xspace}
+\newcommand{\pruefer}{Uwe Werner\xspace}
+\newcommand{\semester}{WiSe 18/19 - SoSe 2020\xspace}
+\newcommand{\ortderarbeit}{Kassel\xspace}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Um einzelne Seite im Querformat zu verwenden
+\usepackage{pdflscape}
+
+
+%Hurenkinder uns Schusterjungen
+\clubpenalty10000
+\widowpenalty10000
+\displaywidowpenalty=10000
+
+\usepackage{hyperxmp} % XMP-Daten fuer die PDF-Datei
+%Gimmmick: Linked Kapitel und Inhaltsverzeichnis, sowie Referenzen
+\usepackage[pdftex, pdfa]{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black,    
+    pdftitle = {\titel},
+    pdfauthor = {\beteiligte},
+    pdfsubject = {\untertitel},
+    pdfkeywords = {\titel \untertitel},
+    pdflang = de,
+    bookmarks = true,
+    pdfdisplaydoctitle = true,
+    colorlinks = true,
+    plainpages = false,
+    %allcolors = black,
+    hypertexnames = false,
+    pdfpagelabels = true,
+    hyperindex = true,
+    unicode = true,
+    pdfcaptionwriter = {\textsl{\beteiligte}},
+    pdfcontactaddress = {},
+    pdfcontactcity = {Kassel},
+    pdfcontactpostcode = {34119},
+    pdfcontactcountry = {Deutschland},
+    pdfcontactregion = {Hessen},
+    pdfcontactemail = {\emailadresse},
+    pdfcontactphone = {},
+    pdfcontacturl = {http://www.hs-fulda.de},
+    pdfmetalang = {de},
+}
+
+\usepackage{prettyref}
+\usepackage{titleref}
+
+%Schriftart
+
+%\renewcommand*\rmdefault{cmdh}
+%\usepackage{lmodern}
+%\usepackage{mathptmx}
+%\usepackage[scaled=.90]{helvet}
+%\usepackage{courier}
+%\usepackage{bera}
+%\usepackage{boisik}
+
+%Inhaltsverzeichnis
+\usepackage[tocgraduated]{tocstyle}
+\usetocstyle{allwithdot}
+\setcounter{tocdepth}{3}
+
+% Formatierungshilfen: http://wwws.htwk-leipzig.de/~myagovki/latex/formatierungshilfen/
+
+\usepackage[ddmmyyyy]{datetime}
+\renewcommand{\dateseparator}{.}
+
+% Für Kopf und Fußzeile: https://esc-now.de/_/latex-individuelle-kopf--und-fusszeilen/?lang=en
+\usepackage[
+  headsepline, plainheadsepline,
+  footsepline, plainfootsepline
+]{scrlayer-scrpage}
+\pagestyle{scrheadings}
+\clearscrheadfoot
+
+\ihead*{\titel}
+%\ohead*{\vorname \nachname}
+\ifoot*{\today}
+\ofoot*{\pagemark}
+
+% anderthalbfacher Zeilenabstand
+\usepackage[onehalfspacing]{setspace}
+
+%Geometry der Seite festlegen
+\usepackage{geometry}
+\geometry{
+  left=2.5cm,
+  right=2.5cm,
+  top=2.5cm,
+  bottom=2.5cm,
+  headheight=33pt
+}
+
+%Für Gestaltung des Layouts
+\usepackage{blindtext}
+
+%Bilbliothek und Literatur einbinden
+\usepackage[style=authoryear-ibid,natbib=true,backend=biber,sorting=nty]{biblatex}
+\usepackage[babel,german=guillemets]{csquotes}
+\defbibheading{head}{{\section*{Literaturverzeichnis}\addcontentsline{toc}{section}{Literaturverzeichnis}}}
+\addbibresource{bib/literatur.bib}
+
+\newcommand{\zb}{z.\,B.\xspace}
+\newcommand{\ua}{u.\,a.\xspace}
+\newcommand{\oge}{o.\,g.\xspace}
+\newcommand{\dah}{d.\,h.\xspace}
+\newcommand{\bzw}{bzw.\xspace}
+\newcommand{\bzgl}{bzgl.\xspace}
+
+%https://stackoverflow.com/questions/3175105/writing-code-in-latex-document
+\newcommand{\code}[1]{\texttt{#1}}
+
+%https://tex.stackexchange.com/questions/115467/listings-highlight-java-annotations
+\usepackage{listings}
+\usepackage{inconsolata}
+
+\definecolor{pblue}{rgb}{0.13,0.13,1}
+\definecolor{pgreen}{rgb}{0,0.5,0}
+\definecolor{pgrey}{rgb}{0.46,0.45,0.48}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\usepackage{listings}
+
+\lstset{
+  frame=t,
+  language=Java,
+  aboveskip=1mm,
+  belowskip=1mm,
+  columns=flexible,
+  showspaces=false,
+  showtabs=false,
+  numbers=left,
+  breaklines=true,
+  showstringspaces=false,
+  breakatwhitespace=true,
+  commentstyle=\color{pgreen},
+  keywordstyle=\color{pblue},
+  stringstyle=\color{mauve},
+  basicstyle={\small\ttfamily},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=2,
+  moredelim=[il][\textcolor{pgrey}]{$$}, %$$ 
+  moredelim=[is][\textcolor{pgrey}]{\%\%}{\%\%}
+}
+
+% Silbentrennung
+\hyphenation{Funk-tions-be-reich}
+\hyphenation{An-wen-der-be-tre-uung}
