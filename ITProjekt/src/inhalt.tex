@@ -21,7 +21,7 @@ Aktuell wird eine Excel"=Tabelle gepflegt. Diese befindet sich auf einem lokalen
   \label{fig:tafel}
 \end{figure}
 
-Um die Probleme des Datenverlusts und der Synchronisation von Daten zu beseitigen, kam die Idee einer zentralen, aus dem Internet erreichbaren Kleiderverwaltung der Jugendfeuerwehr von Eschenstruth, oder auch \project.
+Um die Probleme des Datenverlusts und der Synchronisation von Daten zu beseitigen, kam die Idee einer zentralen, aus dem Internet erreichbaren Kleiderverwaltung der Jugendfeuerwehr von Eschenstruth, oder auch \project, auf.
 
 In den folgenden Kapiteln werden die Kernziele dieses Projekts erläutert und die Erfolgskriterien definiert. Die beteiligten Personen an diesen Projekt werden erfasst und kurz vorgestellt. Darauf folgt der Projektansatz mit der Anforderungsspezifikation. Dabei werden alle Anforderungen die zwingend in diesem Projekt umgesetzt werden müssen definiert. 
 
@@ -50,11 +50,11 @@ Das Projekt findet im Kontext des Studiengangs Sozialinformatik (B.Sc.) der Hoch
 
 \subsubsection{Risiken, die den Projekterfolg verhindern könnten}
 
-Was für Risiken können im Verlauf des Projekts auftreten?
+\textit{Was für Risiken können im Verlauf des Projekts auftreten?}
 
 Dadurch, dass das Projekt"=Team Vollzeit tätig ist, kann es zu Engpässen in der Durchführung kommen. Dies kann unter Umständen zu Mehrarbeit auf einzelne Team"=Mitglieder führen. Das Risiko ist gering einzuschätzen, da das Projekt"=Team  hinter der Idee steht.
 
-Ein weiteres Risiko betrifft die Evaluation einer kostenlosen, bis kostengünstigen, Plattform, auf der die Anwendung bereit gestellt werden kann. Dabei kann die Akzeptanz der Endkunden sinken, wenn die Betriebskosten zu hoch ausfallen. Ab welchen Betrag die Kosten zu hoch sind, ist noch zu klären. Dieses Risiko ist mittelmäßig einzuschätzen, da es am Markt diverse Anbieter gibt. Unter den bekannteren Anbietern gehören \textit{AWS} vom \textit{Amazon} und \textit{Heroku}.
+Ein weiteres Risiko betrifft die Evaluation einer kostenlosen, bis kostengünstigen, Plattform, auf der die Anwendung bereit gestellt werden kann. Dabei kann die Akzeptanz der Endkunden sinken, wenn die Betriebskosten zu hoch ausfallen. Ab welchen Betrag die Kosten zu hoch sind, ist noch zu klären. Dieses Risiko ist mittelmäßig einzuschätzen, da es am Markt diverse Anbieter gibt. Unter den bekannteren Anbietern gehören \textit{AWS}, von \textit{Amazon}, und \textit{Heroku}.
 
 \subsubsection{Am Projekt Beteiligte}\label{sec:beteiligte}
 
@@ -66,7 +66,7 @@ Zum Projekt"=Team gehören:
 \item Sebastian Seeger, ist zuständig für die Infrastruktur. Das betrifft die Evaluation der Plattform und dessen Konfiguration.
 \end{itemize}
 
-Zu den Kunden gehören: 
+Zu den Kunden, sprich die Beteiligten der freiwilligen Feuerwehr Eschenstruth, gehören: 
 
 \begin{itemize}
 \item Nico M. (zuständig für die Kleiderkammer)
@@ -79,7 +79,7 @@ Zu den Kunden gehören:
 
 \subsubsection{Zu erwartender Projektansatz}
 
-Wie wird das Projekt umgesetzt. Beschreibung der Vorgehensweise (agil und so)
+\textit{Wie wird das Projekt umgesetzt. Beschreibung der Vorgehensweise (agil und so)}
 
 \section{Projektplanung}\label{sec:Projektplanung}
 
@@ -108,21 +108,55 @@ Aus den Aktionen resultiert für die Startseite die Liste der Transaktion in nat
 
 Die Kleidungsstücke und deren Größen, sowie die Ortsteile und die Anwender*innen, können in der \textbf{\textit{Administration}} verwaltet werden.
 
-In der Administration der Ortsteile können beliebige Ortsteile nach Bedarf hinzugefügt werden. Dabei muss der Name angegeben werden und ein Ansprechpartner. Optional können weitere Ansprechpartner zu einem Ortsteil hinzufügt oder bis auf einen entfernt werden. Ein Ortsteil kann auch entfernt werden. Hierbei muss jedoch geprüft werden, ob sich noch Kleidungsstücke auf den Ortsteil gebucht sind. Das Entfernen ist erst dann möglich, wenn alle Kleidungsstücke in den Warenbestand zurück gebucht wurden. Es bietet sich an, dafür eine Komfort"=Funktion bereit zu stellen. Diese Transaktion muss auch über die Startseite erkennbar sein.
+In der Administration der Ortsteile können beliebige Ortsteile nach Bedarf hinzugefügt werden. Dabei muss der Name angegeben werden und ein Ansprechpartner. Optional können weitere Ansprechpartner zu einem Ortsteil hinzufügt oder bis auf einen entfernt werden. Ein Ortsteil kann auch inaktiv gesetzt werden. Hierbei muss jedoch geprüft werden, ob sich noch Kleidungsstücke auf den Ortsteil gebucht sind. Das Inaktiv setzen ist erst dann möglich, wenn alle Kleidungsstücke in den Warenbestand zurück gebucht wurden. Es bietet sich an, dafür eine Komfort"=Funktion bereit zu stellen. Diese Transaktion muss auch über die Startseite erkennbar sein. Ein Ortsteil kann deshalb nicht gelöscht werden, weil durch den Verlust der Information die Transaktionen nicht mehr vollständig nachvollziehbar wären. Ein Ortsteil kann nur dann effektiv gelöscht werden, wenn keinerlei Transaktionen darauf ausgeführt wurden.
 
-Am Ortsteil selbst können Grenzen von Kleidungsstücken bestimmt werden, bei dem eine Warnung erscheint, wenn du zu viele Kleidungsstücke ausgegeben wurden. Diese Warnung erscheint bei den Aktionen nach der Auswahl des Ortsteils. Wenn keine Grenze angegeben wurde, wird nichts geprüft.
+Am Ortsteil können Grenzen der Anzahl von Kleidungsstücken bestimmt werden, bei dem eine Warnung erscheint, wenn zu viele Kleidungsstücke ausgegeben wurden. Diese Warnung erscheint bei den Aktionen nach der Auswahl des Ortsteils. Wenn keine Grenze angegeben wurde, wird nichts geprüft.
 
-Ein weiterer Punkt der Administration ist die Benutzerverwaltung. Hier können die Personen angelegt und gelöscht werden, ihre Rechte verwaltet und der Einkäufer bestimmt werden. dazu müssen der Name, die E"=Mail Adresse gespeichert werden. Zudem kann gesteuert werden, ob die Person nur lesenden, schreibenden oder administrativen Zugriff auf das System hat. Bei lesendem Zugriff ist die Seite der Aktionen gesperrt. Bei schreibenden Zugriff ist die Seite der Administration gesperrt. Der Administrator hat auf alle Bereiche Zugriff. Die Einstellung, ob eine Person für den Einkauf zuständig ist, ist mit der Administration der Kleidungsstücke verknüpft. 
+Ein weiterer Punkt der Administration ist die Benutzerverwaltung. Hier können Personen angelegt und gelöscht, ihre Rechte verwaltet und der Einkäufer bestimmt werden. Dazu müssen der Name, die E"=Mail Adresse gespeichert werden. Zudem kann gesteuert werden, ob die Person nur lesenden, schreibenden oder administrativen Zugriff auf das System hat. Bei lesendem Zugriff ist die Seite der Aktionen gesperrt. Bei schreibenden Zugriff ist die Seite der Administration gesperrt. Der Administrator hat auf alle Bereiche Zugriff. Die Einstellung, ob eine Person für den Einkauf zuständig ist, ist mit der Administration der Kleidungsstücke verknüpft. 
 
 Die Kleidungsarten und die dazugehörigen Größen können in der Administration erweitert werden. Diese können nur gelöscht werden, wenn noch keine Transaktionen mit der Kleidungsart und Größe vorgenommen wurde. Dies ist besonders wichtig, damit die Auswertungen auch weiterhin nachvollziehbar und reproduzierbar sind. Kleidungsarten können aber inaktiv gesetzt werden, wodurch diese bei Aktionen nicht mehr ausgewählt werden können. Zu jeder Kombination von Kleidungsart und Größe kann ein Grenzwert festgelegt werden, bei dem die Einkäufer*innen eine E"=Mail Benachrichtigung erhalten. Damit diese Grenze nicht bei jeder Neuanlage eingetippt werden muss, kann der Standardwert angegeben werden.
 
-Im Abschnitt der \textit{\textbf{Auswertungen}} können die Anwender*innen eine Bericht erstellen, der Auskunft über die ausgegebenen, zurückgenommenen und ausgesonderten Kleidungsstücke gibt. Dabei kann in einem Filter der Zeitraum, die Kleidungsart, Größe, der Ortsteil (wie auch der lokale Warenbestand) gesetzt werden, wodurch der Bericht auf spezielle Bedürfnisse angepasst werden kann. Der Bericht soll als Excel"=Tabelle oder PDF erfolgen.
+Im Abschnitt der \textit{\textbf{Auswertungen}} können die Anwender*innen eine Bericht erstellen, der Auskunft über die ausgegebenen, zurückgenommenen und ausgesonderten Kleidungsstücke gibt. Dabei kann in einem Filter der Zeitraum, die Kleidungsart, Größe, Transaktionsart, der Ortsteil (wie auch der lokale Warenbestand) gesetzt werden, wodurch der Bericht auf spezielle Bedürfnisse angepasst werden kann. Der Bericht soll als Excel"=Tabelle oder PDF erfolgen.
 
 \subsection{Projektplan}
 \subsubsection{Work-Breakdown-Structure}\label{sec:wbs}
 
-Hier die Roadmap ausführlicher beschreiben als in GitHub.
+\textit{TODO: Verschriftlichen}
 
+\begin{itemize}
+\item Phase 1 (Aug-Sept 2018)
+  \begin{itemize}
+  \item Get in contact with stakeholders
+  \item Analyse and document requirements (upcoming data / rest-services / security)
+  \item Design frontend/backend architecture and server infrastructure
+  \item Setup project structure with https://start.spring.io/
+  \item Setting up Continious Integration (build/release process). Goal: build and release pipeline. (Jenkins? Nexus? Maven Repo?)
+  \item Project-Init (documents output)
+  \item Project definition document
+  \item Project plan
+  \end{itemize}
+
+\item Phase 2 (Feb-Mar 2019)
+  \begin{itemize}
+  \item Define definition of done (DOD).
+  \item Iterative sprints (1 week) with daylies (10 minutes via Skype)
+  \item Developing backend / frontend. Setup, configure, maintanance database / server.
+  \item Documentation and tests
+  \item Full Agile and so. Tim will know (at least scrum master, haha)
+  \item document output
+  \item project diary
+  \end{itemize}
+
+\item Phase 3 (Aug-Sept 2019)
+  \begin{itemize}
+  \item Same as phase 2 :
+  \end{itemize}
+
+\item Phase 4 (Feb-Mar 2020)
+  \begin{itemize}
+  \item project closure
+  \end{itemize}
+\end{itemize}
 
 \subsubsection{Ressourcenplanung}
 
