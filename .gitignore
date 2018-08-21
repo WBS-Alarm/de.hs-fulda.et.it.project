@@ -1,0 +1,48 @@
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.bcf
+*.run.xml
+.idea/*
+*.iml
+*/target
+
+# LaTex Output Files #
+######################
+*.bak
+*.pdf
+*.synctex.gz
+*.aux
+*.toc
+*.bbl
+*.blg
+*.out
+*.lof
+*.nav
+*.snm
+*.pdf_tex
+*.lot
+*.lol
+*.locode
+
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+*.lock
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
