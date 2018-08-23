@@ -1,6 +1,6 @@
 package de.hsfulda.et.wbs.service;
 
-import de.hsfulda.et.wbs.entity.User;
+import de.hsfulda.et.wbs.security.User;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;

@@ -1,6 +1,6 @@
 package de.hsfulda.et.wbs.controller;
 
-import de.hsfulda.et.wbs.entity.User;
+import de.hsfulda.et.wbs.security.User;
 import de.hsfulda.et.wbs.service.UserAuthenticationService;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;

@@ -1,4 +1,4 @@
-package de.hsfulda.et.wbs.entity;
+package de.hsfulda.et.wbs.security;
 
 
 import com.fasterxml.jackson.annotation.JsonCreator;
