@@ -15,8 +15,9 @@ import java.util.Date;
 public class Position {
 
     @Id
-    private BigInteger id;
-    private BigInteger anzahl;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private Long anzahl;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TRANSAKTION_ID")

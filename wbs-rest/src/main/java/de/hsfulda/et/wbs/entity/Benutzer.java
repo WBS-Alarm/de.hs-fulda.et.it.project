@@ -1,34 +1,27 @@
 package de.hsfulda.et.wbs.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.Value;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import javax.validation.constraints.Size;
 
-import static java.util.Objects.requireNonNull;
 @Getter
 @Setter
 @Entity
 @Table(name = "BENUTZER")
-public class Benutzer  {
+public class Benutzer {
 
     @Id
-    private BigInteger id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @Column(name = "NAME")
+    @Size(max = 60)
     private String username;
+    @Size(max = 60)
     private String password;
+    @Size(max = 254)
     private String mail;
     private Boolean einkaeufer;
 

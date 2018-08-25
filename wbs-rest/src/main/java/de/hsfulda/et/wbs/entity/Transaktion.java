@@ -16,7 +16,8 @@ import java.util.List;
 public class Transaktion {
 
     @Id
-    private BigInteger id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "DATE")
     private Date datum;

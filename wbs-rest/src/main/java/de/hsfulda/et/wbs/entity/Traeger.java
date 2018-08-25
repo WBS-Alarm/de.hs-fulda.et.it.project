@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -15,7 +16,9 @@ import java.util.List;
 public class Traeger {
 
     @Id
-    private BigInteger id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Size(max = 60)
     private String name;
 
     @OneToMany(mappedBy = "traeger", fetch = FetchType.LAZY)
@@ -24,7 +27,7 @@ public class Traeger {
     @OneToMany(mappedBy = "traeger", fetch = FetchType.LAZY)
     private List<Kategorie> kategorien;
 
-    @ManyToMany(mappedBy = "traeger", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "traeger", fetch = FetchType.LAZY)
     private List<Benutzer> benutzer;
 
     protected Traeger() {

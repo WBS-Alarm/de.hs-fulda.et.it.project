@@ -1,6 +1,7 @@
 package de.hsfulda.et.wbs.security.token;
 
 import com.google.common.collect.ImmutableMap;
+import de.hsfulda.et.wbs.security.Password;
 import de.hsfulda.et.wbs.security.User;
 import de.hsfulda.et.wbs.service.UserAuthenticationService;
 import de.hsfulda.et.wbs.service.UserCrudService;
@@ -30,7 +31,7 @@ final class TokenAuthenticationService implements UserAuthenticationService {
     public Optional<String> login(final String username, final String password) {
         return users
             .findByUsername(username)
-            .filter(user -> Objects.equals(password, user.getPassword()))
+            .filter(user -> Password.checkPassword(password, user.getPassword()))
             .map(user -> tokens.expiring(ImmutableMap.of("username", username)));
     }
 
@@ -44,6 +45,6 @@ final class TokenAuthenticationService implements UserAuthenticationService {
 
     @Override
     public void logout(final User user) {
-        // Nothing to doy
+        // Nothing to do
     }
 }

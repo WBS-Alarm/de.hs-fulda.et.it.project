@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.math.BigInteger;
 
 @Getter
@@ -14,8 +15,11 @@ import java.math.BigInteger;
 public class Kontakt {
 
     @Id
-    private BigInteger id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Size(max = 60)
     private String name;
+    @Size(max = 254)
     private String mail;
 
     @ManyToOne(fetch = FetchType.LAZY)
