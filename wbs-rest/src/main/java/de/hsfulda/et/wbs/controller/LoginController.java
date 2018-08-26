@@ -19,28 +19,10 @@ import static lombok.AccessLevel.PRIVATE;
 @RequestMapping("/public/users")
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 @AllArgsConstructor(access = PACKAGE)
-final class PublicUsersController {
+final class LoginController {
 
     @NonNull
     UserAuthenticationService authentication;
-
-    @NonNull
-    UserCrudService users;
-
-    @PostMapping("/register")
-    String register(@RequestBody final Benutzer user) {
-        users
-            .save(
-                User
-                    .builder()
-                    .id(user.getUsername())
-                    .username(user.getUsername())
-                    .password(user.getPassword())
-                    .build()
-            );
-
-        return login(user);
-    }
 
     @PostMapping("/login")
     String login(@RequestBody final Benutzer user) {
