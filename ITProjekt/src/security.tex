@@ -1,0 +1,24 @@
+\section{Absicherung des Systems}\label{sec:Security}
+
+Da es sich bei der Kleiderverwaltung um ein geschlossenen System handelt, dass nur von einem bestimmten Personenkreis verwendet werden darf, muss die Person sich authentifizieren. Das System prüft die Anmeldedaten und autorisiert die Person, wenn seine Anmeldedaten korrekt sind und sie im System als Benutzer*in hinterlegt ist.
+
+Wie die Registrierung und Anmeldung genau funktionieren soll, wird in den folgenden Kapitel genauer beschrieben.
+
+\subsection{Registrierung}
+
+
+
+\subsection{Anmeldung}
+
+Damit nur berechtigte Personen Zugriff auf das System erhalten, muss die Anwendung abgesichert werden. Die Authentifizierung geschieht im Backend. Im öffentlichen Zugriff steht nur die Anmeldung. Im abgesicherten Bereich können nur angemeldete Personen Daten lesen und schreiben. Über die erfolgreiche Anmeldung am Backend wird der Person ein Json Web Token (JWT) geliefert, das im Header \textit{Authorization} bei jedem HTTP-Request mitgegeben werden muss. Das Token beinhaltet den Nutzernamen und die Dauer bis wann die Anmeldung gültig ist. 
+
+Anmeldung: Ein Token wird erzeugt, an den Client zurückgegeben.
+Bei einem Request: Token auffrischen, sofern bereits ein Token besteht.
+Abmelden: Token aus der DB löschen.
+
+Damit angemeldete Personen sich Abmelden können, werden die Token mit in der Datenbank gespeichert. Bei der Abmeldung wird der Token aus der Benutzertabelle entfernt. Dadurch muss ein neues Token erzeugt werden.
+
+\textit{Ablaufplan?}
+
+\textit{Was ist das JWT?}
+
