@@ -1,0 +1,190 @@
+{
+  "front-version": "2.19.1",
+  "version": 3,
+  "nodes": [
+    {
+      "type": "Scenario",
+      "id": "e0bcf1be-d8c8-4cdc-a7e3-7d5ec0a319bd",
+      "lastModified": "2018-09-12T21:26:06.501+02:00",
+      "name": "User Registration and Query",
+      "requestOrder": [
+        "Register User",
+        "Call User",
+        "Login User",
+        "Logout"
+      ]
+    },
+    {
+      "uriEditor": true,
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"username\": \"johnny\",\n  \"password\": \"rainbow\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:8080",
+        "path": "/users/register"
+      },
+      "id": "2e156521-9402-4a0a-9afd-46b4079cb04d",
+      "lastModified": "2018-08-26T13:36:12.441+02:00",
+      "name": "Register User",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "e0bcf1be-d8c8-4cdc-a7e3-7d5ec0a319bd"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": ""
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:8080",
+        "path": "/users/current"
+      },
+      "id": "a9af7de7-16f4-45fb-b828-934307da9fbd",
+      "lastModified": "2018-09-12T21:25:58.290+02:00",
+      "name": "Call User",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer eyJhbGciOiJIUzI1NiIsInppcCI6IkdaSVAifQ.H4sIAAAAAAAAAKtWyiwuVrJSKk8qVtJRykwsUbIyNDU2M7cwMDYx11FKrSiACFiYmZmDBEqLU4vyEnNTgVqCSwtSi0B8pVoA8px1UEYAAAA.TfwfKzCT2qBdBtqq6R1jzADE10UmMipdt5VrH2Rl3X4"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "e0bcf1be-d8c8-4cdc-a7e3-7d5ec0a319bd"
+    },
+    {
+      "uriEditor": true,
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"username\": \"Superuser\",\n  \"password\": \"password\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:8080",
+        "path": "/public/users/login"
+      },
+      "id": "31bab8a6-3b5f-4788-a9a0-f24adbe4e634",
+      "lastModified": "2018-08-26T13:37:17.772+02:00",
+      "name": "Login User",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "e0bcf1be-d8c8-4cdc-a7e3-7d5ec0a319bd"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": ""
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:8080",
+        "path": "/users/logout"
+      },
+      "id": "2ee4967f-5d6d-421a-853e-ec60cd890e9c",
+      "lastModified": "2018-09-12T21:26:06.502+02:00",
+      "name": "Logout",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer eyJhbGciOiJIUzI1NiIsInppcCI6IkdaSVAifQ.H4sIAAAAAAAAAKtWyiwuVrJSKk8qVtJRykwsUbIyNDU2M7cwMDYx11FKrSiACFiYmZmDBEqLU4vyEnNTgVqCSwtSi0B8pVoA8px1UEYAAAA.TfwfKzCT2qBdBtqq6R1jzADE10UmMipdt5VrH2Rl3X4"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "e0bcf1be-d8c8-4cdc-a7e3-7d5ec0a319bd"
+    }
+  ]
+}
