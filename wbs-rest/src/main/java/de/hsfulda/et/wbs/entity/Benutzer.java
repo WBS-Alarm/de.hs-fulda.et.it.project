@@ -21,6 +21,8 @@ public class Benutzer {
     private String username;
     @Size(max = 60)
     private String password;
+    @Size(max = 255)
+    private String token;
     @Size(max = 254)
     private String mail;
     private Boolean einkaeufer;

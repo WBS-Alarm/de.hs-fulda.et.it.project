@@ -1,6 +1,5 @@
 package de.hsfulda.et.wbs.security.token;
 
-import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableMap;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.impl.compression.GzipCompressionCodec;
@@ -14,6 +13,7 @@ import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import static io.jsonwebtoken.SignatureAlgorithm.HS256;
 import static io.jsonwebtoken.impl.TextCodec.BASE64;

@@ -16,7 +16,7 @@ final class InRepositoryUsers implements UserCrudService {
     private BenutzerCrudRepository repository;
 
     @Override
-    public User save(final User user) {
+    public User register(final User user) {
         Benutzer benutzer = new Benutzer();
         benutzer.setUsername(user.getUsername());
         benutzer.setPassword(Password.hashPassword(user.getPassword()));
@@ -24,8 +24,25 @@ final class InRepositoryUsers implements UserCrudService {
         return as(repository.save(benutzer));
     }
 
+    @Override
+    public User save(final User user, final String token) {
+        Benutzer benutzer = repository.findByUsername(user.getUsername());
+        benutzer.setToken(token);
+        return as(repository.save(benutzer));
+    }
+
     private static User as(Benutzer benutzer) {
         return new User(benutzer.getUsername(), benutzer.getUsername(), benutzer.getPassword());
+    }
+
+    @Override
+    public Optional<String> getToken(User user) {
+        return Optional.ofNullable(repository.findByUsername(user.getUsername()).getToken());
+    }
+
+    @Override
+    public void deleteToken(User user) {
+        save(user, null);
     }
 
     @Override

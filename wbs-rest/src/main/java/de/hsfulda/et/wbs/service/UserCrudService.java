@@ -11,7 +11,13 @@ import java.util.Optional;
  */
 public interface UserCrudService {
 
-    User save(User user);
+    User register(User user);
+
+    User save(User user, String token);
+
+    Optional<String> getToken(User user);
+
+    void deleteToken(User user);
 
     Optional<User> find(String id);
 

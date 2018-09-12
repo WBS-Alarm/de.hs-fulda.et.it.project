@@ -8,6 +8,7 @@ import de.hsfulda.et.wbs.service.UserCrudService;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -28,22 +29,38 @@ final class TokenAuthenticationService implements UserAuthenticationService {
 
     @Override
     public Optional<String> login(final String username, final String password) {
-        return users
-            .findByUsername(username)
-            .filter(user -> Password.checkPassword(password, user.getPassword()))
-            .map(user -> tokens.expiring(ImmutableMap.of("username", username)));
+        Optional<User> user = users.findByUsername(username);
+
+        Optional<String> createdToken = user
+            .filter(u -> Password.checkPassword(password, u.getPassword()))
+            .map(u -> tokens.expiring(ImmutableMap.of("username", username)));
+
+        if (user.isPresent() && createdToken.isPresent()) {
+            users.save(user.get(), createdToken.get());
+        }
+
+        return createdToken;
     }
 
     @Override
     public Optional<User> findByToken(final String token) {
-        return Optional
+        Optional<User> user = Optional
             .of(tokens.verify(token))
             .map(map -> map.get("username"))
             .flatMap(users::findByUsername);
+
+        if (user.isPresent()) {
+            Optional<String> loadedToken = users.getToken(user.get());
+            if (loadedToken.isPresent() && token.equals(loadedToken.get())) {
+                return user;
+            }
+
+        }
+        throw new UsernameNotFoundException("User not authorized");
     }
 
     @Override
     public void logout(final User user) {
-        // Nothing to do
+        users.deleteToken(user);
     }
 }

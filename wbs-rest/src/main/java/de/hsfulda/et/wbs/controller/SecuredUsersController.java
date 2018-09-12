@@ -28,7 +28,7 @@ final class SecuredUsersController {
     @PostMapping("/register")
     void register(@RequestBody final Benutzer user) {
         users
-            .save(
+            .register(
                 User
                     .builder()
                     .id(user.getUsername())
