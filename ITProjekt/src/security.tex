@@ -1,24 +1,39 @@
-\section{Absicherung des Systems}\label{sec:Security}
+\section{Entwicklung}\label{sec:Entwicklung}
 
-Da es sich bei der Kleiderverwaltung um ein geschlossenen System handelt, dass nur von einem bestimmten Personenkreis verwendet werden darf, muss die Person sich authentifizieren. Das System prüft die Anmeldedaten und autorisiert die Person, wenn seine Anmeldedaten korrekt sind und sie im System als Benutzer*in hinterlegt ist.
+\project Wird ein Open Source Projekt. Diese Entscheidung wurde gemeintschaftlich getroffen und entsprechende \textit{GitHub} Repositories wurden dafür erstellt. Die aktuelle Dokumentation ist unter folgender URL zu finden: \url{https://github.com/argh87/de.hs-hulda.et.it.project}.
+
+\subsection{Entwicklungsumgebung}\label{sec:Umgebung}
+
+Für die Entwicklung wird im Backend \textit{Spring Boot} verwendet Es werden \textit{REST Services} angeboten mit denen Daten ausgelesen, verwaltet und manipuliert werden können. Hierbei werden über HTTP Requests Aktionen ausgeführt. Welche URL und Aktionen zur Verfügung stehen werden, muss noch definiert werden.
+
+Das Frontend wird mit \textit{Angular} umgesetzt. Hierbei werden die \textit{REST Services} vom Backend angesprochen und an der Oberfläche für den \textit{User} leicht bedienbar gemacht.
+
+Das Repository befindet sich in folgenden Repositories:
+
+\begin{itemize}
+\item Frontend: \url{https://github.com/WiederT/clothes_management_frontend}
+\item Backend: \url{https://github.com/argh87/de.hs-hulda.et.it.project}
+\end{itemize}
+
+Welche Versionen von Spring Boot und Angular verwendet werden, wird wie in Kapitel~\ref{sec:roadmap} beschreiben in Phase 2 dokumentiert.
+
+\subsection{Absicherung des Systems}\label{sec:Security}
+
+Da es sich bei der Kleiderverwaltung um ein geschlossenen System handelt, dass nur von einem bestimmten Personenkreis verwendet werden darf, muss die Person sich authentifizieren. Das System prüft die Anmeldedaten und autorisiert die Person, wenn seine Anmeldedaten korrekt sind und sie im System als Benutzer*in (\textit{User}) hinterlegt ist.
 
 Wie die Registrierung und Anmeldung genau funktionieren soll, wird in den folgenden Kapitel genauer beschrieben.
 
-\subsection{Registrierung}
+\subsubsection{Registrierung}
 
+\textit{User} können nur durch einen Administrator angelegt werden. So soll vermieden werden, dass Personen sich registrieren, die nicht in den gewünschten Anwenderkreis gehören. Die Administratoren werden bei Initialisierung des Systems angelegt.
 
+\subsubsection{Anmeldung}
 
-\subsection{Anmeldung}
+Damit nur berechtigte Personen Zugriff auf das System erhalten, muss die Anwendung abgesichert werden. Die Authentifizierung geschieht im Backend. Im öffentlichen Zugriff steht nur die Anmeldung. Im abgesicherten Bereich können nur angemeldete Personen Daten lesen und schreiben. Über die erfolgreiche Anmeldung am Backend wird der Person ein \textit{Json Web Token} (\textit{JWT}) geliefert, das im Header \textit{Authorization} bei jedem HTTP-Request mitgegeben werden muss. Das Token beinhaltet den Nutzernamen und die Dauer bis wann die Anmeldung gültig ist. Hierbei ist noch zu definieren wie lange ein Token gültig sein soll.
 
-Damit nur berechtigte Personen Zugriff auf das System erhalten, muss die Anwendung abgesichert werden. Die Authentifizierung geschieht im Backend. Im öffentlichen Zugriff steht nur die Anmeldung. Im abgesicherten Bereich können nur angemeldete Personen Daten lesen und schreiben. Über die erfolgreiche Anmeldung am Backend wird der Person ein Json Web Token (JWT) geliefert, das im Header \textit{Authorization} bei jedem HTTP-Request mitgegeben werden muss. Das Token beinhaltet den Nutzernamen und die Dauer bis wann die Anmeldung gültig ist. 
+Erfolgreiche Anmeldung: Ein Token wird erzeugt, an den Client zurückgegeben. Der Token wird im Cookie gespeichert. Dabei muss dem \textit{User} mitgeteilt werden, dass Cookies erlaubt werden müssen.
 
-Anmeldung: Ein Token wird erzeugt, an den Client zurückgegeben.
-Bei einem Request: Token auffrischen, sofern bereits ein Token besteht.
-Abmelden: Token aus der DB löschen.
+Bei einem Request: Token abgleichen und verifizieren. Wenn das Token gültig ist, handelt es sich um einen registrierten \textit{User}. Anderfalls wird der Request abgelehnt.
 
-Damit angemeldete Personen sich Abmelden können, werden die Token mit in der Datenbank gespeichert. Bei der Abmeldung wird der Token aus der Benutzertabelle entfernt. Dadurch muss ein neues Token erzeugt werden.
-
-\textit{Ablaufplan?}
-
-\textit{Was ist das JWT?}
+Abmelden: Token am Client löschen, indem das Cookie entfernt wird.
 
