@@ -1,0 +1,57 @@
+\section{Projektplanung}\label{sec:Projektplanung}
+
+Diese Anforderungsspezifikation ist die Aufnahme der Bedürfnisse nach dem ersten Meeting mit den Stakeholdern. Durch die Verwendung von \textit{Scrum} können wir durch die grobe Beschreibung der Anforderungen unsere Sprints planen und bei der Erstellung der Datenbankstruktur auf die Anforderungen zurück greifen. 
+
+
+\subsection{Anforderungsspezifikation}\label{sec:anforderungen}
+
+Die Anwendung wird in vier Abschnitte gegliedert: Startseite, Aktionen, Auswertungen und Administration.
+
+Auf der \textit{\textbf{Startseite}} müssen die letzten 20 Transaktionen aufgelistet werden. Dabei werden die Informationen über die Transaktion selbst angezeigt, sowie die Person die die Transaktion ausgeführt hat.
+
+Die Transaktionen, oder auch Aktionen, werden im Abschnitt \textit{\textbf{Aktionen}} durchgeführt. Eine Transaktion umschließt die Informationen der \textit{Kleidungsart}, \textit{Stückzahl}, \textit{Größe}, \textit{Bestimmungsort}, \textit{Art der Aktion} und der \textit{ausführenden Person}. Bei einer Transaktion müssen immer die Informationen über die Kleidungsart, die Stückzahl, die Größe und den Bestimmungsort angegeben werden. Dabei werden Kleidungsart, Größe und Stückzahl in einer Gruppe erfasst damit mehrere Kleidungsarten in einer Transaktion an einen Bestimmungsort übergeben werden können. 
+
+Über die Art der Aktion können der Anwender*innen festgelegen, ob die Kleidungsstücke an einen Bestimmungsort \textit{ausgegeben}, \textit{zurückgenommen} oder \textit{ausgesondert} werden. Kleidungsstücke können auch in die Wäsche gegeben werden. Dies ist notwendig um den Überblick über den Bestand zu wahren und nicht bei Mangel während der Ausgabe die Notwendigkeit zu sehen, Kleidungsstücke zu bestellen.
+
+Der \textit{Bestimmungsort} kann ein Ortsteil der Feuerwehr sein oder das Lager, \bzw der Wareneingang. Somit lässt sich erkennen, ob Kleidungsstücke in den Warenbestand aufgenommen wurden, oder an einen Ortsteil ausgegeben wurde.
+Aus den Aktionen resultiert für die Startseite die Liste der Transaktion in natürlich sprachlichen Texten. Zum Beispiel: 
+\begin{itemize}
+\item 5 dünne Jacken in Größe 40 vom Ortsteil Helsa ausgesondert, durch Max Mustermann am 14.12.2019 09:43 Uhr.
+\item 12 Hosen in Größe 32 ins Lager aufgenommen, durch Max Mustermann am 10.12.2019 15:26 Uhr.
+\item 12 Hosen in Größe 32 vom Lager in der Wäsche, durch Max Mustermann am 10.12.2019 12:02 Uhr.
+\item 10 Jacken in Größe 40, 10 Stiefel in Größe 36 vom Ortsteil Helsa ausgegeben, durch Max Mustermann am 06.12.2019 18:12 Uhr.
+\item 10 Jacken in Größe 40, 10 Stiefel in Größe 36 vom Wareneingang aufgenommen, durch Max Mustermann am 05.12.2019 17:30 Uhr.
+\end{itemize}
+
+Die Kleidungsstücke und deren Größen, sowie die Ortsteile und die Anwender*innen, können in der \textbf{\textit{Administration}} verwaltet werden.
+
+In der Administration der Ortsteile können beliebige Ortsteile nach Bedarf hinzugefügt werden. Dabei muss der Name angegeben werden und ein Ansprechpartner. Optional können weitere Ansprechpartner zu einem Ortsteil hinzufügt oder bis auf einen entfernt werden. Ein Ortsteil kann auch inaktiv gesetzt werden. Hierbei muss jedoch geprüft werden, ob sich noch Kleidungsstücke auf den Ortsteil gebucht sind. Das Inaktiv setzen ist erst dann möglich, wenn alle Kleidungsstücke in den Warenbestand zurück gebucht wurden. Es bietet sich an, dafür eine Komfort"=Funktion bereit zu stellen. Diese Transaktion muss auch über die Startseite erkennbar sein. Ein Ortsteil kann deshalb nicht gelöscht werden, weil durch den Verlust der Information die Transaktionen nicht mehr vollständig nachvollziehbar wären. Ein Ortsteil kann nur dann effektiv gelöscht werden, wenn keinerlei Transaktionen darauf ausgeführt wurden.
+
+Am Ortsteil können Grenzen der Anzahl von Kleidungsstücken bestimmt werden, bei dem eine Warnung erscheint, wenn zu viele Kleidungsstücke ausgegeben wurden. Diese Warnung erscheint bei den Aktionen nach der Auswahl des Ortsteils. Wenn keine Grenze angegeben wurde, wird nichts geprüft.
+
+Ein weiterer Punkt der Administration ist die Benutzerverwaltung. Hier können Personen angelegt und gelöscht, ihre Rechte verwaltet und der Einkäufer bestimmt werden. Dazu müssen der Name, die E"=Mail Adresse gespeichert werden. Zudem kann gesteuert werden, ob die Person nur lesenden, schreibenden oder administrativen Zugriff auf das System hat. Bei lesendem Zugriff ist die Seite der Aktionen gesperrt. Bei schreibenden Zugriff ist die Seite der Administration gesperrt. Der Administrator hat auf alle Bereiche Zugriff. Die Einstellung, ob eine Person für den Einkauf zuständig ist, ist mit der Administration der Kleidungsstücke verknüpft. 
+
+Die Kleidungsarten und die dazugehörigen Größen können in der Administration erweitert werden. Diese können nur gelöscht werden, wenn noch keine Transaktionen mit der Kleidungsart und Größe vorgenommen wurde. Dies ist besonders wichtig, damit die Auswertungen auch weiterhin nachvollziehbar und reproduzierbar sind. Kleidungsarten können aber inaktiv gesetzt werden, wodurch diese bei Aktionen nicht mehr ausgewählt werden können. Zu jeder Kombination von Kleidungsart und Größe kann ein Grenzwert festgelegt werden, bei dem die Einkäufer*innen eine E"=Mail Benachrichtigung erhalten. Damit diese Grenze nicht bei jeder Neuanlage eingetippt werden muss, kann der Standardwert angegeben werden.
+
+Im Abschnitt der \textit{\textbf{Auswertungen}} können die Anwender*innen eine Bericht erstellen, der Auskunft über die ausgegebenen, zurückgenommenen und ausgesonderten Kleidungsstücke gibt. Dabei kann in einem Filter der Zeitraum, die Kleidungsart, Größe, Transaktionsart, der Ortsteil (wie auch der lokale Warenbestand) gesetzt werden, wodurch der Bericht auf spezielle Bedürfnisse angepasst werden kann. Der Bericht soll als Excel"=Tabelle oder PDF erfolgen.
+
+\subsection{Projektplan}
+\subsubsection{Roadmap}\label{sec:roadmap}
+
+Wir unterteilen den Projektablauf in vier Phasen die in den jeweiligen Semestern abgehandelt werden sollen. In \textit{\textbf{Phase 1}}, die von August bis September 2018 gehen soll, treten wir in Kontakt mit den Verantwortlichen der freiwilligen Feuerwehr Eschenstruth und stellen ihnen die ersten Entwürfe der UI und unseres Konzeptes vor.
+Zusätzlich wollen wir in dieser Phase die Infrastruktur, sowie die Software- und Rest-Architektur planen und erstellen. Wir werden außerdem eine Umgebung für unserer Entwicklung finden und die Projekt Repositories erstellen und pflegen.
+Als letztes wollen wir ein Projektdefinitionsdokument sowie einen Projektplan erstellen.
+
+In \textit{\textbf{Phase 2}} von Februar bis März 2019 werden wir für unsere Entwicklungen eine \textit{Defintion of Done} (\textit{DOD}), also eine Vereinbarung darüber erstellen, wann wir ein Feature für fertig erachten. Danach beginnen wir mit Entwicklungsintervallen (im Folgenden \textit{Sprints }genannt) die jeweils eine Woche lang sein werden. An jedem Tag dieser Intervalle werden wir abends ein Meeting (\textit{Daily}) abhalten, bei dem wir uns auf den aktuellen Stand bringen, was die Entwicklung angeht. Am Ende eines \textit{Sprints} werden wir uns die aktuellen Ergebnisse präsentieren und dazu auch die Stakeholder (Verantwortliche der freiwilligen Feuerwehr) einladen. Die Anmerkungen aus diesen Meetings werden wir jeweils in den folgenden \textit{Sprint} aufnehmen, in die Entwicklung einplanen und umsetzen. 
+
+Währenddessen werden wir immer wieder unsere Arbeit dokumentieren, damit wir nicht am Ende eine große Dokumentationsphase einleiten müssen. Wir werden außerdem unsere Komponenten mit automatisierten Tests versehen.
+
+Die \textit{\textbf{Phase 3}} von August bis September 2019 wird genauso ablaufen, wie die Zweite.
+
+In der letzten \textit{\textbf{Phase 4}} von Februar bis März 2020 werden wir dann das Projekt letzendlich abschließen.  
+
+\subsubsection{Zeitplanung}
+
+Hier noch ein Gantt. Als Bild...
+
+\newpage
