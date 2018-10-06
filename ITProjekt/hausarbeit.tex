@@ -25,20 +25,10 @@
 \setlength{\parskip}{0.3cm}
 
 % hier wird die Datei mit dem eigentlichen Inhalt der Hausarbeit eingebunden
-\input{src/inhalt.tex}
-
-% falls man lieber eine Datei pro Kapitel bevorzug, kann man dies auch einfach realisieren, indem man diese wie folgt einbindet
-%\input{src/kapitel01.tex}
-%\input{src/kapitel02.tex}
-%\input{src/kapitel03.tex}
-% diese müssen dann natürlcih in dem Ordner vorliegen
-
-
-\newpage
-
-\input{src/security.tex}
-
-\newpage
+\input{src/sec/initialisierung.tex}
+\input{src/sec/projektplanung.tex}
+\input{src/sec/entwicklung.tex}
+\input{src/sec/weiteres.tex}
 
 % nocite lässt alle Werke anzeigen, auch solche die nicht verlinkt sind. 
 %\nocite{*}
@@ -50,8 +40,8 @@
 \listoffigures
 \addcontentsline{toc}{section}{\listfigurename}
 
-\listoftables
-\addcontentsline{toc}{section}{Tabellenverzeichnis}
+%\listoftables
+%\addcontentsline{toc}{section}{Tabellenverzeichnis}
 
 %\lstlistoflistings
 %\addcontentsline{toc}{section}{Listings}
