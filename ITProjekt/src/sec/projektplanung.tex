@@ -11,7 +11,7 @@ Auf der \textit{\textbf{Startseite}} müssen die letzten 20 Transaktionen aufgel
 
 Die Transaktionen, oder auch Aktionen, werden im Abschnitt \textit{\textbf{Aktionen}} durchgeführt. Eine Transaktion umschließt die Informationen der \textit{Kleidungsart}, \textit{Stückzahl}, \textit{Größe}, \textit{Bestimmungsort}, \textit{Art der Aktion} und der \textit{ausführenden Person}. Bei einer Transaktion müssen immer die Informationen über die Kleidungsart, die Stückzahl, die Größe und den Bestimmungsort angegeben werden. Dabei werden Kleidungsart, Größe und Stückzahl in einer Gruppe erfasst damit mehrere Kleidungsarten in einer Transaktion an einen Bestimmungsort übergeben werden können. 
 
-Über die Art der Aktion können der Anwender*innen festgelegen, ob die Kleidungsstücke an einen Bestimmungsort \textit{ausgegeben}, \textit{zurückgenommen} oder \textit{ausgesondert} werden. Kleidungsstücke können auch in die Wäsche gegeben werden. Dies ist notwendig um den Überblick über den Bestand zu wahren und nicht bei Mangel während der Ausgabe die Notwendigkeit zu sehen, Kleidungsstücke zu bestellen.
+Über die Art der Aktion können die Anwender*innen festgelegen, ob die Kleidungsstücke an einen Bestimmungsort \textit{ausgegeben}, \textit{zurückgenommen} oder \textit{ausgesondert} werden. Kleidungsstücke können auch in die Wäsche gegeben werden. Dies ist notwendig um den Überblick über den Bestand zu wahren und nicht bei Mangel während der Ausgabe die Notwendigkeit zu sehen, Kleidungsstücke zu bestellen.
 
 Der \textit{Bestimmungsort} kann ein Ortsteil der Feuerwehr sein oder das Lager, \bzw der Wareneingang. Somit lässt sich erkennen, ob Kleidungsstücke in den Warenbestand aufgenommen wurden, oder an einen Ortsteil ausgegeben wurde.
 Aus den Aktionen resultiert für die Startseite die Liste der Transaktion in natürlich sprachlichen Texten. Zum Beispiel: 
@@ -39,7 +39,7 @@ Im Abschnitt der \textit{\textbf{Auswertungen}} können die Anwender*innen eine 
 \subsubsection{Roadmap}\label{sec:roadmap}
 
 Wir unterteilen den Projektablauf in vier Phasen die in den jeweiligen Semestern abgehandelt werden sollen. In \textit{\textbf{Phase 1}}, die von August bis September 2018 gehen soll, treten wir in Kontakt mit den Verantwortlichen der freiwilligen Feuerwehr Eschenstruth und stellen ihnen die ersten Entwürfe der UI und unseres Konzeptes vor.
-Zusätzlich wollen wir in dieser Phase die Infrastruktur, sowie die Software- und Rest-Architektur planen und erstellen. Wir werden außerdem eine Umgebung für unserer Entwicklung finden und die Projekt Repositories erstellen und pflegen.
+Zusätzlich wollen wir in dieser Phase die Infrastruktur, sowie die Software- und REST-Architektur planen und erstellen. Wir werden außerdem eine Umgebung für unserer Entwicklung finden und die Projekt Repositories erstellen und pflegen.
 Als letztes wollen wir ein Projektdefinitionsdokument sowie einen Projektplan erstellen.
 
 In \textit{\textbf{Phase 2}} von Februar bis März 2019 werden wir für unsere Entwicklungen eine \textit{Defintion of Done} (\textit{DOD}), also eine Vereinbarung darüber erstellen, wann wir ein Feature für fertig erachten. Danach beginnen wir mit Entwicklungsintervallen (im Folgenden \textit{Sprints }genannt) die jeweils eine Woche lang sein werden. An jedem Tag dieser Intervalle werden wir abends ein Meeting (\textit{Daily}) abhalten, bei dem wir uns auf den aktuellen Stand bringen, was die Entwicklung angeht. Am Ende eines \textit{Sprints} werden wir uns die aktuellen Ergebnisse präsentieren und dazu auch die Stakeholder (Verantwortliche der freiwilligen Feuerwehr) einladen. Die Anmerkungen aus diesen Meetings werden wir jeweils in den folgenden \textit{Sprint} aufnehmen, in die Entwicklung einplanen und umsetzen. 
@@ -52,6 +52,40 @@ In der letzten \textit{\textbf{Phase 4}} von Februar bis März 2020 werden wir d
 
 \subsubsection{Zeitplanung}
 
-Hier noch ein Gantt. Als Bild...
+In Tabelle~\ref{tab:zeitplanung} sind die geplanten Vorgänge über die Laufzeit des IT"=Projekts von Teil I bis IV aufgelistet. Durch die lange Laufzeit über vier Semester haben wir uns gegen eine grafische Darstellung entschieden. Diese würde zu unübersichtlich werden und brächte keinen Mehrwert.
+
+\begin{table}[htp]
+  \caption{Zeitplnung der einzelnen Vorgänge über das IT"=Projekt Teil I bis IV.}
+  \bgroup
+  \def\arraystretch{1.5}%
+  \begin{tabular}{|l|r|r|}
+    \hline
+    \textbf{Vorgang}                                              & \textbf{Anfang}   & \textbf{Ende} \\ \hline
+    \textbf{Projektinitialisierung (IT-Projekt I - 4. Semster)}   & \textbf{01.08.18} & \textbf{30.09.18} \\ \hline
+    Kontaktanbahnung soziales Handlungsumfeld                     & 01.08.18          & 14.08.18 \\ \hline
+    Bedarfsabklärung                                              & 15.08.18          & 29.08.18 \\ \hline
+    Definition der Ziele des Projekts                             & 30.08.18          & 13.09.18 \\ \hline
+    Erstellen der Repositories                                    & 14.09.18          & 18.09.18 \\ \hline
+    Dokumentation der 1. Projektphase                             & 01.08.18          & 30.09.18 \\ \hline
+    \textbf{Entwicklung (IT-Projekt II - 5. Semster)}             & \textbf{01.02.19} & \textbf{31.03.19} \\ \hline
+    Evaluierung geeigneter Werkzeuge                              & & \\ 
+    (Programmiersprache/DB/Cloud)                                 & 01.02.19          & 15.02.19 \\ \hline
+    Entwicklung von Frontend/Backend/Infrastruktur                & 16.02.19          & 23.03.19 \\ \hline
+    Testen des bisherigen Entwicklungsstands                      & 23.02.19          & 31.03.19 \\ \hline
+    Dokumentation der 2. Phase                                    & 01.02.19          & 31.03.19 \\ \hline
+    \textbf{Entwicklung (IT-Projekt III - 6. Semster)}            & \textbf{01.08.19} & \textbf{30.09.19} \\ \hline
+    Entwicklung von Frontend/Backend/Infrastruktur                & 01.08.19          & 30.09.19 \\ \hline
+    Testen des bisherigen Entwicklungsstands                      & 08.08.19          & 30.09.19 \\ \hline
+    Dokumentation der 3. Phase                                    & 01.08.19          & 30.09.19 \\ \hline
+    \textbf{Entwicklung / Abschluss (IT-Projekt IV - 7. Semster)} & \textbf{01.02.20} & \textbf{31.03.20} \\ \hline
+    Entwicklung von Frontend/Backend/Infrastruktur                & 01.02.20          & 03.03.20 \\ \hline
+    Erstellen der Abschlussdokumentation                          & 01.02.20          & 04.03.20 \\ \hline
+    Erstellen der Kundendokumentation                             & 05.03.20          & 17.03.20 \\ \hline
+    Implementierung der Software                                  & 18.03.20          & 31.03.20 \\ \hline
+    Präsentation und Einweisung beim Kunde                        & 18.03.20          & 31.03.20 \\ \hline
+  \end{tabular}
+  \egroup
+  \label{tab:zeitplanung}
+\end{table}
 
 \newpage
