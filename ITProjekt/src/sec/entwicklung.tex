@@ -1,6 +1,6 @@
 \section{Entwicklung}\label{sec:Entwicklung}
 
-\project wird ein Open Source Projekt. Diese Entscheidung wurde gemeintschaftlich getroffen und entsprechende \textit{GitHub} Repositories wurden dafür erstellt. Die aktuelle Dokumentation ist unter folgender URL zu finden: \url{https://github.com/argh87/de.hs-hulda.et.it.project}.
+\project wird ein Open Source Projekt. Diese Entscheidung wurde gemeinschaftlich getroffen und entsprechende \textit{GitHub} Repositories wurden dafür erstellt. Die aktuelle Dokumentation ist unter folgender URL zu finden: \url{https://github.com/argh87/de.hs-fulda.et.it.project}.
 
 \subsection{Entwicklungsumgebung}\label{sec:Umgebung}
 
@@ -12,7 +12,7 @@ Das Repository befindet sich unter folgenden URL:
 
 \begin{itemize}
 \item Frontend: \url{https://github.com/WiederT/clothes_management_frontend}
-\item Backend: \url{https://github.com/argh87/de.hs-hulda.et.it.project}
+\item Backend: \url{https://github.com/argh87/de.hs-fulda.et.it.project}
 \end{itemize}
 
 Welche Versionen von Spring Boot und Angular verwendet werden, wird wie in Kapitel~\ref{sec:roadmap} beschreiben in Phase 2 dokumentiert.
@@ -33,14 +33,14 @@ Damit nur berechtigte Personen Zugriff auf das System erhalten, muss die Anwendu
 
 Erfolgreiche Anmeldung: Ein Token wird erzeugt, an den Client zurückgegeben. Der Token wird im Cookie gespeichert. Dabei muss dem \textit{User} mitgeteilt werden, dass Cookies erlaubt werden müssen.
 
-Bei einem Request: Token abgleichen und verifizieren. Wenn das Token gültig ist, handelt es sich um einen registrierten \textit{User}. Anderfalls wird der Request abgelehnt.
+Bei einem Request: Token abgleichen und verifizieren. Wenn das Token gültig ist, handelt es sich um einen registrierten \textit{User}. Andernfalls wird der Request abgelehnt.
 
 Abmelden: Token am Client löschen, indem das Cookie entfernt wird.
 
 \subsubsection{Speicherung des Passworts}
 
-Die Speicherung des Passworts zu einem Benutzer ist ein kritisches Thema. Der Artikel von \cite{password} bietet einen gute Orientierung, die Passworter der \textit{User} sicher zu speichern. Dabei wird \ua der Hinweis gegeben, dass Passworter immer mit einem Salt (einem Zusatz zum Passwort selbst) hinzugefügt werden soll, damit Passwörter nicht aus dem gespeicherten Hash über bestimmte Methoden, wie \zb \textit{Lookup Tables}, \textit{Reverse Lookup Tables} pder \textit{Rainbow Tables}, ermittelt werden können. Dabei wird das Werkzeug \textit{bcrypt} empfohlen. Dieses hashed ein Passwort direkt mit einem Salt und kann aus einem Hash das vom \textit{User} eingegebene Passwort verifizieren \citep[vgl.][]{password}. 
+Die Speicherung des Passworts zu einem Benutzer ist ein kritisches Thema. Der Artikel von \cite{password} bietet einen gute Orientierung, die Passwörter der \textit{User} sicher zu speichern. Dabei wird \ua der Hinweis gegeben, dass Passwörter immer mit einem Salt (einem Zusatz zum Passwort selbst) hinzugefügt werden soll, damit Passwörter nicht aus dem gespeicherten Hash über bestimmte Methoden, wie \zb \textit{Lookup Tables}, \textit{Reverse Lookup Tables} oder \textit{Rainbow Tables}, ermittelt werden können. Dabei wird das Werkzeug \textit{bcrypt} empfohlen. Dieses hashed ein Passwort direkt mit einem Salt und kann aus einem Hash das vom \textit{User} eingegebene Passwort verifizieren \citep[vgl.][]{password}. 
 
- Siehe hierzu auch die Implementierung von \textit{bcrypt} unter: \url{https://github.com/argh87/de.hs-hulda.et.it.project/blob/master/wbs-rest/src/main/java/de/hsfulda/et/wbs/security/Password.java}.
+ Siehe hierzu auch die Implementierung von \textit{bcrypt} unter: \url{https://github.com/argh87/de.hs-fulda.et.it.project/blob/master/wbs-rest/src/main/java/de/hsfulda/et/wbs/security/Password.java}.
 
 \newpage
