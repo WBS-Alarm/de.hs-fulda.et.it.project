@@ -4,8 +4,6 @@ package de.hsfulda.et.wbs.security;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Builder;
-import lombok.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -14,13 +12,14 @@ import java.util.Collection;
 
 import static java.util.Objects.requireNonNull;
 
-@Value
-@Builder
 public class User implements UserDetails {
 
     private String id;
     private String username;
     private String password;
+
+    private User() {
+    }
 
     @JsonCreator
     public User(@JsonProperty("id") final String id,
@@ -65,5 +64,62 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    void setId(String id) {
+        this.id = id;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    void setUsername(String username) {
+        this.username = username;
+    }
+
+    void setPassword(String password) {
+        this.password = password;
+    }
+
+    static User makeTemplate(User user) {
+        return new User(user.getId(), user.getUsername(), user.getPassword());
+    }
+
+    public static class UserBuilder {
+
+        private final User template;
+
+        private UserBuilder() {
+            template = new User();
+        }
+
+        public UserBuilder id(String id) {
+            template.setId(id);
+            return this;
+        }
+
+        public UserBuilder username(String username) {
+            template.setUsername(username);
+            return this;
+        }
+
+        public UserBuilder password(String password) {
+            template.setPassword(password);
+            return this;
+        }
+
+        public User build() {
+            return makeTemplate(template);
+        }
+    }
+
+    public static UserBuilder builder() {
+        return new UserBuilder();
     }
 }

@@ -1,16 +1,10 @@
 package de.hsfulda.et.wbs.entity;
 
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.math.BigInteger;
 import java.util.List;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "TRAEGER")
 public class Traeger {
@@ -33,4 +27,43 @@ public class Traeger {
     protected Traeger() {
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Zielort> getZielorte() {
+        return zielorte;
+    }
+
+    public void setZielorte(List<Zielort> zielorte) {
+        this.zielorte = zielorte;
+    }
+
+    public List<Kategorie> getKategorien() {
+        return kategorien;
+    }
+
+    public void setKategorien(List<Kategorie> kategorien) {
+        this.kategorien = kategorien;
+    }
+
+    public List<Benutzer> getBenutzer() {
+        return benutzer;
+    }
+
+    public void setBenutzer(List<Benutzer> benutzer) {
+        this.benutzer = benutzer;
+    }
 }

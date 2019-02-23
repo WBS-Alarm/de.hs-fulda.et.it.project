@@ -1,14 +1,9 @@
 package de.hsfulda.et.wbs.entity;
 
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "BENUTZER")
 public class Benutzer {
@@ -31,4 +26,59 @@ public class Benutzer {
     @JoinColumn(name = "TRAEGER_ID")
     private Traeger traeger;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public Boolean getEinkaeufer() {
+        return einkaeufer;
+    }
+
+    public void setEinkaeufer(Boolean einkaeufer) {
+        this.einkaeufer = einkaeufer;
+    }
+
+    public Traeger getTraeger() {
+        return traeger;
+    }
+
+    public void setTraeger(Traeger traeger) {
+        this.traeger = traeger;
+    }
 }

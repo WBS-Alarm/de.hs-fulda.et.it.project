@@ -1,39 +1,33 @@
 package de.hsfulda.et.wbs.security.token;
 
-import com.google.common.collect.ImmutableMap;
 import de.hsfulda.et.wbs.security.Password;
 import de.hsfulda.et.wbs.security.User;
 import de.hsfulda.et.wbs.service.UserAuthenticationService;
 import de.hsfulda.et.wbs.service.UserCrudService;
-import lombok.AllArgsConstructor;
-import lombok.NonNull;
-import lombok.experimental.FieldDefaults;
+import de.hsfulda.et.wbs.util.ImmutableMap;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-import static lombok.AccessLevel.PACKAGE;
-import static lombok.AccessLevel.PRIVATE;
-
 @Service
-@AllArgsConstructor(access = PACKAGE)
-@FieldDefaults(level = PRIVATE, makeFinal = true)
 final class TokenAuthenticationService implements UserAuthenticationService {
 
-    @NonNull
-    TokenService tokens;
+    private final TokenService tokens;
+    private final UserCrudService users;
 
-    @NonNull
-    UserCrudService users;
+    public TokenAuthenticationService(TokenService tokens, UserCrudService users) {
+        this.tokens = tokens;
+        this.users = users;
+    }
 
     @Override
     public Optional<String> login(final String username, final String password) {
         Optional<User> user = users.findByUsername(username);
 
         Optional<String> createdToken = user
-            .filter(u -> Password.checkPassword(password, u.getPassword()))
-            .map(u -> tokens.expiring(ImmutableMap.of("username", username)));
+                .filter(u -> Password.checkPassword(password, u.getPassword()))
+                .map(u -> tokens.expiring(ImmutableMap.of("username", username)));
 
         if (user.isPresent() && createdToken.isPresent()) {
             users.save(user.get(), createdToken.get());
@@ -45,9 +39,9 @@ final class TokenAuthenticationService implements UserAuthenticationService {
     @Override
     public Optional<User> findByToken(final String token) {
         Optional<User> user = Optional
-            .of(tokens.verify(token))
-            .map(map -> map.get("username"))
-            .flatMap(users::findByUsername);
+                .of(tokens.verify(token))
+                .map(map -> map.get("username"))
+                .flatMap(users::findByUsername);
 
         if (user.isPresent()) {
             Optional<String> loadedToken = users.getToken(user.get());

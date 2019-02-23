@@ -1,16 +1,10 @@
 package de.hsfulda.et.wbs.entity;
 
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.math.BigInteger;
 import java.util.List;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "ZIELORTE")
 public class Zielort {
@@ -32,6 +26,46 @@ public class Zielort {
     @ManyToMany(mappedBy = "zielort", fetch = FetchType.LAZY)
     private List<Kontakt> kontakte;
 
-    protected Zielort() {}
+    protected Zielort() {
+    }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Traeger getTraeger() {
+        return traeger;
+    }
+
+    public void setTraeger(Traeger traeger) {
+        this.traeger = traeger;
+    }
+
+    public List<Bestand> getBestaende() {
+        return bestaende;
+    }
+
+    public void setBestaende(List<Bestand> bestaende) {
+        this.bestaende = bestaende;
+    }
+
+    public List<Kontakt> getKontakte() {
+        return kontakte;
+    }
+
+    public void setKontakte(List<Kontakt> kontakte) {
+        this.kontakte = kontakte;
+    }
 }

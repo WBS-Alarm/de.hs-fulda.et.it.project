@@ -1,6 +1,5 @@
 package de.hsfulda.et.wbs.security;
 
-import lombok.experimental.FieldDefaults;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -13,12 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.google.common.net.HttpHeaders.AUTHORIZATION;
 import static java.util.Optional.ofNullable;
-import static lombok.AccessLevel.PRIVATE;
 import static org.apache.commons.lang3.StringUtils.removeStart;
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
-@FieldDefaults(level = PRIVATE, makeFinal = true)
 final class TokenAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
     private static final String BEARER = "Bearer";
@@ -29,15 +26,15 @@ final class TokenAuthenticationFilter extends AbstractAuthenticationProcessingFi
 
     @Override
     public Authentication attemptAuthentication(
-        final HttpServletRequest request,
-        final HttpServletResponse response) {
+            final HttpServletRequest request,
+            final HttpServletResponse response) {
         final String param = ofNullable(request.getHeader(AUTHORIZATION))
-            .orElse(request.getParameter("t"));
+                .orElse(request.getParameter("t"));
 
         final String token = ofNullable(param)
-            .map(value -> removeStart(value, BEARER))
-            .map(String::trim)
-            .orElseThrow(() -> new BadCredentialsException("Missing Authentication Token"));
+                .map(value -> removeStart(value, BEARER))
+                .map(String::trim)
+                .orElseThrow(() -> new BadCredentialsException("Missing Authentication Token"));
 
         final Authentication auth = new UsernamePasswordAuthenticationToken(token, token);
         return getAuthenticationManager().authenticate(auth);
@@ -45,10 +42,10 @@ final class TokenAuthenticationFilter extends AbstractAuthenticationProcessingFi
 
     @Override
     protected void successfulAuthentication(
-        final HttpServletRequest request,
-        final HttpServletResponse response,
-        final FilterChain chain,
-        final Authentication authResult) throws IOException, ServletException {
+            final HttpServletRequest request,
+            final HttpServletResponse response,
+            final FilterChain chain,
+            final Authentication authResult) throws IOException, ServletException {
         super.successfulAuthentication(request, response, chain, authResult);
         chain.doFilter(request, response);
     }

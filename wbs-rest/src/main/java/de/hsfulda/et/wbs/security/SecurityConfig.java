@@ -1,6 +1,5 @@
 package de.hsfulda.et.wbs.security;
 
-import lombok.experimental.FieldDefaults;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,18 +19,16 @@ import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import static java.util.Objects.requireNonNull;
-import static lombok.AccessLevel.PRIVATE;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@FieldDefaults(level = PRIVATE, makeFinal = true)
 class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final RequestMatcher PUBLIC_URLS = new OrRequestMatcher(
-        new AntPathRequestMatcher("/public/**")
+            new AntPathRequestMatcher("/public/**")
     );
 
     private static final RequestMatcher PROTECTED_URLS = new NegatedRequestMatcher(PUBLIC_URLS);
@@ -56,24 +53,24 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         http
-            .sessionManagement()
-            .sessionCreationPolicy(STATELESS)
-            .and()
-            .exceptionHandling()
-            // this entry point handles when you request a protected page and you are not yet
-            // authenticated
-            .defaultAuthenticationEntryPointFor(forbiddenEntryPoint(), PROTECTED_URLS)
-            .and()
-            .authenticationProvider(provider)
-            .addFilterBefore(restAuthenticationFilter(), AnonymousAuthenticationFilter.class)
-            .authorizeRequests()
-            .anyRequest()
-            .authenticated()
-            .and()
-            .csrf().disable()
-            .formLogin().disable()
-            .httpBasic().disable()
-            .logout().disable();
+                .sessionManagement()
+                .sessionCreationPolicy(STATELESS)
+                .and()
+                .exceptionHandling()
+                // this entry point handles when you request a protected page and you are not yet
+                // authenticated
+                .defaultAuthenticationEntryPointFor(forbiddenEntryPoint(), PROTECTED_URLS)
+                .and()
+                .authenticationProvider(provider)
+                .addFilterBefore(restAuthenticationFilter(), AnonymousAuthenticationFilter.class)
+                .authorizeRequests()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .csrf().disable()
+                .formLogin().disable()
+                .httpBasic().disable()
+                .logout().disable();
     }
 
     @Bean

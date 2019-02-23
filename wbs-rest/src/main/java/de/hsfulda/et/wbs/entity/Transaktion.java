@@ -1,16 +1,9 @@
 package de.hsfulda.et.wbs.entity;
 
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
-import java.math.BigInteger;
 import java.util.Date;
-import java.util.List;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "TRANSAKTIONEN")
 public class Transaktion {
@@ -30,6 +23,38 @@ public class Transaktion {
     @JoinColumn(name = "ZIELORT_ID")
     private Zielort zielort;
 
-    protected Transaktion() {}
+    protected Transaktion() {
+    }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Date getDatum() {
+        return datum;
+    }
+
+    public void setDatum(Date datum) {
+        this.datum = datum;
+    }
+
+    public Benutzer getBenutzer() {
+        return benutzer;
+    }
+
+    public void setBenutzer(Benutzer benutzer) {
+        this.benutzer = benutzer;
+    }
+
+    public Zielort getZielort() {
+        return zielort;
+    }
+
+    public void setZielort(Zielort zielort) {
+        this.zielort = zielort;
+    }
 }

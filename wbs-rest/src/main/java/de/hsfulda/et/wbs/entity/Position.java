@@ -1,15 +1,8 @@
 package de.hsfulda.et.wbs.entity;
 
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
-import java.math.BigInteger;
-import java.util.Date;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "POSITIONEN")
 public class Position {
@@ -31,6 +24,46 @@ public class Position {
     @JoinColumn(name = "KATEGORIE_ID")
     private Kategorie kategorie;
 
-    protected Position() {}
+    protected Position() {
+    }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getAnzahl() {
+        return anzahl;
+    }
+
+    public void setAnzahl(Long anzahl) {
+        this.anzahl = anzahl;
+    }
+
+    public Transaktion getTransaktion() {
+        return transaktion;
+    }
+
+    public void setTransaktion(Transaktion transaktion) {
+        this.transaktion = transaktion;
+    }
+
+    public Groesse getGroesse() {
+        return groesse;
+    }
+
+    public void setGroesse(Groesse groesse) {
+        this.groesse = groesse;
+    }
+
+    public Kategorie getKategorie() {
+        return kategorie;
+    }
+
+    public void setKategorie(Kategorie kategorie) {
+        this.kategorie = kategorie;
+    }
 }
