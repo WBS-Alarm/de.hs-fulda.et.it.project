@@ -52,6 +52,10 @@ final class InRepositoryUsers implements UserCrudService {
 
     @Override
     public Optional<User> findByUsername(final String username) {
-        return Optional.of(as(repository.findByUsername(username)));
+        Benutzer byUsername = repository.findByUsername(username);
+        if (byUsername == null) {
+            return Optional.empty();
+        }
+        return Optional.of(as(byUsername));
     }
 }

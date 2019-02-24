@@ -4,14 +4,17 @@
   "nodes": [
     {
       "type": "Scenario",
+      "description": "",
       "id": "e0bcf1be-d8c8-4cdc-a7e3-7d5ec0a319bd",
-      "lastModified": "2018-09-12T21:26:06.501+02:00",
+      "lastModified": "2019-02-24T13:28:29.124+01:00",
       "name": "User Registration and Query",
       "requestOrder": [
         "Register User",
         "Call User",
         "Login User",
-        "Logout"
+        "Logout",
+        "Call Demo Resource",
+        "Sitemap"
       ]
     },
     {
@@ -88,13 +91,13 @@
         "path": "/users/current"
       },
       "id": "a9af7de7-16f4-45fb-b828-934307da9fbd",
-      "lastModified": "2018-09-12T21:25:58.290+02:00",
+      "lastModified": "2019-02-24T13:16:00.107+01:00",
       "name": "Call User",
       "headers": [
         {
           "enabled": true,
           "name": "Authorization",
-          "value": "Bearer eyJhbGciOiJIUzI1NiIsInppcCI6IkdaSVAifQ.H4sIAAAAAAAAAKtWyiwuVrJSKk8qVtJRykwsUbIyNDU2M7cwMDYx11FKrSiACFiYmZmDBEqLU4vyEnNTgVqCSwtSi0B8pVoA8px1UEYAAAA.TfwfKzCT2qBdBtqq6R1jzADE10UmMipdt5VrH2Rl3X4"
+          "value": "Bearer eyJhbGciOiJIUzI1NiIsInppcCI6IkdaSVAifQ.H4sIAAAAAAAAAKtWyiwuVrJSKk8qVtJRykwsUbIyNDU1NDCwsDQ00VFKrSiACliaGoMESotTi_ISc1OBWoJLC1KLQHylWgAX470cRgAAAA.xxD1MxQga0B0aG95cYIUHdRHhxCv3_Z1uZJf-_kFmM8"
         }
       ],
       "metaInfo": {},
@@ -183,6 +186,85 @@
           "value": "Bearer eyJhbGciOiJIUzI1NiIsInppcCI6IkdaSVAifQ.H4sIAAAAAAAAAKtWyiwuVrJSKk8qVtJRykwsUbIyNDU2M7cwMDYx11FKrSiACFiYmZmDBEqLU4vyEnNTgVqCSwtSi0B8pVoA8px1UEYAAAA.TfwfKzCT2qBdBtqq6R1jzADE10UmMipdt5VrH2Rl3X4"
         }
       ],
+      "metaInfo": {},
+      "parentId": "e0bcf1be-d8c8-4cdc-a7e3-7d5ec0a319bd"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": ""
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:8080",
+        "path": "/demo"
+      },
+      "id": "97578a2c-bc0d-4e02-a733-44c963429bd6",
+      "lastModified": "2019-02-24T12:46:07.187+01:00",
+      "name": "Call Demo Resource",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Authorization",
+          "value": "Bearer eyJhbGciOiJIUzI1NiIsInppcCI6IkdaSVAifQ.H4sIAAAAAAAAAKtWyiwuVrJSKk8qVtJRykwsUbIyNDU1NDAwtzAz1VFKrSiACliaGIEESotTi_ISc1OBWoJLC1KLQHylWgCOEDFLRgAAAA.mNNhkq4s_ILl_o6oQCj155LWZnmRHj0GfWoPrG4ftRk"
+        }
+      ],
+      "metaInfo": {},
+      "parentId": "e0bcf1be-d8c8-4cdc-a7e3-7d5ec0a319bd"
+    },
+    {
+      "uriEditor": true,
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "application/x-www-form-urlencoded",
+          "items": []
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"username\": \"Superuser\",\n  \"password\": \"password\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:8080",
+        "path": "/public/sitemap"
+      },
+      "id": "4de6d717-762e-4ca1-a5cd-5c9e60a4d9ad",
+      "lastModified": "2019-02-24T13:17:24.357+01:00",
+      "name": "Sitemap",
+      "headers": [],
       "metaInfo": {},
       "parentId": "e0bcf1be-d8c8-4cdc-a7e3-7d5ec0a319bd"
     }
