@@ -60,7 +60,7 @@ class RegisterUserControllerTest extends ControllerTest {
             void superuserIsLoggedOut() throws Exception {
                 mockMvc.perform(get(PATH_CURRENT)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .header("Authorization", "Bearer "))
+                    .header("Authorization", bearerToken))
                     .andExpect(status().isUnauthorized());
             }
 
