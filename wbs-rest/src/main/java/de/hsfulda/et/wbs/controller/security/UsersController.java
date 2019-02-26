@@ -32,6 +32,7 @@ public final class UsersController {
         this.users = users;
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(PATH_REGISTER)
     void register(@RequestBody final Benutzer user) {
         users

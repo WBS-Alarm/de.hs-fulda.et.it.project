@@ -11,7 +11,7 @@ public interface UserAuthenticationService {
      *
      * @param username
      * @param password
-     * @return an {@link Optional} of a user when login succeeds
+     * @return an {@link Optional} of a users token when login succeeds
      */
     Optional<String> login(String username, String password);
 
