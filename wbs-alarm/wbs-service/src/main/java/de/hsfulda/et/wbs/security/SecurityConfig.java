@@ -28,7 +28,10 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final RequestMatcher PUBLIC_URLS = new OrRequestMatcher(
-            new AntPathRequestMatcher("/public/**")
+        new AntPathRequestMatcher("/public/**"),
+        new AntPathRequestMatcher("/"),
+        new AntPathRequestMatcher("/*.js"),
+        new AntPathRequestMatcher("/favicon.ico")
     );
 
     private static final RequestMatcher PROTECTED_URLS = new NegatedRequestMatcher(PUBLIC_URLS);
@@ -53,24 +56,24 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         http
-                .sessionManagement()
-                .sessionCreationPolicy(STATELESS)
-                .and()
-                .exceptionHandling()
-                // this entry point handles when you request a protected page and you are not yet
-                // authenticated
-                .defaultAuthenticationEntryPointFor(forbiddenEntryPoint(), PROTECTED_URLS)
-                .and()
-                .authenticationProvider(provider)
-                .addFilterBefore(restAuthenticationFilter(), AnonymousAuthenticationFilter.class)
-                .authorizeRequests()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .csrf().disable()
-                .formLogin().disable()
-                .httpBasic().disable()
-                .logout().disable();
+            .sessionManagement()
+            .sessionCreationPolicy(STATELESS)
+            .and()
+            .exceptionHandling()
+            // this entry point handles when you request a protected page and you are not yet
+            // authenticated
+            .defaultAuthenticationEntryPointFor(forbiddenEntryPoint(), PROTECTED_URLS)
+            .and()
+            .authenticationProvider(provider)
+            .addFilterBefore(restAuthenticationFilter(), AnonymousAuthenticationFilter.class)
+            .authorizeRequests()
+            .anyRequest()
+            .authenticated()
+            .and()
+            .csrf().disable()
+            .formLogin().disable()
+            .httpBasic().disable()
+            .logout().disable();
     }
 
     @Bean
