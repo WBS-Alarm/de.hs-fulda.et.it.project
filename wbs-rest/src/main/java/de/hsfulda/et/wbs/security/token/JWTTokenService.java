@@ -1,5 +1,7 @@
 package de.hsfulda.et.wbs.security.token;
 
+import de.hsfulda.et.wbs.entity.TokenConfig;
+import de.hsfulda.et.wbs.repo.TokenConfigRepository;
 import de.hsfulda.et.wbs.util.ImmutableMap;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.impl.compression.GzipCompressionCodec;
@@ -12,6 +14,8 @@ import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
 
 import static io.jsonwebtoken.SignatureAlgorithm.HS256;
@@ -25,21 +29,17 @@ final class JWTTokenService implements Clock, TokenService {
     private static final String DOT = ".";
     private static final GzipCompressionCodec COMPRESSION_CODEC = new GzipCompressionCodec();
 
+    private final Map<String, TokenConfig> configMap = new ConcurrentHashMap<>();
+    private final TokenConfigRepository configRepository;
     private final String issuer;
-    private final int expirationSec;
-    private final int clockSkewSec;
-    private final String secretKey;
 
     JWTTokenService(
             @Value("${jwt.issuer:wbs}") final String issuer,
-            @Value("${jwt.expiration-sec:86400}") final int expirationSec,
-            @Value("${jwt.clock-skew-sec:300}") final int clockSkewSec,
-            @Value("${jwt.secret:secret}") final String secret) {
+            final TokenConfigRepository tokenConfigRepository) {
         super();
-        this.issuer = requireNonNull(issuer);
-        this.expirationSec = requireNonNull(expirationSec);
-        this.clockSkewSec = requireNonNull(clockSkewSec);
-        this.secretKey = BASE64.encode(requireNonNull(secret));
+
+        this.issuer = issuer;
+        this.configRepository = tokenConfigRepository;
     }
 
     @Override
@@ -49,7 +49,7 @@ final class JWTTokenService implements Clock, TokenService {
 
     @Override
     public String expiring(final Map<String, String> attributes) {
-        return newToken(attributes, expirationSec);
+        return newToken(attributes, getExpiresInSec());
     }
 
     private String newToken(final Map<String, String> attributes, final int expiresInSec) {
@@ -60,7 +60,7 @@ final class JWTTokenService implements Clock, TokenService {
                 .setIssuedAt(toDate(now));
 
         if (expiresInSec > 0) {
-            Duration expires = Duration.of(expirationSec, ChronoUnit.SECONDS);
+            Duration expires = Duration.of(getExpiresInSec(), ChronoUnit.SECONDS);
             final LocalDateTime expiresAt = now.plus(expires);
             claims.setExpiration(toDate(expiresAt));
         }
@@ -69,7 +69,7 @@ final class JWTTokenService implements Clock, TokenService {
         return Jwts
                 .builder()
                 .setClaims(claims)
-                .signWith(HS256, secretKey)
+                .signWith(HS256, getSecret())
                 .compressWith(COMPRESSION_CODEC)
                 .compact();
     }
@@ -84,8 +84,8 @@ final class JWTTokenService implements Clock, TokenService {
                 .parser()
                 .requireIssuer(issuer)
                 .setClock(this)
-                .setAllowedClockSkewSeconds(clockSkewSec)
-                .setSigningKey(secretKey);
+                .setAllowedClockSkewSeconds(getClock())
+                .setSigningKey(getSecret());
         return parseClaims(() -> parser.parseClaimsJws(token).getBody());
     }
 
@@ -95,7 +95,7 @@ final class JWTTokenService implements Clock, TokenService {
                 .parser()
                 .requireIssuer(issuer)
                 .setClock(this)
-                .setAllowedClockSkewSeconds(clockSkewSec);
+                .setAllowedClockSkewSeconds(getClock());
 
         // See: https://github.com/jwtk/jjwt/issues/135
         final String withoutSignature = substringBeforeLast(token, DOT) + DOT;
@@ -119,4 +119,30 @@ final class JWTTokenService implements Clock, TokenService {
     public Date now() {
         return toDate(LocalDateTime.now());
     }
+
+    private TokenConfig getTokenConfig() {
+        if (!configMap.containsKey(issuer)) {
+            Optional<TokenConfig> config = configRepository.findById(issuer);
+            config.ifPresent(tc -> {
+                configMap.put(issuer, tc);
+            });
+        }
+        return configMap.get(issuer);
+    }
+
+    private String getSecret() {
+        TokenConfig config = getTokenConfig();
+        return BASE64.encode(requireNonNull(config.getSecret()));
+    }
+
+    private int getExpiresInSec() {
+        TokenConfig config = getTokenConfig();
+        return config.getExpiration();
+    }
+
+    private int getClock() {
+        TokenConfig config = getTokenConfig();
+        return config.getClock();
+    }
+
 }
