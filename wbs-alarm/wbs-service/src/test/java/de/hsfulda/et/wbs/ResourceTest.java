@@ -1,6 +1,6 @@
 package de.hsfulda.et.wbs;
 
-import de.hsfulda.et.wbs.service.UserAuthenticationService;
+import de.hsfulda.et.wbs.security.service.UserAuthenticationService;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -11,7 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-public abstract class ControllerTest {
+public abstract class ResourceTest {
 
     @Autowired
     protected MockMvc mockMvc;

@@ -1,6 +1,6 @@
 package de.hsfulda.et.wbs.security;
 
-import de.hsfulda.et.wbs.service.UserAuthenticationService;
+import de.hsfulda.et.wbs.security.service.UserAuthenticationService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
 import org.springframework.security.core.userdetails.UserDetails;

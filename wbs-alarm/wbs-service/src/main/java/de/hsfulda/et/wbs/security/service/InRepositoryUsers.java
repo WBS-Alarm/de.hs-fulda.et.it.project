@@ -1,7 +1,7 @@
-package de.hsfulda.et.wbs.service;
+package de.hsfulda.et.wbs.security.service;
 
 import de.hsfulda.et.wbs.entity.Benutzer;
-import de.hsfulda.et.wbs.repo.BenutzerCrudRepository;
+import de.hsfulda.et.wbs.repository.BenutzerCrudRepository;
 import de.hsfulda.et.wbs.security.Password;
 import de.hsfulda.et.wbs.security.User;
 import org.springframework.beans.factory.annotation.Autowired;

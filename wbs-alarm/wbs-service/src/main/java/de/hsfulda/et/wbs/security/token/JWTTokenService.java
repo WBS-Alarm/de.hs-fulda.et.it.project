@@ -1,7 +1,7 @@
 package de.hsfulda.et.wbs.security.token;
 
-import de.hsfulda.et.wbs.entity.TokenConfig;
-import de.hsfulda.et.wbs.repo.TokenConfigRepository;
+import de.hsfulda.et.wbs.security.entity.TokenConfig;
+import de.hsfulda.et.wbs.security.repository.TokenConfigRepository;
 import de.hsfulda.et.wbs.util.ImmutableMap;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.impl.compression.GzipCompressionCodec;

@@ -1,4 +1,4 @@
-package de.hsfulda.et.wbs.repo;
+package de.hsfulda.et.wbs.repository;
 
 import de.hsfulda.et.wbs.entity.Traeger;
 import org.springframework.data.repository.CrudRepository;

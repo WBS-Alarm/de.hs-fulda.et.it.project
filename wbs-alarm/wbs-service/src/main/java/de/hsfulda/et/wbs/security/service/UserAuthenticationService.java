@@ -1,4 +1,4 @@
-package de.hsfulda.et.wbs.service;
+package de.hsfulda.et.wbs.security.service;
 
 import de.hsfulda.et.wbs.security.User;
 
