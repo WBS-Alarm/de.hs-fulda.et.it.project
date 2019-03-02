@@ -17,6 +17,7 @@ public class User implements UserDetails {
     private String id;
     private String username;
     private String password;
+    private Collection<GrantedAuthority> authorities;
 
     private User() {
     }
@@ -34,7 +35,14 @@ public class User implements UserDetails {
     @JsonIgnore
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
-        return new ArrayList<>();
+        if (authorities == null) {
+            authorities = new ArrayList<>();
+        }
+        return authorities;
+    }
+
+    public void setAuthorities(Collection<GrantedAuthority> authorities) {
+        this.authorities = authorities;
     }
 
     @JsonIgnore
@@ -88,7 +96,9 @@ public class User implements UserDetails {
     }
 
     static User makeTemplate(User user) {
-        return new User(user.getId(), user.getUsername(), user.getPassword());
+        User templated = new User(user.getId(), user.getUsername(), user.getPassword());
+        templated.getAuthorities().addAll(user.getAuthorities());
+        return templated;
     }
 
     public static class UserBuilder {
@@ -111,6 +121,11 @@ public class User implements UserDetails {
 
         public UserBuilder password(String password) {
             template.setPassword(password);
+            return this;
+        }
+
+        public UserBuilder authorities(Collection<GrantedAuthority> authorities) {
+            template.setAuthorities(authorities);
             return this;
         }
 
