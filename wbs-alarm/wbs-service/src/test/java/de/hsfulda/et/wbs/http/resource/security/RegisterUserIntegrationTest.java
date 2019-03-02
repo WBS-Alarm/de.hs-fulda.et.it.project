@@ -43,6 +43,41 @@ class RegisterUserIntegrationTest extends ResourceTest {
                 .andExpect(status().isCreated());
         }
 
+        @DisplayName("Paul ohne Password erstellen")
+        @Test
+        void registerNewUserNoPassword() throws Exception {
+            mockMvc.perform(post(UserRegisterResource.PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\n  \"username\": \"Paul\"\n}")
+                .header("Authorization", bearerToken))
+                .andExpect(status().isBadRequest());
+        }
+
+        @DisplayName("Ohne Namen mit Password 1234 erstellen")
+        @Test
+        void registerNewUserNoName() throws Exception {
+            mockMvc.perform(post(UserRegisterResource.PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\n \"password\": \"1234\"\n}")
+                .header("Authorization", bearerToken))
+                .andExpect(status().isBadRequest());
+        }
+
+        @Nested
+        @DisplayName("Wiederholtes Registrieren")
+        class RegisterPaulAgainn {
+
+            @DisplayName("Nochmal Paul mit Password 1234 erstellen")
+            @Test
+            void registerNewUser() throws Exception {
+                mockMvc.perform(post(UserRegisterResource.PATH)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content("{\n  \"username\": \"Paul\",\n  \"password\": \"1234\"\n}")
+                    .header("Authorization", bearerToken))
+                    .andExpect(status().isConflict());
+            }
+        }
+
         @Nested
         @DisplayName("Superuser abmelden")
         class LogoutSuperuser {
@@ -54,6 +89,7 @@ class RegisterUserIntegrationTest extends ResourceTest {
                     .header("Authorization", bearerToken))
                     .andExpect(status().isOk());
             }
+
 
             @DisplayName("Superuser ist abgemeldet")
             @Test
@@ -72,8 +108,8 @@ class RegisterUserIntegrationTest extends ResourceTest {
                     .content("{\n  \"username\": \"Paul\",\n  \"password\": \"1234\"\n}"))
                     .andExpect(status().isOk())
                     .andExpect(content().string(startsWith("ey")));
-            }
 
+            }
         }
     }
 }
