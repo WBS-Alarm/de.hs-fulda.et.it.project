@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
-import static de.hsfulda.et.wbs.http.resource.SitemapResource.SITEMAP_PATH;
+import static de.hsfulda.et.wbs.http.resource.SitemapResource.PATH;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -29,10 +29,10 @@ class SitemapResourceTest extends ResourceTest {
     @DisplayName("Lades der Sitemap.")
     @Test
     void sitemap() throws Exception {
-        mockMvc.perform(get(SITEMAP_PATH)
+        mockMvc.perform(get(PATH)
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$._links.self[0].href", is(SITEMAP_PATH)))
+            .andExpect(jsonPath("$._links.self[0].href", is(PATH)))
             .andExpect(jsonPath("$._links.self[0].templated", is(false)));
     }
 }

@@ -6,14 +6,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static de.hsfulda.et.wbs.http.resource.SitemapResource.SITEMAP_PATH;
+import static de.hsfulda.et.wbs.http.resource.SitemapResource.PATH;
 import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
 
 @RestController
-@RequestMapping(SITEMAP_PATH)
+@RequestMapping(PATH)
 final class SitemapResource {
 
-    static final String SITEMAP_PATH = "/public/sitemap";
+    static final String PATH = "/public/sitemap";
 
     @GetMapping(produces = HAL_JSON)
     HttpEntity<HalJsonResource> sitemap() {
