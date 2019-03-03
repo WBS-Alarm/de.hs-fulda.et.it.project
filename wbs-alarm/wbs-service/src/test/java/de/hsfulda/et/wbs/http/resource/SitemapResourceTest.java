@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
-import static de.hsfulda.et.wbs.http.resource.SitemapController.SITEMAP_PATH;
+import static de.hsfulda.et.wbs.http.resource.SitemapResource.SITEMAP_PATH;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class SitemapResourceTest extends ResourceTest {
 
     @Autowired
-    private SitemapController controller;
+    private SitemapResource controller;
 
 
     @DisplayName("Laden des Controllers erfolgreich.")
