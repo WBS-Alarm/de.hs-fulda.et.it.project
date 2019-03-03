@@ -1,4 +1,4 @@
-package de.hsfulda.et.wbs.http.resource.security;
+package de.hsfulda.et.wbs.security.resource;
 
 import de.hsfulda.et.wbs.ResourceTest;
 import de.hsfulda.et.wbs.security.resource.CurrentUserResource;
