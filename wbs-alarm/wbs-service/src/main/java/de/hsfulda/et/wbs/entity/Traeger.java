@@ -1,9 +1,14 @@
 package de.hsfulda.et.wbs.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.List;
+
+import static java.util.Objects.requireNonNull;
 
 @Entity
 @Table(name = "TRAEGER")
@@ -24,7 +29,7 @@ public class Traeger {
     @OneToMany(mappedBy = "traeger", fetch = FetchType.LAZY)
     private List<Benutzer> benutzer;
 
-    protected Traeger() {
+    public Traeger() {
     }
 
     public Long getId() {
@@ -65,5 +70,35 @@ public class Traeger {
 
     public void setBenutzer(List<Benutzer> benutzer) {
         this.benutzer = benutzer;
+    }
+
+    public static TraegerBuilder builder() {
+        return new TraegerBuilder();
+    }
+
+    static Traeger makeTemplate(Traeger traeger) {
+        Traeger templated = new Traeger();
+        templated.setName(traeger.getName());
+        return templated;
+    }
+
+    public static class TraegerBuilder {
+
+        private final Traeger template;
+
+
+        private TraegerBuilder() {
+            template = new Traeger();
+        }
+
+        public TraegerBuilder name(String name) {
+            template.setName(name);
+            return this;
+        }
+
+        public Traeger build() {
+            return makeTemplate(template);
+        }
+
     }
 }

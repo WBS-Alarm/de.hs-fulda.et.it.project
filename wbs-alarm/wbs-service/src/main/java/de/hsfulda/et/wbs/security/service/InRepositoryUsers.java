@@ -1,7 +1,7 @@
 package de.hsfulda.et.wbs.security.service;
 
 import de.hsfulda.et.wbs.entity.Benutzer;
-import de.hsfulda.et.wbs.repository.BenutzerCrudRepository;
+import de.hsfulda.et.wbs.repository.BenutzerRepository;
 import de.hsfulda.et.wbs.security.Password;
 import de.hsfulda.et.wbs.security.User;
 import de.hsfulda.et.wbs.security.entity.GrantedAuthority;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 final class InRepositoryUsers implements UserCrudService {
 
     @Autowired
-    private BenutzerCrudRepository repository;
+    private BenutzerRepository repository;
 
     @Autowired
     private GrantedAuthorityRepository authorityRepository;

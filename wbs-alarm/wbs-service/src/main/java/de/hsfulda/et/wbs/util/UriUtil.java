@@ -8,7 +8,7 @@ public abstract class UriUtil {
     private UriUtil() {
     }
 
-    public static String build(String uri, String... params) {
+    public static String build(String uri, Object... params) {
         return new UriTemplate(uri).expand(params).toString();
     }
 }

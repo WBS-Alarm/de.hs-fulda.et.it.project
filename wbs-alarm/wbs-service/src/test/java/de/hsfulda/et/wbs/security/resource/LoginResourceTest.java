@@ -1,7 +1,6 @@
 package de.hsfulda.et.wbs.security.resource;
 
 import de.hsfulda.et.wbs.ResourceTest;
-import de.hsfulda.et.wbs.security.resource.LoginResource;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,10 +1,6 @@
 package de.hsfulda.et.wbs.security.resource;
 
 import de.hsfulda.et.wbs.ResourceTest;
-import de.hsfulda.et.wbs.security.resource.CurrentUserResource;
-import de.hsfulda.et.wbs.security.resource.LoginResource;
-import de.hsfulda.et.wbs.security.resource.UserLogoutResource;
-import de.hsfulda.et.wbs.security.resource.UserRegisterResource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

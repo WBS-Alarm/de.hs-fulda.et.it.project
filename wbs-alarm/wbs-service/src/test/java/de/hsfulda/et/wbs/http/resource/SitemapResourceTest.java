@@ -20,7 +20,7 @@ class SitemapResourceTest extends ResourceTest {
     private SitemapResource controller;
 
 
-    @DisplayName("Laden des Controllers erfolgreich.")
+    @DisplayName("Laden des Resource erfolgreich.")
     @Test
     void contextLoads() {
         assertThat(controller).isNotNull();
