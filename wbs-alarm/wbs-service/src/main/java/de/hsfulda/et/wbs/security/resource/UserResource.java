@@ -6,6 +6,7 @@ import de.hsfulda.et.wbs.security.service.UserCrudService;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +31,7 @@ public class UserResource {
     }
 
     @GetMapping(produces = HAL_JSON)
+    @PreAuthorize("hasAuthority('READ_ALL')")
     HttpEntity<HalJsonResource> get(@PathVariable("username") String username, @AuthenticationPrincipal final User user) {
         Optional<User> byName = users.findByUsername(username);
         if (byName.isPresent()) {
