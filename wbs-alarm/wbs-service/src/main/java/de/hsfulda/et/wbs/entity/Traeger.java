@@ -74,7 +74,7 @@ public class Traeger {
     }
 
     public void addBenutzer(Benutzer b) {
-        if (benutzer == null) {
+        if (getBenutzer() == null) {
             benutzer = new ArrayList<>();
         }
         if(!benutzer.contains(b)) {
