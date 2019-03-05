@@ -15,7 +15,7 @@ import static org.springframework.util.StringUtils.isEmpty;
 
 @RestController
 @RequestMapping(PATH)
-public final class UserRegisterResource {
+public class UserRegisterResource {
 
     public static final String PATH = "/users/register";
 

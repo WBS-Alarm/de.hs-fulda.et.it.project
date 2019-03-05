@@ -56,6 +56,15 @@ class TraegerListResourceTest extends ResourceTest {
             .andExpect(jsonPath("$.name", is("Kassel")));
     }
 
+    @DisplayName("Hinzufügen eines neuen Trägers ohne Berechtigung")
+    @Test
+    void postNewNoPermissions() throws Exception {
+        mockMvc.perform(post(TraegerListResource.PATH)
+                .header("Authorization", getToken("Leser"))
+                .content("{\n \"name\": \"Haueda\"\n}")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden());
+    }
 
     @DisplayName("Hinzufügen eines neuen Trägers - Ohne Namen")
     @Test

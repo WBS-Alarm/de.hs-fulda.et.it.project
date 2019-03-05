@@ -19,7 +19,7 @@ import static de.hsfulda.et.wbs.security.resource.UserResource.PATH;
 
 @RestController
 @RequestMapping(PATH)
-public final class UserResource {
+public class UserResource {
 
     public static final String PATH = "/users/{username}";
 

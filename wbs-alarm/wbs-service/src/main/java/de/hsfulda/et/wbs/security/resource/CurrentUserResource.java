@@ -14,7 +14,7 @@ import static de.hsfulda.et.wbs.security.resource.CurrentUserResource.PATH;
 
 @RestController
 @RequestMapping(PATH)
-public final class CurrentUserResource {
+public class CurrentUserResource {
 
     public static final String PATH = "/users/current";
 

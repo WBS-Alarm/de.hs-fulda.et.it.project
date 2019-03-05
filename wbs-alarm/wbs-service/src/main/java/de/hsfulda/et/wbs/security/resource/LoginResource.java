@@ -15,7 +15,7 @@ import static de.hsfulda.et.wbs.security.resource.LoginResource.PATH;
 
 @RestController
 @RequestMapping(PATH)
-public final class LoginResource {
+public class LoginResource {
 
     public static final String PATH = "/public/users/login";
 

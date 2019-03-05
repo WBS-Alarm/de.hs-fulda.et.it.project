@@ -8,6 +8,7 @@ import de.hsfulda.et.wbs.repository.TraegerRepository;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
@@ -16,7 +17,7 @@ import static org.springframework.util.ObjectUtils.isEmpty;
 
 @RestController
 @RequestMapping(PATH)
-public final class TraegerListResource {
+public class TraegerListResource {
 
     public static final String PATH = "/traeger";
 
@@ -27,6 +28,7 @@ public final class TraegerListResource {
     }
 
     @GetMapping(produces = HAL_JSON)
+    @PreAuthorize("hasAuthority('READ_ALL')")
     HttpEntity<HalJsonResource> get() {
         //TODO: Paginierung?
 
@@ -36,15 +38,16 @@ public final class TraegerListResource {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(produces = HAL_JSON)
+    @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
     HttpEntity<HalJsonResource> post(@RequestBody Traeger traeger) {
         if (isEmpty(traeger.getName())) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         Traeger saved = traegerRepository.save(
-            Traeger.builder().
-                name(traeger.getName())
-                .build());
+                Traeger.builder().
+                        name(traeger.getName())
+                        .build());
 
         return new HttpEntity<>(new TraegerHalJson(saved));
     }

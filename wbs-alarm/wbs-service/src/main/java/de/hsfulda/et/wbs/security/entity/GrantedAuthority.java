@@ -45,8 +45,4 @@ public class GrantedAuthority {
     public void setGroup(Authority group) {
         this.group = group;
     }
-
-    public org.springframework.security.core.GrantedAuthority asAuthority() {
-        return (org.springframework.security.core.GrantedAuthority) () -> group.getCode();
-    }
 }

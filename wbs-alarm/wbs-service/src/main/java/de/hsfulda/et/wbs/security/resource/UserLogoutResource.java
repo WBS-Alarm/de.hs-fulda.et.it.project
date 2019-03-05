@@ -11,7 +11,7 @@ import static de.hsfulda.et.wbs.security.resource.UserLogoutResource.PATH;
 
 @RestController
 @RequestMapping(PATH)
-public final class UserLogoutResource {
+public class UserLogoutResource {
 
     public static final String PATH = "/users/logout";
 
