@@ -4,6 +4,9 @@ values('Feuerwehr');
 insert into benutzer (einkaeufer, mail, password, name, traeger_id)
 values(false, 'test@domain.de', '$2a$12$7w0m4I2kjbQgM0hp0erh4OXqEoBxeYqNoaLUZKpiaISqnIcw91t3i', 'Superuser', (select max(id) from traeger));
 
+insert into benutzer (einkaeufer, mail, password, name, traeger_id)
+values(false, 'test@domain.de', '$2a$12$7w0m4I2kjbQgM0hp0erh4OXqEoBxeYqNoaLUZKpiaISqnIcw91t3i', 'Leser', (select max(id) from traeger));
+
 -- Konfiguration der Token
 insert into tokenconfig (issuer, expiration, clock, secret)
 values ('wbs', 86400, 300, 'secret');
@@ -22,5 +25,8 @@ values(5, 'READ','Lesender Zugriff', true);
 
 insert into granted_authority (user_id, authority_id)
 values ((select id from benutzer where name = 'Superuser'), 1);
+
+insert into granted_authority (user_id, authority_id)
+values ((select id from benutzer where name = 'Leser'), 5);
 
 commit;

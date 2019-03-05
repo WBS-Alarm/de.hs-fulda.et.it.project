@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Objects.requireNonNull;
@@ -70,6 +71,16 @@ public class Traeger {
 
     public void setBenutzer(List<Benutzer> benutzer) {
         this.benutzer = benutzer;
+    }
+
+    public void addBenutzer(Benutzer b) {
+        if (benutzer == null) {
+            benutzer = new ArrayList<>();
+        }
+        if(!benutzer.contains(b)) {
+            b.setTraeger(this);
+            benutzer.add(b);
+        }
     }
 
     public static TraegerBuilder builder() {

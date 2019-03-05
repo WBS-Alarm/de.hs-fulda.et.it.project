@@ -12,7 +12,7 @@ import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
 
 @RestController
 @RequestMapping(PATH)
-public final class SitemapResource {
+public class SitemapResource {
 
     public static final String PATH = "/public/sitemap";
 

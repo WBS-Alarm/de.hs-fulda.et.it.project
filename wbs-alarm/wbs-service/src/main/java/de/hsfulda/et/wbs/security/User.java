@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class User implements UserDetails {
     private String id;
     private String username;
     private String password;
-    private Collection<GrantedAuthority> authorities;
+    private Collection<SimpleGrantedAuthority> authorities;
 
     private User() {
     }
@@ -34,14 +35,14 @@ public class User implements UserDetails {
 
     @JsonIgnore
     @Override
-    public Collection<GrantedAuthority> getAuthorities() {
+    public Collection<SimpleGrantedAuthority> getAuthorities() {
         if (authorities == null) {
             authorities = new ArrayList<>();
         }
         return authorities;
     }
 
-    public void setAuthorities(Collection<GrantedAuthority> authorities) {
+    public void setAuthorities(Collection<SimpleGrantedAuthority> authorities) {
         this.authorities = authorities;
     }
 
@@ -124,7 +125,7 @@ public class User implements UserDetails {
             return this;
         }
 
-        public UserBuilder authorities(Collection<GrantedAuthority> authorities) {
+        public UserBuilder authorities(Collection<SimpleGrantedAuthority> authorities) {
             template.setAuthorities(authorities);
             return this;
         }

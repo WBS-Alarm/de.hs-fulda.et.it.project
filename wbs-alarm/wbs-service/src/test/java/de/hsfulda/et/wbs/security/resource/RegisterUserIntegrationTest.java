@@ -28,21 +28,30 @@ class RegisterUserIntegrationTest extends ResourceTest {
             bearerToken = getTokenAsSuperuser();
         }
 
-
         @DisplayName("Paul mit Password 1234 erstellen")
         @Test
         void registerNewUser() throws Exception {
-            mockMvc.perform(post(UserRegisterResource.PATH)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\n  \"username\": \"Paul\",\n  \"password\": \"1234\"\n}")
-                .header("Authorization", bearerToken))
-                .andExpect(status().isCreated());
+            mockMvc.perform(post(UserRegisterResource.PATH, 1L)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content("{\n  \"username\": \"Paul\",\n  \"password\": \"1234\"\n}")
+                    .header("Authorization", bearerToken))
+                    .andExpect(status().isCreated());
+        }
+
+        @DisplayName("Paul mit Password 1234 erstellen")
+        @Test
+        void registerNewUserTraegerNotExists() throws Exception {
+            mockMvc.perform(post(UserRegisterResource.PATH, 0L)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content("{\n  \"username\": \"Paul\",\n  \"password\": \"1234\"\n}")
+                    .header("Authorization", bearerToken))
+                    .andExpect(status().isNotFound());
         }
 
         @DisplayName("Paul ohne Password erstellen")
         @Test
         void registerNewUserNoPassword() throws Exception {
-            mockMvc.perform(post(UserRegisterResource.PATH)
+            mockMvc.perform(post(UserRegisterResource.PATH, 1L)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\n  \"username\": \"Paul\"\n}")
                 .header("Authorization", bearerToken))
@@ -52,7 +61,7 @@ class RegisterUserIntegrationTest extends ResourceTest {
         @DisplayName("Ohne Namen mit Password 1234 erstellen")
         @Test
         void registerNewUserNoName() throws Exception {
-            mockMvc.perform(post(UserRegisterResource.PATH)
+            mockMvc.perform(post(UserRegisterResource.PATH, 1L)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\n \"password\": \"1234\"\n}")
                 .header("Authorization", bearerToken))
@@ -66,7 +75,7 @@ class RegisterUserIntegrationTest extends ResourceTest {
             @DisplayName("Nochmal Paul mit Password 1234 erstellen")
             @Test
             void registerNewUser() throws Exception {
-                mockMvc.perform(post(UserRegisterResource.PATH)
+                mockMvc.perform(post(UserRegisterResource.PATH, 1L)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content("{\n  \"username\": \"Paul\",\n  \"password\": \"1234\"\n}")
                     .header("Authorization", bearerToken))

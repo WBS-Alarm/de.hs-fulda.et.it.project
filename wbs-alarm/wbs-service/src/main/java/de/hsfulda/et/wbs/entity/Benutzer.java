@@ -3,6 +3,7 @@ package de.hsfulda.et.wbs.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 
 @Entity
 @Table(name = "BENUTZER")
@@ -80,5 +81,18 @@ public class Benutzer {
 
     public void setTraeger(Traeger traeger) {
         this.traeger = traeger;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Benutzer benutzer = (Benutzer) o;
+        return Objects.equals(id, benutzer.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
