@@ -18,6 +18,7 @@ public abstract class ResourceTest {
     protected static final String SU_USER = "Superuser";
     protected static final String LE_USER = "Leser";
     protected static final String HE_USER = "HelsaUser";
+    protected static final String FD_USER = "ForDelete";
 
     protected static final String FW_TRAEGER = "Feuerwehr";
     protected static final String HE_TRAEGER = "Helsa";
@@ -26,10 +27,10 @@ public abstract class ResourceTest {
     protected MockMvc mockMvc;
 
     @Autowired
-    private TraegerRepository traegerRepository;
+    protected TraegerRepository traegerRepository;
 
     @Autowired
-    private BenutzerRepository benutzerRepository;
+    protected BenutzerRepository benutzerRepository;
 
     @Autowired
     private UserAuthenticationService authentication;

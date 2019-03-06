@@ -11,7 +11,6 @@ import org.springframework.http.MediaType;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -96,7 +95,6 @@ class TraegerListResourceTest extends ResourceTest {
             mockMvc.perform(get(TraegerResource.PATH, getTraegerId("Kassel"))
                     .header("Authorization", getTokenAsSuperuser()))
                     .andExpect(status().isOk())
-                    .andDo(print())
                     .andExpect(jsonPath("$._links.self[0].href", is(resourceLink)))
                     .andExpect(jsonPath("$._links.self[0].templated", is(false)))
                     .andExpect(jsonPath("$._links.delete[0].href", is(resourceLink)))

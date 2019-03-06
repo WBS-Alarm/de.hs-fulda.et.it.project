@@ -22,6 +22,8 @@ public class Benutzer {
     @Size(max = 254)
     private String mail;
     private Boolean einkaeufer;
+    @Column(name = "aktiv", columnDefinition = "boolean default true")
+    private Boolean aktiv;
 
     @ManyToOne
     @JoinColumn(name = "TRAEGER_ID")
@@ -81,6 +83,14 @@ public class Benutzer {
 
     public void setTraeger(Traeger traeger) {
         this.traeger = traeger;
+    }
+
+    public Boolean getAktiv() {
+        return aktiv;
+    }
+
+    public void setAktiv(Boolean aktiv) {
+        this.aktiv = aktiv;
     }
 
     @Override

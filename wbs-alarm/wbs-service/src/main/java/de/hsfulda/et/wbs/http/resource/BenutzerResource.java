@@ -52,7 +52,16 @@ public class BenutzerResource {
         });
     }
 
-
+    /**
+     * Ändert die Werte von einem Benutzer. Hierbei wird die alte Repräsentation vom Benutzer geladen und
+     * nur Werte überschrieben die auch geändert werden dürfen. Password, Token und Benutzername bleiben
+     * von Änderungen ungebtroffen.
+     *
+     * @param user     angemeldeter Benutzer
+     * @param id       ID des Benutzers aus dem Pfad
+     * @param benutzer geänderte Werte des Benutzers
+     * @return Aktualisierter Benutzer.
+     */
     @PutMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
     HttpEntity<HalJsonResource> put(
@@ -60,15 +69,37 @@ public class BenutzerResource {
             @PathVariable("id") Long id,
             @RequestBody Benutzer benutzer) {
         return accessService.hasAccess(user, id, () -> {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            Optional<Benutzer> b = benutzerRepository.findById(id);
+            if (b.isPresent()) {
+                Benutzer loaded = b.get();
+                loaded.setEinkaeufer(benutzer.getEinkaeufer());
+                loaded.setMail(benutzer.getMail());
+                benutzerRepository.save(loaded);
+                return new HttpEntity<>(new BenutzerHalJson(loaded));
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         });
     }
 
+    /**
+     * Benutzer werden nicht gelöscht, sondern nur deaktiviert.
+     *
+     * @param user angemeldeter Benutzer
+     * @param id   ID des Benutzers aus dem Pfad
+     * @return Rückmeldung über den Erfolg durch den HttpStatus.
+     */
     @DeleteMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
     HttpEntity<HalJsonResource> delete(@AuthenticationPrincipal User user, @PathVariable("id") Long id) {
         return accessService.hasAccess(user, id, () -> {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            Optional<Benutzer> b = benutzerRepository.findById(id);
+            if (b.isPresent()) {
+                Benutzer loaded = b.get();
+                loaded.setAktiv(false);
+                benutzerRepository.save(loaded);
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         });
     }
 }

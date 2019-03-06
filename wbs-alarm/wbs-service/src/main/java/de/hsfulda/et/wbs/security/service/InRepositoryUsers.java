@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 final class InRepositoryUsers implements UserCrudService {
@@ -30,6 +27,7 @@ final class InRepositoryUsers implements UserCrudService {
         Benutzer benutzer = new Benutzer();
         benutzer.setUsername(user.getUsername());
         benutzer.setPassword(Password.hashPassword(user.getPassword()));
+        benutzer.setAktiv(true);
 
         return as(repository.save(benutzer));
     }

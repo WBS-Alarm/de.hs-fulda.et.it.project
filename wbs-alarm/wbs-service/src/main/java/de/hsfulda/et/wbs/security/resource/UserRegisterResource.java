@@ -53,6 +53,7 @@ public class UserRegisterResource {
                         .id(user.getUsername())
                         .username(user.getUsername())
                         .password(user.getPassword())
+                        .aktiv(true)
                         .build()
         );
 

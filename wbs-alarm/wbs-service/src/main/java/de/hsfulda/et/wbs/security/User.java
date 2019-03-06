@@ -4,7 +4,6 @@ package de.hsfulda.et.wbs.security;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -18,6 +17,7 @@ public class User implements UserDetails {
     private String id;
     private String username;
     private String password;
+    private boolean aktiv;
     private Collection<SimpleGrantedAuthority> authorities;
 
     private User() {
@@ -96,9 +96,18 @@ public class User implements UserDetails {
         this.password = password;
     }
 
+    public boolean isAktiv() {
+        return aktiv;
+    }
+
+    public void setAktiv(boolean aktiv) {
+        this.aktiv = aktiv;
+    }
+
     static User makeTemplate(User user) {
         User templated = new User(user.getId(), user.getUsername(), user.getPassword());
         templated.getAuthorities().addAll(user.getAuthorities());
+        templated.setAktiv(user.isAktiv());
         return templated;
     }
 
@@ -132,6 +141,11 @@ public class User implements UserDetails {
 
         public User build() {
             return makeTemplate(template);
+        }
+
+        public UserBuilder aktiv(boolean aktiv) {
+            template.setAktiv(aktiv);
+            return this;
         }
     }
 
