@@ -6,6 +6,8 @@ import de.hsfulda.et.wbs.entity.Traeger;
 import de.hsfulda.et.wbs.http.resource.TraegerListResource;
 import de.hsfulda.et.wbs.util.UriUtil;
 
+import java.util.stream.Collectors;
+
 public class TraegerHalJson extends HalJsonResource {
 
     public TraegerHalJson(Traeger traeger) {
@@ -19,8 +21,13 @@ public class TraegerHalJson extends HalJsonResource {
         addProperty("id", traeger.getId());
         addProperty("name", traeger.getName());
 
+        addEmbeddedResources("benutzer",
+                traeger.getBenutzer()
+                        .stream()
+                        .map(b -> new BenutzerHalJson(b, false))
+                        .collect(Collectors.toList()));
+
         // TODO: embedded Kategorien
         // TODO: embedded Zielorte
-        // TODO: embedded Benutzer
     }
 }

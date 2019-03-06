@@ -1,15 +1,12 @@
 package de.hsfulda.et.wbs.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.util.Objects.requireNonNull;
 
 @Entity
 @Table(name = "TRAEGER")
@@ -28,6 +25,7 @@ public class Traeger {
     private List<Kategorie> kategorien;
 
     @OneToMany(mappedBy = "traeger", fetch = FetchType.LAZY)
+    @Where(clause = "aktiv = true")
     private List<Benutzer> benutzer;
 
     public Traeger() {
@@ -66,6 +64,9 @@ public class Traeger {
     }
 
     public List<Benutzer> getBenutzer() {
+        if (benutzer == null) {
+            benutzer =  new ArrayList<>();
+        }
         return benutzer;
     }
 
@@ -77,7 +78,7 @@ public class Traeger {
         if (getBenutzer() == null) {
             benutzer = new ArrayList<>();
         }
-        if(!benutzer.contains(b)) {
+        if (!benutzer.contains(b)) {
             b.setTraeger(this);
             benutzer.add(b);
         }
