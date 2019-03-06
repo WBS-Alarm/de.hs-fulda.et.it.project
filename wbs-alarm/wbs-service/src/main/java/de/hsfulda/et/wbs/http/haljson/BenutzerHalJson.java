@@ -14,7 +14,7 @@ public class BenutzerHalJson extends HalJsonResource {
     public BenutzerHalJson(Benutzer benutzer, boolean embedded) {
         addBenutzerProperies(benutzer);
         if (embedded) {
-            addEmbeddedResource("traeger", new TraegerHalJson(benutzer.getTraeger()));
+            addEmbeddedResource("traeger", new TraegerHalJson(benutzer.getTraeger(), false));
         }
     }
 
