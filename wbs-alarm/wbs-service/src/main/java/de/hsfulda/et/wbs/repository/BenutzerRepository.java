@@ -1,11 +1,12 @@
 package de.hsfulda.et.wbs.repository;
 
 import de.hsfulda.et.wbs.entity.Benutzer;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
-import java.math.BigInteger;
+public interface BenutzerRepository extends CrudRepository<Benutzer, Long> {
 
-public interface BenutzerRepository extends CrudRepository<Benutzer, BigInteger> {
-
-    Benutzer findByUsername(String username);
+    @Query("select b from Benutzer b where b.username = :username and b.aktiv = true")
+    Benutzer findByUsername(@Param("username") String username);
 }

@@ -15,8 +15,8 @@ public class TraegerListHalJson extends HalJsonResource {
         addLink(Link.self(TraegerListResource.PATH));
 
         List<HalJsonResource> resources = StreamSupport.stream(traeger.spliterator(), false)
-            .map(TraegerHalJson::new)
-            .collect(Collectors.toList());
+                .map(t -> new TraegerHalJson(t, false))
+                .collect(Collectors.toList());
 
         addEmbeddedResources("elemente", resources);
 

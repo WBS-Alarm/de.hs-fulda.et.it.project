@@ -1,5 +1,6 @@
 package de.hsfulda.et.wbs;
 
+import de.hsfulda.et.wbs.http.resource.BenutzerResource;
 import de.hsfulda.et.wbs.http.resource.TraegerListResource;
 import de.hsfulda.et.wbs.http.resource.TraegerResource;
 import de.hsfulda.et.wbs.security.resource.*;
@@ -11,8 +12,9 @@ public enum Relations {
     REL_USER_CURRENT("current", CurrentUserResource.PATH),
     REL_USER_REGISTER("registerUser", UserRegisterResource.PATH),
     REL_USER_LOGIN("userLogin", LoginResource.PATH),
-    REL_TRAEGER_LIST("traegerList",TraegerListResource.PATH),
-    REL_TRAEGER("traeger",TraegerResource.PATH);
+    REL_BENUTZER("benutzer", BenutzerResource.PATH),
+    REL_TRAEGER_LIST("traegerList", TraegerListResource.PATH),
+    REL_TRAEGER("traeger", TraegerResource.PATH);
 
     private final String rel;
     private final String href;
