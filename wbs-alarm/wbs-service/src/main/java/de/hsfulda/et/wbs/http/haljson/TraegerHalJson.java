@@ -11,6 +11,24 @@ import java.util.stream.Collectors;
 public class TraegerHalJson extends HalJsonResource {
 
     public TraegerHalJson(Traeger traeger) {
+        this(traeger, true);
+    }
+
+    public TraegerHalJson(Traeger traeger, boolean embedded) {
+        addTraegerProperties(traeger);
+
+        if (embedded) {
+            addEmbeddedResources("benutzer",
+                    traeger.getBenutzer()
+                            .stream()
+                            .map(b -> new BenutzerHalJson(b, false))
+                            .collect(Collectors.toList()));
+            // TODO: embedded Kategorien
+            // TODO: embedded Zielorte
+        }
+    }
+
+    private void addTraegerProperties(Traeger traeger) {
         String traegerResource = UriUtil.build("/traeger/{id}", traeger.getId());
 
         addLink(Link.self(traegerResource));
@@ -20,14 +38,5 @@ public class TraegerHalJson extends HalJsonResource {
 
         addProperty("id", traeger.getId());
         addProperty("name", traeger.getName());
-
-        addEmbeddedResources("benutzer",
-                traeger.getBenutzer()
-                        .stream()
-                        .map(b -> new BenutzerHalJson(b, false))
-                        .collect(Collectors.toList()));
-
-        // TODO: embedded Kategorien
-        // TODO: embedded Zielorte
     }
 }
