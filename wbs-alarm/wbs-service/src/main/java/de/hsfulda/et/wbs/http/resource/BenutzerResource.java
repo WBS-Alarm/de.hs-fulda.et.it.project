@@ -2,7 +2,6 @@ package de.hsfulda.et.wbs.http.resource;
 
 import de.hsfulda.et.wbs.core.HalJsonResource;
 import de.hsfulda.et.wbs.entity.Benutzer;
-import de.hsfulda.et.wbs.entity.Traeger;
 import de.hsfulda.et.wbs.http.haljson.BenutzerHalJson;
 import de.hsfulda.et.wbs.repository.BenutzerRepository;
 import de.hsfulda.et.wbs.security.User;
@@ -36,7 +35,6 @@ public class BenutzerResource {
         this.accessService = accessService;
     }
 
-
     /**
      * Ermittelt einen Benutzer anhand der ID.
      *
@@ -57,13 +55,20 @@ public class BenutzerResource {
 
     @PutMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
-    HttpEntity<HalJsonResource> put(@PathVariable("id") Long id, @RequestBody Traeger traeger) {
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    HttpEntity<HalJsonResource> put(
+            @AuthenticationPrincipal User user,
+            @PathVariable("id") Long id,
+            @RequestBody Benutzer benutzer) {
+        return accessService.hasAccess(user, id, () -> {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        });
     }
 
     @DeleteMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
-    HttpEntity<HalJsonResource> delete(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    HttpEntity<HalJsonResource> delete(@AuthenticationPrincipal User user, @PathVariable("id") Long id) {
+        return accessService.hasAccess(user, id, () -> {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        });
     }
 }
