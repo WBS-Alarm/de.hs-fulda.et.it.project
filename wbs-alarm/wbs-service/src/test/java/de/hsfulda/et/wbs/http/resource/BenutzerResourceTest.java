@@ -19,15 +19,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Disabled("Hier nochmal prüfen wie diese Fälle aufgebaut werden können.")
-@DisplayName("Resource Benutzer")
+@DisplayName("Test der Benutzer Resource")
 class BenutzerResourceTest extends ResourceTest {
-
-    @Autowired
-    private TraegerRepository traegerRepository;
-
-    @Autowired
-    private BenutzerRepository benutzerRepository;
 
     @Autowired
     private BenutzerResource resource;
@@ -38,55 +31,21 @@ class BenutzerResourceTest extends ResourceTest {
         assertThat(resource).isNotNull();
     }
 
-    private Long benutzerGleich;
-    private Long benutzerAnners;
-
-    @BeforeEach
-    void setup() throws Exception {
-        Traeger s = new Traeger();
-        s.setName("KasselDings");
-        Benutzer b = new Benutzer();
-        b.setUsername("UserKassel");
-        s.addBenutzer(b);
-        traegerRepository.save(s);
-        benutzerAnners = b.getId();
-
-        Optional<Traeger> ma = traegerRepository.findById(1L);
-        Benutzer b1 = new Benutzer();
-        b1.setUsername("UserFeuerwehr");
-        Traeger traeger = ma.get();
-        traeger.addBenutzer(b1);
-
-        traegerRepository.save(traeger);
-        benutzerGleich = b1.getId();
-
-    }
-
-    @AfterEach
-    void tearDown() {
-        deleteUser("UserFeuerwehr");
-        deleteUser("UserKassel");
-        deleteTraegr("KasselDings");
-    }
-
-    private void deleteUser(String username) {
-        Benutzer b1 = benutzerRepository.findByUsername(username);
-        if(b1 != null) {
-            benutzerRepository.delete(b1);
-        }
-    }
-
-    private void deleteTraegr(String name) {
-        List<Traeger> b1 = traegerRepository.findByName(name);
-        traegerRepository.deleteAll(b1);
-    }
-
     @DisplayName("Anzeigen eines Benutzers vom gleichen Träger wie der User")
     @Test
     void getBenutzer() throws Exception {
-        mockMvc.perform(get(BenutzerResource.PATH, benutzerGleich)
+        mockMvc.perform(get(BenutzerResource.PATH, getBenutzerId(LE_USER))
                 .header("Authorization", getTokenAsSuperuser())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+    }
+
+    @DisplayName("Anzeigen eines Benutzers vom anderen Träger wie der User")
+    @Test
+    void getBenutzerAndererTraeger() throws Exception {
+        mockMvc.perform(get(BenutzerResource.PATH, getBenutzerId(HE_USER))
+                .header("Authorization", getTokenAsSuperuser())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 }

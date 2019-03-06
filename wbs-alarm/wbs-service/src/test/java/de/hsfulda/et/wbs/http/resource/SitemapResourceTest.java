@@ -19,7 +19,6 @@ class SitemapResourceTest extends ResourceTest {
     @Autowired
     private SitemapResource controller;
 
-
     @DisplayName("Laden des Resource erfolgreich.")
     @Test
     void contextLoads() {

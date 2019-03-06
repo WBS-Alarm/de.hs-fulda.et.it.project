@@ -1,11 +1,17 @@
 insert into traeger (name)
 values('Feuerwehr');
 
-insert into benutzer (einkaeufer, mail, password, name, traeger_id)
-values(false, 'test@domain.de', '$2a$12$7w0m4I2kjbQgM0hp0erh4OXqEoBxeYqNoaLUZKpiaISqnIcw91t3i', 'Superuser', (select max(id) from traeger));
+insert into traeger (name)
+values('Helsa');
 
 insert into benutzer (einkaeufer, mail, password, name, traeger_id)
-values(false, 'test@domain.de', '$2a$12$7w0m4I2kjbQgM0hp0erh4OXqEoBxeYqNoaLUZKpiaISqnIcw91t3i', 'Leser', (select max(id) from traeger));
+values(false, 'superuser@domain.de', '$2a$12$7w0m4I2kjbQgM0hp0erh4OXqEoBxeYqNoaLUZKpiaISqnIcw91t3i', 'Superuser', (select id from traeger where name = 'Feuerwehr'));
+
+insert into benutzer (einkaeufer, mail, password, name, traeger_id)
+values(false, 'leser@domain.de', '$2a$12$7w0m4I2kjbQgM0hp0erh4OXqEoBxeYqNoaLUZKpiaISqnIcw91t3i', 'Leser', (select id from traeger where name = 'Feuerwehr'));
+
+insert into benutzer (einkaeufer, mail, password, name, traeger_id)
+values(false, 'helsaUser@domain.de', '$2a$12$7w0m4I2kjbQgM0hp0erh4OXqEoBxeYqNoaLUZKpiaISqnIcw91t3i', 'HelsaUser', (select id from traeger where name = 'Helsa'));
 
 -- Konfiguration der Token
 insert into tokenconfig (issuer, expiration, clock, secret)
@@ -28,5 +34,8 @@ values ((select id from benutzer where name = 'Superuser'), 1);
 
 insert into granted_authority (user_id, authority_id)
 values ((select id from benutzer where name = 'Leser'), 5);
+
+insert into granted_authority (user_id, authority_id)
+values ((select id from benutzer where name = 'HelsaUser'), 2);
 
 commit;

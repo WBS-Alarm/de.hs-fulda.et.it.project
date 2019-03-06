@@ -35,25 +35,24 @@ class TraegerListResourceTest extends ResourceTest {
     @Test
     void getAll() throws Exception {
         mockMvc.perform(get(TraegerListResource.PATH)
-            .header("Authorization", getTokenAsSuperuser()))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$._links.self[0].href", is(TraegerListResource.PATH)))
-            .andExpect(jsonPath("$._links.self[0].templated", is(false)))
-            .andExpect(jsonPath("$._embedded.elemente[0].id", is(1)))
-            .andExpect(jsonPath("$._embedded.elemente[0].name", is("Feuerwehr")));
+                .header("Authorization", getTokenAsSuperuser()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$._links.self[0].href", is(TraegerListResource.PATH)))
+                .andExpect(jsonPath("$._links.self[0].templated", is(false)))
+                .andExpect(jsonPath("$._embedded.elemente[0].id", is(1)))
+                .andExpect(jsonPath("$._embedded.elemente[0].name", is("Feuerwehr")));
     }
 
     @DisplayName("Hinzufügen eines neuen Trägers")
     @Test
     void postNew() throws Exception {
         mockMvc.perform(post(TraegerListResource.PATH)
-            .header("Authorization", getTokenAsSuperuser())
-            .content("{\n \"name\": \"Kassel\"\n}")
-            .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isCreated())
-            .andExpect(jsonPath("$._links.self[0].templated", is(false)))
-            .andExpect(jsonPath("$.id", is(2)))
-            .andExpect(jsonPath("$.name", is("Kassel")));
+                .header("Authorization", getTokenAsSuperuser())
+                .content("{\n \"name\": \"Kassel\"\n}")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$._links.self[0].templated", is(false)))
+                .andExpect(jsonPath("$.name", is("Kassel")));
     }
 
     @DisplayName("Hinzufügen eines neuen Trägers ohne Berechtigung")
@@ -70,10 +69,10 @@ class TraegerListResourceTest extends ResourceTest {
     @Test
     void postNewNoName() throws Exception {
         mockMvc.perform(post(TraegerListResource.PATH)
-            .header("Authorization", getTokenAsSuperuser())
-            .content("{\n \"name\": \"\"\n}")
-            .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isBadRequest());
+                .header("Authorization", getTokenAsSuperuser())
+                .content("{\n \"name\": \"\"\n}")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
     }
 
 
@@ -81,9 +80,9 @@ class TraegerListResourceTest extends ResourceTest {
     @Test
     void postNewNoBody() throws Exception {
         mockMvc.perform(post(TraegerListResource.PATH)
-            .header("Authorization", getTokenAsSuperuser())
-            .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isBadRequest());
+                .header("Authorization", getTokenAsSuperuser())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
     }
 
     @DisplayName("Aktionen auf einen Träger")
@@ -93,27 +92,26 @@ class TraegerListResourceTest extends ResourceTest {
         @DisplayName("Ermitteln eines Trägers")
         @Test
         void getKassel() throws Exception {
-            String resourceLink = UriUtil.build(TraegerResource.PATH, 2L);
-            mockMvc.perform(get(TraegerResource.PATH, 2L)
-                .header("Authorization", getTokenAsSuperuser()))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(jsonPath("$._links.self[0].href", is(resourceLink)))
-                .andExpect(jsonPath("$._links.self[0].templated", is(false)))
-                .andExpect(jsonPath("$._links.delete[0].href", is(resourceLink)))
-                .andExpect(jsonPath("$._links.delete[0].templated", is(false)))
-                .andExpect(jsonPath("$._links.update[0].href", is(resourceLink)))
-                .andExpect(jsonPath("$._links.update[0].templated", is(false)))
-                .andExpect(jsonPath("$.id", is(2)))
-                .andExpect(jsonPath("$.name", is("Kassel")));
+            String resourceLink = UriUtil.build(TraegerResource.PATH, getTraegerId("Kassel"));
+            mockMvc.perform(get(TraegerResource.PATH, getTraegerId("Kassel"))
+                    .header("Authorization", getTokenAsSuperuser()))
+                    .andExpect(status().isOk())
+                    .andDo(print())
+                    .andExpect(jsonPath("$._links.self[0].href", is(resourceLink)))
+                    .andExpect(jsonPath("$._links.self[0].templated", is(false)))
+                    .andExpect(jsonPath("$._links.delete[0].href", is(resourceLink)))
+                    .andExpect(jsonPath("$._links.delete[0].templated", is(false)))
+                    .andExpect(jsonPath("$._links.update[0].href", is(resourceLink)))
+                    .andExpect(jsonPath("$._links.update[0].templated", is(false)))
+                    .andExpect(jsonPath("$.name", is("Kassel")));
         }
 
         @DisplayName("Ermitteln eines Trägers - nicht gefunden")
         @Test
         void getNotFound() throws Exception {
             mockMvc.perform(get(TraegerResource.PATH, 0L)
-                .header("Authorization", getTokenAsSuperuser()))
-                .andExpect(status().isNotFound());
+                    .header("Authorization", getTokenAsSuperuser()))
+                    .andExpect(status().isNotFound());
         }
 
         @DisplayName("Ändern des Names vom Träger")
@@ -123,23 +121,22 @@ class TraegerListResourceTest extends ResourceTest {
             @DisplayName("Ändern eines Trägers")
             @Test
             void putKassel() throws Exception {
-                mockMvc.perform(put(TraegerResource.PATH, 2L)
-                    .header("Authorization", getTokenAsSuperuser())
-                    .content("{\n \"name\": \"Fulda\"\n}")
-                    .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.id", is(2)))
-                    .andExpect(jsonPath("$.name", is("Fulda")));
+                mockMvc.perform(put(TraegerResource.PATH, getTraegerId("Kassel"))
+                        .header("Authorization", getTokenAsSuperuser())
+                        .content("{\n \"name\": \"Fulda\"\n}")
+                        .contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isOk())
+                        .andExpect(jsonPath("$.name", is("Fulda")));
             }
 
             @DisplayName("Ändern eines Trägers - der Name ist leer")
             @Test
             void putKasselNoName() throws Exception {
-                mockMvc.perform(put(TraegerResource.PATH, 2L)
-                    .header("Authorization", getTokenAsSuperuser())
-                    .content("{\n \"name\": \"\"\n}")
-                    .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isBadRequest());
+                mockMvc.perform(put(TraegerResource.PATH, getTraegerId("Fulda"))
+                        .header("Authorization", getTokenAsSuperuser())
+                        .content("{\n \"name\": \"\"\n}")
+                        .contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isBadRequest());
             }
 
             @DisplayName("Löschen des neuen Trägers")
@@ -149,33 +146,27 @@ class TraegerListResourceTest extends ResourceTest {
                 @DisplayName("Träger ist vorhanden")
                 @Test
                 void deleteKassel() throws Exception {
-                    mockMvc.perform(delete(TraegerResource.PATH, 2L)
-                        .header("Authorization", getTokenAsSuperuser()))
-                        .andExpect(status().isOk());
+                    Long fulda = getTraegerId("Fulda");
+                    mockMvc.perform(delete(TraegerResource.PATH, fulda)
+                            .header("Authorization", getTokenAsSuperuser()))
+                            .andExpect(status().isOk());
+
+                    // Danach nicht mehr zu finden
+                    mockMvc.perform(get(TraegerResource.PATH, fulda)
+                            .header("Authorization", getTokenAsSuperuser()))
+                            .andExpect(status().isNotFound());
                 }
 
                 @DisplayName("Träger ist unbekannt")
                 @Test
                 void deleteNotFound() throws Exception {
                     mockMvc.perform(delete(TraegerResource.PATH, 0L)
-                        .header("Authorization", getTokenAsSuperuser()))
-                        .andExpect(status().isNotFound());
-                }
-
-                @DisplayName("Sicherstellen das Träger nicht mehr da ist")
-                @Nested
-                class DeletedNotFoundTest {
-
-                    @DisplayName("Gelöschter Träger nicht gefunden")
-                    @Test
-                    void getNotFound() throws Exception {
-                        mockMvc.perform(get(TraegerResource.PATH, 2L)
                             .header("Authorization", getTokenAsSuperuser()))
                             .andExpect(status().isNotFound());
-                    }
                 }
-            }
-        }
 
+            }
+
+        }
     }
 }

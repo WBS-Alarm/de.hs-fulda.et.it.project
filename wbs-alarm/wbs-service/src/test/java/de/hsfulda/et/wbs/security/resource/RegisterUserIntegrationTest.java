@@ -31,7 +31,7 @@ class RegisterUserIntegrationTest extends ResourceTest {
         @DisplayName("Paul mit Password 1234 erstellen")
         @Test
         void registerNewUser() throws Exception {
-            mockMvc.perform(post(UserRegisterResource.PATH, 1L)
+            mockMvc.perform(post(UserRegisterResource.PATH, getTraegerId(FW_TRAEGER))
                     .contentType(MediaType.APPLICATION_JSON)
                     .content("{\n  \"username\": \"Paul\",\n  \"password\": \"1234\"\n}")
                     .header("Authorization", bearerToken))
@@ -51,7 +51,7 @@ class RegisterUserIntegrationTest extends ResourceTest {
         @DisplayName("Paul ohne Password erstellen")
         @Test
         void registerNewUserNoPassword() throws Exception {
-            mockMvc.perform(post(UserRegisterResource.PATH, 1L)
+            mockMvc.perform(post(UserRegisterResource.PATH, getTraegerId(FW_TRAEGER))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\n  \"username\": \"Paul\"\n}")
                 .header("Authorization", bearerToken))
@@ -61,7 +61,7 @@ class RegisterUserIntegrationTest extends ResourceTest {
         @DisplayName("Ohne Namen mit Password 1234 erstellen")
         @Test
         void registerNewUserNoName() throws Exception {
-            mockMvc.perform(post(UserRegisterResource.PATH, 1L)
+            mockMvc.perform(post(UserRegisterResource.PATH, getTraegerId(FW_TRAEGER))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\n \"password\": \"1234\"\n}")
                 .header("Authorization", bearerToken))
@@ -75,7 +75,7 @@ class RegisterUserIntegrationTest extends ResourceTest {
             @DisplayName("Nochmal Paul mit Password 1234 erstellen")
             @Test
             void registerNewUser() throws Exception {
-                mockMvc.perform(post(UserRegisterResource.PATH, 1L)
+                mockMvc.perform(post(UserRegisterResource.PATH, getTraegerId(FW_TRAEGER))
                     .contentType(MediaType.APPLICATION_JSON)
                     .content("{\n  \"username\": \"Paul\",\n  \"password\": \"1234\"\n}")
                     .header("Authorization", bearerToken))
