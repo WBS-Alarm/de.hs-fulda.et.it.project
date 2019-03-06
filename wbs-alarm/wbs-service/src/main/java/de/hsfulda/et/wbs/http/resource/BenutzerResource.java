@@ -19,7 +19,8 @@ import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
 import static de.hsfulda.et.wbs.http.resource.BenutzerResource.PATH;
 
 /**
- * Diese Resource stellt einen Träger dar. Hier kann ein Träger aufgerufen, bearbeitet und gelöscht werden.
+ * Diese Resource stellt einen Benutzer dar. Hier kann ein Benutzer aufgerufen, bearbeitet und gelöscht (inaktiv
+ * gesetzt) werden.
  */
 @RestController
 @RequestMapping(PATH)
