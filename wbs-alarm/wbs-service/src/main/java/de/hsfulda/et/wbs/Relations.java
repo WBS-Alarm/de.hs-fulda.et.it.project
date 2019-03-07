@@ -1,8 +1,6 @@
 package de.hsfulda.et.wbs;
 
-import de.hsfulda.et.wbs.http.resource.BenutzerResource;
-import de.hsfulda.et.wbs.http.resource.TraegerListResource;
-import de.hsfulda.et.wbs.http.resource.TraegerResource;
+import de.hsfulda.et.wbs.http.resource.*;
 import de.hsfulda.et.wbs.security.resource.*;
 
 public enum Relations {
@@ -13,6 +11,8 @@ public enum Relations {
     REL_USER_REGISTER("registerUser", UserRegisterResource.PATH),
     REL_USER_LOGIN("userLogin", LoginResource.PATH),
     REL_BENUTZER("benutzer", BenutzerResource.PATH),
+    REL_ZIELORT_LIST("zielortList", ZielortListResource.PATH),
+    REL_ZIELORT("zielort", ZielortResource.PATH),
     REL_TRAEGER_LIST("traegerList", TraegerListResource.PATH),
     REL_TRAEGER("traeger", TraegerResource.PATH);
 

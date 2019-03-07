@@ -22,8 +22,25 @@ public class AccessService {
         this.traegerRepository = traegerRepository;
     }
 
-    public HttpEntity<HalJsonResource> hasAccess(User user, Long benutzerId, Supplier<HttpEntity<HalJsonResource>> supplier) {
-        Optional<Traeger> traeger = traegerRepository.findTraegerByUsernameAndBenutezrId(user.getUsername(), benutzerId);
+    public HttpEntity<HalJsonResource> hasAccessOnBenutzer(User user, Long benutzerId, Supplier<HttpEntity<HalJsonResource>> supplier) {
+        Optional<Traeger> traeger = traegerRepository.findTraegerByUsernameAndBenutzerId(user.getUsername(), benutzerId);
+        return getHalJsonResourceHttpEntity(supplier, traeger);
+    }
+
+    public HttpEntity<HalJsonResource> hasAccessOnZielort(User user, Long zielortId, Supplier<HttpEntity<HalJsonResource>> supplier) {
+        Optional<Traeger> traeger = traegerRepository.findTraegerByUsernameAndZielortId(user.getUsername(), zielortId);
+        return getHalJsonResourceHttpEntity(supplier, traeger);
+    }
+
+    public HttpEntity<HalJsonResource> hasAccessOnTraeger(User user, Long traegerId, Supplier<HttpEntity<HalJsonResource>> supplier) {
+        Optional<Traeger> traeger = traegerRepository.findTraegerByUsernameAndTraegerId(user.getUsername(), traegerId);
+        return getHalJsonResourceHttpEntity(supplier, traeger);
+    }
+
+    private HttpEntity<HalJsonResource> getHalJsonResourceHttpEntity(
+        Supplier<HttpEntity<HalJsonResource>> supplier,
+        Optional<Traeger> traeger) {
+
         if (traeger.isPresent()) {
             return supplier.get();
         }

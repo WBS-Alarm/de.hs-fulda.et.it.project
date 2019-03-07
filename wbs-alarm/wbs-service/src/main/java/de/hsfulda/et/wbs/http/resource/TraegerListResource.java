@@ -2,6 +2,7 @@ package de.hsfulda.et.wbs.http.resource;
 
 import de.hsfulda.et.wbs.core.HalJsonResource;
 import de.hsfulda.et.wbs.entity.Traeger;
+import de.hsfulda.et.wbs.entity.Zielort;
 import de.hsfulda.et.wbs.http.haljson.TraegerHalJson;
 import de.hsfulda.et.wbs.http.haljson.TraegerListHalJson;
 import de.hsfulda.et.wbs.repository.TraegerRepository;
@@ -44,10 +45,12 @@ public class TraegerListResource {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        Traeger saved = traegerRepository.save(
-                Traeger.builder().
-                        name(traeger.getName())
-                        .build());
+        Traeger tr = Traeger.builder().
+            name(traeger.getName())
+            .build();
+
+        Zielort.getStandardForNewTraeger().forEach(tr::addZielort);
+        Traeger saved = traegerRepository.save(tr);
 
         return new HttpEntity<>(new TraegerHalJson(saved));
     }

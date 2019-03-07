@@ -23,8 +23,13 @@ public class TraegerHalJson extends HalJsonResource {
                             .stream()
                             .map(b -> new BenutzerHalJson(b, false))
                             .collect(Collectors.toList()));
+
+            addEmbeddedResources("zielorte",
+                    traeger.getZielorte()
+                            .stream()
+                            .map(z -> new ZielortHalJson(z, false))
+                            .collect(Collectors.toList()));
             // TODO: embedded Kategorien
-            // TODO: embedded Zielorte
         }
     }
 

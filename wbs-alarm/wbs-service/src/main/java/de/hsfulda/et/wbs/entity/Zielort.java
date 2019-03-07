@@ -3,6 +3,7 @@ package de.hsfulda.et.wbs.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -15,6 +16,10 @@ public class Zielort {
 
     @Size(max = 60)
     private String name;
+
+    private boolean auto;
+
+    private boolean aktiv;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TRAEGER_ID")
@@ -45,6 +50,22 @@ public class Zielort {
         this.name = name;
     }
 
+    public boolean isAuto() {
+        return auto;
+    }
+
+    public void setAuto(boolean auto) {
+        this.auto = auto;
+    }
+
+    public boolean isAktiv() {
+        return aktiv;
+    }
+
+    public void setAktiv(boolean aktiv) {
+        this.aktiv = aktiv;
+    }
+
     public Traeger getTraeger() {
         return traeger;
     }
@@ -67,5 +88,54 @@ public class Zielort {
 
     public void setKontakte(List<Kontakt> kontakte) {
         this.kontakte = kontakte;
+    }
+
+
+    public static ZielortBuilder builder() {
+        return new ZielortBuilder();
+    }
+
+    static Zielort makeTemplate(Zielort zielort) {
+        Zielort templated = new Zielort();
+        templated.setName(zielort.getName());
+        templated.setTraeger(zielort.getTraeger());
+        return templated;
+    }
+
+    public static class ZielortBuilder {
+
+        private final Zielort template;
+
+
+        private ZielortBuilder() {
+            template = new Zielort();
+        }
+
+        public ZielortBuilder name(String name) {
+            template.setName(name);
+            return this;
+        }
+
+        public ZielortBuilder aktiv(boolean aktiv) {
+            template.setAktiv(aktiv);
+            return this;
+        }
+
+        public ZielortBuilder auto(boolean auto) {
+            template.setAuto(auto);
+            return this;
+        }
+
+        public Zielort build() {
+            return makeTemplate(template);
+        }
+    }
+
+    public static List<Zielort> getStandardForNewTraeger() {
+        return Arrays.asList(
+            builder().name("Wäscherei").aktiv(true).auto(true).build(),
+            builder().name("Wareneingang").aktiv(true).auto(true).build(),
+            builder().name("Lager").aktiv(true).auto(true).build(),
+            builder().name("Aussonderung").aktiv(true).auto(true).build());
     }
 }

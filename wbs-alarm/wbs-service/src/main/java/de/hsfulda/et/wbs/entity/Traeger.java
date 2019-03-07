@@ -19,6 +19,7 @@ public class Traeger {
     private String name;
 
     @OneToMany(mappedBy = "traeger", fetch = FetchType.LAZY)
+    @Where(clause = "aktiv = true")
     private List<Zielort> zielorte;
 
     @OneToMany(mappedBy = "traeger", fetch = FetchType.LAZY)
@@ -48,11 +49,24 @@ public class Traeger {
     }
 
     public List<Zielort> getZielorte() {
+        if (zielorte == null) {
+            zielorte = new ArrayList<>();
+        }
         return zielorte;
     }
 
     public void setZielorte(List<Zielort> zielorte) {
         this.zielorte = zielorte;
+    }
+
+    public void addZielort(Zielort z) {
+        if (zielorte == null) {
+            zielorte = new ArrayList<>();
+        }
+        if (!zielorte.contains(z)) {
+            z.setTraeger(this);
+            zielorte.add(z);
+        }
     }
 
     public List<Kategorie> getKategorien() {
@@ -65,7 +79,7 @@ public class Traeger {
 
     public List<Benutzer> getBenutzer() {
         if (benutzer == null) {
-            benutzer =  new ArrayList<>();
+            benutzer = new ArrayList<>();
         }
         return benutzer;
     }
@@ -75,7 +89,7 @@ public class Traeger {
     }
 
     public void addBenutzer(Benutzer b) {
-        if (getBenutzer() == null) {
+        if (benutzer == null) {
             benutzer = new ArrayList<>();
         }
         if (!benutzer.contains(b)) {

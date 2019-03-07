@@ -46,7 +46,7 @@ public class BenutzerResource {
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")
     HttpEntity<HalJsonResource> get(@AuthenticationPrincipal User user, @PathVariable("id") Long id) {
-        return accessService.hasAccess(user, id, () -> {
+        return accessService.hasAccessOnBenutzer(user, id, () -> {
             Optional<Benutzer> benutzer = benutzerRepository.findById(id);
             return benutzer.<HttpEntity<HalJsonResource>>map(b -> new HttpEntity<>(new BenutzerHalJson(b)))
                     .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -69,7 +69,7 @@ public class BenutzerResource {
             @AuthenticationPrincipal User user,
             @PathVariable("id") Long id,
             @RequestBody Benutzer benutzer) {
-        return accessService.hasAccess(user, id, () -> {
+        return accessService.hasAccessOnBenutzer(user, id, () -> {
             Optional<Benutzer> b = benutzerRepository.findById(id);
             if (b.isPresent()) {
                 Benutzer loaded = b.get();
@@ -92,7 +92,7 @@ public class BenutzerResource {
     @DeleteMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
     HttpEntity<HalJsonResource> delete(@AuthenticationPrincipal User user, @PathVariable("id") Long id) {
-        return accessService.hasAccess(user, id, () -> {
+        return accessService.hasAccessOnBenutzer(user, id, () -> {
             Optional<Benutzer> b = benutzerRepository.findById(id);
             if (b.isPresent()) {
                 Benutzer loaded = b.get();
