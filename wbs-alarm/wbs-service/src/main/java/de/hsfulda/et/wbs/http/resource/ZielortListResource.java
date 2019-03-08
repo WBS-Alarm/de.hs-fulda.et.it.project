@@ -77,7 +77,7 @@ public class ZielortListResource {
 
             Traeger tr = traeger.get();
             tr.addZielort(saved);
-            traegerRepository.save(tr);
+            zielortRepository.save(saved);
 
             return new HttpEntity<>(new ZielortHalJson(saved));
         });

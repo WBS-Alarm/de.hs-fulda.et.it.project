@@ -2,6 +2,7 @@ package de.hsfulda.et.wbs;
 
 import de.hsfulda.et.wbs.repository.BenutzerRepository;
 import de.hsfulda.et.wbs.repository.TraegerRepository;
+import de.hsfulda.et.wbs.repository.ZielortTestRepository;
 import de.hsfulda.et.wbs.security.service.UserAuthenticationService;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public abstract class ResourceTest {
     protected TraegerRepository traegerRepository;
 
     @Autowired
+    protected ZielortTestRepository zielortRepository;
+
+    @Autowired
     protected BenutzerRepository benutzerRepository;
 
     @Autowired
@@ -55,5 +59,9 @@ public abstract class ResourceTest {
 
     protected Long getTraegerId(String name) {
         return traegerRepository.findByName(name).get(0).getId();
+    }
+
+    protected Long getZielortId(String name, String traeger) {
+        return zielortRepository.findByName(name, traeger).get(0).getId();
     }
 }

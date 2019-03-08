@@ -36,7 +36,6 @@ public class ZielortResource {
         this.accessService = accessService;
     }
 
-
     /**
      * Ermittelt einen Zielort anhand der ID.
      *
@@ -47,7 +46,7 @@ public class ZielortResource {
     @PreAuthorize("hasAuthority('READ_ALL')")
     HttpEntity<HalJsonResource> get(@AuthenticationPrincipal User user, @PathVariable("id") Long id) {
         return accessService.hasAccessOnZielort(user, id, () -> {
-            Optional<Zielort> managed = zielortRepository.findById(id);
+            Optional<Zielort> managed = zielortRepository.findByIdAndAktivIsTrue(id);
             if (managed.isPresent()) {
                 return new HttpEntity<>(new ZielortHalJson(managed.get()));
             }
@@ -58,7 +57,7 @@ public class ZielortResource {
     /**
      * Bearbeitet einen Zielort. Hierbei wird nur der Name geändert.
      *
-     * @param id ID des Zielorts aus dem Pfad
+     * @param id      ID des Zielorts aus dem Pfad
      * @param traeger Zielort mit neuem Namen
      * @return gespeicherten Träger. Anderfalls 404 oder 409
      */
@@ -73,6 +72,10 @@ public class ZielortResource {
             Optional<Zielort> managed = zielortRepository.findById(id);
             if (managed.isPresent()) {
                 Zielort zo = managed.get();
+                if (zo.isAuto()) {
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                }
+
                 zo.setName(traeger.getName());
                 Zielort saved = zielortRepository.save(zo);
                 return new HttpEntity<>(new ZielortHalJson(saved));
