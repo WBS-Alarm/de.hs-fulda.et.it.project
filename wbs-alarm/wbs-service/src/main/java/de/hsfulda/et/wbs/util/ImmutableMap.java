@@ -116,16 +116,6 @@ public class ImmutableMap<K, V> implements Map<K, V> {
     }
 
     @Override
-    public boolean equals(Object o) {
-        return immutableMap.equals(o);
-    }
-
-    @Override
-    public int hashCode() {
-        return immutableMap.hashCode();
-    }
-
-    @Override
     public V getOrDefault(Object key, V defaultValue) {
         return immutableMap.getOrDefault(key, defaultValue);
     }

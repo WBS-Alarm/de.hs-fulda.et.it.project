@@ -47,7 +47,7 @@ public abstract class ResourceTest {
         return getToken(username, "password");
     }
 
-    protected String getToken(String username, String password) {
+    private String getToken(String username, String password) {
         return "Bearer " + authentication
                 .login(username, password)
                 .orElseThrow(() -> new RuntimeException("invalid login and/or password"));

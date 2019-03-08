@@ -1,9 +1,10 @@
 package de.hsfulda.et.wbs.security.entity;
 
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.Size;
-import java.util.List;
 
 @Entity
 @Table(name = "TOKENCONFIG")

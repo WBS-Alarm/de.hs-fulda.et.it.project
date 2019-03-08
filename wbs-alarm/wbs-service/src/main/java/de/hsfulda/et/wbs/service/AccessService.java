@@ -24,26 +24,26 @@ public class AccessService {
 
     public HttpEntity<HalJsonResource> hasAccessOnBenutzer(User user, Long benutzerId, Supplier<HttpEntity<HalJsonResource>> supplier) {
         Optional<Traeger> traeger = traegerRepository.findTraegerByUsernameAndBenutzerId(user.getUsername(), benutzerId);
-        return getHalJsonResourceHttpEntity(supplier, traeger);
-    }
-
-    public HttpEntity<HalJsonResource> hasAccessOnZielort(User user, Long zielortId, Supplier<HttpEntity<HalJsonResource>> supplier) {
-        Optional<Traeger> traeger = traegerRepository.findTraegerByUsernameAndZielortId(user.getUsername(), zielortId);
-        return getHalJsonResourceHttpEntity(supplier, traeger);
-    }
-
-    public HttpEntity<HalJsonResource> hasAccessOnTraeger(User user, Long traegerId, Supplier<HttpEntity<HalJsonResource>> supplier) {
-        Optional<Traeger> traeger = traegerRepository.findTraegerByUsernameAndTraegerId(user.getUsername(), traegerId);
-        return getHalJsonResourceHttpEntity(supplier, traeger);
-    }
-
-    private HttpEntity<HalJsonResource> getHalJsonResourceHttpEntity(
-        Supplier<HttpEntity<HalJsonResource>> supplier,
-        Optional<Traeger> traeger) {
-
         if (traeger.isPresent()) {
             return supplier.get();
         }
         return new ResponseEntity<>(NOT_FOUND);
     }
+
+    public HttpEntity<HalJsonResource> hasAccessOnZielort(User user, Long zielortId, Supplier<HttpEntity<HalJsonResource>> supplier) {
+        Optional<Traeger> traeger = traegerRepository.findTraegerByUsernameAndZielortId(user.getUsername(), zielortId);
+        if (traeger.isPresent()) {
+            return supplier.get();
+        }
+        return new ResponseEntity<>(NOT_FOUND);
+    }
+
+    public HttpEntity<HalJsonResource> hasAccessOnTraeger(User user, Long traegerId, Supplier<HttpEntity<HalJsonResource>> supplier) {
+        Optional<Traeger> traeger = traegerRepository.findTraegerByUsernameAndTraegerId(user.getUsername(), traegerId);
+        if (traeger.isPresent()) {
+            return supplier.get();
+        }
+        return new ResponseEntity<>(NOT_FOUND);
+    }
+
 }

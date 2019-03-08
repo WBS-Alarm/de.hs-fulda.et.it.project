@@ -9,8 +9,8 @@ public interface UserAuthenticationService {
     /**
      * Logs in with the given {@code username} and {@code password}.
      *
-     * @param username
-     * @param password
+     * @param username given username
+     * @param password given password
      * @return an {@link Optional} of a users token when login succeeds
      */
     Optional<String> login(String username, String password);
@@ -19,7 +19,7 @@ public interface UserAuthenticationService {
      * Finds a user by its dao-key.
      *
      * @param token user dao key
-     * @return
+     * @return Registered User
      */
     Optional<User> findByToken(String token);
 

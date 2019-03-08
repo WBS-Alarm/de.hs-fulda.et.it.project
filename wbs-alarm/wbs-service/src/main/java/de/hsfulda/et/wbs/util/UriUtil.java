@@ -1,6 +1,5 @@
 package de.hsfulda.et.wbs.util;
 
-import org.springframework.web.util.UriBuilder;
 import org.springframework.web.util.UriTemplate;
 
 public abstract class UriUtil {

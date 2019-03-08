@@ -6,8 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.*;
 
-import static java.util.Objects.requireNonNull;
-
 /**
  * Dynamische Hal-Json-Ressourcen-Implementierung. Dadurch können beliebige Typen hiermit dargestellt werden.
  */
