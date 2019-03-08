@@ -22,7 +22,6 @@ public class Benutzer {
     @Size(max = 254)
     private String mail;
     private Boolean einkaeufer;
-    @Column(name = "aktiv", columnDefinition = "boolean default true")
     private Boolean aktiv;
 
     @ManyToOne
