@@ -99,6 +99,7 @@ public class Zielort {
         Zielort templated = new Zielort();
         templated.setName(zielort.getName());
         templated.setTraeger(zielort.getTraeger());
+        templated.setAktiv(zielort.isAktiv());
         return templated;
     }
 
