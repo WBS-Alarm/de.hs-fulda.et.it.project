@@ -46,3 +46,6 @@
 ehthumbs.db
 Thumbs.db
 wbs-alarm/wbs-frontend/package-lock.json
+wbs-alarm/wbs-frontend/node
+wbs-alarm/wbs-frontend/target
+wbs-alarm/wbs-frontend/node/yarn/dist/README.md
