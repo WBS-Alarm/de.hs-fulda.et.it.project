@@ -3,16 +3,13 @@ package de.hsfulda.et.wbs.core;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Objects;
-import java.util.regex.Pattern;
 
 /**
  * Link zu einer Resource.
  */
 public class Link {
 
-    private static final Pattern templatePattern = Pattern.compile("^(.*\\{\\w+\\}.*)$");
-    public static final String REL_SELF = "self";
-    public static final String REL_TYPE = "type";
+    private static final String REL_SELF = "self";
 
     /*
      * Rel wird außerhalb des Links dargestellt.
@@ -21,7 +18,7 @@ public class Link {
     private final String rel;
     private final String href;
 
-    protected Link(final String rel, final String href) {
+    private Link(final String rel, final String href) {
         Objects.requireNonNull(rel, "Rel must not be null");
         Objects.requireNonNull(href, "Href must not be null");
 

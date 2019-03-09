@@ -19,11 +19,11 @@ public class BenutzerHalJson extends HalJsonResource {
     }
 
     private void addBenutzerProperies(Benutzer benutzer) {
-        String traegerResource = UriUtil.build("/benutzer/{id}", benutzer.getId());
+        String benutzerResource = UriUtil.build("/benutzer/{id}", benutzer.getId());
 
-        addLink(Link.self(traegerResource));
-        addLink(Link.create("delete", traegerResource));
-        addLink(Link.create("update", traegerResource));
+        addLink(Link.self(benutzerResource));
+        addLink(Link.create("delete", benutzerResource));
+        addLink(Link.create("update", benutzerResource));
 
         addProperty("id", benutzer.getId());
         addProperty("username", benutzer.getUsername());

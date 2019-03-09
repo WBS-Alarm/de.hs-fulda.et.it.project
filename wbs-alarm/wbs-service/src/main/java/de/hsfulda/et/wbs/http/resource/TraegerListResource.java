@@ -13,11 +13,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
-import static de.hsfulda.et.wbs.http.resource.TraegerListResource.PATH;
 import static org.springframework.util.ObjectUtils.isEmpty;
 
+/**
+ * Über die Träger Listen Resource können ale Träger aufgelistet werden und neue Träger hinzugefügt werden.
+ */
 @RestController
-@RequestMapping(PATH)
+@RequestMapping(TraegerListResource.PATH)
 public class TraegerListResource {
 
     public static final String PATH = "/traeger";
@@ -28,6 +30,12 @@ public class TraegerListResource {
         this.traegerRepository = traegerRepository;
     }
 
+    /**
+     * Ermittelt alle Träger der Anwendung. Welche Träger es gibt, stellt kein besonderes Problem dar, da die
+     * Informationen innerhalb eines Trägers nur über die den berechtigten Benutzer eingesehen werden können.
+     *
+     * @return alle vorhandenen Träger.
+     */
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")
     HttpEntity<HalJsonResource> get() {
@@ -37,9 +45,16 @@ public class TraegerListResource {
         return new HttpEntity<>(new TraegerListHalJson(all));
     }
 
+    /**
+     * Erstellt einen Träger im System. Hierbei werden noch Standard-Zielorte dazu erstellt, die vom Anwendern nicht
+     * entfernt werden können. Nur ein Administrator kann einen Träger im System anlegen.
+     *
+     * @param traeger Neuer Träger.
+     * @return Erstellter Träger.
+     */
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(produces = HAL_JSON)
-    @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     HttpEntity<HalJsonResource> post(@RequestBody Traeger traeger) {
         if (isEmpty(traeger.getName())) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

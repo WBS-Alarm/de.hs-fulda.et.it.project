@@ -21,12 +21,12 @@ public class ZielortHalJson extends HalJsonResource {
     }
 
     private void addZielortProperties(Zielort zielort) {
-        String traegerResource = UriUtil.build("/zielort/{id}", zielort.getId());
+        String zielortResource = UriUtil.build("/zielort/{id}", zielort.getId());
 
-        addLink(Link.self(traegerResource));
+        addLink(Link.self(zielortResource));
         addLink(Link.create("add", ZielortListResource.PATH));
-        addLink(Link.create("delete", traegerResource));
-        addLink(Link.create("update", traegerResource));
+        addLink(Link.create("delete", zielortResource));
+        addLink(Link.create("update", zielortResource));
 
         addProperty("id", zielort.getId());
         addProperty("name", zielort.getName());

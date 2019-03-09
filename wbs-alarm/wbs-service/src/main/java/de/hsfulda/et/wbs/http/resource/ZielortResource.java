@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
-import static de.hsfulda.et.wbs.http.resource.ZielortResource.PATH;
 import static org.springframework.util.ObjectUtils.isEmpty;
 
 /**
- * Diese Resource stellt einen Träger dar. Hier kann ein Träger aufgerufen, bearbeitet und gelöscht werden.
+ * Diese Resource stellt einen Träger dar. Hier kann ein Zielort aufgerufen, bearbeitet und gelöscht (inaktiv gesetzt)
+ * werden.
  */
 @RestController
-@RequestMapping(PATH)
+@RequestMapping(ZielortResource.PATH)
 public class ZielortResource {
 
     public static final String PATH = "/zielort/{id}";
@@ -40,26 +40,24 @@ public class ZielortResource {
      * Ermittelt einen Zielort anhand der ID.
      *
      * @param id ID des Zielorts aus dem Pfad
-     * @return gefundenen Träger. Anderfalls 404
+     * @return gefundenen ZIelort. Anderfalls 404
      */
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")
     HttpEntity<HalJsonResource> get(@AuthenticationPrincipal User user, @PathVariable("id") Long id) {
         return accessService.hasAccessOnZielort(user, id, () -> {
             Optional<Zielort> managed = zielortRepository.findByIdAndAktivIsTrue(id);
-            if (managed.isPresent()) {
-                return new HttpEntity<>(new ZielortHalJson(managed.get()));
-            }
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return managed.<HttpEntity<HalJsonResource>>map(zielort -> new HttpEntity<>(new ZielortHalJson(zielort)))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
         });
     }
 
     /**
      * Bearbeitet einen Zielort. Hierbei wird nur der Name geändert.
      *
-     * @param id      ID des Zielorts aus dem Pfad
+     * @param id ID des Zielorts aus dem Pfad
      * @param traeger Zielort mit neuem Namen
-     * @return gespeicherten Träger. Anderfalls 404 oder 409
+     * @return gespeicherten Zielort. Anderfalls 404 oder 409
      */
     @PutMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")

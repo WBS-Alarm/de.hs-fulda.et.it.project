@@ -7,16 +7,15 @@ import de.hsfulda.et.wbs.http.resource.ZielortListResource;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 public class ZielortListHalJson extends HalJsonResource {
 
-    public ZielortListHalJson(Iterable<Zielort> traeger) {
+    public ZielortListHalJson(List<Zielort> zielorte) {
         addLink(Link.self(ZielortListResource.PATH));
 
-        List<HalJsonResource> resources = StreamSupport.stream(traeger.spliterator(), false)
-                .map(t -> new ZielortHalJson(t, false))
-                .collect(Collectors.toList());
+        List<HalJsonResource> resources = zielorte.stream()
+            .map(t -> new ZielortHalJson(t, false))
+            .collect(Collectors.toList());
 
         addEmbeddedResources("elemente", resources);
 

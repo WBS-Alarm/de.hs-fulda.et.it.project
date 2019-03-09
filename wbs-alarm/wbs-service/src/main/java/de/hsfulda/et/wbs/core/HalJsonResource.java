@@ -12,10 +12,8 @@ import java.util.*;
 public class HalJsonResource {
 
     public static final String HAL_JSON = "application/hal+json";
-
-    static final String _EMBEDDED = "_embedded";
-
-    static final String _LINKS = "_links";
+    private static final String _EMBEDDED = "_embedded";
+    private static final String _LINKS = "_links";
 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @JsonProperty(_LINKS)
@@ -56,7 +54,7 @@ public class HalJsonResource {
      * @param link Link der auf die bestehende Liste hinzugefügt werden soll.
      * @throws NullPointerException wenn die {@code link}-Referenz {@code null} war.
      */
-    public final void addLink(final Link link) {
+    protected final void addLink(final Link link) {
         Objects.requireNonNull(link, "The link must not be null");
         List<Link> links = getLinksForRelation(link.getRel());
 
@@ -74,7 +72,7 @@ public class HalJsonResource {
      * @param relation Relation der Resource.
      * @param resource Resource die zu den embedded Resourcen hinzugefügt werden soll.
      */
-    public void addEmbeddedResource(final String relation, final HalJsonResource resource) {
+    protected void addEmbeddedResource(final String relation, final HalJsonResource resource) {
         Objects.requireNonNull(resource, "haljson must not be null to be embedded in a haljson");
 
         List<HalJsonResource> halJsonResources = ensureEmbeddedForRelationIsNotNull(relation);
@@ -99,7 +97,7 @@ public class HalJsonResource {
      * @param relation Relation der Resourcen.
      * @param resources Resourcen die zu den embedded Resourcen hinzugefügt werden sollen.
      */
-    public void addEmbeddedResources(final String relation, final List<HalJsonResource> resources) {
+    protected void addEmbeddedResources(final String relation, final List<HalJsonResource> resources) {
         Objects.requireNonNull(resources, "resources must not be null to be embedded in a haljson");
         if (resources.contains(null)) {
             throw new NullPointerException("List of resources contains one or more null values");
@@ -114,7 +112,7 @@ public class HalJsonResource {
      * @param name Name der Eigenschaft.
      * @param value Wert der Eigenschaft.
      */
-    public void addProperty(final String name, final Object value) {
+    protected void addProperty(final String name, final Object value) {
         Objects.requireNonNull(name, "name of the property of the hal+json Resource must not be null");
 
         properties.put(name, value);

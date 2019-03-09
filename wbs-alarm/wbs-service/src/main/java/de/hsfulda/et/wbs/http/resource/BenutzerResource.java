@@ -16,14 +16,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
-import static de.hsfulda.et.wbs.http.resource.BenutzerResource.PATH;
 
 /**
  * Diese Resource stellt einen Benutzer dar. Hier kann ein Benutzer aufgerufen, bearbeitet und gelöscht (inaktiv
  * gesetzt) werden.
  */
 @RestController
-@RequestMapping(PATH)
+@RequestMapping(BenutzerResource.PATH)
 public class BenutzerResource {
 
     public static final String PATH = "/benutzer/{id}";
@@ -40,7 +39,7 @@ public class BenutzerResource {
      * Ermittelt einen Benutzer anhand der ID.
      *
      * @param user angemeldeter Benutzer
-     * @param id   ID des Benutzers aus dem Pfad
+     * @param id ID des Benutzers aus dem Pfad
      * @return gefundenen Träger. Anderfalls 404
      */
     @GetMapping(produces = HAL_JSON)
@@ -49,26 +48,26 @@ public class BenutzerResource {
         return accessService.hasAccessOnBenutzer(user, id, () -> {
             Optional<Benutzer> benutzer = benutzerRepository.findById(id);
             return benutzer.<HttpEntity<HalJsonResource>>map(b -> new HttpEntity<>(new BenutzerHalJson(b)))
-                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
         });
     }
 
     /**
-     * Ändert die Werte von einem Benutzer. Hierbei wird die alte Repräsentation vom Benutzer geladen und
-     * nur Werte überschrieben die auch geändert werden dürfen. Password, Token und Benutzername bleiben
-     * von Änderungen ungebtroffen.
+     * Ändert die Werte von einem Benutzer. Hierbei wird die alte Repräsentation vom Benutzer geladen und nur Werte
+     * überschrieben die auch geändert werden dürfen. Password, Token und Benutzername bleiben von Änderungen
+     * unbetroffen.
      *
-     * @param user     angemeldeter Benutzer
-     * @param id       ID des Benutzers aus dem Pfad
+     * @param user angemeldeter Benutzer
+     * @param id ID des Benutzers aus dem Pfad
      * @param benutzer geänderte Werte des Benutzers
      * @return Aktualisierter Benutzer.
      */
     @PutMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
     HttpEntity<HalJsonResource> put(
-            @AuthenticationPrincipal User user,
-            @PathVariable("id") Long id,
-            @RequestBody Benutzer benutzer) {
+        @AuthenticationPrincipal User user,
+        @PathVariable("id") Long id,
+        @RequestBody Benutzer benutzer) {
         return accessService.hasAccessOnBenutzer(user, id, () -> {
             Optional<Benutzer> b = benutzerRepository.findById(id);
             if (b.isPresent()) {
@@ -86,7 +85,7 @@ public class BenutzerResource {
      * Benutzer werden nicht gelöscht, sondern nur deaktiviert.
      *
      * @param user angemeldeter Benutzer
-     * @param id   ID des Benutzers aus dem Pfad
+     * @param id ID des Benutzers aus dem Pfad
      * @return Rückmeldung über den Erfolg durch den HttpStatus.
      */
     @DeleteMapping(produces = HAL_JSON)

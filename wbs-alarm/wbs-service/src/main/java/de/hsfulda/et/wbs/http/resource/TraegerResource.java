@@ -13,14 +13,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
-import static de.hsfulda.et.wbs.http.resource.TraegerResource.PATH;
 import static org.springframework.util.ObjectUtils.isEmpty;
 
 /**
  * Diese Resource stellt einen Träger dar. Hier kann ein Träger aufgerufen, bearbeitet und gelöscht werden.
  */
 @RestController
-@RequestMapping(PATH)
+@RequestMapping(TraegerResource.PATH)
 public class TraegerResource {
 
     public static final String PATH = "/traeger/{id}";
@@ -41,10 +40,8 @@ public class TraegerResource {
     @PreAuthorize("hasAuthority('READ_ALL')")
     HttpEntity<HalJsonResource> get(@PathVariable("id") Long id) {
         Optional<Traeger> managed = traegerRepository.findById(id);
-        if (managed.isPresent()) {
-            return new HttpEntity<>(new TraegerHalJson(managed.get()));
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return managed.<HttpEntity<HalJsonResource>>map(traeger -> new HttpEntity<>(new TraegerHalJson(traeger)))
+            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     /**
@@ -79,7 +76,7 @@ public class TraegerResource {
      * @return 200. Andernfalls 404.
      */
     @DeleteMapping(produces = HAL_JSON)
-    @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     HttpEntity<HalJsonResource> delete(@PathVariable("id") Long id) {
         Optional<Traeger> managed = traegerRepository.findById(id);
 

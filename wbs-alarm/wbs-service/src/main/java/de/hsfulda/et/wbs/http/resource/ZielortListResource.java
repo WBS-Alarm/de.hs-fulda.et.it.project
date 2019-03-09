@@ -16,14 +16,17 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
-import static de.hsfulda.et.wbs.http.resource.ZielortListResource.PATH;
 import static org.springframework.util.ObjectUtils.isEmpty;
 
+/**
+ * Auf der Resource Zielorte können alle Zielorte zu einem Träger abgerufen werden und neue Zielorte erstellt werden.
+ */
 @RestController
-@RequestMapping(PATH)
+@RequestMapping(ZielortListResource.PATH)
 public class ZielortListResource {
 
     public static final String PATH = "/traeger/{traegerId}/zielorte";
@@ -42,18 +45,32 @@ public class ZielortListResource {
         this.accessService = accessService;
     }
 
-
+    /**
+     * Ermittlelt alle Zielorte zu einem Träger.
+     *
+     * @param user Angemeldeter Benutzer.
+     * @param traegerId ID des Trägres.
+     * @return Liste aller Zielorte zu einem Träger.
+     */
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")
     HttpEntity<HalJsonResource> get(@AuthenticationPrincipal User user, @PathVariable("traegerId") Long traegerId) {
         return accessService.hasAccessOnTraeger(user, traegerId, () -> {
             //TODO: Paginierung?
 
-            Iterable<Zielort> all = zielortRepository.findAll();
+            List<Zielort> all = zielortRepository.findAllByTraegerId(traegerId);
             return new HttpEntity<>(new ZielortListHalJson(all));
         });
     }
 
+    /**
+     * Erstellt einen neuen Zielort zu einem Träger.
+     *
+     * @param user Angemeldeter Benutzer.
+     * @param traegerId ID des Trägers.
+     * @param zielort Neuer Zielort.
+     * @return Persistierter Zielort.
+     */
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")

@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-import static de.hsfulda.et.wbs.security.resource.UserRegisterResource.PATH;
 import static org.springframework.util.StringUtils.isEmpty;
 
+/**
+ * In dieser Resource werden Benutzer zu einem Träger registriert. Dies geschieht nur über den Träger Manager.
+ */
 @RestController
-@RequestMapping(PATH)
+@RequestMapping(UserRegisterResource.PATH)
 public class UserRegisterResource {
 
     public static final String PATH = "/users/register/{traegerId}";
@@ -32,6 +34,14 @@ public class UserRegisterResource {
         this.benutzerRepo = benutzerRepo;
     }
 
+    /**
+     * Erst werden die Angaben zum Benutzer gerprüft, ob Name und Password angegeben wurden. Danach wird geprüft, ob der
+     * Träger existiert und ob es bereits einen Benutzer mit dem Username bereits vergeben ist.
+     *
+     * @param traegerId ID des Trägers zu dem der Benutzer angelegt werden soll.
+     * @param user Angemeldeter Benutzer.
+     * @return Status 201.
+     */
     @PostMapping
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
     ResponseEntity<Void> post(@PathVariable("traegerId") Long traegerId, @RequestBody final Benutzer user) {
@@ -49,12 +59,12 @@ public class UserRegisterResource {
         }
 
         users.register(
-                User.builder()
-                        .id(user.getUsername())
-                        .username(user.getUsername())
-                        .password(user.getPassword())
-                        .aktiv(true)
-                        .build()
+            User.builder()
+                .id(user.getUsername())
+                .username(user.getUsername())
+                .password(user.getPassword())
+                .aktiv(true)
+                .build()
         );
 
         setBenutzerOnTraeger(user, traeger.get());

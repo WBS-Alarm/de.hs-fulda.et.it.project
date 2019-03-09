@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Optional;
 
 import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
-import static de.hsfulda.et.wbs.security.resource.UserResource.PATH;
 
+/**
+ * Über diese Resource kann ein User ermittelt werden.
+ */
 @RestController
-@RequestMapping(PATH)
+@RequestMapping(UserResource.PATH)
 public class UserResource {
 
     public static final String PATH = "/users/{username}";
@@ -34,9 +36,8 @@ public class UserResource {
     @PreAuthorize("hasAuthority('READ_ALL')")
     HttpEntity<HalJsonResource> get(@PathVariable("username") String username, @AuthenticationPrincipal final User user) {
         Optional<User> byName = users.findByUsername(username);
-        if (byName.isPresent()) {
-            return new HttpEntity<>(new de.hsfulda.et.wbs.security.haljson.UserResource(byName.get()));
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return byName.<HttpEntity<HalJsonResource>>map(user1 ->
+            new HttpEntity<>(new de.hsfulda.et.wbs.security.haljson.UserResource(user1)))
+            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }

@@ -19,6 +19,5 @@ public class TraegerListHalJson extends HalJsonResource {
                 .collect(Collectors.toList());
 
         addEmbeddedResources("elemente", resources);
-
     }
 }

@@ -19,7 +19,5 @@ public interface UserCrudService {
 
     void deleteToken(User user);
 
-    Optional<User> find(String id);
-
     Optional<User> findByUsername(String username);
 }
