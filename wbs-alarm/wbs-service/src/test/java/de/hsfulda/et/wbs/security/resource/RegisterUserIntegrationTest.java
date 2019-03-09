@@ -28,7 +28,7 @@ class RegisterUserIntegrationTest extends ResourceTest {
             bearerToken = getTokenAsSuperuser();
         }
 
-        @DisplayName("Paul mit Password 1234 erstellen")
+        @DisplayName("erstellt Paul mit Password 1234")
         @Test
         void registerNewUser() throws Exception {
             mockMvc.perform(post(UserRegisterResource.PATH, getTraegerId(FW_TRAEGER))
@@ -38,7 +38,7 @@ class RegisterUserIntegrationTest extends ResourceTest {
                     .andExpect(status().isCreated());
         }
 
-        @DisplayName("Paul mit Password 1234 erstellen")
+        @DisplayName("erstellt nicht Paul mit Password 1234 zu unbekannten Träger")
         @Test
         void registerNewUserTraegerNotExists() throws Exception {
             mockMvc.perform(post(UserRegisterResource.PATH, 0L)
@@ -48,7 +48,7 @@ class RegisterUserIntegrationTest extends ResourceTest {
                     .andExpect(status().isNotFound());
         }
 
-        @DisplayName("Paul ohne Password erstellen")
+        @DisplayName("erstellen nicht Paul ohne Password")
         @Test
         void registerNewUserNoPassword() throws Exception {
             mockMvc.perform(post(UserRegisterResource.PATH, getTraegerId(FW_TRAEGER))
@@ -58,7 +58,7 @@ class RegisterUserIntegrationTest extends ResourceTest {
                 .andExpect(status().isBadRequest());
         }
 
-        @DisplayName("Ohne Namen mit Password 1234 erstellen")
+        @DisplayName("erstellt nicht Benutzer ohne angegebenen Namen mit Password 1234")
         @Test
         void registerNewUserNoName() throws Exception {
             mockMvc.perform(post(UserRegisterResource.PATH, getTraegerId(FW_TRAEGER))
@@ -69,15 +69,15 @@ class RegisterUserIntegrationTest extends ResourceTest {
         }
 
         @Nested
-        @DisplayName("Wiederholtes Registrieren")
+        @DisplayName("bei erneuter Registrierung")
         class RegisterPaulAgainn {
 
-            @DisplayName("Nochmal Paul mit Password 1234 erstellen")
+            @DisplayName("kann keinen zweiten Paul mit beliebigen Password erstellen")
             @Test
             void registerNewUser() throws Exception {
                 mockMvc.perform(post(UserRegisterResource.PATH, getTraegerId(FW_TRAEGER))
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content("{\n  \"username\": \"Paul\",\n  \"password\": \"1234\"\n}")
+                    .content("{\n  \"username\": \"Paul\",\n  \"password\": \"2345\"\n}")
                     .header("Authorization", bearerToken))
                     .andExpect(status().isConflict());
             }
@@ -96,7 +96,7 @@ class RegisterUserIntegrationTest extends ResourceTest {
             }
 
 
-            @DisplayName("Superuser ist abgemeldet")
+            @DisplayName("ist Superuser abgemeldet")
             @Test
             void superuserIsLoggedOut() throws Exception {
                 mockMvc.perform(get(CurrentUserResource.PATH)
@@ -105,7 +105,7 @@ class RegisterUserIntegrationTest extends ResourceTest {
                     .andExpect(status().isUnauthorized());
             }
 
-            @DisplayName("und mit Paul anmelden")
+            @DisplayName("kann Paul anmelden")
             @Test
             void loginAsPaul() throws Exception {
                 mockMvc.perform(post(LoginResource.PATH)

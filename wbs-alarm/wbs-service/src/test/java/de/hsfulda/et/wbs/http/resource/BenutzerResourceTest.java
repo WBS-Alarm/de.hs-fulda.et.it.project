@@ -17,19 +17,19 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@DisplayName("Test der Benutzer Resource")
+@DisplayName("Die Benutzer Resource")
 class BenutzerResourceTest extends ResourceTest {
 
     @Autowired
     private BenutzerResource resource;
 
-    @DisplayName("Laden der Resourcen erfolgreich.")
+    @DisplayName("wird im Spring Context geladen und gefunden")
     @Test
     void contextLoads() {
         assertThat(resource).isNotNull();
     }
 
-    @DisplayName("Anzeigen eines Benutzers vom gleichen Träger wie der User")
+    @DisplayName("wird bei gleichen Träger angezeigt")
     @Test
     void getBenutzer() throws Exception {
         mockMvc.perform(get(BenutzerResource.PATH, getBenutzerId(LE_USER))
@@ -38,7 +38,7 @@ class BenutzerResourceTest extends ResourceTest {
                 .andExpect(status().isOk());
     }
 
-    @DisplayName("Anzeigen eines Benutzers vom anderen Träger wie der User")
+    @DisplayName("wird bei einem anderen Träger nicht angezeigt")
     @Test
     void getBenutzerAndererTraeger() throws Exception {
         mockMvc.perform(get(BenutzerResource.PATH, getBenutzerId(HE_USER))
@@ -47,7 +47,7 @@ class BenutzerResourceTest extends ResourceTest {
                 .andExpect(status().isNotFound());
     }
 
-    @DisplayName("Ändern der Email Adresse eines Benutzers")
+    @DisplayName("kann die E-Mail Adresse ändern aber nicht den Namen")
     @Test
     void putAendernVonVorhandenenBenutzer() throws Exception {
         mockMvc.perform(put(BenutzerResource.PATH, getBenutzerId(LE_USER))
@@ -59,7 +59,7 @@ class BenutzerResourceTest extends ResourceTest {
                 .andExpect(jsonPath("$.mail", is("neueMail@domain.de")));
     }
 
-    @DisplayName("Ändern der Email Adresse eines unbekannten Benutzers")
+    @DisplayName("kann keinen unbekannten Benutzer ändern")
     @Test
     void putAendernVonUnbekanntenBenutzer() throws Exception {
         mockMvc.perform(put(BenutzerResource.PATH, 0L)
@@ -69,7 +69,7 @@ class BenutzerResourceTest extends ResourceTest {
                 .andExpect(status().isNotFound());
     }
 
-    @DisplayName("Ändern der Email Adresse eines unberechtigten Benutzers")
+    @DisplayName("kann keinen Benutzer von einem anderen Träger ändern")
     @Test
     void putAendernVonUnberechtigtenBenutzer() throws Exception {
         mockMvc.perform(put(BenutzerResource.PATH, getBenutzerId(LE_USER))
@@ -79,7 +79,7 @@ class BenutzerResourceTest extends ResourceTest {
                 .andExpect(status().isNotFound());
     }
 
-    @DisplayName("Löschen eines Benutzers")
+    @DisplayName("kann einen Benutzer löschen indem er inaktiv gesetzt wird")
     @Test
     void deleteBenutzer() throws Exception {
         Long forDeleteId = getBenutzerId(FD_USER);

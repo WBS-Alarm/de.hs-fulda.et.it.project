@@ -14,20 +14,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-@DisplayName("Test des Login Controllers.")
+@DisplayName("Die Login Resource")
 class LoginResourceTest extends ResourceTest {
 
     @Autowired
     private LoginResource controller;
 
 
-    @DisplayName("Laden des Controllers erfolgreich.")
+    @DisplayName("wird im Spring Context geladen und gefunden")
     @Test
     void contextLoads() {
         assertThat(controller).isNotNull();
     }
 
-    @DisplayName("Login eines bereits registrierten Benutzers.")
+    @DisplayName("meldet einen bereits registrierten Benutzer an")
     @Test
     void login() throws Exception {
         mockMvc.perform(post(PATH)
@@ -37,7 +37,7 @@ class LoginResourceTest extends ResourceTest {
             .andExpect(content().string(startsWith("ey")));
     }
 
-    @DisplayName("Fehlerhafte Anmeldung.")
+    @DisplayName("weißt eine fehlerhafte Anmeldung ab")
     @Test
     void loginFailed() throws Exception {
         mockMvc.perform(post(PATH)

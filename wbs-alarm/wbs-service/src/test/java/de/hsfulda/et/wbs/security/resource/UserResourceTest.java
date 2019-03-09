@@ -12,7 +12,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@DisplayName("Test des Users Controller und dessen Suppaths.")
+@DisplayName("Die User Resourcen und Subresourcen")
 class UserResourceTest extends ResourceTest {
 
     @Autowired
@@ -31,7 +31,7 @@ class UserResourceTest extends ResourceTest {
     private UserResource userResource;
 
 
-    @DisplayName("Laden der Resourcen erfolgreich.")
+    @DisplayName("werden im Spring Context geladen und gefunden")
     @Test
     void contextLoads() {
         Assertions.assertThat(userLogoutResource).isNotNull();
@@ -41,7 +41,7 @@ class UserResourceTest extends ResourceTest {
         Assertions.assertThat(userResource).isNotNull();
     }
 
-    @DisplayName("Laden des angemeldeten Benutzers")
+    @DisplayName("ermitteln den angemeldeten Benutzer")
     @Test
     void getCurrentUser() throws Exception {
         mockMvc.perform(get(CurrentUserResource.PATH)
@@ -53,7 +53,7 @@ class UserResourceTest extends ResourceTest {
             .andExpect(jsonPath("$._links.self[0].templated", is(false)));
     }
 
-    @DisplayName("Laden des angemeldeten Benutzers als nicht angemeldeter Benutzer")
+    @DisplayName("können nicht von unangemeldeten Benutzern zugegriffen werden")
     @Test
     void getCurrentUserNoToken() throws Exception {
         mockMvc.perform(get(CurrentUserResource.PATH)
@@ -62,7 +62,7 @@ class UserResourceTest extends ResourceTest {
             .andExpect(status().isUnauthorized());
     }
 
-    @DisplayName("Laden eines vorhandenen Benutzers")
+    @DisplayName("können einen vorhandenen Benutzer anhand des Namens laden")
     @Test
     void getSomeUser() throws Exception {
         mockMvc.perform(get(UserResource.PATH, "Superuser")
@@ -74,7 +74,7 @@ class UserResourceTest extends ResourceTest {
             .andExpect(jsonPath("$._links.self[0].templated", is(false)));
     }
 
-    @DisplayName("Laden eines unbekannten Benutzers")
+    @DisplayName("können keinen unbekannten Benutzer anhand des Namens laden")
     @Test
     void getSomeUserUnknown() throws Exception {
         mockMvc.perform(get(UserResource.PATH, "Nobody")

@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@DisplayName("Test der Traeger Resourcen.")
+@DisplayName("Die Traeger Resource")
 class TraegerListResourceTest extends ResourceTest {
 
     @Autowired
@@ -23,14 +23,14 @@ class TraegerListResourceTest extends ResourceTest {
     @Autowired
     private TraegerResource resource;
 
-    @DisplayName("Laden der Resourcen erfolgreich.")
+    @DisplayName("wird im Spring Context geladen und gefunden")
     @Test
     void contextLoads() {
         assertThat(resource).isNotNull();
         assertThat(listResource).isNotNull();
     }
 
-    @DisplayName("Ermitteln aller Traeger")
+    @DisplayName("wird als Liste und embedded angezeigt")
     @Test
     void getAll() throws Exception {
         mockMvc.perform(get(TraegerListResource.PATH)
@@ -42,7 +42,7 @@ class TraegerListResourceTest extends ResourceTest {
                 .andExpect(jsonPath("$._embedded.elemente[0].name", is("Feuerwehr")));
     }
 
-    @DisplayName("Hinzufügen eines neuen Trägers")
+    @DisplayName("kann einen neuen Träger als Admin erstellen")
     @Test
     void postNew() throws Exception {
         mockMvc.perform(post(TraegerListResource.PATH)
@@ -54,7 +54,7 @@ class TraegerListResourceTest extends ResourceTest {
                 .andExpect(jsonPath("$.name", is("Kassel")));
     }
 
-    @DisplayName("Hinzufügen eines neuen Trägers ohne Berechtigung")
+    @DisplayName("kann keinen neuen Träger als lesender Anwender erstellen")
     @Test
     void postNewNoPermissions() throws Exception {
         mockMvc.perform(post(TraegerListResource.PATH)
@@ -64,7 +64,7 @@ class TraegerListResourceTest extends ResourceTest {
                 .andExpect(status().isForbidden());
     }
 
-    @DisplayName("Hinzufügen eines neuen Trägers - Ohne Namen")
+    @DisplayName("kann keinen neuen Träger ohne Namen als Admin erstellen")
     @Test
     void postNewNoName() throws Exception {
         mockMvc.perform(post(TraegerListResource.PATH)
@@ -75,7 +75,7 @@ class TraegerListResourceTest extends ResourceTest {
     }
 
 
-    @DisplayName("Hinzufügen eines neuen Trägers - Ohne RequestBody")
+    @DisplayName("kann keinen neuen Träger ohne Request Body als Admin erstellen")
     @Test
     void postNewNoBody() throws Exception {
         mockMvc.perform(post(TraegerListResource.PATH)
@@ -84,11 +84,11 @@ class TraegerListResourceTest extends ResourceTest {
                 .andExpect(status().isBadRequest());
     }
 
-    @DisplayName("Aktionen auf einen Träger")
+    @DisplayName("im Einzelnen")
     @Nested
     class TraegerTest {
 
-        @DisplayName("Ermitteln eines Trägers")
+        @DisplayName("wird angezeigt")
         @Test
         void getKassel() throws Exception {
             String resourceLink = UriUtil.build(TraegerResource.PATH, getTraegerId("Kassel"));
@@ -104,7 +104,7 @@ class TraegerListResourceTest extends ResourceTest {
                     .andExpect(jsonPath("$.name", is("Kassel")));
         }
 
-        @DisplayName("Ermitteln eines Trägers - nicht gefunden")
+        @DisplayName("wird nicht angezeigt, wenn der Träger nicht vorhanden ist")
         @Test
         void getNotFound() throws Exception {
             mockMvc.perform(get(TraegerResource.PATH, 0L)
@@ -112,11 +112,11 @@ class TraegerListResourceTest extends ResourceTest {
                     .andExpect(status().isNotFound());
         }
 
-        @DisplayName("Ändern des Names vom Träger")
+        @DisplayName("bei Änderungen")
         @Nested
         class TraegerChangeTest {
 
-            @DisplayName("Ändern eines Trägers")
+            @DisplayName("wird erfolgreich der Name geändert")
             @Test
             void putKassel() throws Exception {
                 mockMvc.perform(put(TraegerResource.PATH, getTraegerId("Kassel"))
@@ -127,7 +127,7 @@ class TraegerListResourceTest extends ResourceTest {
                         .andExpect(jsonPath("$.name", is("Fulda")));
             }
 
-            @DisplayName("Ändern eines Trägers - der Name ist leer")
+            @DisplayName("wird ohne Angabe von Namen nicht geändert")
             @Test
             void putKasselNoName() throws Exception {
                 mockMvc.perform(put(TraegerResource.PATH, getTraegerId("Fulda"))
@@ -137,11 +137,11 @@ class TraegerListResourceTest extends ResourceTest {
                         .andExpect(status().isBadRequest());
             }
 
-            @DisplayName("Löschen des neuen Trägers")
+            @DisplayName("beim Entfernen")
             @Nested
             class TraegerDeleteTest {
 
-                @DisplayName("Träger ist vorhanden")
+                @DisplayName("wird der Träger erfolgreich gelöscht und ist nicht mehr auffindbar")
                 @Test
                 void deleteKassel() throws Exception {
                     Long fulda = getTraegerId("Fulda");
@@ -155,7 +155,7 @@ class TraegerListResourceTest extends ResourceTest {
                             .andExpect(status().isNotFound());
                 }
 
-                @DisplayName("Träger ist unbekannt")
+                @DisplayName("wird der Träger nciht gefunden wenn dieser nicht existiert")
                 @Test
                 void deleteNotFound() throws Exception {
                     mockMvc.perform(delete(TraegerResource.PATH, 0L)

@@ -1,31 +1,36 @@
 package de.hsfulda.et.wbs.http.resource;
 
 import de.hsfulda.et.wbs.ResourceTest;
+import de.hsfulda.et.wbs.entity.Zielort;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@DisplayName("Test der Zielort Resourcen.")
+@DisplayName("Die Zielort Resource")
 class ZielortResourceTest extends ResourceTest {
 
     @Autowired
     private ZielortResource resource;
 
-    @DisplayName("Laden der Resourcen erfolgreich.")
+    @DisplayName("wird im Spring Context geladen und gefunden")
     @Test
     void contextLoads() {
         assertThat(resource).isNotNull();
     }
 
-    @DisplayName("Anzeigen eines Zielorts vom gleichen Träger wie der User")
+    @DisplayName("wird aufgelistet zu dem Träger des Anwenders aufgelistet.")
     @Test
     void getZielort() throws Exception {
         Long zielortId = getZielortId("Wareneingang", FW_TRAEGER);
@@ -39,7 +44,7 @@ class ZielortResourceTest extends ResourceTest {
                 .andExpect(jsonPath("$._embedded.traeger[0].name", is(FW_TRAEGER)));
     }
 
-    @DisplayName("Anzeigen eines Zielorts vom anderen Träger wie der User")
+    @DisplayName("wird von einem anderen Träger nicht angezeigt.")
     @Test
     void getZielortNotFound() throws Exception {
         Long zielortId = getZielortId("Wareneingang", FW_TRAEGER);
@@ -49,7 +54,7 @@ class ZielortResourceTest extends ResourceTest {
                 .andExpect(status().isNotFound());
     }
 
-    @DisplayName("Erstellen eines Zielorts")
+    @DisplayName("kann für einen Träger erstellt werden")
     @Test
     void putAendernEinesZielorts() throws Exception {
         Long traegerId = getTraegerId(HE_TRAEGER);
@@ -63,11 +68,11 @@ class ZielortResourceTest extends ResourceTest {
                 .andExpect(jsonPath("$._embedded.traeger[0].name", is(HE_TRAEGER)));
     }
 
-    @DisplayName("Aktionen auf einen Zielorts")
+    @DisplayName("bei Änderungen")
     @Nested
     class ZielortAenderungen {
 
-        @DisplayName("selbstangelegter Zielort ist ohne Namen nicht änderbar")
+        @DisplayName("wird nicht geändert wenn der Name nicht angegeben wurde")
         @Test
         void putAendernErstellterZielortKeinName() throws Exception {
             Long zielortId = getZielortId("Eschenstruth", HE_TRAEGER);
@@ -78,7 +83,7 @@ class ZielortResourceTest extends ResourceTest {
                     .andExpect(status().isBadRequest());
         }
 
-        @DisplayName("Standard-Zielort ist nicht änderbar")
+        @DisplayName("wird nicht geändert wenn es sich um einen automatisierten Zielort handelt")
         @Test
         void putAendernStandardZielort() throws Exception {
             Long zielortId = getZielortId("Wareneingang", HE_TRAEGER);
@@ -89,11 +94,11 @@ class ZielortResourceTest extends ResourceTest {
                     .andExpect(status().isBadRequest());
         }
 
-        @DisplayName("Valides Ändern")
+        @DisplayName("valide")
         @Nested
         class AenderZielort {
 
-            @DisplayName("selbstangelegter Zielort ist änderbar")
+            @DisplayName("wird geändert wenn der Zielort nicht automatisiert angelegt wurde ")
             @Test
             void putAendernErstellterZielort() throws Exception {
                 Long zielortId = getZielortId("Eschenstruth", HE_TRAEGER);
@@ -107,11 +112,11 @@ class ZielortResourceTest extends ResourceTest {
                         .andExpect(jsonPath("$._embedded.traeger[0].name", is(HE_TRAEGER)));
             }
 
-            @DisplayName("und wieder löschen")
+            @DisplayName("ist löschbar")
             @Nested
             class LoeschenTraeger {
 
-                @DisplayName("eines vorhandenen Zielorts")
+                @DisplayName("wird inaktiv gesetzt wenn der ZIelort nicht automatisiert angelegt wurde")
                 @Test
                 void deleteDeleteValid() throws Exception {
                     Long zielortId = getZielortId("Eschenstr.", HE_TRAEGER);
@@ -125,10 +130,15 @@ class ZielortResourceTest extends ResourceTest {
                             .header("Authorization", getToken(HE_USER))
                             .contentType(MediaType.APPLICATION_JSON))
                             .andExpect(status().isNotFound());
+
+                    Optional<Zielort> byId = zielortRepository.findById(zielortId);
+
+                    assertTrue(byId.isPresent());
+                    assertFalse(byId.get().isAktiv());
                 }
 
 
-                @DisplayName("eines unbekannten Zielorts")
+                @DisplayName("wird nicht gelöscht wenn ZIelort nicht gefunden wurde")
                 @Test
                 void deleteNotFoun() throws Exception {
                     mockMvc.perform(delete(ZielortResource.PATH, 0L)

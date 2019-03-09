@@ -13,25 +13,25 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@DisplayName("Test des Sitemap Controllers.")
+@DisplayName("Die Sitemap Resource")
 class SitemapResourceTest extends ResourceTest {
 
     @Autowired
     private SitemapResource controller;
 
-    @DisplayName("Laden des Resource erfolgreich.")
+    @DisplayName("wird im Spring Context geladen und gefunden")
     @Test
     void contextLoads() {
         assertThat(controller).isNotNull();
     }
 
-    @DisplayName("Lades der Sitemap.")
+    @DisplayName("wird angezeigt.")
     @Test
     void sitemap() throws Exception {
         mockMvc.perform(get(PATH)
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$._links.self[0].href", is(PATH)))
+            .andExpect(jsonPath("$._links.self[0].href", is(SitemapResource.PATH)))
             .andExpect(jsonPath("$._links.self[0].templated", is(false)));
     }
 }
