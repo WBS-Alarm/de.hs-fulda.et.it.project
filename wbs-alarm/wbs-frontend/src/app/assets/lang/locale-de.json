@@ -6,5 +6,11 @@
 	"example": "Beispiel",
 	"search": "Suchen",
 	"noResult": "Keine Ergebnisse",
-	"test": "Das ist nur ein Test"
+	"test": "Das ist nur ein Test",
+
+	"login": {
+		"username": "Benutzername",
+		"password": "Passwort",
+		"language": "Sprache"
+	}
 }

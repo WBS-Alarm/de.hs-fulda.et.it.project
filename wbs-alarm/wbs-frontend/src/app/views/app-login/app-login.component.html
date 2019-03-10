@@ -1,0 +1,13 @@
+<terra-portlet>
+    <terra-text-input [inputName]="username"
+                      [(ngModel)]="user.name">
+    </terra-text-input>
+    <terra-text-input [inputName]="password"
+                      [(ngModel)]="user.password">
+    </terra-text-input>
+    <terra-select-box
+            [inputName]="languageCaption"
+            [inputListBoxValues]="languages"
+            [(ngModel)]="user.language">
+    </terra-select-box>
+</terra-portlet>

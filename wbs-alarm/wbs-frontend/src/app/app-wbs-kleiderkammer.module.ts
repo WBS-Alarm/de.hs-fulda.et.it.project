@@ -26,7 +26,9 @@ import { ExampleViewComponent } from './views/example/example-view.component';
 import { TableComponent } from './views/example/overview/table/table.component';
 import { FilterComponent } from './views/example/overview/filter/filter.component';
 import { OverviewViewComponent } from './views/example/overview/overview-view.component';
-import {AppWbsKleiderkammer} from "./app-wbs-kleiderkammer";
+import { AppWbsKleiderkammer } from './app-wbs-kleiderkammer';
+import { AppLoginComponent } from './views/app-login/app-login.component';
+
 
 @NgModule({
     imports:      [
@@ -48,7 +50,8 @@ import {AppWbsKleiderkammer} from "./app-wbs-kleiderkammer";
         ExampleViewComponent,
         TableComponent,
         FilterComponent,
-        OverviewViewComponent
+        OverviewViewComponent,
+        AppLoginComponent
     ],
     providers:    [
         {

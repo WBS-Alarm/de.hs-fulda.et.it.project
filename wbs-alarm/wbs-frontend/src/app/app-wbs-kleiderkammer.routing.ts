@@ -6,12 +6,17 @@ import {
 import { StartViewComponent } from './views/start-view.component';
 import { RouterViewComponent } from './views/router/router-view.component';
 import { ExampleViewComponent } from './views/example/example-view.component';
+import {AppLoginComponent} from "./views/app-login/app-login.component";
 
 const appRoutes:Routes = [
     {
         path: '',
-        redirectTo: 'plugin',
+        redirectTo: 'login',
         pathMatch: 'full',
+    },
+    {
+        path: 'login',
+        component: AppLoginComponent
     },
     {
         path: 'plugin',
