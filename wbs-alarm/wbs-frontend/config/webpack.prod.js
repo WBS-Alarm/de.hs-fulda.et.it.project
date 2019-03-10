@@ -10,7 +10,7 @@ module.exports = merge(commonConfig, {
     mode: 'production',
     devtool: 'source-map',
     output: {
-        path: helpers.root('dist'),
+        path: helpers.root('dist/META-INF/resources'),
         filename: '[name].js',
         chunkFilename: '[name].js'
     },

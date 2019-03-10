@@ -9,7 +9,7 @@ module.exports = merge(commonConfig, {
     mode: 'development',
     devtool: 'eval-source-map',
     output: {
-        path: helpers.root('dist'),
+        path: helpers.root('dist/META-INF/resources'),
         filename: '[name].js',
         chunkFilename: '[id].chunk.js'
     },
