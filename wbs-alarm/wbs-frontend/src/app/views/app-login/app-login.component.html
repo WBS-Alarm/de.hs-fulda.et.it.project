@@ -1,13 +1,17 @@
-<terra-portlet>
-    <terra-text-input [inputName]="username"
+<terra-portlet class="login-portlet">
+    <h2>Willkommen in der WBS Kleiderkammer</h2>
+    <terra-text-input [inputName]="'Benutzername'"
                       [(ngModel)]="user.name">
     </terra-text-input>
-    <terra-text-input [inputName]="password"
+    <terra-text-input [inputName]="'Passwort'"
                       [(ngModel)]="user.password">
     </terra-text-input>
-    <terra-select-box
-            [inputName]="languageCaption"
-            [inputListBoxValues]="languages"
-            [(ngModel)]="user.language">
-    </terra-select-box>
+    <!--<terra-select-box-->
+            <!--[inputName]="'Sprache'"-->
+            <!--[inputListBoxValues]="languages"-->
+            <!--[(ngModel)]="user.language">-->
+    <!--</terra-select-box>-->
+
+    <terra-button [inputCaption]="'Anmelden'"
+                    (outputClicked)="login()"></terra-button>
 </terra-portlet>

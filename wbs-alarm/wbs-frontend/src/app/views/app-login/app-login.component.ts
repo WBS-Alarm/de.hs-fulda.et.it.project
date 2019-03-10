@@ -34,7 +34,7 @@ export class AppLoginComponent implements OnInit {
     public ngOnInit():void
     {
         this.initTranslations();
-        this.initLanguageValues();
+        // this.initLanguageValues();
     }
 
     private initTranslations():void
@@ -44,18 +44,23 @@ export class AppLoginComponent implements OnInit {
         this.languageCaption = this.translation.translate('login.language', this.lang);
     }
 
-    private initLanguageValues():void
+    // private initLanguageValues():void
+    // {
+    //     this.languages =
+    //         [
+    //             {
+    //                 caption: 'Deutsch',
+    //                 value: 'de'
+    //             },
+    //             {
+    //                 caption: 'English',
+    //                 value: 'en'
+    //             }
+    //         ];
+    // }
+
+    protected login():void
     {
-        this.languages =
-            [
-                {
-                    caption: 'Deutsch',
-                    value: 'de'
-                },
-                {
-                    caption: 'English',
-                    value: 'en'
-                }
-            ];
+        console.log(this.user);
     }
 }
