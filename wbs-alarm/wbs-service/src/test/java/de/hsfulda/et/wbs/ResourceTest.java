@@ -3,6 +3,7 @@ package de.hsfulda.et.wbs;
 import de.hsfulda.et.wbs.repository.BenutzerRepository;
 import de.hsfulda.et.wbs.repository.TraegerRepository;
 import de.hsfulda.et.wbs.repository.ZielortTestRepository;
+import de.hsfulda.et.wbs.security.repository.GrantedAuthorityRepository;
 import de.hsfulda.et.wbs.security.service.UserAuthenticationService;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,10 +38,13 @@ public abstract class ResourceTest {
     protected BenutzerRepository benutzerRepository;
 
     @Autowired
+    protected GrantedAuthorityRepository grantedAuthorityRepository;
+
+    @Autowired
     private UserAuthenticationService authentication;
 
     protected String getTokenAsSuperuser() {
-        return getToken("Superuser", "password");
+        return getToken(SU_USER, "password");
     }
 
     protected String getToken(String username) {
@@ -63,5 +67,9 @@ public abstract class ResourceTest {
 
     protected Long getZielortId(String name, String traeger) {
         return zielortRepository.findByName(name, traeger).get(0).getId();
+    }
+
+    protected boolean hasGrantedAuthority(Long userId, Long authorityId) {
+        return grantedAuthorityRepository.findByUserId(userId).stream().anyMatch(g -> authorityId.equals(g.getAuthorityId()));
     }
 }

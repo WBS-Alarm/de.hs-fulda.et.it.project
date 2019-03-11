@@ -3,7 +3,12 @@ package de.hsfulda.et.wbs.http.haljson;
 import de.hsfulda.et.wbs.core.HalJsonResource;
 import de.hsfulda.et.wbs.core.Link;
 import de.hsfulda.et.wbs.entity.Benutzer;
+import de.hsfulda.et.wbs.security.entity.GrantedAuthority;
+import de.hsfulda.et.wbs.security.haljson.AuthorityHalJson;
 import de.hsfulda.et.wbs.util.UriUtil;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class BenutzerHalJson extends HalJsonResource {
 
@@ -16,6 +21,15 @@ public class BenutzerHalJson extends HalJsonResource {
         if (embedded) {
             addEmbeddedResource("traeger", new TraegerHalJson(benutzer.getTraeger(), false));
         }
+    }
+
+    public BenutzerHalJson(Benutzer benutzer, List<GrantedAuthority> granted) {
+        this(benutzer, true);
+
+        addEmbeddedResources("authorities", granted.stream()
+                .map(g -> new AuthorityHalJson(g.getGroup()))
+                .collect(Collectors.toList()));
+
     }
 
     private void addBenutzerProperies(Benutzer benutzer) {

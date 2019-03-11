@@ -27,6 +27,9 @@ public class GrantedAuthority {
     }
 
     public void setUserId(Long userId) {
+        if (pk == null) {
+            pk = new GrantedAuthorityKey();
+        }
         pk.setUserId(userId);
     }
 
@@ -35,6 +38,9 @@ public class GrantedAuthority {
     }
 
     public void setAuthorityId(Long authorityId) {
+        if (pk == null) {
+            pk = new GrantedAuthorityKey();
+        }
         pk.setAuthorityId(authorityId);
     }
 

@@ -2,6 +2,7 @@ package de.hsfulda.et.wbs.security.resource;
 
 import de.hsfulda.et.wbs.core.HalJsonResource;
 import de.hsfulda.et.wbs.security.User;
+import de.hsfulda.et.wbs.security.haljson.UserHalJson;
 import de.hsfulda.et.wbs.security.service.UserCrudService;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -37,7 +38,7 @@ public class UserResource {
     HttpEntity<HalJsonResource> get(@PathVariable("username") String username, @AuthenticationPrincipal final User user) {
         Optional<User> byName = users.findByUsername(username);
         return byName.<HttpEntity<HalJsonResource>>map(user1 ->
-            new HttpEntity<>(new de.hsfulda.et.wbs.security.haljson.UserResource(user1)))
+            new HttpEntity<>(new UserHalJson(user1)))
             .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }
