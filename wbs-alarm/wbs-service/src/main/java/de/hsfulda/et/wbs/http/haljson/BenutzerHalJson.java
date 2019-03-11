@@ -27,7 +27,7 @@ public class BenutzerHalJson extends HalJsonResource {
         this(benutzer, true);
 
         addEmbeddedResources("authorities", granted.stream()
-                .map(g -> new AuthorityHalJson(g.getGroup()))
+                .map(g -> new AuthorityHalJson(g.getGroup(), benutzer))
                 .collect(Collectors.toList()));
 
     }

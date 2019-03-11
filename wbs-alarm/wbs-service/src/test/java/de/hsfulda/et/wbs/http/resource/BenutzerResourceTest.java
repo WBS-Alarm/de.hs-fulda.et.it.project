@@ -15,6 +15,7 @@ import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -38,6 +39,7 @@ class BenutzerResourceTest extends ResourceTest {
                 .header("Authorization", getTokenAsSuperuser())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
+                .andDo(print())
                 .andExpect(jsonPath("$._embedded.authorities[0].id", is(5)))
                 .andExpect(jsonPath("$._embedded.authorities[0].code", is("READ")))
                 .andExpect(jsonPath("$._embedded.traeger", notNullValue()))

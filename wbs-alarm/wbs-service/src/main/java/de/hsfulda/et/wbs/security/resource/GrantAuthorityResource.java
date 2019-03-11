@@ -11,10 +11,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -66,4 +63,30 @@ public class GrantAuthorityResource {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+
+    @DeleteMapping(produces = HAL_JSON)
+    @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
+    HttpEntity<HalJsonResource> delete(
+            @PathVariable("authorityId") Long authorityId,
+            @PathVariable("benutzerId") Long benutzerId) {
+        Optional<Benutzer> benutzer = benutzerRepository.findById(benutzerId);
+        Optional<Authority> authority = authorityRepository.findById(authorityId);
+
+        if (benutzer.isPresent() && authority.isPresent()) {
+
+            List<GrantedAuthority> granted = grantedAuthorityRepository.findByUserId(benutzerId);
+            Optional<GrantedAuthority> found = granted.stream()
+                    .filter(g -> authorityId.equals(g.getAuthorityId()))
+                    .findFirst();
+
+            if (found.isPresent()) {
+                grantedAuthorityRepository.delete(found.get());
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+
 }

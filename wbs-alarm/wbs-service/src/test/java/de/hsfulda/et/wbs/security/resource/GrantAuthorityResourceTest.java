@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -78,6 +80,33 @@ class GrantAuthorityResourceTest extends ResourceTest {
                     .contentType(MediaType.APPLICATION_JSON)
                     .header("Authorization", getTokenAsSuperuser()))
                     .andExpect(status().isConflict());
+        }
+
+        @DisplayName("Löschen von vergebenen Rechten")
+        @Nested
+        class DeleteGrantedRole {
+
+            @DisplayName("kann ein vergebenes Recht löschen")
+            @Test
+            void deleteGrantedAuthority() throws Exception {
+                Long grantId = getBenutzerId("ForGrantTest");
+                mockMvc.perform(delete(GrantAuthorityResource.PATH, 5, grantId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", getTokenAsSuperuser()))
+                        .andExpect(status().isOk());
+
+                assertFalse(hasGrantedAuthority(grantId, 5L));
+            }
+
+            @DisplayName("findet kein nicht vergebenens Recht")
+            @Test
+            void deleteGrantedAuthorityNotFound() throws Exception {
+                Long grantId = getBenutzerId("ForGrantTest");
+                mockMvc.perform(delete(GrantAuthorityResource.PATH, 1, grantId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", getTokenAsSuperuser()))
+                        .andExpect(status().isNotFound());
+            }
         }
     }
 }
