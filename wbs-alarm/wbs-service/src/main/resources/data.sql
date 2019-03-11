@@ -34,6 +34,8 @@ values(true, false, 'helsaUser@domain.de', '$2a$12$7w0m4I2kjbQgM0hp0erh4OXqEoBxe
 insert into benutzer (aktiv, einkaeufer, mail, password, name, traeger_id)
 values(true, false, 'helsaUser@domain.de', '$2a$12$7w0m4I2kjbQgM0hp0erh4OXqEoBxeYqNoaLUZKpiaISqnIcw91t3i', 'ForDelete', (select id from traeger where name = 'Helsa'));
 
+insert into benutzer (aktiv, einkaeufer, mail, password, name, traeger_id)
+values(true, false, 'helsaUser@domain.de', '$2a$12$7w0m4I2kjbQgM0hp0erh4OXqEoBxeYqNoaLUZKpiaISqnIcw91t3i', 'ForGrantTest', (select id from traeger where name = 'Feuerwehr'));
 
 -- Konfiguration der Token
 insert into tokenconfig (issuer, expiration, clock, secret)

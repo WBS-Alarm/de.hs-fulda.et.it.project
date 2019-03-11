@@ -5,6 +5,8 @@ import de.hsfulda.et.wbs.entity.Benutzer;
 import de.hsfulda.et.wbs.http.haljson.BenutzerHalJson;
 import de.hsfulda.et.wbs.repository.BenutzerRepository;
 import de.hsfulda.et.wbs.security.User;
+import de.hsfulda.et.wbs.security.entity.GrantedAuthority;
+import de.hsfulda.et.wbs.security.repository.GrantedAuthorityRepository;
 import de.hsfulda.et.wbs.service.AccessService;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
@@ -28,10 +31,15 @@ public class BenutzerResource {
     public static final String PATH = "/benutzer/{id}";
 
     private final BenutzerRepository benutzerRepository;
+    private final GrantedAuthorityRepository grantedAuthorityRepository;
     private final AccessService accessService;
 
-    public BenutzerResource(BenutzerRepository benutzerRepository, AccessService accessService) {
+    public BenutzerResource(
+            BenutzerRepository benutzerRepository,
+            GrantedAuthorityRepository grantedAuthorityRepository,
+            AccessService accessService) {
         this.benutzerRepository = benutzerRepository;
+        this.grantedAuthorityRepository = grantedAuthorityRepository;
         this.accessService = accessService;
     }
 
@@ -47,8 +55,12 @@ public class BenutzerResource {
     HttpEntity<HalJsonResource> get(@AuthenticationPrincipal User user, @PathVariable("id") Long id) {
         return accessService.hasAccessOnBenutzer(user, id, () -> {
             Optional<Benutzer> benutzer = benutzerRepository.findById(id);
-            return benutzer.<HttpEntity<HalJsonResource>>map(b -> new HttpEntity<>(new BenutzerHalJson(b)))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+            if (benutzer.isPresent()) {
+                Benutzer b = benutzer.get();
+                List<GrantedAuthority> granted = grantedAuthorityRepository.findByUserId(b.getId());
+                return new HttpEntity<>(new BenutzerHalJson(b, granted));
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         });
     }
 

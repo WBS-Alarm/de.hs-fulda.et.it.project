@@ -9,6 +9,8 @@ public enum Relations {
     REL_USER_LOGOUT("logout", UserLogoutResource.PATH),
     REL_USER_CURRENT("current", CurrentUserResource.PATH),
     REL_USER_REGISTER("registerUser", UserRegisterResource.PATH),
+    REL_AUTHORITIES("authorities", AuthorityResource.PATH),
+    REL_GRANT_AUTHORITY("grantAuthority", GrantAuthorityResource.PATH),
     REL_USER_LOGIN("userLogin", LoginResource.PATH),
     REL_BENUTZER("benutzer", BenutzerResource.PATH),
     REL_ZIELORT_LIST("zielortList", ZielortListResource.PATH),

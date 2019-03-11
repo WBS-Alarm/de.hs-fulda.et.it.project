@@ -11,9 +11,11 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -32,10 +34,17 @@ class BenutzerResourceTest extends ResourceTest {
     @DisplayName("wird bei gleichen Träger angezeigt")
     @Test
     void getBenutzer() throws Exception {
-        mockMvc.perform(get(BenutzerResource.PATH, getBenutzerId(LE_USER))
+        Long benutzerId = getBenutzerId(LE_USER);
+        mockMvc.perform(get(BenutzerResource.PATH, benutzerId)
                 .header("Authorization", getTokenAsSuperuser())
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$._embedded.authorities[0].id", is(5)))
+                .andExpect(jsonPath("$._embedded.authorities[0].code", is("READ")))
+                .andExpect(jsonPath("$._embedded.traeger", notNullValue()))
+                .andExpect(jsonPath("$._links.self[0].href", is("/benutzer/" + benutzerId)))
+                .andExpect(jsonPath("$._links.self[0].templated", is(false)));
     }
 
     @DisplayName("wird bei einem anderen Träger nicht angezeigt")
