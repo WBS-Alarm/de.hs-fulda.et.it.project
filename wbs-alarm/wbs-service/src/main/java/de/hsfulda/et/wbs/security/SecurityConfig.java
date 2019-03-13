@@ -31,6 +31,7 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
         new AntPathRequestMatcher("/public/**"),
         new AntPathRequestMatcher("/"),
         new AntPathRequestMatcher("/*.js"),
+        new AntPathRequestMatcher("/assets/**"),
         new AntPathRequestMatcher("/favicon.ico")
     );
 
