@@ -28,6 +28,9 @@ import { FilterComponent } from './views/example/overview/filter/filter.componen
 import { OverviewViewComponent } from './views/example/overview/overview-view.component';
 import { AppWbsKleiderkammer } from './app-wbs-kleiderkammer';
 import { AppLoginComponent } from './views/app-login/app-login.component';
+import { GetSitemapService } from './core/service/rest/sitemap/wbs-sitemap.service';
+import { WbsSitemapHelper } from "./core/service/rest/sitemap/data/wbs-sitemap.helper";
+import {LoginService} from "./core/service/rest/login/login.service";
 
 
 @NgModule({
@@ -61,6 +64,9 @@ import { AppLoginComponent } from './views/app-login/app-login.component';
             multi:      true
         },
         appRoutingProviders,
+        GetSitemapService,
+        WbsSitemapHelper,
+        LoginService,
         TerraNodeTreeConfig
     ],
     bootstrap:    [

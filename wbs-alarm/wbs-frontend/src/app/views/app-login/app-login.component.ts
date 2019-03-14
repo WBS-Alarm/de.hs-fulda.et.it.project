@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import { Language,
          TranslationService } from 'angular-l10n';
 import {TerraSelectBoxValueInterface} from "@plentymarkets/terra-components";
+import {LoginService} from "../../core/service/rest/login/login.service";
 
 @Component({
     selector: 'app-login',
@@ -27,7 +28,8 @@ export class AppLoginComponent implements OnInit {
 
     protected languageCaption:string;
 
-    constructor(private translation:TranslationService)
+    constructor(private translation:TranslationService,
+                private loginService:LoginService)
     {
     }
 
@@ -61,6 +63,9 @@ export class AppLoginComponent implements OnInit {
 
     protected login():void
     {
-        console.log(this.user);
+       this.loginService.login(this.user).subscribe((result) =>
+       {
+           console.log(result);
+       });
     }
 }
