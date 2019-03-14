@@ -1,10 +1,10 @@
 package de.hsfulda.et.wbs.http.resource;
 
 import de.hsfulda.et.wbs.core.HalJsonResource;
+import de.hsfulda.et.wbs.core.User;
 import de.hsfulda.et.wbs.entity.Zielort;
 import de.hsfulda.et.wbs.http.haljson.ZielortHalJson;
 import de.hsfulda.et.wbs.repository.ZielortRepository;
-import de.hsfulda.et.wbs.security.User;
 import de.hsfulda.et.wbs.service.AccessService;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;

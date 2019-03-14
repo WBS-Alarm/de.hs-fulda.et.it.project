@@ -1,7 +1,7 @@
 package de.hsfulda.et.wbs.security.token;
 
+import de.hsfulda.et.wbs.core.User;
 import de.hsfulda.et.wbs.security.Password;
-import de.hsfulda.et.wbs.security.User;
 import de.hsfulda.et.wbs.security.service.UserAuthenticationService;
 import de.hsfulda.et.wbs.security.service.UserCrudService;
 import de.hsfulda.et.wbs.util.ImmutableMap;

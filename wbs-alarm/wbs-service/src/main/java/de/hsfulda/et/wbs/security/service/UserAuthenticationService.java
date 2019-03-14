@@ -1,6 +1,6 @@
 package de.hsfulda.et.wbs.security.service;
 
-import de.hsfulda.et.wbs.security.User;
+import de.hsfulda.et.wbs.core.User;
 
 import java.util.Optional;
 

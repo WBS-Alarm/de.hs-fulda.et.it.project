@@ -21,7 +21,7 @@ public class TraegerHalJson extends HalJsonResource {
             addEmbeddedResources("benutzer",
                     traeger.getBenutzer()
                             .stream()
-                            .map(b -> new BenutzerHalJson(b, false))
+                            .map(BenutzerHalJson::ofNoEmbaddables)
                             .collect(Collectors.toList()));
 
             addEmbeddedResources("zielorte",

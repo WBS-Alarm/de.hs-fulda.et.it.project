@@ -1,10 +1,10 @@
 package de.hsfulda.et.wbs.http.resource;
 
 import de.hsfulda.et.wbs.core.HalJsonResource;
+import de.hsfulda.et.wbs.core.User;
 import de.hsfulda.et.wbs.entity.Benutzer;
 import de.hsfulda.et.wbs.http.haljson.BenutzerHalJson;
 import de.hsfulda.et.wbs.repository.BenutzerRepository;
-import de.hsfulda.et.wbs.security.User;
 import de.hsfulda.et.wbs.security.entity.GrantedAuthority;
 import de.hsfulda.et.wbs.security.repository.GrantedAuthorityRepository;
 import de.hsfulda.et.wbs.service.AccessService;
@@ -58,7 +58,7 @@ public class BenutzerResource {
             if (benutzer.isPresent()) {
                 Benutzer b = benutzer.get();
                 List<GrantedAuthority> granted = grantedAuthorityRepository.findByUserId(b.getId());
-                return new HttpEntity<>(new BenutzerHalJson(b, granted));
+                return new HttpEntity<>(BenutzerHalJson.ofGrantedAuthorities(b, granted));
             }
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         });
@@ -87,7 +87,7 @@ public class BenutzerResource {
                 loaded.setEinkaeufer(benutzer.getEinkaeufer());
                 loaded.setMail(benutzer.getMail());
                 benutzerRepository.save(loaded);
-                return new HttpEntity<>(new BenutzerHalJson(loaded));
+                return new HttpEntity<>(BenutzerHalJson.of(loaded));
             }
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         });

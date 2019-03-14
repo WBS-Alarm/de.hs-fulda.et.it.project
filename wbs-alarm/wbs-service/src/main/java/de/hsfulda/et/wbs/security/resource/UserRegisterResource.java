@@ -1,10 +1,10 @@
 package de.hsfulda.et.wbs.security.resource;
 
+import de.hsfulda.et.wbs.core.User;
 import de.hsfulda.et.wbs.entity.Benutzer;
 import de.hsfulda.et.wbs.entity.Traeger;
 import de.hsfulda.et.wbs.repository.BenutzerRepository;
 import de.hsfulda.et.wbs.repository.TraegerRepository;
-import de.hsfulda.et.wbs.security.User;
 import de.hsfulda.et.wbs.security.service.UserCrudService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,13 +39,13 @@ public class UserRegisterResource {
      * Träger existiert und ob es bereits einen Benutzer mit dem Username bereits vergeben ist.
      *
      * @param traegerId ID des Trägers zu dem der Benutzer angelegt werden soll.
-     * @param user Angemeldeter Benutzer.
+     * @param benutzer      Angemeldeter Benutzer.
      * @return Status 201.
      */
     @PostMapping
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
-    ResponseEntity<Void> post(@PathVariable("traegerId") Long traegerId, @RequestBody final Benutzer user) {
-        if (isEmpty(user.getUsername()) || isEmpty(user.getPassword())) {
+    ResponseEntity<Void> post(@PathVariable("traegerId") Long traegerId, @RequestBody final Benutzer benutzer) {
+        if (isEmpty(benutzer.getUsername()) || isEmpty(benutzer.getPassword())) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         Optional<Traeger> traeger = traegerRepo.findById(traegerId);
@@ -53,21 +53,14 @@ public class UserRegisterResource {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        Optional<User> found = users.findByUsername(user.getUsername());
+        Optional<User> found = users.findByUsername(benutzer.getUsername());
         if (found.isPresent()) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 
-        users.register(
-            User.builder()
-                .id(user.getUsername())
-                .username(user.getUsername())
-                .password(user.getPassword())
-                .aktiv(true)
-                .build()
-        );
+        users.register(new User(benutzer));
 
-        setBenutzerOnTraeger(user, traeger.get());
+        setBenutzerOnTraeger(benutzer, traeger.get());
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

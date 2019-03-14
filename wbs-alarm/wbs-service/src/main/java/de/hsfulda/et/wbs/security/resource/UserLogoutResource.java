@@ -1,6 +1,6 @@
 package de.hsfulda.et.wbs.security.resource;
 
-import de.hsfulda.et.wbs.security.User;
+import de.hsfulda.et.wbs.core.User;
 import de.hsfulda.et.wbs.security.service.UserAuthenticationService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

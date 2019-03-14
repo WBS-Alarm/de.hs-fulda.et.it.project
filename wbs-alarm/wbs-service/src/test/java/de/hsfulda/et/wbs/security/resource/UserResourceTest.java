@@ -27,10 +27,6 @@ class UserResourceTest extends ResourceTest {
     @Autowired
     private UserRegisterResource userRegisterResource;
 
-    @Autowired
-    private UserResource userResource;
-
-
     @DisplayName("werden im Spring Context geladen und gefunden")
     @Test
     void contextLoads() {
@@ -38,7 +34,6 @@ class UserResourceTest extends ResourceTest {
         Assertions.assertThat(currentUserResource).isNotNull();
         Assertions.assertThat(loginResource).isNotNull();
         Assertions.assertThat(userRegisterResource).isNotNull();
-        Assertions.assertThat(userResource).isNotNull();
     }
 
     @DisplayName("ermitteln den angemeldeten Benutzer")
@@ -48,9 +43,7 @@ class UserResourceTest extends ResourceTest {
             .contentType(MediaType.APPLICATION_JSON)
             .header("Authorization", getTokenAsSuperuser()))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$.username", is("Superuser")))
-            .andExpect(jsonPath("$._links.self[0].href", is("/users/Superuser")))
-            .andExpect(jsonPath("$._links.self[0].templated", is(false)));
+            .andExpect(jsonPath("$.username", is("Superuser")));
     }
 
     @DisplayName("können nicht von unangemeldeten Benutzern zugegriffen werden")
@@ -60,26 +53,5 @@ class UserResourceTest extends ResourceTest {
             .contentType(MediaType.APPLICATION_JSON)
             .header("Authorization", "Bearer "))
             .andExpect(status().isUnauthorized());
-    }
-
-    @DisplayName("können einen vorhandenen Benutzer anhand des Namens laden")
-    @Test
-    void getSomeUser() throws Exception {
-        mockMvc.perform(get(UserResource.PATH, "Superuser")
-            .contentType(MediaType.APPLICATION_JSON)
-            .header("Authorization", getTokenAsSuperuser()))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.username", is("Superuser")))
-            .andExpect(jsonPath("$._links.self[0].href", is("/users/Superuser")))
-            .andExpect(jsonPath("$._links.self[0].templated", is(false)));
-    }
-
-    @DisplayName("können keinen unbekannten Benutzer anhand des Namens laden")
-    @Test
-    void getSomeUserUnknown() throws Exception {
-        mockMvc.perform(get(UserResource.PATH, "Nobody")
-            .contentType(MediaType.APPLICATION_JSON)
-            .header("Authorization", getTokenAsSuperuser()))
-            .andExpect(status().isNotFound());
     }
 }
