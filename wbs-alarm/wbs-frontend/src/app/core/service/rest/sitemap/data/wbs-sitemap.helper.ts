@@ -9,7 +9,7 @@ export class WbsSitemapHelper
 
     constructor()
     {
-       this.headers = new HttpHeaders({'Content-Type': 'application/json'});
+       this.headers = new HttpHeaders({'Content-Type': 'application/hal + json'});
     }
 
     public set Bearer(value:string)
@@ -36,7 +36,7 @@ export class WbsSitemapHelper
     {
         if(localStorage.getItem('accessToken'))
         {
-            this.setToHeader('Authorization', localStorage.getItem('accessToken'));
+            this.setToHeader('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
         }
 
         return this.headers;
@@ -44,7 +44,7 @@ export class WbsSitemapHelper
 
     protected setToHeader(key:string, value:string):void
     {
-        this.headers.set(key, value);
+        this.headers = this.headers.set(key, value);
     }
 
     public getLogin():string

@@ -19,6 +19,7 @@ export class UsersService
     {
         this.headers = this.sitemapHelper.setAuthorization();
 
+        console.log(this.headers);
 
         return this.http.get(this.sitemapHelper.getCurrentUsers(), {
             headers: this.headers

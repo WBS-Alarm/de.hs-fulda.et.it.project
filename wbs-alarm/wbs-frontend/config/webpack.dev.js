@@ -14,7 +14,7 @@ module.exports = merge(commonConfig, {
         chunkFilename: '[id].chunk.js'
     },
     devServer: {
-        port: 3002,
+        port: 8080,
         historyApiFallback: true,
         disableHostCheck: true
     },

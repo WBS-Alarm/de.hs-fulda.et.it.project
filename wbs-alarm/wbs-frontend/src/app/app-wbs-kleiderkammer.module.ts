@@ -33,6 +33,7 @@ import { WbsSitemapHelper } from "./core/service/rest/sitemap/data/wbs-sitemap.h
 import {LoginService} from "./core/service/rest/login/login.service";
 import { UsersService } from './core/service/rest/users/users.service';
 import { UserAndSystemDataService } from './core/service/rest/users/user-and-system-data.service';
+import { WbsPreloadingStrategy } from './core/strategies/preloading-strategy';
 
 
 @NgModule({
@@ -78,6 +79,7 @@ import { UserAndSystemDataService } from './core/service/rest/users/user-and-sys
         LoginService,
         UsersService,
         UserAndSystemDataService,
+        WbsPreloadingStrategy,
         TerraNodeTreeConfig
     ],
     bootstrap:    [

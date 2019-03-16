@@ -5,6 +5,10 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const helpers = require('./helpers');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
+const METADATA = {
+    baseUrl: '/login'
+};
+
 module.exports = {
     entry: {
         'polyfills': './src/polyfills.ts',

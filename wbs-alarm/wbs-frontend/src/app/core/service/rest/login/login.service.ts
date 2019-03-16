@@ -35,6 +35,8 @@ export class LoginService
     {
         this.headers = this.sitemapHelper.setAuthorization();
 
+        console.log(this.headers);
+
         return this.http.get(this.sitemapHelper.getLogout(),
             {
                 headers: this.headers

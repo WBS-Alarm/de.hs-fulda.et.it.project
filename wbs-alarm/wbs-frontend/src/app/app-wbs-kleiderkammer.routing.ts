@@ -8,6 +8,7 @@ import { RouterViewComponent } from './views/router/router-view.component';
 import { ExampleViewComponent } from './views/example/example-view.component';
 import {AppLoginComponent} from "./views/app-login/app-login.component";
 import { GUARDS } from './core/guards/guards';
+import { WbsPreloadingStrategy } from './core/strategies/preloading-strategy';
 
 const appRoutes:Routes = [
     {
@@ -56,4 +57,7 @@ const appRoutes:Routes = [
 export const appRoutingProviders:Array<any> = [];
 
 export const routing:ModuleWithProviders =
-    RouterModule.forRoot(appRoutes, {useHash:false});
+    RouterModule.forRoot(appRoutes, {
+        preloadingStrategy: WbsPreloadingStrategy,
+        onSameUrlNavigation: 'reload'
+    });

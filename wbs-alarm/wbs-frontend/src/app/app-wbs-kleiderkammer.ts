@@ -1,9 +1,10 @@
 import {
-    Component, OnInit,
+    Component,
+    OnInit,
     ViewEncapsulation
 } from '@angular/core';
-import {WbsSitemapHelper} from "./core/service/rest/sitemap/data/wbs-sitemap.helper";
-import {GetSitemapService} from "./core/service/rest/sitemap/wbs-sitemap.service";
+import { WbsSitemapHelper } from "./core/service/rest/sitemap/data/wbs-sitemap.helper";
+import { GetSitemapService } from "./core/service/rest/sitemap/wbs-sitemap.service";
 
 @Component({
     selector:      'app-terra-basic',
@@ -21,11 +22,9 @@ export class AppWbsKleiderkammer implements OnInit
 
     public ngOnInit():void
     {
-           this.sitemapService.getSitemaps().subscribe((result:any) =>
-           {
-               this.sitemapHelper.sitemaps = result;
-           });
-
-
+        this.sitemapService.getSitemaps().subscribe((result:any) =>
+        {
+            this.sitemapHelper.sitemaps = result;
+        });
     }
 }
