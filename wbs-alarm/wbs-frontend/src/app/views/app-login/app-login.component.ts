@@ -1,15 +1,19 @@
 import {Component, OnInit} from '@angular/core';
 import { Language,
          TranslationService } from 'angular-l10n';
-import {TerraSelectBoxValueInterface} from "@plentymarkets/terra-components";
+import {TerraAlertComponent, TerraSelectBoxValueInterface} from "@plentymarkets/terra-components";
 import {LoginService} from "../../core/service/rest/login/login.service";
+import {WbsSitemapHelper} from "../../core/service/rest/sitemap/data/wbs-sitemap.helper";
+import {Router} from "@angular/router";
+
 
 @Component({
     selector: 'app-login',
     templateUrl: './app-login.component.html',
     styleUrls: ['./app-login.component.scss']
 })
-export class AppLoginComponent implements OnInit {
+export class AppLoginComponent implements OnInit
+{
 
     @Language()
     public lang:string;
@@ -29,7 +33,9 @@ export class AppLoginComponent implements OnInit {
     protected languageCaption:string;
 
     constructor(private translation:TranslationService,
-                private loginService:LoginService)
+                private loginService:LoginService,
+                private sitemapHelper:WbsSitemapHelper,
+                private router:Router)
     {
     }
 
@@ -63,9 +69,20 @@ export class AppLoginComponent implements OnInit {
 
     protected login():void
     {
-       this.loginService.login(this.user).subscribe((result) =>
+       this.loginService.login(this.user).subscribe(
+           (result:string) =>
        {
            console.log(result);
-       });
+           this.router.navigate(['/plugin/start']);
+       },
+       (error:any) =>
+       {
+           this.sitemapHelper.Bearer = error.error.text;
+           this.router.navigate(['/plugin/start']);
+       },
+           () =>
+           {
+                this.router.navigate(['/plugin/start']);
+           });
     }
 }
