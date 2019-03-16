@@ -31,6 +31,8 @@ import { AppLoginComponent } from './views/app-login/app-login.component';
 import { GetSitemapService } from './core/service/rest/sitemap/wbs-sitemap.service';
 import { WbsSitemapHelper } from "./core/service/rest/sitemap/data/wbs-sitemap.helper";
 import {LoginService} from "./core/service/rest/login/login.service";
+import { UsersService } from './core/service/rest/users/users.service';
+import { UserAndSystemDataService } from './core/service/rest/users/user-and-system-data.service';
 
 
 @NgModule({
@@ -40,7 +42,7 @@ import {LoginService} from "./core/service/rest/login/login.service";
         FormsModule,
         HttpClientModule,
         TranslationModule.forRoot(l10nConfig),
-        RouterModule.forRoot([]),
+        //RouterModule.forRoot([]),
         TerraComponentsModule.forRoot(),
         routing
     ],
@@ -63,10 +65,19 @@ import {LoginService} from "./core/service/rest/login/login.service";
             deps:       [L10nLoader],
             multi:      true
         },
+        {
+            provide:    APP_INITIALIZER, // APP_INITIALIZER will execute the function when the app is initialized and delay what
+                                         // it provides.
+            useFactory: initUserAndSystemData,
+            deps:       [UserAndSystemDataService],
+            multi:      true
+        },
         appRoutingProviders,
         GetSitemapService,
         WbsSitemapHelper,
         LoginService,
+        UsersService,
+        UserAndSystemDataService,
         TerraNodeTreeConfig
     ],
     bootstrap:    [
@@ -84,4 +95,9 @@ export class AppWbsKleiderkammerModule
 function initL10n(l10nLoader:L10nLoader):Function
 {
     return ():Promise<void> => l10nLoader.load();
+}
+
+function initUserAndSystemData(userAndSystemDataLoader:UserAndSystemDataService):Function
+{
+    return ():Promise<void | Error> => userAndSystemDataLoader.load();
 }

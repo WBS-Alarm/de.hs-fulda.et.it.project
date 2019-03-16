@@ -3,7 +3,6 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import {WbsSitemapHelper} from "./core/service/rest/sitemap/data/wbs-sitemap.helper";
-import {logger} from "codelyzer/util/logger";
 import {GetSitemapService} from "./core/service/rest/sitemap/wbs-sitemap.service";
 
 @Component({

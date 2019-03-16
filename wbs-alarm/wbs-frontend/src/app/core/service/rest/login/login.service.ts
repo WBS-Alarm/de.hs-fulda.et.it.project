@@ -1,13 +1,16 @@
-import { Injectable }  from '../../../../../../node_modules/@angular/core';
-import { WbsSitemapHelper }  from '../sitemap/data/wbs-sitemap.helper';
-import { HttpClient } from '../../../../../../node_modules/@angular/common/http';
-import { Observable }  from 'rxjs/Observable';
+import { Injectable } from '../../../../../../node_modules/@angular/core';
+import { WbsSitemapHelper } from '../sitemap/data/wbs-sitemap.helper';
+import {
+    HttpClient,
+    HttpHeaders
+} from '../../../../../../node_modules/@angular/common/http';
+import { Observable } from 'rxjs/Observable';
 
 
 @Injectable()
 export class LoginService
 {
-
+    private headers:HttpHeaders;
 
     constructor(private sitemapHelper:WbsSitemapHelper,
                 private http:HttpClient)
@@ -21,6 +24,20 @@ export class LoginService
             {
                 "username": user.name,
                 "password": user.password
-            });
+            },
+            {
+                responseType: 'text'
+            }
+        );
+    }
+
+    public logout():Observable<any>
+    {
+        this.headers = this.sitemapHelper.setAuthorization();
+
+        return this.http.get(this.sitemapHelper.getLogout(),
+            {
+                headers: this.headers
+            })
     }
 }

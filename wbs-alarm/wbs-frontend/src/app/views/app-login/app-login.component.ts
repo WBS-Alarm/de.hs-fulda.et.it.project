@@ -72,17 +72,14 @@ export class AppLoginComponent implements OnInit
        this.loginService.login(this.user).subscribe(
            (result:string) =>
        {
-           console.log(result);
-           this.router.navigate(['/plugin/start']);
+           localStorage.setItem('accessToken', result);
+           this.sitemapHelper.Bearer = result;
+           this.router.navigate(['plugin', 'start']);
        },
        (error:any) =>
        {
-           this.sitemapHelper.Bearer = error.error.text;
-           this.router.navigate(['/plugin/start']);
-       },
-           () =>
-           {
-                this.router.navigate(['/plugin/start']);
-           });
+           console.log(error);
+
+       });
     }
 }

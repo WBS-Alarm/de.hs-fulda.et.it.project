@@ -4,6 +4,7 @@ import {
     OnInit
 } from '@angular/core';
 import { Language } from 'angular-l10n';
+import { LoginService } from '../../core/service/rest/login/login.service';
 
 @Component({
     selector: 'start',
@@ -18,7 +19,7 @@ export class StartComponent implements OnInit
     @Input()
     public myTitle:string;
 
-    constructor()
+    constructor(private loginService:LoginService)
     {
     }
 
@@ -28,6 +29,16 @@ export class StartComponent implements OnInit
 
     public redirectToSomethingWentWrong():void
     {
-        window.open('https://www.youtube.com/watch?v=t3otBjVZzT0', '_blank');
+        //window.open('https://www.youtube.com/watch?v=t3otBjVZzT0', '_blank');
+        this.loginService.logout().subscribe(
+            (result) =>
+            {
+                console.log('Logout erfolgreich!');
+            },
+            (error:Error) =>
+            {
+                console.log('Beim Logout ist ein Fehler aufgetreten');
+            }
+        )
     }
 }

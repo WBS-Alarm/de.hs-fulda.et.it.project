@@ -7,6 +7,7 @@ import { StartViewComponent } from './views/start-view.component';
 import { RouterViewComponent } from './views/router/router-view.component';
 import { ExampleViewComponent } from './views/example/example-view.component';
 import {AppLoginComponent} from "./views/app-login/app-login.component";
+import { GUARDS } from './core/guards/guards';
 
 const appRoutes:Routes = [
     {
@@ -21,6 +22,7 @@ const appRoutes:Routes = [
     {
         path: 'plugin',
         component: RouterViewComponent,
+        //canActivate: GUARDS,
         children:[
             {
                 path: '',
@@ -33,6 +35,7 @@ const appRoutes:Routes = [
             {
                 path: 'start',
                 component: StartViewComponent,
+                //canActivate: GUARDS,
                 data: {
                     label: 'start'
                 }
@@ -40,6 +43,7 @@ const appRoutes:Routes = [
             {
                 path: 'example',
                 component: ExampleViewComponent,
+                //canActivate: GUARDS,
                 data: {
                     label: 'example'
                 }
@@ -52,4 +56,4 @@ const appRoutes:Routes = [
 export const appRoutingProviders:Array<any> = [];
 
 export const routing:ModuleWithProviders =
-    RouterModule.forRoot(appRoutes, {useHash:true});
+    RouterModule.forRoot(appRoutes, {useHash:false});
