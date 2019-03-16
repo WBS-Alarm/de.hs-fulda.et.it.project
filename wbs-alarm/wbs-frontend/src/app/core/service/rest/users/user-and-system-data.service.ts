@@ -28,12 +28,12 @@ export class UserAndSystemDataService
                 }
                 else
                 {
-                    //this.redirectToLoginPage()
+                    this.redirectToLoginPage()
                 }
             }
         ).catch((error:Error) =>
         {
-            //this.redirectToLoginPage();
+            this.redirectToLoginPage();
             return Observable.of(error);
         }).toPromise()
     }
@@ -51,7 +51,7 @@ export class UserAndSystemDataService
             //let url:string = window.location.protocol +
             //                 '//' +
             //                 window.location.host.slice(window.location.host.indexOf('.') + 1);
-            let url:string = window.location.origin + '/login';
+            let url:string = window.location.origin + '/#/login';
 
             window.location.replace(url);
         }

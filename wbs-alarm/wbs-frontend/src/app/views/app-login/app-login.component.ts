@@ -5,6 +5,7 @@ import {TerraAlertComponent, TerraSelectBoxValueInterface} from "@plentymarkets/
 import {LoginService} from "../../core/service/rest/login/login.service";
 import {WbsSitemapHelper} from "../../core/service/rest/sitemap/data/wbs-sitemap.helper";
 import {Router} from "@angular/router";
+import { GlobalRegistryService } from '../../core/global-registry/global-registry.service';
 
 
 @Component({
@@ -34,6 +35,7 @@ export class AppLoginComponent implements OnInit
 
     constructor(private translation:TranslationService,
                 private loginService:LoginService,
+                private globalRegistryService:GlobalRegistryService,
                 private sitemapHelper:WbsSitemapHelper,
                 private router:Router)
     {
@@ -74,6 +76,7 @@ export class AppLoginComponent implements OnInit
        {
            localStorage.setItem('accessToken', result);
            this.sitemapHelper.Bearer = result;
+           this.globalRegistryService.setisLoggedIn(true);
            this.router.navigate(['plugin', 'start']);
        },
        (error:any) =>

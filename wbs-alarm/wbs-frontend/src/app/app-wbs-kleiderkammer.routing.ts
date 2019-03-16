@@ -23,7 +23,7 @@ const appRoutes:Routes = [
     {
         path: 'plugin',
         component: RouterViewComponent,
-        //canActivate: GUARDS,
+        canActivate: GUARDS,
         children:[
             {
                 path: '',
@@ -36,7 +36,7 @@ const appRoutes:Routes = [
             {
                 path: 'start',
                 component: StartViewComponent,
-                //canActivate: GUARDS,
+                canActivate: GUARDS,
                 data: {
                     label: 'start'
                 }
@@ -44,7 +44,7 @@ const appRoutes:Routes = [
             {
                 path: 'example',
                 component: ExampleViewComponent,
-                //canActivate: GUARDS,
+                canActivate: GUARDS,
                 data: {
                     label: 'example'
                 }
@@ -59,5 +59,6 @@ export const appRoutingProviders:Array<any> = [];
 export const routing:ModuleWithProviders =
     RouterModule.forRoot(appRoutes, {
         preloadingStrategy: WbsPreloadingStrategy,
-        onSameUrlNavigation: 'reload'
+        onSameUrlNavigation: 'reload',
+        useHash: true
     });

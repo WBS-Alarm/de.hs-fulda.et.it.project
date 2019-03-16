@@ -34,6 +34,7 @@ import {LoginService} from "./core/service/rest/login/login.service";
 import { UsersService } from './core/service/rest/users/users.service';
 import { UserAndSystemDataService } from './core/service/rest/users/user-and-system-data.service';
 import { WbsPreloadingStrategy } from './core/strategies/preloading-strategy';
+import { GlobalRegistryService } from './core/global-registry/global-registry.service';
 
 
 @NgModule({
@@ -78,6 +79,7 @@ import { WbsPreloadingStrategy } from './core/strategies/preloading-strategy';
         WbsSitemapHelper,
         LoginService,
         UsersService,
+        GlobalRegistryService,
         UserAndSystemDataService,
         WbsPreloadingStrategy,
         TerraNodeTreeConfig
