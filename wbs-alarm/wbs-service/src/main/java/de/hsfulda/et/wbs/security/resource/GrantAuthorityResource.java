@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
 import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
 
 /**
@@ -25,7 +26,7 @@ import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
 @RequestMapping(GrantAuthorityResource.PATH)
 public class GrantAuthorityResource {
 
-    public static final String PATH = "/authority/{authorityId}/grant/{benutzerId}";
+    public static final String PATH = CONTEXT_ROOT + "/authority/{authorityId}/grant/{benutzerId}";
 
     private final GrantedAuthorityRepository grantedAuthorityRepository;
     private final AuthorityRepository authorityRepository;

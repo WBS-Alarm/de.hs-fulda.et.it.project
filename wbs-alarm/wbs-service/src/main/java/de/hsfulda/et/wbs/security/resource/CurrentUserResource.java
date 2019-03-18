@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
 import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
 
 /**
@@ -19,7 +20,7 @@ import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
 @RequestMapping(CurrentUserResource.PATH)
 public class CurrentUserResource {
 
-    public static final String PATH = "/users/current";
+    public static final String PATH = CONTEXT_ROOT + "/users/current";
 
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")

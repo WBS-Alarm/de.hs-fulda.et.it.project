@@ -8,6 +8,8 @@ import de.hsfulda.et.wbs.util.UriUtil;
 
 import java.util.stream.Collectors;
 
+import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
+
 public class TraegerHalJson extends HalJsonResource {
 
     public TraegerHalJson(Traeger traeger) {
@@ -29,12 +31,17 @@ public class TraegerHalJson extends HalJsonResource {
                             .stream()
                             .map(z -> new ZielortHalJson(z, false))
                             .collect(Collectors.toList()));
-            // TODO: embedded Kategorien
+
+            addEmbeddedResources("kategorien",
+                    traeger.getKategorien()
+                            .stream()
+                            .map(z -> new KategorieHalJson(z, false))
+                            .collect(Collectors.toList()));
         }
     }
 
     private void addTraegerProperties(Traeger traeger) {
-        String traegerResource = UriUtil.build("/traeger/{id}", traeger.getId());
+        String traegerResource = UriUtil.build(CONTEXT_ROOT + "/traeger/{id}", traeger.getId());
 
         addLink(Link.self(traegerResource));
         addLink(Link.create("add", TraegerListResource.PATH));

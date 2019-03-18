@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
+import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
 import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
 import static org.springframework.util.ObjectUtils.isEmpty;
 
@@ -26,7 +27,7 @@ import static org.springframework.util.ObjectUtils.isEmpty;
 @RequestMapping(KategorieResource.PATH)
 public class KategorieResource {
 
-    public static final String PATH = "/kategorie/{id}";
+    public static final String PATH = CONTEXT_ROOT + "/kategorie/{id}";
 
     private final KategorieRepository kategorieRepository;
     private final AccessService accessService;

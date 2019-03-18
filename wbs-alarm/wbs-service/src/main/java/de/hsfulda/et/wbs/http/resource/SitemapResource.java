@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
 import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
 
 /**
@@ -17,7 +18,7 @@ import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
 @RequestMapping(SitemapResource.PATH)
 public class SitemapResource {
 
-    public static final String PATH = "/public/sitemap";
+    public static final String PATH = CONTEXT_ROOT + "/public/sitemap";
 
     /**
      * Erstellt aus den Relationen die Sitemap.

@@ -70,6 +70,9 @@ public class Traeger {
     }
 
     public List<Kategorie> getKategorien() {
+        if (kategorien == null) {
+            kategorien = new ArrayList<>();
+        }
         return kategorien;
     }
 

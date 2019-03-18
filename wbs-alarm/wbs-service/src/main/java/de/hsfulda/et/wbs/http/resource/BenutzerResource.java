@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
 import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
 
 /**
@@ -28,7 +29,7 @@ import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
 @RequestMapping(BenutzerResource.PATH)
 public class BenutzerResource {
 
-    public static final String PATH = "/benutzer/{id}";
+    public static final String PATH = CONTEXT_ROOT + "/benutzer/{id}";
 
     private final BenutzerRepository benutzerRepository;
     private final GrantedAuthorityRepository grantedAuthorityRepository;

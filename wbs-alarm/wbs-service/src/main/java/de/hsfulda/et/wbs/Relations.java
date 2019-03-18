@@ -3,6 +3,8 @@ package de.hsfulda.et.wbs;
 import de.hsfulda.et.wbs.http.resource.*;
 import de.hsfulda.et.wbs.security.resource.*;
 
+import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
+
 public enum Relations {
 
     REL_USER_LOGOUT("logout", UserLogoutResource.PATH),
@@ -24,7 +26,7 @@ public enum Relations {
 
     Relations(String rel, String href) {
         this.rel = rel;
-        this.href = href.substring(1);
+        this.href = href.substring(1 + CONTEXT_ROOT.length());
     }
 
     public String getRel() {

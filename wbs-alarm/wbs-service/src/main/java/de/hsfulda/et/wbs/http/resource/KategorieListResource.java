@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
 import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
 import static org.springframework.util.ObjectUtils.isEmpty;
 
@@ -29,7 +30,7 @@ import static org.springframework.util.ObjectUtils.isEmpty;
 @RequestMapping(KategorieListResource.PATH)
 public class KategorieListResource {
 
-    public static final String PATH = "/traeger/{traegerId}/kategorien";
+    public static final String PATH = CONTEXT_ROOT + "/traeger/{traegerId}/kategorien";
 
     private final TraegerRepository traegerRepository;
     private final KategorieRepository kategorieRepository;

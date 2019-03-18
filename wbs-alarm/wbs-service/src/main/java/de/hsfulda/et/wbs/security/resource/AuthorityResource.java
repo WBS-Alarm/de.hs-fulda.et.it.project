@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
 import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
 
 /**
@@ -18,7 +19,7 @@ import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
 @RequestMapping(AuthorityResource.PATH)
 public class AuthorityResource {
 
-    public static final String PATH = "/authorities";
+    public static final String PATH = CONTEXT_ROOT + "/authorities";
 
     private final AuthorityRepository authorityRepository;
 

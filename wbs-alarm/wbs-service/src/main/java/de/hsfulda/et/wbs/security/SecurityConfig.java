@@ -18,6 +18,7 @@ import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
+import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
 import static java.util.Objects.requireNonNull;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
@@ -28,7 +29,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final RequestMatcher PUBLIC_URLS = new OrRequestMatcher(
-        new AntPathRequestMatcher("/public/**"),
+        new AntPathRequestMatcher(CONTEXT_ROOT + "/public/**"),
         new AntPathRequestMatcher("/"),
         new AntPathRequestMatcher("/*.js"),
         new AntPathRequestMatcher("/favicon.ico")

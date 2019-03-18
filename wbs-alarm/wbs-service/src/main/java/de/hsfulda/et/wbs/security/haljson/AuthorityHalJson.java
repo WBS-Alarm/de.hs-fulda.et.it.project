@@ -7,6 +7,8 @@ import de.hsfulda.et.wbs.security.entity.Authority;
 import de.hsfulda.et.wbs.security.resource.GrantAuthorityResource;
 import de.hsfulda.et.wbs.util.UriUtil;
 
+import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
+
 public class AuthorityHalJson extends HalJsonResource {
 
     public AuthorityHalJson(final Authority authority, final Benutzer benutzer) {
@@ -21,7 +23,7 @@ public class AuthorityHalJson extends HalJsonResource {
     }
 
     private void addProperties(Authority authority) {
-        addLink(Link.create("grant","/authority/" + authority.getId() + "/grant/{benutzerId}"));
+        addLink(Link.create("grant", CONTEXT_ROOT + "/authority/" + authority.getId() + "/grant/{benutzerId}"));
 
         addProperty("id", authority.getId());
         addProperty("code", authority.getCode());

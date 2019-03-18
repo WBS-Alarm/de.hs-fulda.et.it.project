@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
+import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
 import static org.springframework.util.StringUtils.isEmpty;
 
 /**
@@ -22,7 +23,7 @@ import static org.springframework.util.StringUtils.isEmpty;
 @RequestMapping(UserRegisterResource.PATH)
 public class UserRegisterResource {
 
-    public static final String PATH = "/users/register/{traegerId}";
+    public static final String PATH = CONTEXT_ROOT + "/users/register/{traegerId}";
 
     private final UserCrudService users;
     private final TraegerRepository traegerRepo;

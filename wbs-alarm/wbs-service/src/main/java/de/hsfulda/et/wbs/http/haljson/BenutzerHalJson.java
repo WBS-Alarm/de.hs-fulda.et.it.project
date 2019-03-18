@@ -11,6 +11,8 @@ import de.hsfulda.et.wbs.util.UriUtil;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
+
 public class BenutzerHalJson extends HalJsonResource {
 
     private BenutzerHalJson(Benutzer benutzer, boolean embedded) {
@@ -45,7 +47,7 @@ public class BenutzerHalJson extends HalJsonResource {
     }
 
     private void addBenutzerProperies(Benutzer benutzer) {
-        String benutzerResource = UriUtil.build("/benutzer/{id}", benutzer.getId());
+        String benutzerResource = UriUtil.build(CONTEXT_ROOT + "/benutzer/{id}", benutzer.getId());
 
         addLink(Link.self(benutzerResource));
         addLink(Link.create("delete", benutzerResource));

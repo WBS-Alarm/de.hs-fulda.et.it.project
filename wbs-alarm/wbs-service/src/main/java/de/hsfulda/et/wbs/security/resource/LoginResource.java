@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
+import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
+
 /**
  * Über die Login Resource werden die Credentials angenommen und validiert. Bei erfolgreicher Authentifizierung wird dem
  * Anwender ein Token erstellt.
@@ -19,7 +21,7 @@ import java.util.Optional;
 @RequestMapping(LoginResource.PATH)
 public class LoginResource {
 
-    public static final String PATH = "/public/users/login";
+    public static final String PATH = CONTEXT_ROOT + "/public/users/login";
 
     private final UserAuthenticationService authentication;
 

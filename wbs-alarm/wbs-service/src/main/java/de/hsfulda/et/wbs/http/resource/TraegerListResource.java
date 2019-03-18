@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
 import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
 import static org.springframework.util.ObjectUtils.isEmpty;
 
@@ -22,7 +23,7 @@ import static org.springframework.util.ObjectUtils.isEmpty;
 @RequestMapping(TraegerListResource.PATH)
 public class TraegerListResource {
 
-    public static final String PATH = "/traeger";
+    public static final String PATH = CONTEXT_ROOT + "/traeger";
 
     private final TraegerRepository traegerRepository;
 

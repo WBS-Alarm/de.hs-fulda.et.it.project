@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
+
 /**
  * Über dne Logout wird das Token eines angemeldeten Benutzers gelöscht und somit invalidiert.
  */
@@ -15,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(UserLogoutResource.PATH)
 public class UserLogoutResource {
 
-    public static final String PATH = "/users/logout";
+    public static final String PATH = CONTEXT_ROOT + "/users/logout";
 
     private final UserAuthenticationService authentication;
 

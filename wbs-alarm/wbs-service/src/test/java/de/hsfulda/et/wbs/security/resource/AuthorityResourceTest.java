@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
+import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -35,7 +36,7 @@ class AuthorityResourceTest extends ResourceTest {
                 .andExpect(jsonPath("$._embedded.authorities[0].id", is(2)))
                 .andExpect(jsonPath("$._embedded.authorities[0].code", is("CONTROL")))
                 .andExpect(jsonPath("$._embedded.authorities[0].bezeichnung", is("Administration")))
-                .andExpect(jsonPath("$._links.self[0].href", is("/authorities")))
+                .andExpect(jsonPath("$._links.self[0].href", is(CONTEXT_ROOT + "/authorities")))
                 .andExpect(jsonPath("$._links.self[0].templated", is(false)));
     }
 

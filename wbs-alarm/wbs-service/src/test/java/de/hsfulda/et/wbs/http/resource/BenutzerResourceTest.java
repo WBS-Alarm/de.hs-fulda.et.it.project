@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 
 import java.util.Optional;
 
+import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.core.IsNull.notNullValue;
@@ -43,7 +44,7 @@ class BenutzerResourceTest extends ResourceTest {
                 .andExpect(jsonPath("$._embedded.authorities[0].id", is(5)))
                 .andExpect(jsonPath("$._embedded.authorities[0].code", is("READ")))
                 .andExpect(jsonPath("$._embedded.traeger", notNullValue()))
-                .andExpect(jsonPath("$._links.self[0].href", is("/benutzer/" + benutzerId)))
+                .andExpect(jsonPath("$._links.self[0].href", is(CONTEXT_ROOT + "/benutzer/" + benutzerId)))
                 .andExpect(jsonPath("$._links.self[0].templated", is(false)));
     }
 
