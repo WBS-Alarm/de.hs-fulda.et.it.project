@@ -35,6 +35,7 @@ import { UsersService } from './core/service/rest/users/users.service';
 import { UserAndSystemDataService } from './core/service/rest/users/user-and-system-data.service';
 import { WbsPreloadingStrategy } from './core/strategies/preloading-strategy';
 import { GlobalRegistryService } from './core/global-registry/global-registry.service';
+import { IsLoggedInGuard } from './core/guards/isLoggedInGuard';
 
 
 @NgModule({
@@ -80,6 +81,7 @@ import { GlobalRegistryService } from './core/global-registry/global-registry.se
         LoginService,
         UsersService,
         GlobalRegistryService,
+        IsLoggedInGuard,
         UserAndSystemDataService,
         WbsPreloadingStrategy,
         TerraNodeTreeConfig
