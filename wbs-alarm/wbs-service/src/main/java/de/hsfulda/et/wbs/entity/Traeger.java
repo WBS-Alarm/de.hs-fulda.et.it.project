@@ -77,6 +77,16 @@ public class Traeger {
         this.kategorien = kategorien;
     }
 
+    public void addKategorie(Kategorie z) {
+        if (kategorien == null) {
+            kategorien = new ArrayList<>();
+        }
+        if (!kategorien.contains(z)) {
+            z.setTraeger(this);
+            kategorien.add(z);
+        }
+    }
+
     public List<Benutzer> getBenutzer() {
         if (benutzer == null) {
             benutzer = new ArrayList<>();

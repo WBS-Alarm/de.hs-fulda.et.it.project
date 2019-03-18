@@ -1,6 +1,7 @@
 package de.hsfulda.et.wbs;
 
 import de.hsfulda.et.wbs.repository.BenutzerRepository;
+import de.hsfulda.et.wbs.repository.KategorieTestRepository;
 import de.hsfulda.et.wbs.repository.TraegerRepository;
 import de.hsfulda.et.wbs.repository.ZielortTestRepository;
 import de.hsfulda.et.wbs.security.repository.GrantedAuthorityRepository;
@@ -35,6 +36,9 @@ public abstract class ResourceTest {
     protected ZielortTestRepository zielortRepository;
 
     @Autowired
+    protected KategorieTestRepository kategorieRepository;
+
+    @Autowired
     protected BenutzerRepository benutzerRepository;
 
     @Autowired
@@ -67,6 +71,10 @@ public abstract class ResourceTest {
 
     protected Long getZielortId(String name, String traeger) {
         return zielortRepository.findByName(name, traeger).get(0).getId();
+    }
+
+    protected Long getKategorieId(String name, String traeger) {
+        return kategorieRepository.findByName(name, traeger).get(0).getId();
     }
 
     protected boolean hasGrantedAuthority(Long userId, Long authorityId) {

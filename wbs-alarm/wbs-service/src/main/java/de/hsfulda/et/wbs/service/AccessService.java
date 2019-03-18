@@ -23,21 +23,28 @@ public class AccessService {
     public HttpEntity<HalJsonResource> hasAccessOnBenutzer(
             final User user, final Long benutzerId, final Supplier<HttpEntity<HalJsonResource>> supplier) {
 
-        Long counts = traegerRepository.findTraegerByUsernameAndBenutzerId(user.getId(), benutzerId);
+        Long counts = traegerRepository.findTraegerByUserAndBenutzerId(user.getId(), benutzerId);
         return evaluteCount(counts, supplier);
     }
 
     public HttpEntity<HalJsonResource> hasAccessOnZielort(
             final User user, final Long zielortId, final Supplier<HttpEntity<HalJsonResource>> supplier) {
 
-        Long counts = traegerRepository.findTraegerByUsernameAndZielortId(user.getId(), zielortId);
+        Long counts = traegerRepository.findTraegerByUserAndZielortId(user.getId(), zielortId);
         return evaluteCount(counts, supplier);
     }
 
     public HttpEntity<HalJsonResource> hasAccessOnTraeger(
             final User user, final Long traegerId, final Supplier<HttpEntity<HalJsonResource>> supplier) {
 
-        Long counts = traegerRepository.findTraegerByUsernameAndTraegerId(user.getId(), traegerId);
+        Long counts = traegerRepository.findTraegerByUserAndTraegerId(user.getId(), traegerId);
+        return evaluteCount(counts, supplier);
+    }
+
+    public HttpEntity<HalJsonResource> hasAccessOnKategorie(
+            final User user, final Long kategorieId, final Supplier<HttpEntity<HalJsonResource>> supplier) {
+
+        Long counts = traegerRepository.findTraegerByUserAndKategorieId(user.getId(), kategorieId);
         return evaluteCount(counts, supplier);
     }
 
