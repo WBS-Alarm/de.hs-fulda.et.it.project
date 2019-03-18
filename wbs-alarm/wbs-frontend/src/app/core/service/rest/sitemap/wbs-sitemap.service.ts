@@ -12,6 +12,6 @@ export class GetSitemapService
 
     public getSitemaps():Observable<any>
     {
-        return this.http.get('/public/sitemap');
+        return this.http.get('/wbs/public/sitemap');
     }
 }

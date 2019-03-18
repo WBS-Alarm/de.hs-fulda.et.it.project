@@ -1,5 +1,5 @@
-import { HttpHeaders } from "@angular/common/http";
-import { isNullOrUndefined } from 'util';
+import {HttpHeaders} from "@angular/common/http";
+import {isNullOrUndefined} from 'util';
 
 export class WbsSitemapHelper
 {
@@ -9,7 +9,7 @@ export class WbsSitemapHelper
 
     constructor()
     {
-       this.headers = new HttpHeaders({'Content-Type': 'application/hal + json'});
+       this.headers = new HttpHeaders({'Content-Type': 'application/hal+json'});
     }
 
     public set Bearer(value:string)
@@ -62,7 +62,7 @@ export class WbsSitemapHelper
         }
         else
         {
-            url = '/users/current';
+            url = '/wbs/users/current';
         }
 
         return url;
