@@ -14,6 +14,8 @@ public enum Relations {
     REL_BENUTZER("benutzer", BenutzerResource.PATH),
     REL_ZIELORT_LIST("zielortList", ZielortListResource.PATH),
     REL_ZIELORT("zielort", ZielortResource.PATH),
+    REL_KATEGORIE_LIST("kategorieList", KategorieListResource.PATH),
+    REL_KATEGORIE("kategorie", KategorieResource.PATH),
     REL_TRAEGER_LIST("traegerList", TraegerListResource.PATH),
     REL_TRAEGER("traeger", TraegerResource.PATH);
 

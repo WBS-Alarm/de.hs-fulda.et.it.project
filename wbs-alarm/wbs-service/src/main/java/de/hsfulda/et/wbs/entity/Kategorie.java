@@ -15,6 +15,8 @@ public class Kategorie {
     @Size(max = 40)
     private String name;
 
+    private boolean aktiv;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TRAEGER_ID")
     private Traeger traeger;
@@ -41,6 +43,14 @@ public class Kategorie {
         this.name = name;
     }
 
+    public boolean isAktiv() {
+        return aktiv;
+    }
+
+    public void setAktiv(boolean aktiv) {
+        this.aktiv = aktiv;
+    }
+
     public Traeger getTraeger() {
         return traeger;
     }
@@ -55,5 +65,42 @@ public class Kategorie {
 
     public void setGroessen(List<Groesse> groessen) {
         this.groessen = groessen;
+    }
+
+
+    public static KategorieBuilder builder() {
+        return new KategorieBuilder();
+    }
+
+    static Kategorie makeTemplate(Kategorie zielort) {
+        Kategorie templated = new Kategorie();
+        templated.setName(zielort.getName());
+        templated.setTraeger(zielort.getTraeger());
+        templated.setAktiv(zielort.isAktiv());
+        return templated;
+    }
+
+    public static class KategorieBuilder {
+
+        private final Kategorie template;
+
+
+        private KategorieBuilder() {
+            template = new Kategorie();
+        }
+
+        public KategorieBuilder name(String name) {
+            template.setName(name);
+            return this;
+        }
+
+        public KategorieBuilder aktiv(boolean aktiv) {
+            template.setAktiv(aktiv);
+            return this;
+        }
+
+        public Kategorie build() {
+            return makeTemplate(template);
+        }
     }
 }

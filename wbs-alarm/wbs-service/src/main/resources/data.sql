@@ -10,6 +10,10 @@ values('Lager', true, true, (select id from traeger where name = 'Feuerwehr'));
 insert into zielorte(name, auto, aktiv, traeger_id)
 values('Aussonderung', true, true, (select id from traeger where name = 'Feuerwehr'));
 
+insert into kategorien(name, aktiv, traeger_id)
+values('Polo-Hemd', true, (select id from traeger where name = 'Feuerwehr'));
+
+
 insert into traeger (name)
 values('Helsa');
 
@@ -21,6 +25,11 @@ insert into zielorte(name, auto, aktiv, traeger_id)
 values('Lager', true, true, (select id from traeger where name = 'Helsa'));
 insert into zielorte(name, auto, aktiv, traeger_id)
 values('Aussonderung', true, true, (select id from traeger where name = 'Helsa'));
+
+insert into kategorien(name, aktiv, traeger_id)
+values('Polo-Hemd', true, (select id from traeger where name = 'Helsa'));
+
+
 
 insert into benutzer (aktiv, einkaeufer, mail, password, name, traeger_id)
 values(true, false, 'superuser@domain.de', '$2a$12$7w0m4I2kjbQgM0hp0erh4OXqEoBxeYqNoaLUZKpiaISqnIcw91t3i', 'Superuser', (select id from traeger where name = 'Feuerwehr'));

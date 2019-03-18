@@ -90,7 +90,6 @@ public class Zielort {
         this.kontakte = kontakte;
     }
 
-
     public static ZielortBuilder builder() {
         return new ZielortBuilder();
     }
