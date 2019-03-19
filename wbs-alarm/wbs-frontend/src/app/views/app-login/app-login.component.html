@@ -5,14 +5,16 @@
     </terra-text-input>
     <terra-text-input [inputName]="'Passwort'"
                       [(ngModel)]="user.password"
-                      [inputIsPassword]="true"  >
+                      [inputIsPassword]="true">
     </terra-text-input>
     <!--<terra-select-box-->
-            <!--[inputName]="'Sprache'"-->
-            <!--[inputListBoxValues]="languages"-->
-            <!--[(ngModel)]="user.language">-->
+    <!--[inputName]="'Sprache'"-->
+    <!--[inputListBoxValues]="languages"-->
+    <!--[(ngModel)]="user.language">-->
     <!--</terra-select-box>-->
-
-    <terra-button [inputCaption]="'Anmelden'"
-                    (outputClicked)="login()"></terra-button>
+    
+    <terra-button [inputType]="submit"
+                  [inputCaption]="'Anmelden'"
+                  (outputClicked)="login()">
+    </terra-button>
 </terra-portlet>
