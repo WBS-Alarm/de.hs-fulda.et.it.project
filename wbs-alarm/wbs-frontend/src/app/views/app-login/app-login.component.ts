@@ -78,7 +78,7 @@ export class AppLoginComponent implements OnInit
        {
            this.alert.addAlert({
                msg:              'Sie werden eingeloggt',
-               type:             'succes',
+               type:             'success',
                dismissOnTimeout: null,
                identifier:       'login'
            });
@@ -94,7 +94,7 @@ export class AppLoginComponent implements OnInit
 
            this.alert.addAlert({
                msg:              'Falscher Benutzername oder Passwort',
-               type:             'damger',
+               type:             'danger',
                dismissOnTimeout: 0,
                identifier:       'loginError'
            });
