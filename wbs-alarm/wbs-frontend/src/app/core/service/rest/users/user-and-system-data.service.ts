@@ -4,6 +4,7 @@ import {
 } from "@angular/core";
 import { UsersService } from './users.service';
 import { Observable } from "rxjs/Observable";
+import { GlobalRegistryService } from '../../../global-registry/global-registry.service';
 
 
 @Injectable()
@@ -11,7 +12,8 @@ export class UserAndSystemDataService
 {
     private userService:UsersService;
 
-    constructor(injector:Injector)
+    constructor(injector:Injector,
+                private globalRegistryService:GlobalRegistryService)
     {
         this.userService = injector.get(UsersService);
     }
@@ -24,7 +26,9 @@ export class UserAndSystemDataService
             {
                 if(userData)
                 {
-                    console.log('user has permissions')
+                    console.log('user has permissions');
+
+                    this.globalRegistryService.setisLoggedIn(true)
                 }
                 else
                 {
