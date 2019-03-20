@@ -20,7 +20,7 @@ import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
 import static org.springframework.util.ObjectUtils.isEmpty;
 
 /**
- * Diese Resource stellt einen Träger dar. Hier kann ein Kategorie aufgerufen, bearbeitet und gelöscht (inaktiv gesetzt)
+ * Diese Resource stellt eine Kategorie dar. Hier kann ein Kategorie aufgerufen, bearbeitet und gelöscht (inaktiv gesetzt)
  * werden.
  */
 @RestController

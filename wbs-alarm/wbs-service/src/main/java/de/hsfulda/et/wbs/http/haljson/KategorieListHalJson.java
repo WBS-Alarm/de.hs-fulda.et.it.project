@@ -10,10 +10,10 @@ import java.util.stream.Collectors;
 
 public class KategorieListHalJson extends HalJsonResource {
 
-    public KategorieListHalJson(List<Kategorie> zielorte) {
+    public KategorieListHalJson(List<Kategorie> kategorien) {
         addLink(Link.self(KategorieListResource.PATH));
 
-        List<HalJsonResource> resources = zielorte.stream()
+        List<HalJsonResource> resources = kategorien.stream()
             .map(t -> new KategorieHalJson(t, false))
             .collect(Collectors.toList());
 

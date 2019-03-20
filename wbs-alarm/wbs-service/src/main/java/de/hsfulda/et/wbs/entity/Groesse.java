@@ -3,7 +3,6 @@ package de.hsfulda.et.wbs.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.List;
 
 @Entity
 @Table(name = "GROESSEN")
@@ -14,13 +13,11 @@ public class Groesse {
     private Long id;
     @Size(max = 20)
     private String name;
+    private boolean aktiv;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "KATEGORIEN_GROESSEN",
-            joinColumns = @JoinColumn(name = "GROESSE_ID", referencedColumnName = "ID"),
-            inverseJoinColumns = @JoinColumn(name = "KATEGORIE_ID", referencedColumnName = "ID"))
-    private List<Kategorie> kategorien;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "KATEGORIE_ID")
+    private Kategorie kategorie;
 
     protected Groesse() {
     }
@@ -41,11 +38,55 @@ public class Groesse {
         this.name = name;
     }
 
-    public List<Kategorie> getKategorien() {
-        return kategorien;
+    public boolean isAktiv() {
+        return aktiv;
     }
 
-    public void setKategorien(List<Kategorie> kategorien) {
-        this.kategorien = kategorien;
+    public void setAktiv(boolean aktiv) {
+        this.aktiv = aktiv;
+    }
+
+    public Kategorie getKategorie() {
+        return kategorie;
+    }
+
+    public void setKategorie(Kategorie kategorie) {
+        this.kategorie = kategorie;
+    }
+
+    public static GroesseBuilder builder() {
+        return new GroesseBuilder();
+    }
+
+    static Groesse makeTemplate(Groesse groesse) {
+        Groesse templated = new Groesse();
+        templated.setName(groesse.getName());
+        templated.setKategorie(groesse.getKategorie());
+        templated.setAktiv(groesse.isAktiv());
+        return templated;
+    }
+
+    public static class GroesseBuilder {
+
+        private final Groesse template;
+
+
+        private GroesseBuilder() {
+            template = new Groesse();
+        }
+
+        public GroesseBuilder name(String name) {
+            template.setName(name);
+            return this;
+        }
+
+        public GroesseBuilder aktiv(boolean aktiv) {
+            template.setAktiv(aktiv);
+            return this;
+        }
+
+        public Groesse build() {
+            return makeTemplate(template);
+        }
     }
 }

@@ -3,6 +3,7 @@ package de.hsfulda.et.wbs.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,7 +22,7 @@ public class Kategorie {
     @JoinColumn(name = "TRAEGER_ID")
     private Traeger traeger;
 
-    @ManyToMany(mappedBy = "kategorien", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "kategorie", fetch = FetchType.LAZY)
     private List<Groesse> groessen;
 
     protected Kategorie() {
@@ -67,16 +68,27 @@ public class Kategorie {
         this.groessen = groessen;
     }
 
+    public void addGroesse(Groesse groesse) {
+        if (groessen == null) {
+            groessen = new ArrayList<>();
+        }
+        if (!groessen.contains(groesse)) {
+            groesse.setKategorie(this);
+            groessen.add(groesse);
+        }
+
+    }
+
 
     public static KategorieBuilder builder() {
         return new KategorieBuilder();
     }
 
-    static Kategorie makeTemplate(Kategorie zielort) {
+    static Kategorie makeTemplate(Kategorie kategorie) {
         Kategorie templated = new Kategorie();
-        templated.setName(zielort.getName());
-        templated.setTraeger(zielort.getTraeger());
-        templated.setAktiv(zielort.isAktiv());
+        templated.setName(kategorie.getName());
+        templated.setTraeger(kategorie.getTraeger());
+        templated.setAktiv(kategorie.isAktiv());
         return templated;
     }
 

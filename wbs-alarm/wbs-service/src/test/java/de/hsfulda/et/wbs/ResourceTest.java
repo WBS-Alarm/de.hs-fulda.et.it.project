@@ -1,9 +1,6 @@
 package de.hsfulda.et.wbs;
 
-import de.hsfulda.et.wbs.repository.BenutzerRepository;
-import de.hsfulda.et.wbs.repository.KategorieTestRepository;
-import de.hsfulda.et.wbs.repository.TraegerRepository;
-import de.hsfulda.et.wbs.repository.ZielortTestRepository;
+import de.hsfulda.et.wbs.repository.*;
 import de.hsfulda.et.wbs.security.repository.GrantedAuthorityRepository;
 import de.hsfulda.et.wbs.security.service.UserAuthenticationService;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,6 +34,9 @@ public abstract class ResourceTest {
 
     @Autowired
     protected KategorieTestRepository kategorieRepository;
+
+    @Autowired
+    protected GroesseTestRepository groesseRepository;
 
     @Autowired
     protected BenutzerRepository benutzerRepository;
@@ -75,6 +75,10 @@ public abstract class ResourceTest {
 
     protected Long getKategorieId(String name, String traeger) {
         return kategorieRepository.findByName(name, traeger).get(0).getId();
+    }
+
+    protected Long getGroesseId(String name, String kategorie, String traeger) {
+        return groesseRepository.findByName(name, kategorie, traeger).get(0).getId();
     }
 
     protected boolean hasGrantedAuthority(Long userId, Long authorityId) {

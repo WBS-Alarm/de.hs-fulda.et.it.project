@@ -36,4 +36,12 @@ public interface TraegerRepository extends CrudRepository<Traeger, Long> {
             "where b.id = :userId " +
             "and k.id = :kategorieId")
     Long findTraegerByUserAndKategorieId(@Param("userId") Long userID, @Param("kategorieId") Long kategorieId);
+
+    @Query("SELECT COUNT(t) FROM Traeger t " +
+        "JOIN t.benutzer b " +
+        "JOIN t.kategorien k " +
+        "JOIN k.groessen g " +
+        "where b.id = :userId " +
+        "and g.id = :groesseId")
+    Long findTraegerByUserAndGroesseId(@Param("userId") Long userID, @Param("groesseId") Long groesseId);
 }

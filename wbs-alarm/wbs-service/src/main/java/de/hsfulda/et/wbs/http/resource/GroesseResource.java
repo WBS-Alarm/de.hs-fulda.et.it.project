@@ -2,9 +2,9 @@ package de.hsfulda.et.wbs.http.resource;
 
 import de.hsfulda.et.wbs.core.HalJsonResource;
 import de.hsfulda.et.wbs.core.User;
-import de.hsfulda.et.wbs.entity.Zielort;
-import de.hsfulda.et.wbs.http.haljson.ZielortHalJson;
-import de.hsfulda.et.wbs.repository.ZielortRepository;
+import de.hsfulda.et.wbs.entity.Groesse;
+import de.hsfulda.et.wbs.http.haljson.GroesseHalJson;
+import de.hsfulda.et.wbs.repository.GroesseRepository;
 import de.hsfulda.et.wbs.service.AccessService;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -20,25 +20,25 @@ import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
 import static org.springframework.util.ObjectUtils.isEmpty;
 
 /**
- * Diese Resource stellt einen Zielort dar. Hier kann ein Zielort aufgerufen, bearbeitet und gelöscht (inaktiv gesetzt)
+ * Diese Resource stellt einen Größe dar. Hier kann eine Größe aufgerufen, bearbeitet und gelöscht (inaktiv gesetzt)
  * werden.
  */
 @RestController
-@RequestMapping(ZielortResource.PATH)
-public class ZielortResource {
+@RequestMapping(GroesseResource.PATH)
+public class GroesseResource {
 
-    public static final String PATH = CONTEXT_ROOT + "/zielort/{id}";
+    public static final String PATH = CONTEXT_ROOT + "/groesse/{id}";
 
-    private final ZielortRepository zielortRepository;
+    private final GroesseRepository groesseRepository;
     private final AccessService accessService;
 
-    public ZielortResource(ZielortRepository zielortRepository, AccessService accessService) {
-        this.zielortRepository = zielortRepository;
+    public GroesseResource(GroesseRepository groesseRepository, AccessService accessService) {
+        this.groesseRepository = groesseRepository;
         this.accessService = accessService;
     }
 
     /**
-     * Ermittelt einen Zielort anhand der ID.
+     * Ermittelt einen Groesse anhand der ID.
      *
      * @param id ID des Zielorts aus dem Pfad
      * @return gefundenen ZIelort. Anderfalls 404
@@ -47,58 +47,55 @@ public class ZielortResource {
     @PreAuthorize("hasAuthority('READ_ALL')")
     HttpEntity<HalJsonResource> get(@AuthenticationPrincipal User user, @PathVariable("id") Long id) {
         return accessService.hasAccessOnZielort(user, id, () -> {
-            Optional<Zielort> managed = zielortRepository.findByIdAndAktivIsTrue(id);
-            return managed.<HttpEntity<HalJsonResource>>map(zielort -> new HttpEntity<>(new ZielortHalJson(zielort)))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+            Optional<Groesse> managed = groesseRepository.findByIdAndAktivIsTrue(id);
+            return managed.<HttpEntity<HalJsonResource>>map(groesse -> new HttpEntity<>(new GroesseHalJson(groesse)))
+                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
         });
     }
 
     /**
-     * Bearbeitet einen Zielort. Hierbei wird nur der Name geändert.
+     * Ermittelt eine Groesse anhand der ID.
      *
-     * @param id ID des Zielorts aus dem Pfad
-     * @param traeger Zielort mit neuem Namen
-     * @return gespeicherten Zielort. Anderfalls 404 oder 409
+     * @param id ID des Groesses aus dem Pfad
+     * @param traeger Groesse mit neuem Namen
+     * @return gespeicherten Groesse. Anderfalls 404 oder 409
      */
     @PutMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
-    HttpEntity<HalJsonResource> put(@AuthenticationPrincipal User user, @PathVariable("id") Long id, @RequestBody Zielort traeger) {
-        return accessService.hasAccessOnZielort(user, id, () -> {
+    HttpEntity<HalJsonResource> put(@AuthenticationPrincipal User user, @PathVariable("id") Long id, @RequestBody Groesse traeger) {
+        return accessService.hasAccessOnGroesse(user, id, () -> {
             if (isEmpty(traeger.getName())) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
-            Optional<Zielort> managed = zielortRepository.findById(id);
+            Optional<Groesse> managed = groesseRepository.findById(id);
             if (managed.isPresent()) {
-                Zielort zo = managed.get();
-                if (zo.isAuto()) {
-                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-                }
+                Groesse zo = managed.get();
 
                 zo.setName(traeger.getName());
-                Zielort saved = zielortRepository.save(zo);
-                return new HttpEntity<>(new ZielortHalJson(saved));
+                Groesse saved = groesseRepository.save(zo);
+                return new HttpEntity<>(new GroesseHalJson(saved));
             }
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         });
     }
 
     /**
-     * Entfernt einen Zielort durch inaktiv setzen.
+     * Entfernt einen Groesse durch inaktiv setzen.
      *
-     * @param id ID des Zielorts aus dem Pfad
+     * @param id ID des Groesses aus dem Pfad
      * @return 200. Andernfalls 404.
      */
     @DeleteMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
     HttpEntity<HalJsonResource> delete(@AuthenticationPrincipal User user, @PathVariable("id") Long id) {
-        return accessService.hasAccessOnZielort(user, id, () -> {
-            Optional<Zielort> managed = zielortRepository.findById(id);
+        return accessService.hasAccessOnGroesse(user, id, () -> {
+            Optional<Groesse> managed = groesseRepository.findById(id);
 
             if (managed.isPresent()) {
-                Zielort zo = managed.get();
+                Groesse zo = managed.get();
                 zo.setAktiv(false);
-                zielortRepository.save(zo);
+                groesseRepository.save(zo);
                 return new ResponseEntity<>(HttpStatus.OK);
             }
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
