@@ -63,7 +63,6 @@ public class Link {
         if (obj == null) {
             return false;
         }
-        // Subklassen verlassen sich darauf, dass dieser Vergleich vorhanden ist!
         if (getClass() != obj.getClass()) {
             return false;
         }

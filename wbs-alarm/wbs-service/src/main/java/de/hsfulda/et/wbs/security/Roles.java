@@ -1,6 +1,6 @@
 package de.hsfulda.et.wbs.security;
 
-import de.hsfulda.et.wbs.security.entity.GrantedAuthority;
+import de.hsfulda.et.wbs.core.data.GrantedAuthorityData;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.*;
@@ -26,10 +26,10 @@ public enum Roles {
         return roles.contains(auth);
     }
 
-    public static Set<SimpleGrantedAuthority> getRoles(Collection<GrantedAuthority> authorities) {
+    public static Set<SimpleGrantedAuthority> getRoles(Collection<GrantedAuthorityData> authorities) {
         final Set<SimpleGrantedAuthority> rollen = new HashSet<>();
         for (Roles role : values()) {
-            for (GrantedAuthority authority : authorities) {
+            for (GrantedAuthorityData authority : authorities) {
                 if (role.contains(authority.getGroup().getCode())) {
                     rollen.add(new SimpleGrantedAuthority(role.roleName));
                 }

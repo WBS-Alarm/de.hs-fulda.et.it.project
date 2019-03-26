@@ -1,6 +1,7 @@
 package de.hsfulda.et.wbs.http.resource;
 
 import de.hsfulda.et.wbs.core.HalJsonResource;
+import de.hsfulda.et.wbs.core.data.TraegerData;
 import de.hsfulda.et.wbs.entity.Traeger;
 import de.hsfulda.et.wbs.entity.Zielort;
 import de.hsfulda.et.wbs.http.haljson.TraegerHalJson;
@@ -8,7 +9,6 @@ import de.hsfulda.et.wbs.http.haljson.TraegerListHalJson;
 import de.hsfulda.et.wbs.repository.TraegerRepository;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,9 +40,7 @@ public class TraegerListResource {
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")
     HttpEntity<HalJsonResource> get() {
-        //TODO: Paginierung?
-
-        Iterable<Traeger> all = traegerRepository.findAll();
+        Iterable<TraegerData> all = traegerRepository.findAllAsData();
         return new HttpEntity<>(new TraegerListHalJson(all));
     }
 
@@ -58,7 +56,7 @@ public class TraegerListResource {
     @PreAuthorize("hasAuthority('ADMIN')")
     HttpEntity<HalJsonResource> post(@RequestBody Traeger traeger) {
         if (isEmpty(traeger.getName())) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            throw new IllegalArgumentException("Name des Trägers muss angegeben werden");
         }
 
         Traeger tr = Traeger.builder().

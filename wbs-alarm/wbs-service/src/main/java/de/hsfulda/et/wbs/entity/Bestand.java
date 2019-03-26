@@ -1,11 +1,16 @@
 package de.hsfulda.et.wbs.entity;
 
 
+import de.hsfulda.et.wbs.core.data.BestandData;
+import de.hsfulda.et.wbs.core.data.GroesseData;
+import de.hsfulda.et.wbs.core.data.KategorieData;
+import de.hsfulda.et.wbs.core.data.ZielortData;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "BESTAENDE")
-public class Bestand {
+public class Bestand implements BestandData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +32,7 @@ public class Bestand {
     protected Bestand() {
     }
 
+    @Override
     public Long getId() {
         return id;
     }
@@ -35,6 +41,7 @@ public class Bestand {
         this.id = id;
     }
 
+    @Override
     public Long getAnzahl() {
         return anzahl;
     }
@@ -43,7 +50,8 @@ public class Bestand {
         this.anzahl = anzahl;
     }
 
-    public Groesse getGroesse() {
+    @Override
+    public GroesseData getGroesse() {
         return groesse;
     }
 
@@ -51,7 +59,8 @@ public class Bestand {
         this.groesse = groesse;
     }
 
-    public Kategorie getKategorie() {
+    @Override
+    public KategorieData getKategorie() {
         return kategorie;
     }
 
@@ -59,7 +68,8 @@ public class Bestand {
         this.kategorie = kategorie;
     }
 
-    public Zielort getZielort() {
+    @Override
+    public ZielortData getZielort() {
         return zielort;
     }
 

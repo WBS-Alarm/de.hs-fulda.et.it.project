@@ -1,11 +1,12 @@
 package de.hsfulda.et.wbs.http.resource;
 
 import de.hsfulda.et.wbs.core.HalJsonResource;
+import de.hsfulda.et.wbs.core.ResourceNotFoundException;
 import de.hsfulda.et.wbs.core.User;
+import de.hsfulda.et.wbs.core.data.GrantedAuthorityData;
 import de.hsfulda.et.wbs.entity.Benutzer;
 import de.hsfulda.et.wbs.http.haljson.BenutzerHalJson;
 import de.hsfulda.et.wbs.repository.BenutzerRepository;
-import de.hsfulda.et.wbs.security.entity.GrantedAuthority;
 import de.hsfulda.et.wbs.security.repository.GrantedAuthorityRepository;
 import de.hsfulda.et.wbs.service.AccessService;
 import org.springframework.http.HttpEntity;
@@ -36,9 +37,9 @@ public class BenutzerResource {
     private final AccessService accessService;
 
     public BenutzerResource(
-            BenutzerRepository benutzerRepository,
-            GrantedAuthorityRepository grantedAuthorityRepository,
-            AccessService accessService) {
+        BenutzerRepository benutzerRepository,
+        GrantedAuthorityRepository grantedAuthorityRepository,
+        AccessService accessService) {
         this.benutzerRepository = benutzerRepository;
         this.grantedAuthorityRepository = grantedAuthorityRepository;
         this.accessService = accessService;
@@ -56,12 +57,14 @@ public class BenutzerResource {
     HttpEntity<HalJsonResource> get(@AuthenticationPrincipal User user, @PathVariable("id") Long id) {
         return accessService.hasAccessOnBenutzer(user, id, () -> {
             Optional<Benutzer> benutzer = benutzerRepository.findById(id);
-            if (benutzer.isPresent()) {
-                Benutzer b = benutzer.get();
-                List<GrantedAuthority> granted = grantedAuthorityRepository.findByUserId(b.getId());
-                return new HttpEntity<>(BenutzerHalJson.ofGrantedAuthorities(b, granted));
+
+            if (!benutzer.isPresent()) {
+                throw new ResourceNotFoundException();
             }
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+            Benutzer b = benutzer.get();
+            List<GrantedAuthorityData> granted = grantedAuthorityRepository.findByUserId(b.getId());
+            return new HttpEntity<>(BenutzerHalJson.ofGrantedAuthorities(b, granted));
         });
     }
 
@@ -83,14 +86,16 @@ public class BenutzerResource {
         @RequestBody Benutzer benutzer) {
         return accessService.hasAccessOnBenutzer(user, id, () -> {
             Optional<Benutzer> b = benutzerRepository.findById(id);
-            if (b.isPresent()) {
-                Benutzer loaded = b.get();
-                loaded.setEinkaeufer(benutzer.getEinkaeufer());
-                loaded.setMail(benutzer.getMail());
-                benutzerRepository.save(loaded);
-                return new HttpEntity<>(BenutzerHalJson.of(loaded));
+
+            if (!b.isPresent()) {
+                throw new ResourceNotFoundException();
             }
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+            Benutzer loaded = b.get();
+            loaded.setEinkaeufer(benutzer.getEinkaeufer());
+            loaded.setMail(benutzer.getMail());
+            benutzerRepository.save(loaded);
+            return new HttpEntity<>(BenutzerHalJson.of(loaded));
         });
     }
 
@@ -106,13 +111,15 @@ public class BenutzerResource {
     HttpEntity<HalJsonResource> delete(@AuthenticationPrincipal User user, @PathVariable("id") Long id) {
         return accessService.hasAccessOnBenutzer(user, id, () -> {
             Optional<Benutzer> b = benutzerRepository.findById(id);
-            if (b.isPresent()) {
-                Benutzer loaded = b.get();
-                loaded.setAktiv(false);
-                benutzerRepository.save(loaded);
-                return new ResponseEntity<>(HttpStatus.OK);
+
+            if (!b.isPresent()) {
+                throw new ResourceNotFoundException();
             }
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+            Benutzer loaded = b.get();
+            loaded.setAktiv(false);
+            benutzerRepository.save(loaded);
+            return new ResponseEntity<>(HttpStatus.OK);
         });
     }
 }

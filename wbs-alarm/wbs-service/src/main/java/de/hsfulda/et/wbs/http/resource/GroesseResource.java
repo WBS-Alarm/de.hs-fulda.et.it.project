@@ -1,6 +1,7 @@
 package de.hsfulda.et.wbs.http.resource;
 
 import de.hsfulda.et.wbs.core.HalJsonResource;
+import de.hsfulda.et.wbs.core.ResourceNotFoundException;
 import de.hsfulda.et.wbs.core.User;
 import de.hsfulda.et.wbs.entity.Groesse;
 import de.hsfulda.et.wbs.http.haljson.GroesseHalJson;
@@ -49,7 +50,7 @@ public class GroesseResource {
         return accessService.hasAccessOnZielort(user, id, () -> {
             Optional<Groesse> managed = groesseRepository.findByIdAndAktivIsTrue(id);
             return managed.<HttpEntity<HalJsonResource>>map(groesse -> new HttpEntity<>(new GroesseHalJson(groesse)))
-                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .orElseThrow(ResourceNotFoundException::new);
         });
     }
 
@@ -65,18 +66,20 @@ public class GroesseResource {
     HttpEntity<HalJsonResource> put(@AuthenticationPrincipal User user, @PathVariable("id") Long id, @RequestBody Groesse traeger) {
         return accessService.hasAccessOnGroesse(user, id, () -> {
             if (isEmpty(traeger.getName())) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                throw new IllegalArgumentException("Name des Trägers muss angegeben werden");
             }
 
             Optional<Groesse> managed = groesseRepository.findById(id);
-            if (managed.isPresent()) {
-                Groesse zo = managed.get();
 
-                zo.setName(traeger.getName());
-                Groesse saved = groesseRepository.save(zo);
-                return new HttpEntity<>(new GroesseHalJson(saved));
+            if (!managed.isPresent()) {
+                throw new ResourceNotFoundException();
             }
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+            Groesse zo = managed.get();
+
+            zo.setName(traeger.getName());
+            Groesse saved = groesseRepository.save(zo);
+            return new HttpEntity<>(new GroesseHalJson(saved));
         });
     }
 
@@ -92,13 +95,14 @@ public class GroesseResource {
         return accessService.hasAccessOnGroesse(user, id, () -> {
             Optional<Groesse> managed = groesseRepository.findById(id);
 
-            if (managed.isPresent()) {
-                Groesse zo = managed.get();
-                zo.setAktiv(false);
-                groesseRepository.save(zo);
-                return new ResponseEntity<>(HttpStatus.OK);
+            if (!managed.isPresent()) {
+                throw new ResourceNotFoundException();
             }
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+            Groesse zo = managed.get();
+            zo.setAktiv(false);
+            groesseRepository.save(zo);
+            return new ResponseEntity<>(HttpStatus.OK);
         });
     }
 }

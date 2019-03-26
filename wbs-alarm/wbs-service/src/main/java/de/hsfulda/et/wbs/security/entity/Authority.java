@@ -1,6 +1,8 @@
 package de.hsfulda.et.wbs.security.entity;
 
 
+import de.hsfulda.et.wbs.core.data.AuthorityData;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -8,7 +10,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "AUTHORITY")
-public class Authority {
+public class Authority implements AuthorityData {
 
     @Id
     private Long id;
@@ -21,6 +23,7 @@ public class Authority {
 
     private boolean aktiv;
 
+    @Override
     public Long getId() {
         return id;
     }
@@ -29,6 +32,7 @@ public class Authority {
         this.id = id;
     }
 
+    @Override
     public String getCode() {
         return code;
     }
@@ -37,6 +41,7 @@ public class Authority {
         this.code = code;
     }
 
+    @Override
     public String getBezeichnung() {
         return bezeichnung;
     }
@@ -45,6 +50,7 @@ public class Authority {
         this.bezeichnung = bezeichnung;
     }
 
+    @Override
     public boolean isAktiv() {
         return aktiv;
     }

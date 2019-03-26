@@ -2,6 +2,7 @@ package de.hsfulda.et.wbs.http.resource;
 
 import de.hsfulda.et.wbs.core.HalJsonResource;
 import de.hsfulda.et.wbs.core.User;
+import de.hsfulda.et.wbs.core.data.ZielortData;
 import de.hsfulda.et.wbs.entity.Traeger;
 import de.hsfulda.et.wbs.entity.Zielort;
 import de.hsfulda.et.wbs.http.haljson.ZielortHalJson;
@@ -11,7 +12,6 @@ import de.hsfulda.et.wbs.repository.ZielortRepository;
 import de.hsfulda.et.wbs.service.AccessService;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -57,9 +57,7 @@ public class ZielortListResource {
     @PreAuthorize("hasAuthority('READ_ALL')")
     HttpEntity<HalJsonResource> get(@AuthenticationPrincipal User user, @PathVariable("traegerId") Long traegerId) {
         return accessService.hasAccessOnTraeger(user, traegerId, () -> {
-            //TODO: Paginierung?
-
-            List<Zielort> all = zielortRepository.findAllByTraegerId(traegerId);
+            List<ZielortData> all = zielortRepository.findAllByTraegerId(traegerId);
             return new HttpEntity<>(new ZielortListHalJson(all));
         });
     }
@@ -82,7 +80,7 @@ public class ZielortListResource {
         return accessService.hasAccessOnTraeger(user, traegerId, () -> {
 
             if (isEmpty(zielort.getName())) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                throw new IllegalArgumentException("Name des Zielorts muss angegeben werden.");
             }
 
             Optional<Traeger> traeger = traegerRepository.findById(traegerId);

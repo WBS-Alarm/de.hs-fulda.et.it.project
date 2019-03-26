@@ -1,14 +1,19 @@
 package de.hsfulda.et.wbs.entity;
 
 
+import de.hsfulda.et.wbs.core.data.GroesseData;
+import de.hsfulda.et.wbs.core.data.KategorieData;
+import de.hsfulda.et.wbs.core.data.TraegerData;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "KATEGORIEN")
-public class Kategorie {
+public class Kategorie implements KategorieData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +33,7 @@ public class Kategorie {
     protected Kategorie() {
     }
 
+    @Override
     public Long getId() {
         return id;
     }
@@ -36,6 +42,7 @@ public class Kategorie {
         this.id = id;
     }
 
+    @Override
     public String getName() {
         return name;
     }
@@ -44,6 +51,7 @@ public class Kategorie {
         this.name = name;
     }
 
+    @Override
     public boolean isAktiv() {
         return aktiv;
     }
@@ -52,7 +60,8 @@ public class Kategorie {
         this.aktiv = aktiv;
     }
 
-    public Traeger getTraeger() {
+    @Override
+    public TraegerData getTraeger() {
         return traeger;
     }
 
@@ -60,8 +69,12 @@ public class Kategorie {
         this.traeger = traeger;
     }
 
-    public List<Groesse> getGroessen() {
-        return groessen;
+    @Override
+    public List<GroesseData> getGroessen() {
+        if (groessen == null) {
+            groessen = new ArrayList<>();
+        }
+        return groessen.stream().map(g -> (GroesseData) g).collect(Collectors.toList());
     }
 
     public void setGroessen(List<Groesse> groessen) {
@@ -86,9 +99,9 @@ public class Kategorie {
 
     static Kategorie makeTemplate(Kategorie kategorie) {
         Kategorie templated = new Kategorie();
-        templated.setName(kategorie.getName());
-        templated.setTraeger(kategorie.getTraeger());
-        templated.setAktiv(kategorie.isAktiv());
+        templated.name = kategorie.name;
+        templated.traeger = kategorie.traeger;
+        templated.aktiv = kategorie.aktiv;
         return templated;
     }
 

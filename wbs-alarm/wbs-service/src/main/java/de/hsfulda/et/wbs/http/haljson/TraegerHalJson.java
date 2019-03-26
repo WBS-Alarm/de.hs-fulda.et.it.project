@@ -2,7 +2,7 @@ package de.hsfulda.et.wbs.http.haljson;
 
 import de.hsfulda.et.wbs.core.HalJsonResource;
 import de.hsfulda.et.wbs.core.Link;
-import de.hsfulda.et.wbs.entity.Traeger;
+import de.hsfulda.et.wbs.core.data.TraegerData;
 import de.hsfulda.et.wbs.http.resource.TraegerListResource;
 import de.hsfulda.et.wbs.util.UriUtil;
 
@@ -12,35 +12,35 @@ import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
 
 public class TraegerHalJson extends HalJsonResource {
 
-    public TraegerHalJson(Traeger traeger) {
+    public TraegerHalJson(TraegerData traeger) {
         this(traeger, true);
     }
 
-    public TraegerHalJson(Traeger traeger, boolean embedded) {
+    public TraegerHalJson(TraegerData traeger, boolean embedded) {
         addTraegerProperties(traeger);
 
         if (embedded) {
             addEmbeddedResources("benutzer",
-                    traeger.getBenutzer()
-                            .stream()
-                            .map(BenutzerHalJson::ofNoEmbaddables)
-                            .collect(Collectors.toList()));
+                traeger.getBenutzer()
+                    .stream()
+                    .map(BenutzerHalJson::ofNoEmbaddables)
+                    .collect(Collectors.toList()));
 
             addEmbeddedResources("zielorte",
-                    traeger.getZielorte()
-                            .stream()
-                            .map(z -> new ZielortHalJson(z, false))
-                            .collect(Collectors.toList()));
+                traeger.getZielorte()
+                    .stream()
+                    .map(z -> new ZielortHalJson(z, false))
+                    .collect(Collectors.toList()));
 
             addEmbeddedResources("kategorien",
-                    traeger.getKategorien()
-                            .stream()
-                            .map(z -> new KategorieHalJson(z, false))
-                            .collect(Collectors.toList()));
+                traeger.getKategorien()
+                    .stream()
+                    .map(z -> new KategorieHalJson(z, false))
+                    .collect(Collectors.toList()));
         }
     }
 
-    private void addTraegerProperties(Traeger traeger) {
+    private void addTraegerProperties(TraegerData traeger) {
         String traegerResource = UriUtil.build(CONTEXT_ROOT + "/traeger/{id}", traeger.getId());
 
         addLink(Link.self(traegerResource));

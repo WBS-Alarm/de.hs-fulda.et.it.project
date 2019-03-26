@@ -3,8 +3,8 @@ package de.hsfulda.et.wbs.http.haljson;
 import de.hsfulda.et.wbs.core.HalJsonResource;
 import de.hsfulda.et.wbs.core.Link;
 import de.hsfulda.et.wbs.core.User;
-import de.hsfulda.et.wbs.entity.Benutzer;
-import de.hsfulda.et.wbs.security.entity.GrantedAuthority;
+import de.hsfulda.et.wbs.core.data.BenutzerData;
+import de.hsfulda.et.wbs.core.data.GrantedAuthorityData;
 import de.hsfulda.et.wbs.security.haljson.AuthorityHalJson;
 import de.hsfulda.et.wbs.util.UriUtil;
 
@@ -15,27 +15,27 @@ import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
 
 public class BenutzerHalJson extends HalJsonResource {
 
-    private BenutzerHalJson(Benutzer benutzer, boolean embedded) {
+    private BenutzerHalJson(BenutzerData benutzer, boolean embedded) {
         addBenutzerProperies(benutzer);
         if (embedded) {
             addEmbeddedResource("traeger", new TraegerHalJson(benutzer.getTraeger(), false));
         }
     }
 
-    public static BenutzerHalJson of(Benutzer benutzer) {
+    public static BenutzerHalJson of(BenutzerData benutzer) {
         return new BenutzerHalJson(benutzer, true);
     }
 
-    public static BenutzerHalJson ofNoEmbaddables(Benutzer benutzer) {
+    public static BenutzerHalJson ofNoEmbaddables(BenutzerData benutzer) {
         return new BenutzerHalJson(benutzer, false);
     }
 
-    public static BenutzerHalJson ofGrantedAuthorities(Benutzer benutzer, List<GrantedAuthority> granted) {
+    public static BenutzerHalJson ofGrantedAuthorities(BenutzerData benutzer, List<GrantedAuthorityData> granted) {
         BenutzerHalJson hal = new BenutzerHalJson(benutzer, true);
 
         hal.addEmbeddedResources("authorities", granted.stream()
-                .map(g -> new AuthorityHalJson(g.getGroup(), benutzer))
-                .collect(Collectors.toList()));
+            .map(g -> new AuthorityHalJson(g.getGroup(), benutzer))
+            .collect(Collectors.toList()));
 
         return hal;
     }
@@ -46,7 +46,7 @@ public class BenutzerHalJson extends HalJsonResource {
         return hal;
     }
 
-    private void addBenutzerProperies(Benutzer benutzer) {
+    private void addBenutzerProperies(BenutzerData benutzer) {
         String benutzerResource = UriUtil.build(CONTEXT_ROOT + "/benutzer/{id}", benutzer.getId());
 
         addLink(Link.self(benutzerResource));

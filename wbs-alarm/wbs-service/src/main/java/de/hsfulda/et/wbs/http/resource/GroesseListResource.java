@@ -2,6 +2,7 @@ package de.hsfulda.et.wbs.http.resource;
 
 import de.hsfulda.et.wbs.core.HalJsonResource;
 import de.hsfulda.et.wbs.core.User;
+import de.hsfulda.et.wbs.core.data.GroesseData;
 import de.hsfulda.et.wbs.entity.Groesse;
 import de.hsfulda.et.wbs.entity.Kategorie;
 import de.hsfulda.et.wbs.http.haljson.GroesseHalJson;
@@ -11,7 +12,6 @@ import de.hsfulda.et.wbs.repository.KategorieRepository;
 import de.hsfulda.et.wbs.service.AccessService;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -57,9 +57,7 @@ public class GroesseListResource {
     @PreAuthorize("hasAuthority('READ_ALL')")
     HttpEntity<HalJsonResource> get(@AuthenticationPrincipal User user, @PathVariable("kategorieId") Long kategorieId) {
         return accessService.hasAccessOnKategorie(user, kategorieId, () -> {
-            //TODO: Paginierung?
-
-            List<Groesse> all = groesseRepository.findAllByKategorieId(kategorieId);
+            List<GroesseData> all = groesseRepository.findAllByKategorieId(kategorieId);
             return new HttpEntity<>(new GroesseListHalJson(all));
         });
     }
@@ -82,7 +80,7 @@ public class GroesseListResource {
         return accessService.hasAccessOnKategorie(user, kategorieId, () -> {
 
             if (isEmpty(groesse.getName())) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                throw new IllegalArgumentException("Name der Größe muss angegeben werden.");
             }
 
             Optional<Kategorie> kategorie = kategorieRepository.findById(kategorieId);

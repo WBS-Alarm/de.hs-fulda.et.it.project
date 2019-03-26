@@ -1,6 +1,7 @@
 package de.hsfulda.et.wbs.http.resource;
 
 import de.hsfulda.et.wbs.core.HalJsonResource;
+import de.hsfulda.et.wbs.core.ResourceNotFoundException;
 import de.hsfulda.et.wbs.core.User;
 import de.hsfulda.et.wbs.entity.Kategorie;
 import de.hsfulda.et.wbs.http.haljson.KategorieHalJson;
@@ -20,8 +21,8 @@ import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
 import static org.springframework.util.ObjectUtils.isEmpty;
 
 /**
- * Diese Resource stellt eine Kategorie dar. Hier kann ein Kategorie aufgerufen, bearbeitet und gelöscht (inaktiv gesetzt)
- * werden.
+ * Diese Resource stellt eine Kategorie dar. Hier kann ein Kategorie aufgerufen, bearbeitet und gelöscht (inaktiv
+ * gesetzt) werden.
  */
 @RestController
 @RequestMapping(KategorieResource.PATH)
@@ -49,7 +50,7 @@ public class KategorieResource {
         return accessService.hasAccessOnZielort(user, id, () -> {
             Optional<Kategorie> managed = kategorieRepository.findByIdAndAktivIsTrue(id);
             return managed.<HttpEntity<HalJsonResource>>map(kategorie -> new HttpEntity<>(new KategorieHalJson(kategorie)))
-                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .orElseThrow(ResourceNotFoundException::new);
         });
     }
 
@@ -65,18 +66,20 @@ public class KategorieResource {
     HttpEntity<HalJsonResource> put(@AuthenticationPrincipal User user, @PathVariable("id") Long id, @RequestBody Kategorie traeger) {
         return accessService.hasAccessOnKategorie(user, id, () -> {
             if (isEmpty(traeger.getName())) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                throw new IllegalArgumentException("Name des Trägers muss angegeben werden.");
             }
 
             Optional<Kategorie> managed = kategorieRepository.findById(id);
-            if (managed.isPresent()) {
-                Kategorie zo = managed.get();
 
-                zo.setName(traeger.getName());
-                Kategorie saved = kategorieRepository.save(zo);
-                return new HttpEntity<>(new KategorieHalJson(saved));
+            if (!managed.isPresent()) {
+                throw new ResourceNotFoundException();
             }
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+            Kategorie zo = managed.get();
+
+            zo.setName(traeger.getName());
+            Kategorie saved = kategorieRepository.save(zo);
+            return new HttpEntity<>(new KategorieHalJson(saved));
         });
     }
 
@@ -92,13 +95,14 @@ public class KategorieResource {
         return accessService.hasAccessOnKategorie(user, id, () -> {
             Optional<Kategorie> managed = kategorieRepository.findById(id);
 
-            if (managed.isPresent()) {
-                Kategorie zo = managed.get();
-                zo.setAktiv(false);
-                kategorieRepository.save(zo);
-                return new ResponseEntity<>(HttpStatus.OK);
+            if (!managed.isPresent()) {
+                throw new ResourceNotFoundException();
             }
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+            Kategorie zo = managed.get();
+            zo.setAktiv(false);
+            kategorieRepository.save(zo);
+            return new ResponseEntity<>(HttpStatus.OK);
         });
     }
 }

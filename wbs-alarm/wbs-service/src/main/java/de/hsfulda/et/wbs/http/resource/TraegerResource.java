@@ -1,6 +1,7 @@
 package de.hsfulda.et.wbs.http.resource;
 
 import de.hsfulda.et.wbs.core.HalJsonResource;
+import de.hsfulda.et.wbs.core.ResourceNotFoundException;
 import de.hsfulda.et.wbs.entity.Traeger;
 import de.hsfulda.et.wbs.http.haljson.TraegerHalJson;
 import de.hsfulda.et.wbs.repository.TraegerRepository;
@@ -42,7 +43,7 @@ public class TraegerResource {
     HttpEntity<HalJsonResource> get(@PathVariable("id") Long id) {
         Optional<Traeger> managed = traegerRepository.findById(id);
         return managed.<HttpEntity<HalJsonResource>>map(traeger -> new HttpEntity<>(new TraegerHalJson(traeger)))
-            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+            .orElseThrow(ResourceNotFoundException::new);
     }
 
     /**
@@ -56,17 +57,18 @@ public class TraegerResource {
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
     HttpEntity<HalJsonResource> put(@PathVariable("id") Long id, @RequestBody Traeger traeger) {
         if (isEmpty(traeger.getName())) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            throw new IllegalArgumentException("Name des Trägers muss angegeben werden.");
         }
 
         Optional<Traeger> managed = traegerRepository.findById(id);
-        if (managed.isPresent()) {
-            Traeger tr = managed.get();
-            tr.setName(traeger.getName());
-            Traeger saved = traegerRepository.save(tr);
-            return new HttpEntity<>(new TraegerHalJson(saved));
+        if (!managed.isPresent()) {
+            throw new ResourceNotFoundException();
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        Traeger tr = managed.get();
+        tr.setName(traeger.getName());
+        Traeger saved = traegerRepository.save(tr);
+        return new HttpEntity<>(new TraegerHalJson(saved));
     }
 
     /**
@@ -81,10 +83,11 @@ public class TraegerResource {
     HttpEntity<HalJsonResource> delete(@PathVariable("id") Long id) {
         Optional<Traeger> managed = traegerRepository.findById(id);
 
-        if (managed.isPresent()) {
-            traegerRepository.delete(managed.get());
-            return new ResponseEntity<>(HttpStatus.OK);
+        if (!managed.isPresent()) {
+            throw new ResourceNotFoundException();
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        traegerRepository.delete(managed.get());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

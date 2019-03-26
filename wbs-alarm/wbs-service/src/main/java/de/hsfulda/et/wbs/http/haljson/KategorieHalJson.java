@@ -2,7 +2,7 @@ package de.hsfulda.et.wbs.http.haljson;
 
 import de.hsfulda.et.wbs.core.HalJsonResource;
 import de.hsfulda.et.wbs.core.Link;
-import de.hsfulda.et.wbs.entity.Kategorie;
+import de.hsfulda.et.wbs.core.data.KategorieData;
 import de.hsfulda.et.wbs.http.resource.KategorieListResource;
 import de.hsfulda.et.wbs.util.UriUtil;
 
@@ -10,11 +10,11 @@ import java.util.stream.Collectors;
 
 public class KategorieHalJson extends HalJsonResource {
 
-    public KategorieHalJson(Kategorie kategorie) {
+    public KategorieHalJson(KategorieData kategorie) {
         this(kategorie, true);
     }
 
-    public KategorieHalJson(Kategorie kategorie, boolean embedded) {
+    public KategorieHalJson(KategorieData kategorie, boolean embedded) {
         addKategorieProperties(kategorie);
 
         if (embedded) {
@@ -28,7 +28,7 @@ public class KategorieHalJson extends HalJsonResource {
         }
     }
 
-    private void addKategorieProperties(Kategorie kategorie) {
+    private void addKategorieProperties(KategorieData kategorie) {
         String kategorieResource = UriUtil.build("/kategorie/{id}", kategorie.getId());
 
         addLink(Link.self(kategorieResource));

@@ -1,11 +1,11 @@
 package de.hsfulda.et.wbs.security.service;
 
 import de.hsfulda.et.wbs.core.User;
+import de.hsfulda.et.wbs.core.data.GrantedAuthorityData;
 import de.hsfulda.et.wbs.entity.Benutzer;
 import de.hsfulda.et.wbs.repository.BenutzerRepository;
 import de.hsfulda.et.wbs.security.Password;
 import de.hsfulda.et.wbs.security.Roles;
-import de.hsfulda.et.wbs.security.entity.GrantedAuthority;
 import de.hsfulda.et.wbs.security.repository.GrantedAuthorityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,7 +40,7 @@ final class InRepositoryUsers implements UserCrudService {
     }
 
     private User as(Benutzer benutzer) {
-        Collection<GrantedAuthority> authorities = authorityRepository.findByUserId(benutzer.getId());
+        Collection<GrantedAuthorityData> authorities = authorityRepository.findByUserId(benutzer.getId());
 
         User user = new User(benutzer);
         user.addAuthorities(Roles.getRoles(authorities));

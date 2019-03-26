@@ -1,16 +1,21 @@
 package de.hsfulda.et.wbs.entity;
 
 
+import de.hsfulda.et.wbs.core.data.BenutzerData;
+import de.hsfulda.et.wbs.core.data.KategorieData;
+import de.hsfulda.et.wbs.core.data.TraegerData;
+import de.hsfulda.et.wbs.core.data.ZielortData;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "TRAEGER")
-public class Traeger {
+public class Traeger implements TraegerData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +37,7 @@ public class Traeger {
     public Traeger() {
     }
 
+    @Override
     public Long getId() {
         return id;
     }
@@ -40,6 +46,7 @@ public class Traeger {
         this.id = id;
     }
 
+    @Override
     public String getName() {
         return name;
     }
@@ -48,11 +55,12 @@ public class Traeger {
         this.name = name;
     }
 
-    public List<Zielort> getZielorte() {
+    @Override
+    public List<ZielortData> getZielorte() {
         if (zielorte == null) {
             zielorte = new ArrayList<>();
         }
-        return zielorte;
+        return zielorte.stream().map(z -> (ZielortData) z).collect(Collectors.toList());
     }
 
     public void setZielorte(List<Zielort> zielorte) {
@@ -69,11 +77,12 @@ public class Traeger {
         }
     }
 
-    public List<Kategorie> getKategorien() {
+    @Override
+    public List<KategorieData> getKategorien() {
         if (kategorien == null) {
             kategorien = new ArrayList<>();
         }
-        return kategorien;
+        return kategorien.stream().map(k -> (KategorieData) k).collect(Collectors.toList());
     }
 
     public void setKategorien(List<Kategorie> kategorien) {
@@ -90,11 +99,12 @@ public class Traeger {
         }
     }
 
-    public List<Benutzer> getBenutzer() {
+    @Override
+    public List<BenutzerData> getBenutzer() {
         if (benutzer == null) {
             benutzer = new ArrayList<>();
         }
-        return benutzer;
+        return benutzer.stream().map(b -> (BenutzerData) b).collect(Collectors.toList());
     }
 
     public void setBenutzer(List<Benutzer> benutzer) {

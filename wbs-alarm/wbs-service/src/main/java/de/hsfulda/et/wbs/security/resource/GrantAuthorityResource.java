@@ -1,6 +1,9 @@
 package de.hsfulda.et.wbs.security.resource;
 
+import de.hsfulda.et.wbs.core.AuthorityAlreadyGrantedException;
 import de.hsfulda.et.wbs.core.HalJsonResource;
+import de.hsfulda.et.wbs.core.ResourceNotFoundException;
+import de.hsfulda.et.wbs.core.data.GrantedAuthorityData;
 import de.hsfulda.et.wbs.entity.Benutzer;
 import de.hsfulda.et.wbs.repository.BenutzerRepository;
 import de.hsfulda.et.wbs.security.entity.Authority;
@@ -33,9 +36,9 @@ public class GrantAuthorityResource {
     private final BenutzerRepository benutzerRepository;
 
     public GrantAuthorityResource(
-            GrantedAuthorityRepository grantedAuthorityRepository,
-            AuthorityRepository authorityRepository,
-            BenutzerRepository benutzerRepository) {
+        GrantedAuthorityRepository grantedAuthorityRepository,
+        AuthorityRepository authorityRepository,
+        BenutzerRepository benutzerRepository) {
         this.grantedAuthorityRepository = grantedAuthorityRepository;
         this.authorityRepository = authorityRepository;
         this.benutzerRepository = benutzerRepository;
@@ -44,50 +47,51 @@ public class GrantAuthorityResource {
     @PostMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
     HttpEntity<HalJsonResource> post(
-            @PathVariable("authorityId") Long authorityId,
-            @PathVariable("benutzerId") Long benutzerId) {
+        @PathVariable("authorityId") Long authorityId,
+        @PathVariable("benutzerId") Long benutzerId) {
         Optional<Benutzer> benutzer = benutzerRepository.findById(benutzerId);
         Optional<Authority> authority = authorityRepository.findById(authorityId);
 
-        if (benutzer.isPresent() && authority.isPresent()) {
-
-            List<GrantedAuthority> granted = grantedAuthorityRepository.findByUserId(benutzerId);
-            boolean alreadyGranted = granted.stream().anyMatch(g -> authorityId.equals(g.getAuthorityId()));
-            if (!alreadyGranted) {
-                GrantedAuthority toGrant = new GrantedAuthority();
-                toGrant.setAuthorityId(authorityId);
-                toGrant.setUserId(benutzerId);
-                grantedAuthorityRepository.save(toGrant);
-                return new ResponseEntity<>(HttpStatus.CREATED);
-            }
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        if (!(benutzer.isPresent() && authority.isPresent())) {
+            throw new ResourceNotFoundException();
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        List<GrantedAuthorityData> granted = grantedAuthorityRepository.findByUserId(benutzerId);
+        boolean alreadyGranted = granted.stream().anyMatch(g -> authorityId.equals(g.getAuthorityId()));
+        if (alreadyGranted) {
+            throw new AuthorityAlreadyGrantedException();
+        }
+
+        GrantedAuthority toGrant = new GrantedAuthority();
+        toGrant.setAuthorityId(authorityId);
+        toGrant.setUserId(benutzerId);
+        grantedAuthorityRepository.save(toGrant);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 
     @DeleteMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
     HttpEntity<HalJsonResource> delete(
-            @PathVariable("authorityId") Long authorityId,
-            @PathVariable("benutzerId") Long benutzerId) {
+        @PathVariable("authorityId") Long authorityId,
+        @PathVariable("benutzerId") Long benutzerId) {
         Optional<Benutzer> benutzer = benutzerRepository.findById(benutzerId);
         Optional<Authority> authority = authorityRepository.findById(authorityId);
 
-        if (benutzer.isPresent() && authority.isPresent()) {
-
-            List<GrantedAuthority> granted = grantedAuthorityRepository.findByUserId(benutzerId);
-            Optional<GrantedAuthority> found = granted.stream()
-                    .filter(g -> authorityId.equals(g.getAuthorityId()))
-                    .findFirst();
-
-            if (found.isPresent()) {
-                grantedAuthorityRepository.delete(found.get());
-                return new ResponseEntity<>(HttpStatus.OK);
-            }
+        if (!(benutzer.isPresent() && authority.isPresent())) {
+            throw new ResourceNotFoundException();
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        List<GrantedAuthorityData> granted = grantedAuthorityRepository.findByUserId(benutzerId);
+        Optional<GrantedAuthorityData> found = granted.stream()
+            .filter(g -> authorityId.equals(g.getAuthorityId()))
+            .findFirst();
+
+        if (!found.isPresent()) {
+            throw new ResourceNotFoundException();
+        }
+
+        grantedAuthorityRepository.delete((GrantedAuthority) found.get());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
 }

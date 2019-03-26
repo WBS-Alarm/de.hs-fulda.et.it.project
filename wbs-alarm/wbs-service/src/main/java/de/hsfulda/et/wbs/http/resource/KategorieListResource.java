@@ -2,6 +2,7 @@ package de.hsfulda.et.wbs.http.resource;
 
 import de.hsfulda.et.wbs.core.HalJsonResource;
 import de.hsfulda.et.wbs.core.User;
+import de.hsfulda.et.wbs.core.data.KategorieData;
 import de.hsfulda.et.wbs.entity.Kategorie;
 import de.hsfulda.et.wbs.entity.Traeger;
 import de.hsfulda.et.wbs.http.haljson.KategorieHalJson;
@@ -11,7 +12,6 @@ import de.hsfulda.et.wbs.repository.TraegerRepository;
 import de.hsfulda.et.wbs.service.AccessService;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +24,8 @@ import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
 import static org.springframework.util.ObjectUtils.isEmpty;
 
 /**
- * Auf der Resource Kategorien können alle Kategorien zu einem Träger abgerufen werden und neue Kategorien erstellt werden.
+ * Auf der Resource Kategorien können alle Kategorien zu einem Träger abgerufen werden und neue Kategorien erstellt
+ * werden.
  */
 @RestController
 @RequestMapping(KategorieListResource.PATH)
@@ -37,9 +38,9 @@ public class KategorieListResource {
     private final AccessService accessService;
 
     public KategorieListResource(
-            TraegerRepository traegerRepository,
-            KategorieRepository kategorieRepository,
-            AccessService accessService) {
+        TraegerRepository traegerRepository,
+        KategorieRepository kategorieRepository,
+        AccessService accessService) {
 
         this.traegerRepository = traegerRepository;
         this.kategorieRepository = kategorieRepository;
@@ -49,7 +50,7 @@ public class KategorieListResource {
     /**
      * Ermittlelt alle Kategorien zu einem Träger.
      *
-     * @param user      Angemeldeter Benutzer.
+     * @param user Angemeldeter Benutzer.
      * @param traegerId ID des Trägres.
      * @return Liste aller Kategorien zu einem Träger.
      */
@@ -57,9 +58,7 @@ public class KategorieListResource {
     @PreAuthorize("hasAuthority('READ_ALL')")
     HttpEntity<HalJsonResource> get(@AuthenticationPrincipal User user, @PathVariable("traegerId") Long traegerId) {
         return accessService.hasAccessOnTraeger(user, traegerId, () -> {
-            //TODO: Paginierung?
-
-            List<Kategorie> all = kategorieRepository.findAllByTraegerId(traegerId);
+            List<KategorieData> all = kategorieRepository.findAllByTraegerId(traegerId);
             return new HttpEntity<>(new KategorieListHalJson(all));
         });
     }
@@ -67,7 +66,7 @@ public class KategorieListResource {
     /**
      * Erstellt eine neue Kategorie zu einem Träger.
      *
-     * @param user      Angemeldeter Benutzer.
+     * @param user Angemeldeter Benutzer.
      * @param traegerId ID des Trägers.
      * @param kategorie Neue Kategorie.
      * @return Persistierter Kategorie.
@@ -76,22 +75,22 @@ public class KategorieListResource {
     @PostMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
     HttpEntity<HalJsonResource> post(
-            @AuthenticationPrincipal User user,
-            @PathVariable("traegerId") Long traegerId,
-            @RequestBody Kategorie kategorie) {
+        @AuthenticationPrincipal User user,
+        @PathVariable("traegerId") Long traegerId,
+        @RequestBody Kategorie kategorie) {
         return accessService.hasAccessOnTraeger(user, traegerId, () -> {
 
             if (isEmpty(kategorie.getName())) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                throw new IllegalArgumentException("Name der Kategorie muss angegeben werden.");
             }
 
             Optional<Traeger> traeger = traegerRepository.findById(traegerId);
 
             Kategorie saved =
-                    Kategorie.builder()
-                            .name(kategorie.getName())
-                            .aktiv(true)
-                            .build();
+                Kategorie.builder()
+                    .name(kategorie.getName())
+                    .aktiv(true)
+                    .build();
 
             Traeger tr = traeger.get();
             tr.addKategorie(saved);

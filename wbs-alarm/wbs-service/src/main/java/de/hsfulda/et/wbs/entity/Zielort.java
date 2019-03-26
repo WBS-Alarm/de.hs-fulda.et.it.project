@@ -1,6 +1,9 @@
 package de.hsfulda.et.wbs.entity;
 
 
+import de.hsfulda.et.wbs.core.data.TraegerData;
+import de.hsfulda.et.wbs.core.data.ZielortData;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.Arrays;
@@ -8,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "ZIELORTE")
-public class Zielort {
+public class Zielort implements ZielortData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +37,7 @@ public class Zielort {
     protected Zielort() {
     }
 
+    @Override
     public Long getId() {
         return id;
     }
@@ -42,6 +46,7 @@ public class Zielort {
         this.id = id;
     }
 
+    @Override
     public String getName() {
         return name;
     }
@@ -50,6 +55,7 @@ public class Zielort {
         this.name = name;
     }
 
+    @Override
     public boolean isAuto() {
         return auto;
     }
@@ -58,6 +64,7 @@ public class Zielort {
         this.auto = auto;
     }
 
+    @Override
     public boolean isAktiv() {
         return aktiv;
     }
@@ -66,7 +73,8 @@ public class Zielort {
         this.aktiv = aktiv;
     }
 
-    public Traeger getTraeger() {
+    @Override
+    public TraegerData getTraeger() {
         return traeger;
     }
 
@@ -96,9 +104,9 @@ public class Zielort {
 
     static Zielort makeTemplate(Zielort zielort) {
         Zielort templated = new Zielort();
-        templated.setName(zielort.getName());
-        templated.setTraeger(zielort.getTraeger());
-        templated.setAktiv(zielort.isAktiv());
+        templated.name = zielort.name;
+        templated.traeger = zielort.traeger;
+        templated.aktiv = zielort.aktiv;
         return templated;
     }
 

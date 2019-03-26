@@ -1,12 +1,15 @@
 package de.hsfulda.et.wbs.entity;
 
 
+import de.hsfulda.et.wbs.core.data.GroesseData;
+import de.hsfulda.et.wbs.core.data.KategorieData;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "GROESSEN")
-public class Groesse {
+public class Groesse implements GroesseData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +25,7 @@ public class Groesse {
     protected Groesse() {
     }
 
+    @Override
     public Long getId() {
         return id;
     }
@@ -30,6 +34,7 @@ public class Groesse {
         this.id = id;
     }
 
+    @Override
     public String getName() {
         return name;
     }
@@ -38,6 +43,7 @@ public class Groesse {
         this.name = name;
     }
 
+    @Override
     public boolean isAktiv() {
         return aktiv;
     }
@@ -46,7 +52,8 @@ public class Groesse {
         this.aktiv = aktiv;
     }
 
-    public Kategorie getKategorie() {
+    @Override
+    public KategorieData getKategorie() {
         return kategorie;
     }
 
@@ -60,9 +67,9 @@ public class Groesse {
 
     static Groesse makeTemplate(Groesse groesse) {
         Groesse templated = new Groesse();
-        templated.setName(groesse.getName());
-        templated.setKategorie(groesse.getKategorie());
-        templated.setAktiv(groesse.isAktiv());
+        templated.name = groesse.name;
+        templated.kategorie = groesse.kategorie;
+        templated.aktiv = groesse.aktiv;
         return templated;
     }
 

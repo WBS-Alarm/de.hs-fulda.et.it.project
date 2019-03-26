@@ -1,6 +1,7 @@
 package de.hsfulda.et.wbs.http.resource;
 
 import de.hsfulda.et.wbs.core.HalJsonResource;
+import de.hsfulda.et.wbs.core.ResourceNotFoundException;
 import de.hsfulda.et.wbs.core.User;
 import de.hsfulda.et.wbs.entity.Zielort;
 import de.hsfulda.et.wbs.http.haljson.ZielortHalJson;
@@ -49,7 +50,7 @@ public class ZielortResource {
         return accessService.hasAccessOnZielort(user, id, () -> {
             Optional<Zielort> managed = zielortRepository.findByIdAndAktivIsTrue(id);
             return managed.<HttpEntity<HalJsonResource>>map(zielort -> new HttpEntity<>(new ZielortHalJson(zielort)))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .orElseThrow(ResourceNotFoundException::new);
         });
     }
 
@@ -57,29 +58,30 @@ public class ZielortResource {
      * Bearbeitet einen Zielort. Hierbei wird nur der Name geändert.
      *
      * @param id ID des Zielorts aus dem Pfad
-     * @param traeger Zielort mit neuem Namen
+     * @param zielort Zielort mit neuem Namen
      * @return gespeicherten Zielort. Anderfalls 404 oder 409
      */
     @PutMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
-    HttpEntity<HalJsonResource> put(@AuthenticationPrincipal User user, @PathVariable("id") Long id, @RequestBody Zielort traeger) {
+    HttpEntity<HalJsonResource> put(@AuthenticationPrincipal User user, @PathVariable("id") Long id, @RequestBody Zielort zielort) {
         return accessService.hasAccessOnZielort(user, id, () -> {
-            if (isEmpty(traeger.getName())) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            if (isEmpty(zielort.getName())) {
+                throw new IllegalArgumentException("Name des Zielorts muss angegeben werden.");
             }
 
             Optional<Zielort> managed = zielortRepository.findById(id);
-            if (managed.isPresent()) {
-                Zielort zo = managed.get();
-                if (zo.isAuto()) {
-                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-                }
-
-                zo.setName(traeger.getName());
-                Zielort saved = zielortRepository.save(zo);
-                return new HttpEntity<>(new ZielortHalJson(saved));
+            if (!managed.isPresent()) {
+                throw new ResourceNotFoundException();
             }
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+            Zielort zo = managed.get();
+            if (zo.isAuto()) {
+                throw new IllegalArgumentException("Zielort kann nicht geändert werden, da es sich um eine automatisierten Zielort handelt.");
+            }
+
+            zo.setName(zielort.getName());
+            Zielort saved = zielortRepository.save(zo);
+            return new HttpEntity<>(new ZielortHalJson(saved));
         });
     }
 
@@ -95,13 +97,14 @@ public class ZielortResource {
         return accessService.hasAccessOnZielort(user, id, () -> {
             Optional<Zielort> managed = zielortRepository.findById(id);
 
-            if (managed.isPresent()) {
-                Zielort zo = managed.get();
-                zo.setAktiv(false);
-                zielortRepository.save(zo);
-                return new ResponseEntity<>(HttpStatus.OK);
+            if (!managed.isPresent()) {
+                throw new ResourceNotFoundException();
             }
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+            Zielort zo = managed.get();
+            zo.setAktiv(false);
+            zielortRepository.save(zo);
+            return new ResponseEntity<>(HttpStatus.OK);
         });
     }
 }

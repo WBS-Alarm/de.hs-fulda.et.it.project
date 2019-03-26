@@ -1,15 +1,13 @@
 package de.hsfulda.et.wbs.service;
 
 import de.hsfulda.et.wbs.core.HalJsonResource;
+import de.hsfulda.et.wbs.core.ResourceNotFoundException;
 import de.hsfulda.et.wbs.core.User;
 import de.hsfulda.et.wbs.repository.TraegerRepository;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.function.Supplier;
-
-import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
 public class AccessService {
@@ -60,7 +58,7 @@ public class AccessService {
         if (counts > 0) {
             return supplier.get();
         }
-        return new ResponseEntity<>(NOT_FOUND);
+        throw new ResourceNotFoundException();
     }
 
 }

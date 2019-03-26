@@ -1,5 +1,6 @@
 package de.hsfulda.et.wbs.repository;
 
+import de.hsfulda.et.wbs.core.data.TraegerData;
 import de.hsfulda.et.wbs.entity.Traeger;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -8,6 +9,9 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface TraegerRepository extends CrudRepository<Traeger, Long> {
+
+    @Query("SELECT t FROM Traeger t")
+    List<TraegerData> findAllAsData();
 
     List<Traeger> findByName(String name);
 

@@ -1,6 +1,6 @@
 package de.hsfulda.et.wbs.security.token;
 
-import de.hsfulda.et.wbs.security.entity.TokenConfig;
+import de.hsfulda.et.wbs.core.data.TokenConfigData;
 import de.hsfulda.et.wbs.security.repository.TokenConfigRepository;
 import de.hsfulda.et.wbs.util.ImmutableMap;
 import io.jsonwebtoken.*;
@@ -29,7 +29,7 @@ final class JWTTokenService implements Clock, TokenService {
     private static final String DOT = ".";
     private static final GzipCompressionCodec COMPRESSION_CODEC = new GzipCompressionCodec();
 
-    private final Map<String, TokenConfig> configMap = new ConcurrentHashMap<>();
+    private final Map<String, TokenConfigData> configMap = new ConcurrentHashMap<>();
     private final TokenConfigRepository configRepository;
     private final String issuer;
 
@@ -120,26 +120,26 @@ final class JWTTokenService implements Clock, TokenService {
         return toDate(LocalDateTime.now());
     }
 
-    private TokenConfig getTokenConfig() {
+    private TokenConfigData getTokenConfig() {
         if (!configMap.containsKey(issuer)) {
-            Optional<TokenConfig> config = configRepository.findById(issuer);
+            Optional<TokenConfigData> config = configRepository.findByIdAsData(issuer);
             config.ifPresent(tc -> configMap.put(issuer, tc));
         }
         return configMap.get(issuer);
     }
 
     private String getSecret() {
-        TokenConfig config = getTokenConfig();
+        TokenConfigData config = getTokenConfig();
         return BASE64.encode(requireNonNull(config.getSecret()));
     }
 
     private int getExpiresInSec() {
-        TokenConfig config = getTokenConfig();
+        TokenConfigData config = getTokenConfig();
         return config.getExpiration();
     }
 
     private int getClock() {
-        TokenConfig config = getTokenConfig();
+        TokenConfigData config = getTokenConfig();
         return config.getClock();
     }
 

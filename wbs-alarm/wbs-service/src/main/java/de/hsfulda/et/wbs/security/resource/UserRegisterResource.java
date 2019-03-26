@@ -1,6 +1,8 @@
 package de.hsfulda.et.wbs.security.resource;
 
+import de.hsfulda.et.wbs.core.ResourceNotFoundException;
 import de.hsfulda.et.wbs.core.User;
+import de.hsfulda.et.wbs.core.UserAlreadyExistsException;
 import de.hsfulda.et.wbs.entity.Benutzer;
 import de.hsfulda.et.wbs.entity.Traeger;
 import de.hsfulda.et.wbs.repository.BenutzerRepository;
@@ -40,23 +42,24 @@ public class UserRegisterResource {
      * Träger existiert und ob es bereits einen Benutzer mit dem Username bereits vergeben ist.
      *
      * @param traegerId ID des Trägers zu dem der Benutzer angelegt werden soll.
-     * @param benutzer      Angemeldeter Benutzer.
+     * @param benutzer Angemeldeter Benutzer.
      * @return Status 201.
      */
     @PostMapping
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
     ResponseEntity<Void> post(@PathVariable("traegerId") Long traegerId, @RequestBody final Benutzer benutzer) {
         if (isEmpty(benutzer.getUsername()) || isEmpty(benutzer.getPassword())) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            throw new IllegalArgumentException("Benutername und Password müssen angegeben werden.");
         }
+
         Optional<Traeger> traeger = traegerRepo.findById(traegerId);
         if (!traeger.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            throw new ResourceNotFoundException();
         }
 
         Optional<User> found = users.findByUsername(benutzer.getUsername());
         if (found.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
+            throw new UserAlreadyExistsException();
         }
 
         users.register(new User(benutzer));
