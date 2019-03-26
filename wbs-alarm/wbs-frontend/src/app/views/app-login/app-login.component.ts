@@ -79,7 +79,7 @@ export class AppLoginComponent implements OnInit
            this.alert.addAlert({
                msg:              'Sie werden eingeloggt',
                type:             'success',
-               dismissOnTimeout: null,
+               dismissOnTimeout: 10,
                identifier:       'login'
            });
 

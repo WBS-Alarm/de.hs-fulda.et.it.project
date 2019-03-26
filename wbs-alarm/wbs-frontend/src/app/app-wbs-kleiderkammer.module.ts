@@ -36,6 +36,7 @@ import { UserAndSystemDataService } from './core/service/rest/users/user-and-sys
 import { WbsPreloadingStrategy } from './core/strategies/preloading-strategy';
 import { GlobalRegistryService } from './core/global-registry/global-registry.service';
 import { IsLoggedInGuard } from './core/guards/isLoggedInGuard';
+import { AppUsersComponent } from './views/app-users/app-users.component';
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import { IsLoggedInGuard } from './core/guards/isLoggedInGuard';
         TableComponent,
         FilterComponent,
         OverviewViewComponent,
-        AppLoginComponent
+        AppLoginComponent,
+        AppUsersComponent
     ],
     providers:    [
         {
