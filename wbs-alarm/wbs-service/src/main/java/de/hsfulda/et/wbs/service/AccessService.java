@@ -21,35 +21,41 @@ public class AccessService {
     }
 
     public HttpEntity<HalJsonResource> hasAccessOnBenutzer(
-            final User user, final Long benutzerId, final Supplier<HttpEntity<HalJsonResource>> supplier) {
+        final User user, final Long benutzerId, final Supplier<HttpEntity<HalJsonResource>> supplier) {
 
         Long counts = traegerRepository.findTraegerByUserAndBenutzerId(user.getId(), benutzerId);
         return evaluteCount(counts, supplier);
     }
 
     public HttpEntity<HalJsonResource> hasAccessOnZielort(
-            final User user, final Long zielortId, final Supplier<HttpEntity<HalJsonResource>> supplier) {
+        final User user, final Long zielortId, final Supplier<HttpEntity<HalJsonResource>> supplier) {
 
         Long counts = traegerRepository.findTraegerByUserAndZielortId(user.getId(), zielortId);
         return evaluteCount(counts, supplier);
     }
 
     public HttpEntity<HalJsonResource> hasAccessOnTraeger(
-            final User user, final Long traegerId, final Supplier<HttpEntity<HalJsonResource>> supplier) {
+        final User user, final Long traegerId, final Supplier<HttpEntity<HalJsonResource>> supplier) {
 
         Long counts = traegerRepository.findTraegerByUserAndTraegerId(user.getId(), traegerId);
         return evaluteCount(counts, supplier);
     }
 
     public HttpEntity<HalJsonResource> hasAccessOnKategorie(
-            final User user, final Long kategorieId, final Supplier<HttpEntity<HalJsonResource>> supplier) {
+        final User user, final Long kategorieId, final Supplier<HttpEntity<HalJsonResource>> supplier) {
 
         Long counts = traegerRepository.findTraegerByUserAndKategorieId(user.getId(), kategorieId);
         return evaluteCount(counts, supplier);
     }
 
+    public HttpEntity<HalJsonResource> hasAccessOnGroesse(
+        final User user, final Long groesseId, final Supplier<HttpEntity<HalJsonResource>> supplier) {
+        Long counts = traegerRepository.findTraegerByUserAndGroesseId(user.getId(), groesseId);
+        return evaluteCount(counts, supplier);
+    }
+
     private HttpEntity<HalJsonResource> evaluteCount(
-            final Long counts, final Supplier<HttpEntity<HalJsonResource>> supplier) {
+        final Long counts, final Supplier<HttpEntity<HalJsonResource>> supplier) {
 
         if (counts > 0) {
             return supplier.get();
