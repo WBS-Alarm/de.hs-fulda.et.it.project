@@ -1,7 +1,7 @@
 package de.hsfulda.et.wbs.http.resource;
 
 import de.hsfulda.et.wbs.core.HalJsonResource;
-import de.hsfulda.et.wbs.core.User;
+import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.ZielortData;
 import de.hsfulda.et.wbs.entity.Traeger;
 import de.hsfulda.et.wbs.entity.Zielort;
@@ -55,7 +55,7 @@ public class ZielortListResource {
      */
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")
-    HttpEntity<HalJsonResource> get(@AuthenticationPrincipal User user, @PathVariable("traegerId") Long traegerId) {
+    HttpEntity<HalJsonResource> get(@AuthenticationPrincipal WbsUser user, @PathVariable("traegerId") Long traegerId) {
         return accessService.hasAccessOnTraeger(user, traegerId, () -> {
             List<ZielortData> all = zielortRepository.findAllByTraegerId(traegerId);
             return new HttpEntity<>(new ZielortListHalJson(all));
@@ -74,7 +74,7 @@ public class ZielortListResource {
     @PostMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
     HttpEntity<HalJsonResource> post(
-        @AuthenticationPrincipal User user,
+        @AuthenticationPrincipal WbsUser user,
         @PathVariable("traegerId") Long traegerId,
         @RequestBody Zielort zielort) {
         return accessService.hasAccessOnTraeger(user, traegerId, () -> {

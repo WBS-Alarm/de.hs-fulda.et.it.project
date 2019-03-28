@@ -2,7 +2,7 @@ package de.hsfulda.et.wbs.http.resource;
 
 import de.hsfulda.et.wbs.core.HalJsonResource;
 import de.hsfulda.et.wbs.core.ResourceNotFoundException;
-import de.hsfulda.et.wbs.core.User;
+import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.entity.Zielort;
 import de.hsfulda.et.wbs.http.haljson.ZielortHalJson;
 import de.hsfulda.et.wbs.repository.ZielortRepository;
@@ -46,7 +46,7 @@ public class ZielortResource {
      */
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")
-    HttpEntity<HalJsonResource> get(@AuthenticationPrincipal User user, @PathVariable("id") Long id) {
+    HttpEntity<HalJsonResource> get(@AuthenticationPrincipal WbsUser user, @PathVariable("id") Long id) {
         return accessService.hasAccessOnZielort(user, id, () -> {
             Optional<Zielort> managed = zielortRepository.findByIdAndAktivIsTrue(id);
             return managed.<HttpEntity<HalJsonResource>>map(zielort -> new HttpEntity<>(new ZielortHalJson(zielort)))
@@ -63,7 +63,7 @@ public class ZielortResource {
      */
     @PutMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
-    HttpEntity<HalJsonResource> put(@AuthenticationPrincipal User user, @PathVariable("id") Long id, @RequestBody Zielort zielort) {
+    HttpEntity<HalJsonResource> put(@AuthenticationPrincipal WbsUser user, @PathVariable("id") Long id, @RequestBody Zielort zielort) {
         return accessService.hasAccessOnZielort(user, id, () -> {
             if (isEmpty(zielort.getName())) {
                 throw new IllegalArgumentException("Name des Zielorts muss angegeben werden.");
@@ -93,7 +93,7 @@ public class ZielortResource {
      */
     @DeleteMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
-    HttpEntity<HalJsonResource> delete(@AuthenticationPrincipal User user, @PathVariable("id") Long id) {
+    HttpEntity<HalJsonResource> delete(@AuthenticationPrincipal WbsUser user, @PathVariable("id") Long id) {
         return accessService.hasAccessOnZielort(user, id, () -> {
             Optional<Zielort> managed = zielortRepository.findById(id);
 

@@ -2,7 +2,7 @@ package de.hsfulda.et.wbs.http.resource;
 
 import de.hsfulda.et.wbs.core.HalJsonResource;
 import de.hsfulda.et.wbs.core.ResourceNotFoundException;
-import de.hsfulda.et.wbs.core.User;
+import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.entity.Kategorie;
 import de.hsfulda.et.wbs.http.haljson.KategorieHalJson;
 import de.hsfulda.et.wbs.repository.KategorieRepository;
@@ -46,7 +46,7 @@ public class KategorieResource {
      */
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")
-    HttpEntity<HalJsonResource> get(@AuthenticationPrincipal User user, @PathVariable("id") Long id) {
+    HttpEntity<HalJsonResource> get(@AuthenticationPrincipal WbsUser user, @PathVariable("id") Long id) {
         return accessService.hasAccessOnZielort(user, id, () -> {
             Optional<Kategorie> managed = kategorieRepository.findByIdAndAktivIsTrue(id);
             return managed.<HttpEntity<HalJsonResource>>map(kategorie -> new HttpEntity<>(new KategorieHalJson(kategorie)))
@@ -63,7 +63,7 @@ public class KategorieResource {
      */
     @PutMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
-    HttpEntity<HalJsonResource> put(@AuthenticationPrincipal User user, @PathVariable("id") Long id, @RequestBody Kategorie traeger) {
+    HttpEntity<HalJsonResource> put(@AuthenticationPrincipal WbsUser user, @PathVariable("id") Long id, @RequestBody Kategorie traeger) {
         return accessService.hasAccessOnKategorie(user, id, () -> {
             if (isEmpty(traeger.getName())) {
                 throw new IllegalArgumentException("Name des Trägers muss angegeben werden.");
@@ -91,7 +91,7 @@ public class KategorieResource {
      */
     @DeleteMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
-    HttpEntity<HalJsonResource> delete(@AuthenticationPrincipal User user, @PathVariable("id") Long id) {
+    HttpEntity<HalJsonResource> delete(@AuthenticationPrincipal WbsUser user, @PathVariable("id") Long id) {
         return accessService.hasAccessOnKategorie(user, id, () -> {
             Optional<Kategorie> managed = kategorieRepository.findById(id);
 

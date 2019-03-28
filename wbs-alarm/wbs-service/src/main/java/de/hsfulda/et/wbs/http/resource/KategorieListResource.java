@@ -1,7 +1,7 @@
 package de.hsfulda.et.wbs.http.resource;
 
 import de.hsfulda.et.wbs.core.HalJsonResource;
-import de.hsfulda.et.wbs.core.User;
+import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.KategorieData;
 import de.hsfulda.et.wbs.entity.Kategorie;
 import de.hsfulda.et.wbs.entity.Traeger;
@@ -56,7 +56,7 @@ public class KategorieListResource {
      */
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")
-    HttpEntity<HalJsonResource> get(@AuthenticationPrincipal User user, @PathVariable("traegerId") Long traegerId) {
+    HttpEntity<HalJsonResource> get(@AuthenticationPrincipal WbsUser user, @PathVariable("traegerId") Long traegerId) {
         return accessService.hasAccessOnTraeger(user, traegerId, () -> {
             List<KategorieData> all = kategorieRepository.findAllByTraegerId(traegerId);
             return new HttpEntity<>(new KategorieListHalJson(all));
@@ -75,7 +75,7 @@ public class KategorieListResource {
     @PostMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
     HttpEntity<HalJsonResource> post(
-        @AuthenticationPrincipal User user,
+        @AuthenticationPrincipal WbsUser user,
         @PathVariable("traegerId") Long traegerId,
         @RequestBody Kategorie kategorie) {
         return accessService.hasAccessOnTraeger(user, traegerId, () -> {

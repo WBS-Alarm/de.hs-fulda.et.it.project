@@ -3,16 +3,11 @@ package de.hsfulda.et.wbs.core.data;
 
 import java.util.List;
 
-public interface KategorieData {
+public interface KategorieData extends KategorieDto {
 
     Long getId();
-
-    String getName();
-
     boolean isAktiv();
-
     TraegerData getTraeger();
-
     List<GroesseData> getGroessen();
 
 }

@@ -1,7 +1,7 @@
 package de.hsfulda.et.wbs.http.resource;
 
 import de.hsfulda.et.wbs.core.HalJsonResource;
-import de.hsfulda.et.wbs.core.User;
+import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.GroesseData;
 import de.hsfulda.et.wbs.entity.Groesse;
 import de.hsfulda.et.wbs.entity.Kategorie;
@@ -55,7 +55,7 @@ public class GroesseListResource {
      */
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")
-    HttpEntity<HalJsonResource> get(@AuthenticationPrincipal User user, @PathVariable("kategorieId") Long kategorieId) {
+    HttpEntity<HalJsonResource> get(@AuthenticationPrincipal WbsUser user, @PathVariable("kategorieId") Long kategorieId) {
         return accessService.hasAccessOnKategorie(user, kategorieId, () -> {
             List<GroesseData> all = groesseRepository.findAllByKategorieId(kategorieId);
             return new HttpEntity<>(new GroesseListHalJson(all));
@@ -74,7 +74,7 @@ public class GroesseListResource {
     @PostMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
     HttpEntity<HalJsonResource> post(
-        @AuthenticationPrincipal User user,
+        @AuthenticationPrincipal WbsUser user,
         @PathVariable("kategorieId") Long kategorieId,
         @RequestBody Groesse groesse) {
         return accessService.hasAccessOnKategorie(user, kategorieId, () -> {

@@ -1,23 +1,23 @@
 package de.hsfulda.et.wbs.security.service;
 
-import de.hsfulda.et.wbs.core.User;
+import de.hsfulda.et.wbs.core.WbsUser;
 
 import java.util.Optional;
 
 /**
- * User security operations like login and logout, and CRUD operations on {@link User}.
+ * User security operations like login and logout, and CRUD operations on {@link WbsUser}.
  *
  * @author jerome
  */
 public interface UserCrudService {
 
-    User register(User user);
+    WbsUser register(WbsUser user);
 
-    User save(User user, String token);
+    WbsUser save(WbsUser user, String token);
 
-    Optional<String> getToken(User user);
+    Optional<String> getToken(WbsUser user);
 
-    void deleteToken(User user);
+    void deleteToken(WbsUser user);
 
-    Optional<User> findByUsername(String username);
+    Optional<WbsUser> findByUsername(String username);
 }

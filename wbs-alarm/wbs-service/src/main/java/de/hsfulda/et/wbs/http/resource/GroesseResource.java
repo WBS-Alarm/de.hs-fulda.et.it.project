@@ -2,7 +2,7 @@ package de.hsfulda.et.wbs.http.resource;
 
 import de.hsfulda.et.wbs.core.HalJsonResource;
 import de.hsfulda.et.wbs.core.ResourceNotFoundException;
-import de.hsfulda.et.wbs.core.User;
+import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.entity.Groesse;
 import de.hsfulda.et.wbs.http.haljson.GroesseHalJson;
 import de.hsfulda.et.wbs.repository.GroesseRepository;
@@ -46,7 +46,7 @@ public class GroesseResource {
      */
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")
-    HttpEntity<HalJsonResource> get(@AuthenticationPrincipal User user, @PathVariable("id") Long id) {
+    HttpEntity<HalJsonResource> get(@AuthenticationPrincipal WbsUser user, @PathVariable("id") Long id) {
         return accessService.hasAccessOnZielort(user, id, () -> {
             Optional<Groesse> managed = groesseRepository.findByIdAndAktivIsTrue(id);
             return managed.<HttpEntity<HalJsonResource>>map(groesse -> new HttpEntity<>(new GroesseHalJson(groesse)))
@@ -63,7 +63,7 @@ public class GroesseResource {
      */
     @PutMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
-    HttpEntity<HalJsonResource> put(@AuthenticationPrincipal User user, @PathVariable("id") Long id, @RequestBody Groesse traeger) {
+    HttpEntity<HalJsonResource> put(@AuthenticationPrincipal WbsUser user, @PathVariable("id") Long id, @RequestBody Groesse traeger) {
         return accessService.hasAccessOnGroesse(user, id, () -> {
             if (isEmpty(traeger.getName())) {
                 throw new IllegalArgumentException("Name des Trägers muss angegeben werden");
@@ -91,7 +91,7 @@ public class GroesseResource {
      */
     @DeleteMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
-    HttpEntity<HalJsonResource> delete(@AuthenticationPrincipal User user, @PathVariable("id") Long id) {
+    HttpEntity<HalJsonResource> delete(@AuthenticationPrincipal WbsUser user, @PathVariable("id") Long id) {
         return accessService.hasAccessOnGroesse(user, id, () -> {
             Optional<Groesse> managed = groesseRepository.findById(id);
 

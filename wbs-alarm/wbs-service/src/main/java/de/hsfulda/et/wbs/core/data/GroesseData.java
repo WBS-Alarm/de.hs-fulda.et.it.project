@@ -1,14 +1,10 @@
 package de.hsfulda.et.wbs.core.data;
 
 
-public interface GroesseData {
+public interface GroesseData extends GroesseDto {
 
     Long getId();
-
-    String getName();
-
     boolean isAktiv();
-
     KategorieData getKategorie();
 
 }

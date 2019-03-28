@@ -1,12 +1,11 @@
 package de.hsfulda.et.wbs.http.resource;
 
+import de.hsfulda.et.wbs.action.CreateTraegerAction;
+import de.hsfulda.et.wbs.action.GetTraegerListAction;
 import de.hsfulda.et.wbs.core.HalJsonResource;
-import de.hsfulda.et.wbs.core.data.TraegerData;
-import de.hsfulda.et.wbs.entity.Traeger;
-import de.hsfulda.et.wbs.entity.Zielort;
 import de.hsfulda.et.wbs.http.haljson.TraegerHalJson;
 import de.hsfulda.et.wbs.http.haljson.TraegerListHalJson;
-import de.hsfulda.et.wbs.repository.TraegerRepository;
+import de.hsfulda.et.wbs.http.resource.dto.TraegerDtoImpl;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
 import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
-import static org.springframework.util.ObjectUtils.isEmpty;
 
 /**
  * Über die Träger Listen Resource können ale Träger aufgelistet werden und neue Träger hinzugefügt werden.
@@ -25,10 +23,12 @@ public class TraegerListResource {
 
     public static final String PATH = CONTEXT_ROOT + "/traeger";
 
-    private final TraegerRepository traegerRepository;
+    private final GetTraegerListAction getAction;
+    private final CreateTraegerAction postAction;
 
-    public TraegerListResource(TraegerRepository traegerRepository) {
-        this.traegerRepository = traegerRepository;
+    public TraegerListResource(GetTraegerListAction getAction, CreateTraegerAction postAction) {
+        this.getAction = getAction;
+        this.postAction = postAction;
     }
 
     /**
@@ -40,8 +40,7 @@ public class TraegerListResource {
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")
     HttpEntity<HalJsonResource> get() {
-        Iterable<TraegerData> all = traegerRepository.findAllAsData();
-        return new HttpEntity<>(new TraegerListHalJson(all));
+        return new HttpEntity<>(new TraegerListHalJson(getAction.perform()));
     }
 
     /**
@@ -54,18 +53,7 @@ public class TraegerListResource {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('ADMIN')")
-    HttpEntity<HalJsonResource> post(@RequestBody Traeger traeger) {
-        if (isEmpty(traeger.getName())) {
-            throw new IllegalArgumentException("Name des Trägers muss angegeben werden");
-        }
-
-        Traeger tr = Traeger.builder().
-            name(traeger.getName())
-            .build();
-
-        Zielort.getStandardForNewTraeger().forEach(tr::addZielort);
-        Traeger saved = traegerRepository.save(tr);
-
-        return new HttpEntity<>(new TraegerHalJson(saved));
+    HttpEntity<HalJsonResource> post(@RequestBody TraegerDtoImpl traeger) {
+        return new HttpEntity<>(new TraegerHalJson(postAction.perform(traeger)));
     }
 }

@@ -1,12 +1,13 @@
 package de.hsfulda.et.wbs.security.resource;
 
 import de.hsfulda.et.wbs.core.ResourceNotFoundException;
-import de.hsfulda.et.wbs.core.User;
 import de.hsfulda.et.wbs.core.UserAlreadyExistsException;
+import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.entity.Benutzer;
 import de.hsfulda.et.wbs.entity.Traeger;
 import de.hsfulda.et.wbs.repository.BenutzerRepository;
 import de.hsfulda.et.wbs.repository.TraegerRepository;
+import de.hsfulda.et.wbs.security.User;
 import de.hsfulda.et.wbs.security.service.UserCrudService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,12 +58,13 @@ public class UserRegisterResource {
             throw new ResourceNotFoundException();
         }
 
-        Optional<User> found = users.findByUsername(benutzer.getUsername());
+        Optional<WbsUser> found = users.findByUsername(benutzer.getUsername());
         if (found.isPresent()) {
             throw new UserAlreadyExistsException();
         }
 
         users.register(new User(benutzer));
+        //TODO: Header Location setzen
 
         setBenutzerOnTraeger(benutzer, traeger.get());
         return new ResponseEntity<>(HttpStatus.CREATED);
