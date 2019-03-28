@@ -1,11 +1,11 @@
 package de.hsfulda.et.wbs.action.benutzer.impl;
 
 import de.hsfulda.et.wbs.action.benutzer.CreateBenutzerAction;
-import de.hsfulda.et.wbs.core.ResourceNotFoundException;
-import de.hsfulda.et.wbs.core.UserAlreadyExistsException;
 import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.BenutzerCreateDto;
 import de.hsfulda.et.wbs.core.data.BenutzerData;
+import de.hsfulda.et.wbs.core.exception.ResourceNotFoundException;
+import de.hsfulda.et.wbs.core.exception.UserAlreadyExistsException;
 import de.hsfulda.et.wbs.entity.Traeger;
 import de.hsfulda.et.wbs.repository.BenutzerRepository;
 import de.hsfulda.et.wbs.repository.TraegerRepository;

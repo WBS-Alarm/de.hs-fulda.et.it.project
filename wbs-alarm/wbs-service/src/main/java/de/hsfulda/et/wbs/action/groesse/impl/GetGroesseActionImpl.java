@@ -1,9 +1,9 @@
 package de.hsfulda.et.wbs.action.groesse.impl;
 
 import de.hsfulda.et.wbs.action.groesse.GetGroesseAction;
-import de.hsfulda.et.wbs.core.ResourceNotFoundException;
 import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.GroesseData;
+import de.hsfulda.et.wbs.core.exception.ResourceNotFoundException;
 import de.hsfulda.et.wbs.repository.GroesseRepository;
 import de.hsfulda.et.wbs.service.AccessService;
 import org.springframework.stereotype.Component;

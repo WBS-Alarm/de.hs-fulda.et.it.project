@@ -1,7 +1,7 @@
 package de.hsfulda.et.wbs.service;
 
-import de.hsfulda.et.wbs.core.ResourceNotFoundException;
 import de.hsfulda.et.wbs.core.WbsUser;
+import de.hsfulda.et.wbs.core.exception.ResourceNotFoundException;
 import de.hsfulda.et.wbs.repository.AccessRepository;
 import org.springframework.stereotype.Service;
 

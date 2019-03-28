@@ -1,10 +1,11 @@
 package de.hsfulda.et.wbs.action.bestand.impl;
 
 import de.hsfulda.et.wbs.action.bestand.UpdateBestandAction;
-import de.hsfulda.et.wbs.core.ResourceNotFoundException;
 import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.BestandData;
 import de.hsfulda.et.wbs.core.data.BestandDto;
+import de.hsfulda.et.wbs.core.exception.ResourceNotFoundException;
+import de.hsfulda.et.wbs.core.exception.ZielortLockedException;
 import de.hsfulda.et.wbs.repository.BestandRepository;
 import de.hsfulda.et.wbs.service.AccessService;
 import org.springframework.stereotype.Component;
@@ -36,7 +37,7 @@ public class UpdateBestandActionImpl implements UpdateBestandAction {
             }
 
             if (repo.isZielortErfasst(id)) {
-                throw new IllegalStateException("Zielort wurde bereits vollständig erfasst und kann Bestände nicht mehr ändern");
+                throw new ZielortLockedException("Zielort wurde bereits vollständig erfasst und kann Bestände nicht mehr ändern");
             }
 
             repo.updateAnzahl(id, bestand.getAnzahl());

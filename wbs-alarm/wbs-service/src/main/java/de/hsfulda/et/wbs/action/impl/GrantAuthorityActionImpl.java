@@ -1,9 +1,9 @@
 package de.hsfulda.et.wbs.action.impl;
 
 import de.hsfulda.et.wbs.action.GrantAuthorityAction;
-import de.hsfulda.et.wbs.core.AuthorityAlreadyGrantedException;
-import de.hsfulda.et.wbs.core.ResourceNotFoundException;
 import de.hsfulda.et.wbs.core.data.GrantedAuthorityData;
+import de.hsfulda.et.wbs.core.exception.AuthorityAlreadyGrantedException;
+import de.hsfulda.et.wbs.core.exception.ResourceNotFoundException;
 import de.hsfulda.et.wbs.repository.BenutzerRepository;
 import de.hsfulda.et.wbs.security.entity.GrantedAuthority;
 import de.hsfulda.et.wbs.security.repository.AuthorityRepository;

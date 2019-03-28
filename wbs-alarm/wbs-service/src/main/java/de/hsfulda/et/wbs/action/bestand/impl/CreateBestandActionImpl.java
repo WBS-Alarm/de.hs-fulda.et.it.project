@@ -1,11 +1,11 @@
 package de.hsfulda.et.wbs.action.bestand.impl;
 
 import de.hsfulda.et.wbs.action.bestand.CreateBestandAction;
-import de.hsfulda.et.wbs.core.BestandAlreadyExistsException;
-import de.hsfulda.et.wbs.core.ResourceNotFoundException;
 import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.BestandCreateDto;
 import de.hsfulda.et.wbs.core.data.BestandData;
+import de.hsfulda.et.wbs.core.exception.BestandAlreadyExistsException;
+import de.hsfulda.et.wbs.core.exception.ResourceNotFoundException;
 import de.hsfulda.et.wbs.entity.Bestand;
 import de.hsfulda.et.wbs.entity.Groesse;
 import de.hsfulda.et.wbs.entity.Zielort;

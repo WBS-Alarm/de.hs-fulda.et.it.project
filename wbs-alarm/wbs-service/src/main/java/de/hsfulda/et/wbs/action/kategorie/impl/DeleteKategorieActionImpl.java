@@ -1,8 +1,8 @@
 package de.hsfulda.et.wbs.action.kategorie.impl;
 
 import de.hsfulda.et.wbs.action.kategorie.DeleteKategorieAction;
-import de.hsfulda.et.wbs.core.ResourceNotFoundException;
 import de.hsfulda.et.wbs.core.WbsUser;
+import de.hsfulda.et.wbs.core.exception.ResourceNotFoundException;
 import de.hsfulda.et.wbs.repository.KategorieRepository;
 import de.hsfulda.et.wbs.service.AccessService;
 import org.springframework.stereotype.Component;

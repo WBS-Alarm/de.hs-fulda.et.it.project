@@ -1,9 +1,9 @@
 package de.hsfulda.et.wbs.action.traeger.impl;
 
 import de.hsfulda.et.wbs.action.traeger.UpdateTraegerAction;
-import de.hsfulda.et.wbs.core.ResourceNotFoundException;
 import de.hsfulda.et.wbs.core.data.TraegerData;
 import de.hsfulda.et.wbs.core.data.TraegerDto;
+import de.hsfulda.et.wbs.core.exception.ResourceNotFoundException;
 import de.hsfulda.et.wbs.repository.TraegerRepository;
 import org.springframework.stereotype.Component;
 
