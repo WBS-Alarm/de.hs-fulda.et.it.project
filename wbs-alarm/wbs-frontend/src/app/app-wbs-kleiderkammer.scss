@@ -2,3 +2,12 @@
 @import '~@plentymarkets/terra-components/app/styles/icons.glob.scss';
 @import "~@plentymarkets/terra-components/app/styles/styles";
 @import "~@plentymarkets/terra-components/app/styles/themes/theme-loader";
+
+.placer
+{
+  top: 6%;
+  position: absolute;
+  width: 100%;
+  height: 94%;
+}
+
