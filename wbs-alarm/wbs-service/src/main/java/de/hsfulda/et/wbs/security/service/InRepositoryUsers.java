@@ -1,6 +1,7 @@
 package de.hsfulda.et.wbs.security.service;
 
 import de.hsfulda.et.wbs.core.WbsUser;
+import de.hsfulda.et.wbs.core.data.BenutzerCreateDto;
 import de.hsfulda.et.wbs.core.data.BenutzerData;
 import de.hsfulda.et.wbs.core.data.GrantedAuthorityData;
 import de.hsfulda.et.wbs.entity.Benutzer;
@@ -28,13 +29,13 @@ final class InRepositoryUsers implements UserCrudService {
     }
 
     @Override
-    public WbsUser register(final WbsUser user) {
+    public BenutzerData register(final BenutzerCreateDto user) {
         Benutzer benutzer = new Benutzer();
         benutzer.setUsername(user.getUsername());
         benutzer.setPassword(Password.hashPassword(user.getPassword()));
         benutzer.setAktiv(true);
 
-        return as(repository.save(benutzer));
+        return repository.save(benutzer);
     }
 
     @Override

@@ -1,6 +1,8 @@
 package de.hsfulda.et.wbs.security.service;
 
 import de.hsfulda.et.wbs.core.WbsUser;
+import de.hsfulda.et.wbs.core.data.BenutzerCreateDto;
+import de.hsfulda.et.wbs.core.data.BenutzerData;
 
 import java.util.Optional;
 
@@ -11,7 +13,7 @@ import java.util.Optional;
  */
 public interface UserCrudService {
 
-    WbsUser register(WbsUser user);
+    BenutzerData register(BenutzerCreateDto user);
 
     WbsUser save(WbsUser user, String token);
 
