@@ -1,6 +1,6 @@
-package de.hsfulda.et.wbs.action.impl;
+package de.hsfulda.et.wbs.action.benutzer.impl;
 
-import de.hsfulda.et.wbs.action.GetBenutzerAction;
+import de.hsfulda.et.wbs.action.benutzer.GetBenutzerAction;
 import de.hsfulda.et.wbs.core.ResourceNotFoundException;
 import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.BenutzerData;

@@ -1,7 +1,7 @@
 package de.hsfulda.et.wbs.http.resource;
 
-import de.hsfulda.et.wbs.action.CreateTraegerAction;
-import de.hsfulda.et.wbs.action.GetTraegerListAction;
+import de.hsfulda.et.wbs.action.traeger.CreateTraegerAction;
+import de.hsfulda.et.wbs.action.traeger.GetTraegerListAction;
 import de.hsfulda.et.wbs.core.HalJsonResource;
 import de.hsfulda.et.wbs.http.haljson.TraegerHalJson;
 import de.hsfulda.et.wbs.http.haljson.TraegerListHalJson;

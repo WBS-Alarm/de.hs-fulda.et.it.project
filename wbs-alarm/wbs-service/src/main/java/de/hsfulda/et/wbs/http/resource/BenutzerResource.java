@@ -1,9 +1,9 @@
 package de.hsfulda.et.wbs.http.resource;
 
-import de.hsfulda.et.wbs.action.DeleteBenutzerAction;
-import de.hsfulda.et.wbs.action.GetBenutzerAction;
 import de.hsfulda.et.wbs.action.GetGrantedAuthorityListAction;
-import de.hsfulda.et.wbs.action.UpdateBenutzerAction;
+import de.hsfulda.et.wbs.action.benutzer.DeleteBenutzerAction;
+import de.hsfulda.et.wbs.action.benutzer.GetBenutzerAction;
+import de.hsfulda.et.wbs.action.benutzer.UpdateBenutzerAction;
 import de.hsfulda.et.wbs.core.HalJsonResource;
 import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.BenutzerData;

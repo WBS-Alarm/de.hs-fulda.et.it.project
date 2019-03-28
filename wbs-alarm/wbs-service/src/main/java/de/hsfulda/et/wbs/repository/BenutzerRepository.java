@@ -17,7 +17,7 @@ public interface BenutzerRepository extends CrudRepository<Benutzer, Long> {
     @Query("select b from Benutzer b where b.id = :id")
     Optional<BenutzerData> findByIdAsData(@Param("id") Long id);
 
-    @Modifying
+    @Modifying(clearAutomatically = true)
     @Query("update Benutzer b set b.einkaeufer = :einkaeufer, b.mail = :mail where b.id = :id")
     void updateEinkaeuferAndMail(@Param("id") Long id, @Param("einkaeufer") Boolean einkaeufer, @Param("mail") String mail);
 

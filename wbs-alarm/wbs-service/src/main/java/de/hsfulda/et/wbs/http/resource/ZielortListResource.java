@@ -1,27 +1,20 @@
 package de.hsfulda.et.wbs.http.resource;
 
+import de.hsfulda.et.wbs.action.zielort.CreateZielortAction;
+import de.hsfulda.et.wbs.action.zielort.GetZielortListAction;
 import de.hsfulda.et.wbs.core.HalJsonResource;
 import de.hsfulda.et.wbs.core.WbsUser;
-import de.hsfulda.et.wbs.core.data.ZielortData;
-import de.hsfulda.et.wbs.entity.Traeger;
-import de.hsfulda.et.wbs.entity.Zielort;
 import de.hsfulda.et.wbs.http.haljson.ZielortHalJson;
 import de.hsfulda.et.wbs.http.haljson.ZielortListHalJson;
-import de.hsfulda.et.wbs.repository.TraegerRepository;
-import de.hsfulda.et.wbs.repository.ZielortRepository;
-import de.hsfulda.et.wbs.service.AccessService;
+import de.hsfulda.et.wbs.http.resource.dto.ZielortDtoImpl;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
-
 import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
 import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
-import static org.springframework.util.ObjectUtils.isEmpty;
 
 /**
  * Auf der Resource Zielorte können alle Zielorte zu einem Träger abgerufen werden und neue Zielorte erstellt werden.
@@ -32,70 +25,43 @@ public class ZielortListResource {
 
     public static final String PATH = CONTEXT_ROOT + "/traeger/{traegerId}/zielorte";
 
-    private final TraegerRepository traegerRepository;
-    private final ZielortRepository zielortRepository;
-    private final AccessService accessService;
+    private final GetZielortListAction getAction;
+    private final CreateZielortAction postAction;
 
-    public ZielortListResource(
-        TraegerRepository traegerRepository,
-        ZielortRepository zielortRepository,
-        AccessService accessService) {
-
-        this.traegerRepository = traegerRepository;
-        this.zielortRepository = zielortRepository;
-        this.accessService = accessService;
+    public ZielortListResource(GetZielortListAction getAction, CreateZielortAction postAction) {
+        this.getAction = getAction;
+        this.postAction = postAction;
     }
 
     /**
      * Ermittlelt alle Zielorte zu einem Träger.
      *
-     * @param user Angemeldeter Benutzer.
+     * @param user      Angemeldeter Benutzer.
      * @param traegerId ID des Trägres.
      * @return Liste aller Zielorte zu einem Träger.
      */
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")
     HttpEntity<HalJsonResource> get(@AuthenticationPrincipal WbsUser user, @PathVariable("traegerId") Long traegerId) {
-        return accessService.hasAccessOnTraeger(user, traegerId, () -> {
-            List<ZielortData> all = zielortRepository.findAllByTraegerId(traegerId);
-            return new HttpEntity<>(new ZielortListHalJson(all));
-        });
+        return new HttpEntity<>(new ZielortListHalJson(getAction.perform(user, traegerId)));
     }
 
     /**
      * Erstellt einen neuen Zielort zu einem Träger.
      *
-     * @param user Angemeldeter Benutzer.
+     * @param user      Angemeldeter Benutzer.
      * @param traegerId ID des Trägers.
-     * @param zielort Neuer Zielort.
+     * @param zielort   Neuer Zielort.
      * @return Persistierter Zielort.
      */
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
     HttpEntity<HalJsonResource> post(
-        @AuthenticationPrincipal WbsUser user,
-        @PathVariable("traegerId") Long traegerId,
-        @RequestBody Zielort zielort) {
-        return accessService.hasAccessOnTraeger(user, traegerId, () -> {
+            @AuthenticationPrincipal WbsUser user,
+            @PathVariable("traegerId") Long traegerId,
+            @RequestBody ZielortDtoImpl zielort) {
 
-            if (isEmpty(zielort.getName())) {
-                throw new IllegalArgumentException("Name des Zielorts muss angegeben werden.");
-            }
-
-            Optional<Traeger> traeger = traegerRepository.findById(traegerId);
-
-            Zielort saved =
-                Zielort.builder()
-                    .name(zielort.getName())
-                    .aktiv(true)
-                    .build();
-
-            Traeger tr = traeger.get();
-            tr.addZielort(saved);
-            zielortRepository.save(saved);
-
-            return new HttpEntity<>(new ZielortHalJson(saved));
-        });
+        return new HttpEntity<>(new ZielortHalJson(postAction.peform(user, traegerId, zielort)));
     }
 }

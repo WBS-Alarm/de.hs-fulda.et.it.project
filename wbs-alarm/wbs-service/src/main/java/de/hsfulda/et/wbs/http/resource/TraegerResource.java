@@ -1,8 +1,8 @@
 package de.hsfulda.et.wbs.http.resource;
 
-import de.hsfulda.et.wbs.action.DeleteTraegerAction;
-import de.hsfulda.et.wbs.action.GetTraegerAction;
-import de.hsfulda.et.wbs.action.UpdateTraegerAction;
+import de.hsfulda.et.wbs.action.traeger.DeleteTraegerAction;
+import de.hsfulda.et.wbs.action.traeger.GetTraegerAction;
+import de.hsfulda.et.wbs.action.traeger.UpdateTraegerAction;
 import de.hsfulda.et.wbs.core.HalJsonResource;
 import de.hsfulda.et.wbs.http.haljson.TraegerHalJson;
 import de.hsfulda.et.wbs.http.resource.dto.TraegerDtoImpl;

@@ -1,6 +1,6 @@
-package de.hsfulda.et.wbs.action.impl;
+package de.hsfulda.et.wbs.action.traeger.impl;
 
-import de.hsfulda.et.wbs.action.GetTraegerAction;
+import de.hsfulda.et.wbs.action.traeger.GetTraegerAction;
 import de.hsfulda.et.wbs.core.ResourceNotFoundException;
 import de.hsfulda.et.wbs.core.data.TraegerData;
 import de.hsfulda.et.wbs.repository.TraegerRepository;

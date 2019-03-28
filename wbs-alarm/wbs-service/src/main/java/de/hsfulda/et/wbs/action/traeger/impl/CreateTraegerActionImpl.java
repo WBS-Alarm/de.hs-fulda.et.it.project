@@ -1,6 +1,6 @@
-package de.hsfulda.et.wbs.action.impl;
+package de.hsfulda.et.wbs.action.traeger.impl;
 
-import de.hsfulda.et.wbs.action.CreateTraegerAction;
+import de.hsfulda.et.wbs.action.traeger.CreateTraegerAction;
 import de.hsfulda.et.wbs.core.data.TraegerData;
 import de.hsfulda.et.wbs.core.data.TraegerDto;
 import de.hsfulda.et.wbs.entity.Traeger;

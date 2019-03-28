@@ -1,4 +1,4 @@
-package de.hsfulda.et.wbs.action;
+package de.hsfulda.et.wbs.action.benutzer;
 
 import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.BenutzerData;

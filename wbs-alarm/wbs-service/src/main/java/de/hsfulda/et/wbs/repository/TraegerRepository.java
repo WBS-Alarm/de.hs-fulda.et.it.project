@@ -20,7 +20,7 @@ public interface TraegerRepository extends CrudRepository<Traeger, Long> {
 
     List<Traeger> findByName(String name);
 
-    @Modifying
+    @Modifying(clearAutomatically = true)
     @Query("UPDATE Traeger t SET t.name = :name WHERE t.id = :id")
     void updateName(@Param("id") Long id, @Param("name") String name);
 }

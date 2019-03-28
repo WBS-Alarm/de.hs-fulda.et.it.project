@@ -1,4 +1,4 @@
-package de.hsfulda.et.wbs.action;
+package de.hsfulda.et.wbs.action.traeger;
 
 public interface DeleteTraegerAction {
 
