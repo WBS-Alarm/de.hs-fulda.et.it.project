@@ -61,6 +61,6 @@ public class GroesseListResource {
             @AuthenticationPrincipal WbsUser user,
             @PathVariable("kategorieId") Long kategorieId,
             @RequestBody GroesseDtoImpl groesse) {
-        return new HttpEntity<>(new GroesseHalJson(postAction.peform(user, kategorieId, groesse)));
+        return new HttpEntity<>(new GroesseHalJson(postAction.perform(user, kategorieId, groesse)));
     }
 }

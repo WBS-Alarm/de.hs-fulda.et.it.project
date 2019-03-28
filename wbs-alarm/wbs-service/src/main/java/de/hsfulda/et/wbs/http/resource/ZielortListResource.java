@@ -62,6 +62,6 @@ public class ZielortListResource {
             @PathVariable("traegerId") Long traegerId,
             @RequestBody ZielortDtoImpl zielort) {
 
-        return new HttpEntity<>(new ZielortHalJson(postAction.peform(user, traegerId, zielort)));
+        return new HttpEntity<>(new ZielortHalJson(postAction.perform(user, traegerId, zielort)));
     }
 }

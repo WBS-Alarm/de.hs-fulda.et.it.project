@@ -63,6 +63,6 @@ public class KategorieListResource {
             @AuthenticationPrincipal WbsUser user,
             @PathVariable("traegerId") Long traegerId,
             @RequestBody KategorieDtoImpl kategorie) {
-        return new HttpEntity<>(new KategorieHalJson(postAction.peform(user, traegerId, kategorie)));
+        return new HttpEntity<>(new KategorieHalJson(postAction.perform(user, traegerId, kategorie)));
     }
 }

@@ -6,5 +6,5 @@ import de.hsfulda.et.wbs.core.data.ZielortDto;
 
 public interface CreateZielortAction {
 
-    ZielortData peform(WbsUser user, Long traegerId, ZielortDto zielort);
+    ZielortData perform(WbsUser user, Long traegerId, ZielortDto zielort);
 }

@@ -6,5 +6,5 @@ import de.hsfulda.et.wbs.core.data.GroesseDto;
 
 public interface CreateGroesseAction {
 
-    GroesseData peform(WbsUser user, Long kategorieId, GroesseDto groesse);
+    GroesseData perform(WbsUser user, Long kategorieId, GroesseDto groesse);
 }

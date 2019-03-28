@@ -29,7 +29,7 @@ public class CreateGroesseActionImpl implements CreateGroesseAction {
     }
 
     @Override
-    public GroesseData peform(WbsUser user, Long kategorieId, GroesseDto groesse) {
+    public GroesseData perform(WbsUser user, Long kategorieId, GroesseDto groesse) {
         return accessService.hasAccessOnKategorie(user, kategorieId, () -> {
             if (isEmpty(groesse.getName())) {
                 throw new IllegalArgumentException("Name der Größe muss angegeben werden.");

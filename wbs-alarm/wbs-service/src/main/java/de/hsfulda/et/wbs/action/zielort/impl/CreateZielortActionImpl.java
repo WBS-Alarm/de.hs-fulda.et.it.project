@@ -29,7 +29,7 @@ public class CreateZielortActionImpl implements CreateZielortAction {
     }
 
     @Override
-    public ZielortData peform(WbsUser user, Long traegerId, ZielortDto zielort) {
+    public ZielortData perform(WbsUser user, Long traegerId, ZielortDto zielort) {
         return accessService.hasAccessOnTraeger(user, traegerId, () -> {
 
             if (isEmpty(zielort.getName())) {

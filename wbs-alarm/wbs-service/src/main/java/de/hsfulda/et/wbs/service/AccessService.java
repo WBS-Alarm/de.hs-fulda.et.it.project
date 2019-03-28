@@ -50,6 +50,12 @@ public class AccessService {
         return evaluteCount(counts, supplier);
     }
 
+
+    public <T> T hasAccessOnBestand(final WbsUser user, final Long bestandId, final Supplier<T> supplier) {
+        Long counts = repo.findTraegerByUserAndBestandId(user.getId(), bestandId);
+        return evaluteCount(counts, supplier);
+    }
+
     private <T> T evaluteCount(
             final Long counts, final Supplier<T> supplier) {
 
@@ -58,5 +64,4 @@ public class AccessService {
         }
         throw new ResourceNotFoundException();
     }
-
 }

@@ -29,7 +29,7 @@ public class CreateKategorieActionImpl implements CreateKategorieAction {
     }
 
     @Override
-    public KategorieData peform(WbsUser user, Long traegerId, KategorieDto kategorie) {
+    public KategorieData perform(WbsUser user, Long traegerId, KategorieDto kategorie) {
         return accessService.hasAccessOnTraeger(user, traegerId, () -> {
 
             if (isEmpty(kategorie.getName())) {

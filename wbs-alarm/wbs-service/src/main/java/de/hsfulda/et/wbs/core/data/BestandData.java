@@ -1,10 +1,8 @@
 package de.hsfulda.et.wbs.core.data;
 
-public interface BestandData {
+public interface BestandData extends BestandCreateDto {
 
     Long getId();
-
-    Long getAnzahl();
 
     GroesseData getGroesse();
 

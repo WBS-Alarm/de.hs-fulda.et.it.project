@@ -6,5 +6,5 @@ import de.hsfulda.et.wbs.core.data.KategorieDto;
 
 public interface CreateKategorieAction {
 
-    KategorieData peform(WbsUser user, Long traegerId, KategorieDto kategorie);
+    KategorieData perform(WbsUser user, Long traegerId, KategorieDto kategorie);
 }
