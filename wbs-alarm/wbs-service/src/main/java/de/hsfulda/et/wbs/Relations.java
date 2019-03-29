@@ -16,6 +16,8 @@ public enum Relations {
     REL_ZIELORT("zielort", ZielortResource.PATH),
     REL_KATEGORIE_LIST("kategorieList", KategorieListResource.PATH),
     REL_KATEGORIE("kategorie", KategorieResource.PATH),
+    REL_BESTAND_LIST("bestandList", BestandListResource.PATH),
+    REL_BESTAND("bestand", BestandResource.PATH),
     REL_TRAEGER_LIST("traegerList", TraegerListResource.PATH),
     REL_TRAEGER("traeger", TraegerResource.PATH);
 
