@@ -1,20 +1,18 @@
 package de.hsfulda.et.wbs.security.resource;
 
-import de.hsfulda.et.wbs.core.User;
-import de.hsfulda.et.wbs.entity.Benutzer;
-import de.hsfulda.et.wbs.entity.Traeger;
-import de.hsfulda.et.wbs.repository.BenutzerRepository;
-import de.hsfulda.et.wbs.repository.TraegerRepository;
-import de.hsfulda.et.wbs.security.service.UserCrudService;
+import de.hsfulda.et.wbs.action.benutzer.CreateBenutzerAction;
+import de.hsfulda.et.wbs.core.data.BenutzerData;
+import de.hsfulda.et.wbs.security.resource.dto.BenutzerCreateDtoImpl;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.Collections;
 
 import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
-import static org.springframework.util.StringUtils.isEmpty;
 
 /**
  * In dieser Resource werden Benutzer zu einem Träger registriert. Dies geschieht nur über den Träger Manager.
@@ -25,14 +23,10 @@ public class UserRegisterResource {
 
     public static final String PATH = CONTEXT_ROOT + "/users/register/{traegerId}";
 
-    private final UserCrudService users;
-    private final TraegerRepository traegerRepo;
-    private final BenutzerRepository benutzerRepo;
+    private final CreateBenutzerAction postAction;
 
-    UserRegisterResource(UserCrudService users, TraegerRepository traegerRepo, BenutzerRepository benutzerRepo) {
-        this.users = users;
-        this.traegerRepo = traegerRepo;
-        this.benutzerRepo = benutzerRepo;
+    public UserRegisterResource(CreateBenutzerAction postAction) {
+        this.postAction = postAction;
     }
 
     /**
@@ -40,33 +34,16 @@ public class UserRegisterResource {
      * Träger existiert und ob es bereits einen Benutzer mit dem Username bereits vergeben ist.
      *
      * @param traegerId ID des Trägers zu dem der Benutzer angelegt werden soll.
-     * @param benutzer      Angemeldeter Benutzer.
+     * @param benutzer  Angemeldeter Benutzer.
      * @return Status 201.
      */
     @PostMapping
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
-    ResponseEntity<Void> post(@PathVariable("traegerId") Long traegerId, @RequestBody final Benutzer benutzer) {
-        if (isEmpty(benutzer.getUsername()) || isEmpty(benutzer.getPassword())) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        Optional<Traeger> traeger = traegerRepo.findById(traegerId);
-        if (!traeger.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        Optional<User> found = users.findByUsername(benutzer.getUsername());
-        if (found.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
-        }
-
-        users.register(new User(benutzer));
-
-        setBenutzerOnTraeger(benutzer, traeger.get());
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    ResponseEntity<Void> post(@PathVariable("traegerId") Long traegerId, @RequestBody final BenutzerCreateDtoImpl benutzer) {
+        BenutzerData user = postAction.perform(traegerId, benutzer);
+        MultiValueMap<String, String> header = new HttpHeaders();
+        header.put("Location", Collections.singletonList("../../" + user.getId()));
+        return new ResponseEntity<>(header, HttpStatus.CREATED);
     }
 
-    private void setBenutzerOnTraeger(Benutzer user, Traeger traeger) {
-        traeger.addBenutzer(benutzerRepo.findByUsername(user.getUsername()));
-        this.traegerRepo.save(traeger);
-    }
 }

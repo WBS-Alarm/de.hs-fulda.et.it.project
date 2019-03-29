@@ -1,6 +1,6 @@
 package de.hsfulda.et.wbs.security.resource;
 
-import de.hsfulda.et.wbs.core.User;
+import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.security.service.UserAuthenticationService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -27,7 +27,7 @@ public class UserLogoutResource {
 
     @GetMapping
     @PreAuthorize("hasAuthority('READ_ALL')")
-    boolean get(@AuthenticationPrincipal final User user) {
+    boolean get(@AuthenticationPrincipal final WbsUser user) {
         authentication.logout(user);
         return true;
     }

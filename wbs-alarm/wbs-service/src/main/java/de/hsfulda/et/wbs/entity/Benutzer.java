@@ -1,13 +1,16 @@
 package de.hsfulda.et.wbs.entity;
 
 
+import de.hsfulda.et.wbs.core.data.BenutzerData;
+import de.hsfulda.et.wbs.core.data.TraegerData;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
 @Table(name = "BENUTZER")
-public class Benutzer {
+public class Benutzer implements BenutzerData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +31,7 @@ public class Benutzer {
     @JoinColumn(name = "TRAEGER_ID")
     private Traeger traeger;
 
+    @Override
     public Long getId() {
         return id;
     }
@@ -36,6 +40,7 @@ public class Benutzer {
         this.id = id;
     }
 
+    @Override
     public String getUsername() {
         return username;
     }
@@ -44,6 +49,7 @@ public class Benutzer {
         this.username = username;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
@@ -52,6 +58,7 @@ public class Benutzer {
         this.password = password;
     }
 
+    @Override
     public String getToken() {
         return token;
     }
@@ -60,6 +67,7 @@ public class Benutzer {
         this.token = token;
     }
 
+    @Override
     public String getMail() {
         return mail;
     }
@@ -68,6 +76,7 @@ public class Benutzer {
         this.mail = mail;
     }
 
+    @Override
     public Boolean getEinkaeufer() {
         return einkaeufer;
     }
@@ -76,7 +85,8 @@ public class Benutzer {
         this.einkaeufer = einkaeufer;
     }
 
-    public Traeger getTraeger() {
+    @Override
+    public TraegerData getTraeger() {
         return traeger;
     }
 
@@ -84,6 +94,7 @@ public class Benutzer {
         this.traeger = traeger;
     }
 
+    @Override
     public Boolean getAktiv() {
         return aktiv;
     }

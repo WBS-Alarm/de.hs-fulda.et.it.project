@@ -1,6 +1,8 @@
 package de.hsfulda.et.wbs.security.entity;
 
 
+import de.hsfulda.et.wbs.core.data.TokenConfigData;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -8,7 +10,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "TOKENCONFIG")
-public class TokenConfig {
+public class TokenConfig implements TokenConfigData {
 
     @Id
     @Size(max = 15)
@@ -21,6 +23,7 @@ public class TokenConfig {
     @Size(max = 30)
     private String secret;
 
+    @Override
     public String getIssuer() {
         return issuer;
     }
@@ -29,6 +32,7 @@ public class TokenConfig {
         this.issuer = issuer;
     }
 
+    @Override
     public int getExpiration() {
         return expiration;
     }
@@ -37,6 +41,7 @@ public class TokenConfig {
         this.expiration = expiration;
     }
 
+    @Override
     public int getClock() {
         return clock;
     }
@@ -45,6 +50,7 @@ public class TokenConfig {
         this.clock = clock;
     }
 
+    @Override
     public String getSecret() {
         return secret;
     }

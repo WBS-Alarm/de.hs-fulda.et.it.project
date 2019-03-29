@@ -1,14 +1,14 @@
 insert into traeger (name)
 values('Feuerwehr');
 
-insert into zielorte(name, auto, aktiv, traeger_id)
-values('Wäscherei', true, true, (select id from traeger where name = 'Feuerwehr'));
-insert into zielorte(name, auto, aktiv, traeger_id)
-values('Wareneingang', true, true, (select id from traeger where name = 'Feuerwehr'));
-insert into zielorte(name, auto, aktiv, traeger_id)
-values('Lager', true, true, (select id from traeger where name = 'Feuerwehr'));
-insert into zielorte(name, auto, aktiv, traeger_id)
-values('Aussonderung', true, true, (select id from traeger where name = 'Feuerwehr'));
+insert into zielorte(name, auto, aktiv, erfasst, traeger_id)
+values('Wäscherei', true, true, false, (select id from traeger where name = 'Feuerwehr'));
+insert into zielorte(name, auto, aktiv, erfasst, traeger_id)
+values('Wareneingang', true, true, false, (select id from traeger where name = 'Feuerwehr'));
+insert into zielorte(name, auto, aktiv, erfasst, traeger_id)
+values('Lager', true, true, false, (select id from traeger where name = 'Feuerwehr'));
+insert into zielorte(name, auto, aktiv, erfasst, traeger_id)
+values('Aussonderung', true, true, false, (select id from traeger where name = 'Feuerwehr'));
 
 insert into kategorien(name, aktiv, traeger_id)
 values('Polo-Hemd', true, (select id from traeger where name = 'Feuerwehr'));
@@ -16,18 +16,26 @@ values('Polo-Hemd', true, (select id from traeger where name = 'Feuerwehr'));
 insert into groessen(name, aktiv, kategorie_id)
 values('XXL', true, (select k.id from kategorien k where k.name = 'Polo-Hemd' and k.traeger_id = (select id from traeger where name = 'Feuerwehr')));
 
+insert into bestaende(anzahl, groesse_id, zielort_id)
+values(10,
+   (select g.id from groessen g where g.name = 'XXL' and g.kategorie_id =
+       (select k.id from kategorien k where k.name = 'Polo-Hemd' and k.traeger_id =
+           (select id from traeger where name = 'Feuerwehr'))),
+   (select z.id from zielorte z where z.name = 'Wareneingang' and z.traeger_id =
+       (select id from traeger where name = 'Feuerwehr')));
+
 
 insert into traeger (name)
 values('Helsa');
 
-insert into zielorte(name, auto, aktiv, traeger_id)
-values('Wäscherei', true, true, (select id from traeger where name = 'Helsa'));
-insert into zielorte(name, auto, aktiv, traeger_id)
-values('Wareneingang', true, true, (select id from traeger where name = 'Helsa'));
-insert into zielorte(name, auto, aktiv, traeger_id)
-values('Lager', true, true, (select id from traeger where name = 'Helsa'));
-insert into zielorte(name, auto, aktiv, traeger_id)
-values('Aussonderung', true, true, (select id from traeger where name = 'Helsa'));
+insert into zielorte(name, auto, aktiv, erfasst, traeger_id)
+values('Wäscherei', true, true, false, (select id from traeger where name = 'Helsa'));
+insert into zielorte(name, auto, aktiv, erfasst, traeger_id)
+values('Wareneingang', true, true, false, (select id from traeger where name = 'Helsa'));
+insert into zielorte(name, auto, aktiv, erfasst, traeger_id)
+values('Lager', true, true, false, (select id from traeger where name = 'Helsa'));
+insert into zielorte(name, auto, aktiv, erfasst, traeger_id)
+values('Aussonderung', true, true, false, (select id from traeger where name = 'Helsa'));
 
 insert into kategorien(name, aktiv, traeger_id)
 values('Polo-Hemd', true, (select id from traeger where name = 'Helsa'));
@@ -35,6 +43,13 @@ values('Polo-Hemd', true, (select id from traeger where name = 'Helsa'));
 insert into groessen(name, aktiv, kategorie_id)
 values('XXL', true, (select k.id from kategorien k where k.name = 'Polo-Hemd' and k.traeger_id = (select id from traeger where name = 'Helsa')));
 
+insert into bestaende(anzahl, groesse_id, zielort_id)
+values(10,
+   (select g.id from groessen g where g.name = 'XXL' and g.kategorie_id =
+       (select k.id from kategorien k where k.name = 'Polo-Hemd' and k.traeger_id =
+           (select id from traeger where name = 'Helsa'))),
+   (select z.id from zielorte z where z.name = 'Wareneingang' and z.traeger_id =
+       (select id from traeger where name = 'Helsa')));
 
 
 insert into benutzer (aktiv, einkaeufer, mail, password, name, traeger_id)

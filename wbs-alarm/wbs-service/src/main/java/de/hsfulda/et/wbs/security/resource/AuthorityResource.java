@@ -1,8 +1,8 @@
 package de.hsfulda.et.wbs.security.resource;
 
+import de.hsfulda.et.wbs.action.GetAuthorityListAction;
 import de.hsfulda.et.wbs.core.HalJsonResource;
 import de.hsfulda.et.wbs.security.haljson.AuthoritiesHalJson;
-import de.hsfulda.et.wbs.security.repository.AuthorityRepository;
 import org.springframework.http.HttpEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,15 +21,15 @@ public class AuthorityResource {
 
     public static final String PATH = CONTEXT_ROOT + "/authorities";
 
-    private final AuthorityRepository authorityRepository;
+    private final GetAuthorityListAction getActon;
 
-    public AuthorityResource(AuthorityRepository authorityRepository) {
-        this.authorityRepository = authorityRepository;
+    public AuthorityResource(GetAuthorityListAction getActon) {
+        this.getActon = getActon;
     }
 
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
     HttpEntity<HalJsonResource> get() {
-        return new HttpEntity<>(new AuthoritiesHalJson(authorityRepository.findAllByAktivTrueOrderById()));
+        return new HttpEntity<>(new AuthoritiesHalJson(getActon.perform()));
     }
 }

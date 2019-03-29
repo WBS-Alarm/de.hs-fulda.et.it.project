@@ -1,26 +1,27 @@
-package de.hsfulda.et.wbs.core;
+package de.hsfulda.et.wbs.security;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import de.hsfulda.et.wbs.core.WbsUser;
+import de.hsfulda.et.wbs.core.data.BenutzerData;
 import de.hsfulda.et.wbs.entity.Benutzer;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 import static java.lang.Boolean.TRUE;
 
-public class User implements UserDetails {
+public class User implements WbsUser {
 
-    private final Benutzer benutzer;
+    private final BenutzerData benutzer;
     private Collection<SimpleGrantedAuthority> authorities;
 
     private User() {
         benutzer = new Benutzer();
     }
 
-    public User(Benutzer benutzer) {
+    public User(BenutzerData benutzer) {
         this.benutzer = benutzer;
     }
 
@@ -66,6 +67,7 @@ public class User implements UserDetails {
         return TRUE.equals(benutzer.getAktiv());
     }
 
+    @Override
     public Long getId() {
         return benutzer.getId();
     }
@@ -75,7 +77,8 @@ public class User implements UserDetails {
         return benutzer.getUsername();
     }
 
-    public Benutzer getBenutzer() {
+    @Override
+    public BenutzerData getBenutzer() {
         return benutzer;
     }
 }

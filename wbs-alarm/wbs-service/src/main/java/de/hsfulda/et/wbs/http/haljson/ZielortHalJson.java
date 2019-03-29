@@ -2,7 +2,7 @@ package de.hsfulda.et.wbs.http.haljson;
 
 import de.hsfulda.et.wbs.core.HalJsonResource;
 import de.hsfulda.et.wbs.core.Link;
-import de.hsfulda.et.wbs.entity.Zielort;
+import de.hsfulda.et.wbs.core.data.ZielortData;
 import de.hsfulda.et.wbs.http.resource.ZielortListResource;
 import de.hsfulda.et.wbs.util.UriUtil;
 
@@ -10,11 +10,11 @@ import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
 
 public class ZielortHalJson extends HalJsonResource {
 
-    public ZielortHalJson(Zielort zielort) {
+    public ZielortHalJson(ZielortData zielort) {
         this(zielort, true);
     }
 
-    public ZielortHalJson(Zielort zielort, boolean embedded) {
+    public ZielortHalJson(ZielortData zielort, boolean embedded) {
         addZielortProperties(zielort);
 
         if (embedded) {
@@ -22,7 +22,7 @@ public class ZielortHalJson extends HalJsonResource {
         }
     }
 
-    private void addZielortProperties(Zielort zielort) {
+    private void addZielortProperties(ZielortData zielort) {
         String zielortResource = UriUtil.build(CONTEXT_ROOT + "/zielort/{id}", zielort.getId());
 
         addLink(Link.self(zielortResource));

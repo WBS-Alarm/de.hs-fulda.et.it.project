@@ -2,17 +2,17 @@ package de.hsfulda.et.wbs.http.haljson;
 
 import de.hsfulda.et.wbs.core.HalJsonResource;
 import de.hsfulda.et.wbs.core.Link;
-import de.hsfulda.et.wbs.entity.Groesse;
+import de.hsfulda.et.wbs.core.data.GroesseData;
 import de.hsfulda.et.wbs.http.resource.GroesseListResource;
 import de.hsfulda.et.wbs.util.UriUtil;
 
 public class GroesseHalJson extends HalJsonResource {
 
-    public GroesseHalJson(Groesse groesse) {
+    public GroesseHalJson(GroesseData groesse) {
         this(groesse, true);
     }
 
-    public GroesseHalJson(Groesse groesse, boolean embedded) {
+    public GroesseHalJson(GroesseData groesse, boolean embedded) {
         addGroesseProperties(groesse);
 
         if (embedded) {
@@ -20,7 +20,7 @@ public class GroesseHalJson extends HalJsonResource {
         }
     }
 
-    private void addGroesseProperties(Groesse groesse) {
+    private void addGroesseProperties(GroesseData groesse) {
         String groesseResource = UriUtil.build("/kategorie/{id}", groesse.getId());
 
         addLink(Link.self(groesseResource));

@@ -1,11 +1,12 @@
 package de.hsfulda.et.wbs.http.resource;
 
+import de.hsfulda.et.wbs.action.zielort.DeleteZielortAction;
+import de.hsfulda.et.wbs.action.zielort.GetZielortAction;
+import de.hsfulda.et.wbs.action.zielort.UpdateZielortAction;
 import de.hsfulda.et.wbs.core.HalJsonResource;
-import de.hsfulda.et.wbs.core.User;
-import de.hsfulda.et.wbs.entity.Zielort;
+import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.http.haljson.ZielortHalJson;
-import de.hsfulda.et.wbs.repository.ZielortRepository;
-import de.hsfulda.et.wbs.service.AccessService;
+import de.hsfulda.et.wbs.http.resource.dto.ZielortDtoImpl;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +14,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
 import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
-import static org.springframework.util.ObjectUtils.isEmpty;
 
 /**
  * Diese Resource stellt einen Zielort dar. Hier kann ein Zielort aufgerufen, bearbeitet und gelöscht (inaktiv gesetzt)
@@ -29,12 +27,14 @@ public class ZielortResource {
 
     public static final String PATH = CONTEXT_ROOT + "/zielort/{id}";
 
-    private final ZielortRepository zielortRepository;
-    private final AccessService accessService;
+    private final GetZielortAction getAction;
+    private final UpdateZielortAction putAction;
+    private final DeleteZielortAction deleteAction;
 
-    public ZielortResource(ZielortRepository zielortRepository, AccessService accessService) {
-        this.zielortRepository = zielortRepository;
-        this.accessService = accessService;
+    public ZielortResource(GetZielortAction getAction, UpdateZielortAction putAction, DeleteZielortAction deleteAction) {
+        this.getAction = getAction;
+        this.putAction = putAction;
+        this.deleteAction = deleteAction;
     }
 
     /**
@@ -45,42 +45,21 @@ public class ZielortResource {
      */
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")
-    HttpEntity<HalJsonResource> get(@AuthenticationPrincipal User user, @PathVariable("id") Long id) {
-        return accessService.hasAccessOnZielort(user, id, () -> {
-            Optional<Zielort> managed = zielortRepository.findByIdAndAktivIsTrue(id);
-            return managed.<HttpEntity<HalJsonResource>>map(zielort -> new HttpEntity<>(new ZielortHalJson(zielort)))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-        });
+    HttpEntity<HalJsonResource> get(@AuthenticationPrincipal WbsUser user, @PathVariable("id") Long id) {
+        return new HttpEntity<>(new ZielortHalJson(getAction.perform(user, id)));
     }
 
     /**
      * Bearbeitet einen Zielort. Hierbei wird nur der Name geändert.
      *
-     * @param id ID des Zielorts aus dem Pfad
-     * @param traeger Zielort mit neuem Namen
+     * @param id      ID des Zielorts aus dem Pfad
+     * @param zielort Zielort mit neuem Namen
      * @return gespeicherten Zielort. Anderfalls 404 oder 409
      */
     @PutMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
-    HttpEntity<HalJsonResource> put(@AuthenticationPrincipal User user, @PathVariable("id") Long id, @RequestBody Zielort traeger) {
-        return accessService.hasAccessOnZielort(user, id, () -> {
-            if (isEmpty(traeger.getName())) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
-
-            Optional<Zielort> managed = zielortRepository.findById(id);
-            if (managed.isPresent()) {
-                Zielort zo = managed.get();
-                if (zo.isAuto()) {
-                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-                }
-
-                zo.setName(traeger.getName());
-                Zielort saved = zielortRepository.save(zo);
-                return new HttpEntity<>(new ZielortHalJson(saved));
-            }
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        });
+    HttpEntity<HalJsonResource> put(@AuthenticationPrincipal WbsUser user, @PathVariable("id") Long id, @RequestBody ZielortDtoImpl zielort) {
+        return new HttpEntity<>(new ZielortHalJson(putAction.perform(user, id, zielort)));
     }
 
     /**
@@ -91,17 +70,8 @@ public class ZielortResource {
      */
     @DeleteMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
-    HttpEntity<HalJsonResource> delete(@AuthenticationPrincipal User user, @PathVariable("id") Long id) {
-        return accessService.hasAccessOnZielort(user, id, () -> {
-            Optional<Zielort> managed = zielortRepository.findById(id);
-
-            if (managed.isPresent()) {
-                Zielort zo = managed.get();
-                zo.setAktiv(false);
-                zielortRepository.save(zo);
-                return new ResponseEntity<>(HttpStatus.OK);
-            }
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        });
+    HttpEntity<HalJsonResource> delete(@AuthenticationPrincipal WbsUser user, @PathVariable("id") Long id) {
+        deleteAction.perform(user, id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

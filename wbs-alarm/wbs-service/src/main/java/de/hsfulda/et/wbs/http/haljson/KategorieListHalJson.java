@@ -2,7 +2,7 @@ package de.hsfulda.et.wbs.http.haljson;
 
 import de.hsfulda.et.wbs.core.HalJsonResource;
 import de.hsfulda.et.wbs.core.Link;
-import de.hsfulda.et.wbs.entity.Kategorie;
+import de.hsfulda.et.wbs.core.data.KategorieData;
 import de.hsfulda.et.wbs.http.resource.KategorieListResource;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class KategorieListHalJson extends HalJsonResource {
 
-    public KategorieListHalJson(List<Kategorie> kategorien) {
+    public KategorieListHalJson(List<KategorieData> kategorien) {
         addLink(Link.self(KategorieListResource.PATH));
 
         List<HalJsonResource> resources = kategorien.stream()

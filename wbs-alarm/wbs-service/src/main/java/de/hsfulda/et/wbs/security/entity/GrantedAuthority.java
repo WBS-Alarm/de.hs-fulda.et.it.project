@@ -1,11 +1,14 @@
 package de.hsfulda.et.wbs.security.entity;
 
 
+import de.hsfulda.et.wbs.core.data.AuthorityData;
+import de.hsfulda.et.wbs.core.data.GrantedAuthorityData;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "GRANTED_AUTHORITY")
-public class GrantedAuthority {
+public class GrantedAuthority implements GrantedAuthorityData {
 
     @EmbeddedId
     private GrantedAuthorityKey pk;
@@ -22,6 +25,7 @@ public class GrantedAuthority {
         this.pk = pk;
     }
 
+    @Override
     public Long getUserId() {
         return pk.getUserId();
     }
@@ -33,6 +37,7 @@ public class GrantedAuthority {
         pk.setUserId(userId);
     }
 
+    @Override
     public Long getAuthorityId() {
         return pk.getAuthorityId();
     }
@@ -44,7 +49,8 @@ public class GrantedAuthority {
         pk.setAuthorityId(authorityId);
     }
 
-    public Authority getGroup() {
+    @Override
+    public AuthorityData getGroup() {
         return group;
     }
 

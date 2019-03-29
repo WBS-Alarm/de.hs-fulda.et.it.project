@@ -1,66 +1,67 @@
 package de.hsfulda.et.wbs.service;
 
-import de.hsfulda.et.wbs.core.HalJsonResource;
-import de.hsfulda.et.wbs.core.User;
-import de.hsfulda.et.wbs.repository.TraegerRepository;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.ResponseEntity;
+import de.hsfulda.et.wbs.core.WbsUser;
+import de.hsfulda.et.wbs.core.exception.ResourceNotFoundException;
+import de.hsfulda.et.wbs.repository.AccessRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.function.Supplier;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-
 @Service
 public class AccessService {
 
-    private final TraegerRepository traegerRepository;
+    private final AccessRepository repo;
 
-    public AccessService(TraegerRepository traegerRepository) {
-        this.traegerRepository = traegerRepository;
+    public AccessService(AccessRepository repo) {
+        this.repo = repo;
     }
 
-    public HttpEntity<HalJsonResource> hasAccessOnBenutzer(
-        final User user, final Long benutzerId, final Supplier<HttpEntity<HalJsonResource>> supplier) {
+    public <T> T hasAccessOnBenutzer(
+            final WbsUser user, final Long benutzerId, final Supplier<T> supplier) {
 
-        Long counts = traegerRepository.findTraegerByUserAndBenutzerId(user.getId(), benutzerId);
+        Long counts = repo.findTraegerByUserAndBenutzerId(user.getId(), benutzerId);
         return evaluteCount(counts, supplier);
     }
 
-    public HttpEntity<HalJsonResource> hasAccessOnZielort(
-        final User user, final Long zielortId, final Supplier<HttpEntity<HalJsonResource>> supplier) {
+    public <T> T hasAccessOnZielort(
+            final WbsUser user, final Long zielortId, final Supplier<T> supplier) {
 
-        Long counts = traegerRepository.findTraegerByUserAndZielortId(user.getId(), zielortId);
+        Long counts = repo.findTraegerByUserAndZielortId(user.getId(), zielortId);
         return evaluteCount(counts, supplier);
     }
 
-    public HttpEntity<HalJsonResource> hasAccessOnTraeger(
-        final User user, final Long traegerId, final Supplier<HttpEntity<HalJsonResource>> supplier) {
+    public <T> T hasAccessOnTraeger(
+            final WbsUser user, final Long traegerId, final Supplier<T> supplier) {
 
-        Long counts = traegerRepository.findTraegerByUserAndTraegerId(user.getId(), traegerId);
+        Long counts = repo.findTraegerByUserAndTraegerId(user.getId(), traegerId);
         return evaluteCount(counts, supplier);
     }
 
-    public HttpEntity<HalJsonResource> hasAccessOnKategorie(
-        final User user, final Long kategorieId, final Supplier<HttpEntity<HalJsonResource>> supplier) {
+    public <T> T hasAccessOnKategorie(
+            final WbsUser user, final Long kategorieId, final Supplier<T> supplier) {
 
-        Long counts = traegerRepository.findTraegerByUserAndKategorieId(user.getId(), kategorieId);
+        Long counts = repo.findTraegerByUserAndKategorieId(user.getId(), kategorieId);
         return evaluteCount(counts, supplier);
     }
 
-    public HttpEntity<HalJsonResource> hasAccessOnGroesse(
-        final User user, final Long groesseId, final Supplier<HttpEntity<HalJsonResource>> supplier) {
-        Long counts = traegerRepository.findTraegerByUserAndGroesseId(user.getId(), groesseId);
+    public <T> T hasAccessOnGroesse(
+            final WbsUser user, final Long groesseId, final Supplier<T> supplier) {
+        Long counts = repo.findTraegerByUserAndGroesseId(user.getId(), groesseId);
         return evaluteCount(counts, supplier);
     }
 
-    private HttpEntity<HalJsonResource> evaluteCount(
-        final Long counts, final Supplier<HttpEntity<HalJsonResource>> supplier) {
+
+    public <T> T hasAccessOnBestand(final WbsUser user, final Long bestandId, final Supplier<T> supplier) {
+        Long counts = repo.findTraegerByUserAndBestandId(user.getId(), bestandId);
+        return evaluteCount(counts, supplier);
+    }
+
+    private <T> T evaluteCount(
+            final Long counts, final Supplier<T> supplier) {
 
         if (counts > 0) {
             return supplier.get();
         }
-        return new ResponseEntity<>(NOT_FOUND);
+        throw new ResourceNotFoundException();
     }
-
 }
