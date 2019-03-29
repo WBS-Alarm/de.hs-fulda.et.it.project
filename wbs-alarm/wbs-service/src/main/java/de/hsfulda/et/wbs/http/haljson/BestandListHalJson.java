@@ -10,10 +10,10 @@ import java.util.stream.Collectors;
 
 public class BestandListHalJson extends HalJsonResource {
 
-    public BestandListHalJson(List<BestandData> zielorte) {
+    public BestandListHalJson(List<BestandData> bestaende) {
         addLink(Link.self(BestandListResource.PATH));
 
-        List<HalJsonResource> resources = zielorte.stream()
+        List<HalJsonResource> resources = bestaende.stream()
             .map(t -> new BestandHalJson(t, false))
             .collect(Collectors.toList());
 

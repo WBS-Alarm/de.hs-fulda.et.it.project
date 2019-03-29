@@ -17,10 +17,11 @@ public class BestandHalJson extends HalJsonResource {
     public BestandHalJson(BestandData bestand, boolean embedded) {
         addBestandProperties(bestand);
 
+        addEmbeddedResource("kategorie", new KategorieHalJson(bestand.getKategorie(), false));
+        addEmbeddedResource("groesse", new GroesseHalJson(bestand.getGroesse(), false));
+
         if (embedded) {
             addEmbeddedResource("zielort", new ZielortHalJson(bestand.getZielort(), false));
-            addEmbeddedResource("kategorie", new KategorieHalJson(bestand.getKategorie(), false));
-            addEmbeddedResource("groesse", new GroesseHalJson(bestand.getGroesse(), false));
         }
     }
 

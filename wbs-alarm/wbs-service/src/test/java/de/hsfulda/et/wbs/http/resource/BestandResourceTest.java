@@ -15,6 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -24,10 +25,28 @@ class BestandResourceTest extends ResourceTest {
     @Autowired
     private BestandResource resource;
 
+    @Autowired
+    private BestandListResource listResource;
+
     @DisplayName("wird im Spring Context geladen und gefunden")
     @Test
     void contextLoads() {
         assertThat(resource).isNotNull();
+    }
+
+    @DisplayName("wird aufgelistet zu dem Träger des Anwenders aufgelistet.")
+    @Test
+    void getBestandList() throws Exception {
+        Long zielortId = getZielortId("Wareneingang", FW_TRAEGER);
+        mockMvc.perform(get(BestandListResource.PATH, zielortId)
+            .header("Authorization", getTokenAsSuperuser())
+            .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andDo(print())
+            .andExpect(jsonPath("$._links.self[0].templated", is(true)))
+            .andExpect(jsonPath("$._embedded.elemente[0]._embedded.groesse[0].name", is("XXL")))
+            .andExpect(jsonPath("$._embedded.elemente[0]._embedded.kategorie[0].name", is("Polo-Hemd")))
+            .andExpect(jsonPath("$._embedded.elemente[0].anzahl", is(10)));
     }
 
     @DisplayName("wird aufgelistet zu dem Träger des Anwenders aufgelistet.")
