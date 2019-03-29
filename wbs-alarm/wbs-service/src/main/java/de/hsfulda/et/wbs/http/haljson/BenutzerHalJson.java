@@ -15,43 +15,46 @@ import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
 
 public class BenutzerHalJson extends HalJsonResource {
 
-    private BenutzerHalJson(BenutzerData benutzer, boolean embedded) {
-        addBenutzerProperies(benutzer);
+    private BenutzerHalJson(WbsUser user, BenutzerData benutzer, boolean embedded) {
+        addBenutzerProperies(user, benutzer);
         if (embedded) {
-            addEmbeddedResource("traeger", new TraegerHalJson(benutzer.getTraeger(), false));
+            addEmbeddedResource("traeger", new TraegerHalJson(user, benutzer.getTraeger(), false));
         }
     }
 
-    public static BenutzerHalJson of(BenutzerData benutzer) {
-        return new BenutzerHalJson(benutzer, true);
+    public static BenutzerHalJson of(WbsUser user, BenutzerData benutzer) {
+        return new BenutzerHalJson(user, benutzer, true);
     }
 
-    public static BenutzerHalJson ofNoEmbaddables(BenutzerData benutzer) {
-        return new BenutzerHalJson(benutzer, false);
+    public static BenutzerHalJson ofNoEmbaddables(WbsUser user, BenutzerData benutzer) {
+        return new BenutzerHalJson(user, benutzer, false);
     }
 
-    public static BenutzerHalJson ofGrantedAuthorities(BenutzerData benutzer, List<GrantedAuthorityData> granted) {
-        BenutzerHalJson hal = new BenutzerHalJson(benutzer, true);
+    public static BenutzerHalJson ofGrantedAuthorities(WbsUser user, BenutzerData benutzer, List<GrantedAuthorityData> granted) {
+        BenutzerHalJson hal = new BenutzerHalJson(user, benutzer, true);
 
         hal.addEmbeddedResources("authorities", granted.stream()
-            .map(g -> new AuthorityHalJson(g.getGroup(), benutzer))
+            .map(g -> new AuthorityHalJson(user, g.getGroup(), benutzer))
             .collect(Collectors.toList()));
 
         return hal;
     }
 
     public static BenutzerHalJson ofCurrent(WbsUser benutzer) {
-        BenutzerHalJson hal = new BenutzerHalJson(benutzer.getBenutzer(), true);
+        BenutzerHalJson hal = new BenutzerHalJson(benutzer, benutzer.getBenutzer(), true);
         hal.addProperty("authorities", benutzer.getAuthorities());
         return hal;
     }
 
-    private void addBenutzerProperies(BenutzerData benutzer) {
+    private void addBenutzerProperies(WbsUser user, BenutzerData benutzer) {
         String benutzerResource = UriUtil.build(CONTEXT_ROOT + "/benutzer/{id}", benutzer.getId());
 
         addLink(Link.self(benutzerResource));
-        addLink(Link.create("delete", benutzerResource));
-        addLink(Link.create("update", benutzerResource));
+
+        if (user.isTraegerManager()) {
+            addLink(Link.create("delete", benutzerResource));
+            addLink(Link.create("update", benutzerResource));
+        }
 
         addProperty("id", benutzer.getId());
         addProperty("username", benutzer.getUsername());

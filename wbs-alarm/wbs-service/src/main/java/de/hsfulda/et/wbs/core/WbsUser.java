@@ -8,4 +8,8 @@ public interface WbsUser extends UserDetails {
     Long getId();
 
     BenutzerData getBenutzer();
+
+    boolean isAdmin();
+
+    boolean isTraegerManager();
 }

@@ -38,6 +38,16 @@ public class User implements WbsUser {
         getAuthorities().addAll(authorities);
     }
 
+    @Override
+    public boolean isAdmin() {
+        return getAuthorities().stream().anyMatch(a -> Roles.RoleName.ADMIN.equals(a.getAuthority()));
+    }
+
+    @Override
+    public boolean isTraegerManager() {
+        return getAuthorities().stream().anyMatch(a -> Roles.RoleName.TRAEGER_MANAGER.equals(a.getAuthority()));
+    }
+
     @JsonIgnore
     @Override
     public String getPassword() {

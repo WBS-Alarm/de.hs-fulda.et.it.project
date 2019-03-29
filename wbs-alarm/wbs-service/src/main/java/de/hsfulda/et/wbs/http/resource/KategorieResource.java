@@ -46,7 +46,7 @@ public class KategorieResource {
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")
     HttpEntity<HalJsonResource> get(@AuthenticationPrincipal WbsUser user, @PathVariable("id") Long id) {
-        return new HttpEntity<>(new KategorieHalJson(getAction.perform(user, id)));
+        return new HttpEntity<>(new KategorieHalJson(user, getAction.perform(user, id)));
     }
 
     /**
@@ -59,7 +59,7 @@ public class KategorieResource {
     @PutMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
     HttpEntity<HalJsonResource> put(@AuthenticationPrincipal WbsUser user, @PathVariable("id") Long id, @RequestBody KategorieDtoImpl kategorie) {
-        return new HttpEntity<>(new KategorieHalJson(putAction.perform(user, id, kategorie)));
+        return new HttpEntity<>(new KategorieHalJson(user, putAction.perform(user, id, kategorie)));
     }
 
     /**

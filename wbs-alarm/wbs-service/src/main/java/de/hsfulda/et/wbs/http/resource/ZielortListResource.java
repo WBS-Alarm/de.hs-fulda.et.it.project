@@ -43,7 +43,7 @@ public class ZielortListResource {
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")
     HttpEntity<HalJsonResource> get(@AuthenticationPrincipal WbsUser user, @PathVariable("traegerId") Long traegerId) {
-        return new HttpEntity<>(new ZielortListHalJson(getAction.perform(user, traegerId)));
+        return new HttpEntity<>(new ZielortListHalJson(user, getAction.perform(user, traegerId)));
     }
 
     /**
@@ -62,6 +62,6 @@ public class ZielortListResource {
             @PathVariable("traegerId") Long traegerId,
             @RequestBody ZielortDtoImpl zielort) {
 
-        return new HttpEntity<>(new ZielortHalJson(postAction.perform(user, traegerId, zielort)));
+        return new HttpEntity<>(new ZielortHalJson(user, postAction.perform(user, traegerId, zielort)));
     }
 }

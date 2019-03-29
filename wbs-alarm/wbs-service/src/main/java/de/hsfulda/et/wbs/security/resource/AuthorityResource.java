@@ -2,9 +2,11 @@ package de.hsfulda.et.wbs.security.resource;
 
 import de.hsfulda.et.wbs.action.GetAuthorityListAction;
 import de.hsfulda.et.wbs.core.HalJsonResource;
+import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.security.haljson.AuthoritiesHalJson;
 import org.springframework.http.HttpEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +31,7 @@ public class AuthorityResource {
 
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
-    HttpEntity<HalJsonResource> get() {
-        return new HttpEntity<>(new AuthoritiesHalJson(getActon.perform()));
+    HttpEntity<HalJsonResource> get(@AuthenticationPrincipal WbsUser user) {
+        return new HttpEntity<>(new AuthoritiesHalJson(user, getActon.perform()));
     }
 }

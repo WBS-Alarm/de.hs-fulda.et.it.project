@@ -39,7 +39,7 @@ public class ZielortLockResource {
     @PostMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
     HttpEntity<HalJsonResource> post(@AuthenticationPrincipal WbsUser user, @PathVariable("id") Long id) {
-        return new HttpEntity<>(new ZielortHalJson(postAction.perform(user, id)));
+        return new HttpEntity<>(new ZielortHalJson(user, postAction.perform(user, id)));
     }
 
 }

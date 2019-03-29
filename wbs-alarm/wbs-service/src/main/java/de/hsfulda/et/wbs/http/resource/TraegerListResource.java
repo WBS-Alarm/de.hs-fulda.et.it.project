@@ -3,12 +3,14 @@ package de.hsfulda.et.wbs.http.resource;
 import de.hsfulda.et.wbs.action.traeger.CreateTraegerAction;
 import de.hsfulda.et.wbs.action.traeger.GetTraegerListAction;
 import de.hsfulda.et.wbs.core.HalJsonResource;
+import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.http.haljson.TraegerHalJson;
 import de.hsfulda.et.wbs.http.haljson.TraegerListHalJson;
 import de.hsfulda.et.wbs.http.resource.dto.TraegerDtoImpl;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
@@ -39,8 +41,8 @@ public class TraegerListResource {
      */
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")
-    HttpEntity<HalJsonResource> get() {
-        return new HttpEntity<>(new TraegerListHalJson(getAction.perform()));
+    HttpEntity<HalJsonResource> get(@AuthenticationPrincipal WbsUser user) {
+        return new HttpEntity<>(new TraegerListHalJson(user, getAction.perform()));
     }
 
     /**
@@ -53,7 +55,7 @@ public class TraegerListResource {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('ADMIN')")
-    HttpEntity<HalJsonResource> post(@RequestBody TraegerDtoImpl traeger) {
-        return new HttpEntity<>(new TraegerHalJson(postAction.perform(traeger)));
+    HttpEntity<HalJsonResource> post(@AuthenticationPrincipal WbsUser user, @RequestBody TraegerDtoImpl traeger) {
+        return new HttpEntity<>(new TraegerHalJson(user, postAction.perform(traeger)));
     }
 }

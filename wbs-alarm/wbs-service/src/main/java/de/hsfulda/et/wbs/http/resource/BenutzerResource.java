@@ -61,7 +61,7 @@ public class BenutzerResource {
         BenutzerData benutzer = getAction.perform(user, id);
         List<GrantedAuthorityData> authorities = getAuthoritiesAction.perform(benutzer.getId());
 
-        return new HttpEntity<>(BenutzerHalJson.ofGrantedAuthorities(benutzer, authorities));
+        return new HttpEntity<>(BenutzerHalJson.ofGrantedAuthorities(user, benutzer, authorities));
     }
 
     /**
@@ -80,7 +80,7 @@ public class BenutzerResource {
             @AuthenticationPrincipal WbsUser user,
             @PathVariable("id") Long id,
             @RequestBody BenutzerDtoImpl benutzer) {
-        return new HttpEntity<>(BenutzerHalJson.of(putAction.perform(user, id, benutzer)));
+        return new HttpEntity<>(BenutzerHalJson.of(user, putAction.perform(user, id, benutzer)));
     }
 
     /**

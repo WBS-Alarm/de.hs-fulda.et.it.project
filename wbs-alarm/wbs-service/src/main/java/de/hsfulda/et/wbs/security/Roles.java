@@ -38,7 +38,7 @@ public enum Roles {
         return rollen;
     }
 
-    private interface RoleName {
+    public interface RoleName {
         String ADMIN = "ADMIN";
         String TRAEGER_MANAGER = "TRAEGER_MANAGER";
         String READ_ALL = "READ_ALL";

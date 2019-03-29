@@ -46,7 +46,7 @@ public class BestandResource {
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")
     HttpEntity<HalJsonResource> get(@AuthenticationPrincipal WbsUser user, @PathVariable("id") Long id) {
-        return new HttpEntity<>(new BestandHalJson(getAction.perform(user, id)));
+        return new HttpEntity<>(new BestandHalJson(user, getAction.perform(user, id)));
     }
 
     /**
@@ -59,7 +59,7 @@ public class BestandResource {
     @PutMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
     HttpEntity<HalJsonResource> put(@AuthenticationPrincipal WbsUser user, @PathVariable("id") Long id, @RequestBody BestandDtoImpl bestand) {
-        return new HttpEntity<>(new BestandHalJson(putAction.perform(user, id, bestand)));
+        return new HttpEntity<>(new BestandHalJson(user, putAction.perform(user, id, bestand)));
     }
 
     /**

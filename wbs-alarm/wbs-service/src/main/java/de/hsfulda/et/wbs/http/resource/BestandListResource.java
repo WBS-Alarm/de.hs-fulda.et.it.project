@@ -43,7 +43,7 @@ public class BestandListResource {
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")
     HttpEntity<HalJsonResource> get(@AuthenticationPrincipal WbsUser user, @PathVariable("zielortId") Long zielortId) {
-        return new HttpEntity<>(new BestandListHalJson(getAction.perform(user, zielortId)));
+        return new HttpEntity<>(new BestandListHalJson(user, getAction.perform(user, zielortId)));
     }
 
     /**
@@ -62,6 +62,6 @@ public class BestandListResource {
         @PathVariable("zielortId") Long zielortId,
         @RequestBody BestandCreateDtoImpl bestand) {
 
-        return new HttpEntity<>(new BestandHalJson(postAction.perform(user, zielortId, bestand)));
+        return new HttpEntity<>(new BestandHalJson(user, postAction.perform(user, zielortId, bestand)));
     }
 }

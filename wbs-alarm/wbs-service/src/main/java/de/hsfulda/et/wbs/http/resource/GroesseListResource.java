@@ -43,7 +43,7 @@ public class GroesseListResource {
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")
     HttpEntity<HalJsonResource> get(@AuthenticationPrincipal WbsUser user, @PathVariable("kategorieId") Long kategorieId) {
-        return new HttpEntity<>(new GroesseListHalJson(getAction.perform(user, kategorieId)));
+        return new HttpEntity<>(new GroesseListHalJson(user, getAction.perform(user, kategorieId)));
     }
 
     /**
@@ -61,6 +61,6 @@ public class GroesseListResource {
             @AuthenticationPrincipal WbsUser user,
             @PathVariable("kategorieId") Long kategorieId,
             @RequestBody GroesseDtoImpl groesse) {
-        return new HttpEntity<>(new GroesseHalJson(postAction.perform(user, kategorieId, groesse)));
+        return new HttpEntity<>(new GroesseHalJson(user, postAction.perform(user, kategorieId, groesse)));
     }
 }
