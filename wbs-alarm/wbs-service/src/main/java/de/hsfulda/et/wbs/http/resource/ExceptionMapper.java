@@ -11,22 +11,29 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ExceptionMapper {
 
     @ExceptionHandler({ResourceNotFoundException.class})
-    public final ResponseEntity<HalJsonResource> resourceNotFoundException() {
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public final ResponseEntity<HalJsonResource> resourceNotFoundException(Throwable exc) {
+        return toResponse(HttpStatus.NOT_FOUND, exc);
     }
 
     @ExceptionHandler({IllegalArgumentException.class})
-    public final ResponseEntity<HalJsonResource> illegalArgumentException() {
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    public final ResponseEntity<HalJsonResource> illegalArgumentException(Throwable exc) {
+        return toResponse(HttpStatus.BAD_REQUEST, exc);
     }
 
     @ExceptionHandler({UserAlreadyExistsException.class, AuthorityAlreadyGrantedException.class, BestandAlreadyExistsException.class})
-    public final ResponseEntity<HalJsonResource> alreadyExistsException() {
-        return new ResponseEntity<>(HttpStatus.CONFLICT);
+    public final ResponseEntity<HalJsonResource> alreadyExistsException(Throwable exc) {
+        return toResponse(HttpStatus.CONFLICT, exc);
     }
 
     @ExceptionHandler(ZielortLockedException.class)
-    public final ResponseEntity<HalJsonResource> zielortLockedException() {
-        return new ResponseEntity<>(HttpStatus.LOCKED);
+    public final ResponseEntity<HalJsonResource> zielortLockedException(Throwable exc) {
+        return toResponse(HttpStatus.LOCKED, exc);
     }
+
+    private ResponseEntity<HalJsonResource> toResponse(HttpStatus status, Throwable exc) {
+        HalJsonResource message = new HalJsonResource();
+        message.addProperty("message", exc.getMessage());
+        return new ResponseEntity<>(message, status);
+    }
+
 }

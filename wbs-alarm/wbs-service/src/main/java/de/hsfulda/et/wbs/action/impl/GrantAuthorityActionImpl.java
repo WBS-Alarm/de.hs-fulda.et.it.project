@@ -34,13 +34,13 @@ public class GrantAuthorityActionImpl implements GrantAuthorityAction {
     @Override
     public void perform(Long authorityId, Long benutzerId) {
         if (!(benutzerRepository.existsById(benutzerId) && authorityRepository.existsById(authorityId))) {
-            throw new ResourceNotFoundException();
+            throw new ResourceNotFoundException("Authority mit ID a:{0}, b:{1} nicht gefunden.", authorityId, benutzerId);
         }
 
         List<GrantedAuthorityData> granted = repo.findByUserId(benutzerId);
         boolean alreadyGranted = granted.stream().anyMatch(g -> authorityId.equals(g.getAuthorityId()));
         if (alreadyGranted) {
-            throw new AuthorityAlreadyGrantedException();
+            throw new AuthorityAlreadyGrantedException("Das Recht wurde bereits vergeben und kann nicht erneut vergeben werden.");
         }
 
         GrantedAuthority toGrant = new GrantedAuthority();

@@ -26,7 +26,7 @@ public class DeleteBestandActionImpl implements DeleteBestandAction {
         accessService.hasAccessOnBestand(user, id, () -> {
 
             if (!repo.existsById(id)) {
-                throw new ResourceNotFoundException();
+                throw new ResourceNotFoundException("Bestand mit ID {0} nicht gefunden.", id);
             }
 
             if (repo.isZielortErfasst(id)) {

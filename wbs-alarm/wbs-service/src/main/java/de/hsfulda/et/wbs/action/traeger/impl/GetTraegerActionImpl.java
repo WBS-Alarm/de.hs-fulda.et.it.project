@@ -20,6 +20,6 @@ public class GetTraegerActionImpl implements GetTraegerAction {
     @Override
     public TraegerData perform(Long id) {
         Optional<TraegerData> managed = repo.findByIdAsData(id);
-        return managed.orElseThrow(ResourceNotFoundException::new);
+        return managed.orElseThrow(() -> new ResourceNotFoundException("Träger mit ID {0} nicht gefunden.", id));
     }
 }

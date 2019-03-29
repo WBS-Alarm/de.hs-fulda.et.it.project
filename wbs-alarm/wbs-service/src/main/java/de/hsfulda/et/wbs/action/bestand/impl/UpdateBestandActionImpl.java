@@ -29,7 +29,7 @@ public class UpdateBestandActionImpl implements UpdateBestandAction {
         return accessService.hasAccessOnBestand(user, id, () -> {
 
             if (!repo.existsById(id)) {
-                throw new ResourceNotFoundException();
+                throw new ResourceNotFoundException("Bestand mit ID {0} nicht gefunden.", id);
             }
 
             if (bestand.getAnzahl() < 0) {

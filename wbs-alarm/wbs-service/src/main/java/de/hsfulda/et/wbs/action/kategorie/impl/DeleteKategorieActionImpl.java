@@ -25,7 +25,7 @@ public class DeleteKategorieActionImpl implements DeleteKategorieAction {
     public void perform(WbsUser user, Long id) {
         accessService.hasAccessOnKategorie(user, id, () -> {
             if (!repo.existsById(id)) {
-                throw new ResourceNotFoundException();
+                throw new ResourceNotFoundException("Kategorie mit ID {0} nicht gefunden", id);
             }
 
             repo.deactivate(id);

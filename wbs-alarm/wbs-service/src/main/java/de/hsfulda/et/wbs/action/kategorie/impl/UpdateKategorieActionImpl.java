@@ -33,7 +33,7 @@ public class UpdateKategorieActionImpl implements UpdateKategorieAction {
             }
 
             if (!repo.existsById(id)) {
-                throw new ResourceNotFoundException();
+                throw new ResourceNotFoundException("Kategorie mit ID {0} nicht gefunden.", id);
             }
 
             repo.updateName(id, kategorie.getName());

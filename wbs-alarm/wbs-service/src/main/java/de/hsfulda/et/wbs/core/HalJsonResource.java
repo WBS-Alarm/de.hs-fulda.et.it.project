@@ -112,7 +112,7 @@ public class HalJsonResource {
      * @param name Name der Eigenschaft.
      * @param value Wert der Eigenschaft.
      */
-    protected void addProperty(final String name, final Object value) {
+    public void addProperty(final String name, final Object value) {
         Objects.requireNonNull(name, "name of the property of the hal+json Resource must not be null");
 
         properties.put(name, value);

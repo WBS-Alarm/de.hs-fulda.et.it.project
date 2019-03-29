@@ -25,7 +25,7 @@ public class GetKategorieActionImpl implements GetKategorieAction {
     public KategorieData perform(WbsUser user, Long id) {
         return accessService.hasAccessOnKategorie(user, id, () -> {
             Optional<KategorieData> managed = repo.findByIdAndAktivIsTrue(id);
-            return managed.orElseThrow(ResourceNotFoundException::new);
+            return managed.orElseThrow(() -> new ResourceNotFoundException("Kategorie mit ID {0} nicht gefunden.", id));
         });
     }
 }

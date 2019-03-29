@@ -10,7 +10,6 @@ import de.hsfulda.et.wbs.service.AccessService;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
 
 import static org.springframework.util.ObjectUtils.isEmpty;
 
@@ -33,9 +32,8 @@ public class UpdateZielortActionImpl implements UpdateZielortAction {
                 throw new IllegalArgumentException("Name des Zielorts muss angegeben werden.");
             }
 
-            Optional<ZielortData> managed = repo.findByIdAsData(id);
             if (!repo.existsById(id)) {
-                throw new ResourceNotFoundException();
+                throw new ResourceNotFoundException("Zielort mit ID {0} nicht gefunden.", id);
             }
 
             if (repo.isAutomated(id)) {

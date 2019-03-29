@@ -63,7 +63,7 @@ public class CreateBestandActionImpl implements CreateBestandAction {
         Long groesseId = bestand.getGroesseId();
 
         if (!(groesseRepository.existsById(groesseId))) {
-            throw new ResourceNotFoundException();
+            throw new ResourceNotFoundException("Größe mit ID {0} nicht gefunden.", groesseId);
         }
 
         if (bestand.getAnzahl() < 0) {
@@ -72,7 +72,7 @@ public class CreateBestandActionImpl implements CreateBestandAction {
 
         Optional<BestandData> existing = repo.findAllByZielortIdAndGroesseId(zielortId, groesseId);
         if (existing.isPresent()) {
-            throw new BestandAlreadyExistsException();
+            throw new BestandAlreadyExistsException("Bestand kann nicht angelegt werden. Dieser existiert bereits.");
         }
     }
 }

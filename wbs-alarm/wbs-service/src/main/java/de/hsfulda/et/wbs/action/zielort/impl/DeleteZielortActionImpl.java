@@ -24,7 +24,7 @@ public class DeleteZielortActionImpl implements DeleteZielortAction {
     public void perform(WbsUser user, Long id) {
         accessService.hasAccessOnZielort(user, id, () -> {
             if (!repo.existsById(id)) {
-                throw new ResourceNotFoundException();
+                throw new ResourceNotFoundException("Zielort mit ID {0} nicht gefunden.", id);
             }
 
             repo.deactivate(id);

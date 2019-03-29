@@ -24,7 +24,7 @@ public class DeleteTraegerActionImpl implements DeleteTraegerAction {
         Optional<TraegerData> managed = repo.findByIdAsData(id);
 
         if (!managed.isPresent()) {
-            throw new ResourceNotFoundException();
+            throw new ResourceNotFoundException("Träger mit ID {0} nicht gefunden.", id);
         }
 
         repo.deleteById(id);

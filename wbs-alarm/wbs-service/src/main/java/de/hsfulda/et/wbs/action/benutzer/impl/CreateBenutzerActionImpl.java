@@ -34,17 +34,17 @@ public class CreateBenutzerActionImpl implements CreateBenutzerAction {
     @Override
     public BenutzerData perform(Long traegerId, BenutzerCreateDto benutzer) {
         if (isEmpty(benutzer.getUsername()) || isEmpty(benutzer.getPassword())) {
-            throw new IllegalArgumentException("Benutername und Password müssen angegeben werden.");
+            throw new IllegalArgumentException("Benutzername und Password müssen angegeben werden.");
         }
 
         Optional<Traeger> traeger = traegerRepo.findById(traegerId);
         if (!traeger.isPresent()) {
-            throw new ResourceNotFoundException();
+            throw new ResourceNotFoundException("Träger mit ID {0} nicht gefunden.", traegerId);
         }
 
         Optional<WbsUser> found = users.findByUsername(benutzer.getUsername());
         if (found.isPresent()) {
-            throw new UserAlreadyExistsException();
+            throw new UserAlreadyExistsException("Benutzer mit dem Namen {0} existiert bereits", benutzer.getUsername());
         }
 
         BenutzerData user = users.register(benutzer);

@@ -26,7 +26,7 @@ public class GetZielortActionImpl implements GetZielortAction {
     public ZielortData perform(WbsUser user, Long id) {
         return accessService.hasAccessOnZielort(user, id, () -> {
             Optional<Zielort> managed = repo.findByIdAndAktivIsTrue(id);
-            return managed.orElseThrow(ResourceNotFoundException::new);
+            return managed.orElseThrow(() -> new ResourceNotFoundException("Zielort mit ID {0} nicht gefunden.", id));
         });
     }
 }

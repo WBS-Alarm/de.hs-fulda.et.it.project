@@ -25,7 +25,7 @@ public class GetGroesseActionImpl implements GetGroesseAction {
     public GroesseData perform(WbsUser user, Long id) {
         return accessService.hasAccessOnGroesse(user, id, () -> {
             Optional<GroesseData> managed = repo.findByIdAndAktivIsTrue(id);
-            return managed.orElseThrow(ResourceNotFoundException::new);
+            return managed.orElseThrow(() -> new ResourceNotFoundException("Größe mit ID {0} nicht gefunden.", id));
         });
     }
 }

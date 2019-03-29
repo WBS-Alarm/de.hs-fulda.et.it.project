@@ -28,7 +28,7 @@ public class UpdateTraegerActionImpl implements UpdateTraegerAction {
         }
 
         if (!repo.existsById(id)) {
-            throw new ResourceNotFoundException();
+            throw new ResourceNotFoundException("Träger mit ID {0} nicht gefunden.", id);
         }
 
         repo.updateName(id, traeger.getName());

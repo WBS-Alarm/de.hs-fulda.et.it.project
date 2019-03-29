@@ -29,7 +29,7 @@ public class GetBenutzerActionImpl implements GetBenutzerAction {
             Optional<BenutzerData> benutzer = repo.findByIdAsData(id);
 
             if (!benutzer.isPresent()) {
-                throw new ResourceNotFoundException();
+                throw new ResourceNotFoundException("Bentuzer mit ID {0} nicht gefunden.", id);
             }
 
             return benutzer.get();
