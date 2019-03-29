@@ -1,9 +1,7 @@
 package de.hsfulda.et.wbs.http.resource;
 
-import de.hsfulda.et.wbs.core.AuthorityAlreadyGrantedException;
 import de.hsfulda.et.wbs.core.HalJsonResource;
-import de.hsfulda.et.wbs.core.ResourceNotFoundException;
-import de.hsfulda.et.wbs.core.UserAlreadyExistsException;
+import de.hsfulda.et.wbs.core.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -22,8 +20,13 @@ public class ExceptionMapper {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler({UserAlreadyExistsException.class, AuthorityAlreadyGrantedException.class})
-    public final ResponseEntity<HalJsonResource> userAlreadyExistsException() {
+    @ExceptionHandler({UserAlreadyExistsException.class, AuthorityAlreadyGrantedException.class, BestandAlreadyExistsException.class})
+    public final ResponseEntity<HalJsonResource> alreadyExistsException() {
         return new ResponseEntity<>(HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(ZielortLockedException.class)
+    public final ResponseEntity<HalJsonResource> zielortLockedException() {
+        return new ResponseEntity<>(HttpStatus.LOCKED);
     }
 }

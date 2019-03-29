@@ -22,10 +22,6 @@ public class Bestand implements BestandData {
     private Groesse groesse;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "KATEGORIE_ID")
-    private Kategorie kategorie;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ZIELORT_ID")
     private Zielort zielort;
 
@@ -51,6 +47,11 @@ public class Bestand implements BestandData {
     }
 
     @Override
+    public Long getGroesseId() {
+        return getGroesse().getId();
+    }
+
+    @Override
     public GroesseData getGroesse() {
         return groesse;
     }
@@ -61,11 +62,7 @@ public class Bestand implements BestandData {
 
     @Override
     public KategorieData getKategorie() {
-        return kategorie;
-    }
-
-    public void setKategorie(Kategorie kategorie) {
-        this.kategorie = kategorie;
+        return getGroesse().getKategorie();
     }
 
     @Override
@@ -75,5 +72,41 @@ public class Bestand implements BestandData {
 
     public void setZielort(Zielort zielort) {
         this.zielort = zielort;
+    }
+
+    public static BestandBuilder builder() {
+        return new BestandBuilder();
+    }
+
+    static Bestand makeTemplate(Bestand bestand) {
+        Bestand templated = new Bestand();
+        templated.anzahl = bestand.anzahl;
+        templated.groesse = bestand.groesse;
+        return templated;
+    }
+
+    public static class BestandBuilder {
+
+        private final Bestand template;
+
+
+        private BestandBuilder() {
+            template = new Bestand();
+        }
+
+        public BestandBuilder anzahl(Long anzahl) {
+            template.setAnzahl(anzahl);
+            return this;
+        }
+
+        public BestandBuilder groesse(Groesse groesse) {
+            template.setGroesse(groesse);
+            return this;
+        }
+
+        public Bestand build() {
+            return makeTemplate(template);
+        }
+
     }
 }

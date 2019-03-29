@@ -2,7 +2,7 @@ package de.hsfulda.et.wbs.http.haljson;
 
 import de.hsfulda.et.wbs.core.HalJsonResource;
 import de.hsfulda.et.wbs.core.Link;
-import de.hsfulda.et.wbs.core.User;
+import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.BenutzerData;
 import de.hsfulda.et.wbs.core.data.GrantedAuthorityData;
 import de.hsfulda.et.wbs.security.haljson.AuthorityHalJson;
@@ -40,7 +40,7 @@ public class BenutzerHalJson extends HalJsonResource {
         return hal;
     }
 
-    public static BenutzerHalJson ofCurrent(User benutzer) {
+    public static BenutzerHalJson ofCurrent(WbsUser benutzer) {
         BenutzerHalJson hal = new BenutzerHalJson(benutzer.getBenutzer(), true);
         hal.addProperty("authorities", benutzer.getAuthorities());
         return hal;

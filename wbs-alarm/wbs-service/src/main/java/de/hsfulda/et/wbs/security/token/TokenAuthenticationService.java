@@ -1,7 +1,8 @@
 package de.hsfulda.et.wbs.security.token;
 
-import de.hsfulda.et.wbs.core.User;
+import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.security.Password;
+import de.hsfulda.et.wbs.security.User;
 import de.hsfulda.et.wbs.security.service.UserAuthenticationService;
 import de.hsfulda.et.wbs.security.service.UserCrudService;
 import de.hsfulda.et.wbs.util.ImmutableMap;
@@ -23,7 +24,7 @@ final class TokenAuthenticationService implements UserAuthenticationService {
 
     @Override
     public Optional<String> login(final String username, final String password) {
-        Optional<User> user = users.findByUsername(username);
+        Optional<WbsUser> user = users.findByUsername(username);
 
         Optional<String> createdToken = user
                 .filter(u -> Password.checkPassword(password, u.getPassword()))
@@ -37,8 +38,8 @@ final class TokenAuthenticationService implements UserAuthenticationService {
     }
 
     @Override
-    public Optional<User> findByToken(final String token) {
-        Optional<User> user = Optional
+    public Optional<WbsUser> findByToken(final String token) {
+        Optional<WbsUser> user = Optional
                 .of(tokens.verify(token))
                 .map(map -> map.get("username"))
                 .flatMap(users::findByUsername);
@@ -54,7 +55,7 @@ final class TokenAuthenticationService implements UserAuthenticationService {
     }
 
     @Override
-    public void logout(final User user) {
-        users.deleteToken(user);
+    public void logout(final WbsUser user) {
+        users.deleteToken((User) user);
     }
 }

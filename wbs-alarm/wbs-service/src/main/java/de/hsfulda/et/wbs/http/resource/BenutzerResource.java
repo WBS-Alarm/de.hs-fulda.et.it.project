@@ -1,14 +1,15 @@
 package de.hsfulda.et.wbs.http.resource;
 
+import de.hsfulda.et.wbs.action.GetGrantedAuthorityListAction;
+import de.hsfulda.et.wbs.action.benutzer.DeleteBenutzerAction;
+import de.hsfulda.et.wbs.action.benutzer.GetBenutzerAction;
+import de.hsfulda.et.wbs.action.benutzer.UpdateBenutzerAction;
 import de.hsfulda.et.wbs.core.HalJsonResource;
-import de.hsfulda.et.wbs.core.ResourceNotFoundException;
-import de.hsfulda.et.wbs.core.User;
+import de.hsfulda.et.wbs.core.WbsUser;
+import de.hsfulda.et.wbs.core.data.BenutzerData;
 import de.hsfulda.et.wbs.core.data.GrantedAuthorityData;
-import de.hsfulda.et.wbs.entity.Benutzer;
 import de.hsfulda.et.wbs.http.haljson.BenutzerHalJson;
-import de.hsfulda.et.wbs.repository.BenutzerRepository;
-import de.hsfulda.et.wbs.security.repository.GrantedAuthorityRepository;
-import de.hsfulda.et.wbs.service.AccessService;
+import de.hsfulda.et.wbs.http.resource.dto.BenutzerDtoImpl;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
 import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
@@ -32,40 +32,36 @@ public class BenutzerResource {
 
     public static final String PATH = CONTEXT_ROOT + "/benutzer/{id}";
 
-    private final BenutzerRepository benutzerRepository;
-    private final GrantedAuthorityRepository grantedAuthorityRepository;
-    private final AccessService accessService;
+    private final GetBenutzerAction getAction;
+    private final UpdateBenutzerAction putAction;
+    private final DeleteBenutzerAction deleteAction;
+    private final GetGrantedAuthorityListAction getAuthoritiesAction;
 
     public BenutzerResource(
-        BenutzerRepository benutzerRepository,
-        GrantedAuthorityRepository grantedAuthorityRepository,
-        AccessService accessService) {
-        this.benutzerRepository = benutzerRepository;
-        this.grantedAuthorityRepository = grantedAuthorityRepository;
-        this.accessService = accessService;
+            GetBenutzerAction getAction,
+            UpdateBenutzerAction putAction,
+            DeleteBenutzerAction deleteAction,
+            GetGrantedAuthorityListAction getAuthoritiesAction) {
+        this.getAction = getAction;
+        this.putAction = putAction;
+        this.deleteAction = deleteAction;
+        this.getAuthoritiesAction = getAuthoritiesAction;
     }
 
     /**
      * Ermittelt einen Benutzer anhand der ID.
      *
      * @param user angemeldeter Benutzer
-     * @param id ID des Benutzers aus dem Pfad
+     * @param id   ID des Benutzers aus dem Pfad
      * @return gefundenen Träger. Anderfalls 404
      */
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")
-    HttpEntity<HalJsonResource> get(@AuthenticationPrincipal User user, @PathVariable("id") Long id) {
-        return accessService.hasAccessOnBenutzer(user, id, () -> {
-            Optional<Benutzer> benutzer = benutzerRepository.findById(id);
+    HttpEntity<HalJsonResource> get(@AuthenticationPrincipal WbsUser user, @PathVariable("id") Long id) {
+        BenutzerData benutzer = getAction.perform(user, id);
+        List<GrantedAuthorityData> authorities = getAuthoritiesAction.perform(benutzer.getId());
 
-            if (!benutzer.isPresent()) {
-                throw new ResourceNotFoundException();
-            }
-
-            Benutzer b = benutzer.get();
-            List<GrantedAuthorityData> granted = grantedAuthorityRepository.findByUserId(b.getId());
-            return new HttpEntity<>(BenutzerHalJson.ofGrantedAuthorities(b, granted));
-        });
+        return new HttpEntity<>(BenutzerHalJson.ofGrantedAuthorities(benutzer, authorities));
     }
 
     /**
@@ -73,53 +69,31 @@ public class BenutzerResource {
      * überschrieben die auch geändert werden dürfen. Password, Token und Benutzername bleiben von Änderungen
      * unbetroffen.
      *
-     * @param user angemeldeter Benutzer
-     * @param id ID des Benutzers aus dem Pfad
+     * @param user     angemeldeter Benutzer
+     * @param id       ID des Benutzers aus dem Pfad
      * @param benutzer geänderte Werte des Benutzers
      * @return Aktualisierter Benutzer.
      */
     @PutMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
     HttpEntity<HalJsonResource> put(
-        @AuthenticationPrincipal User user,
-        @PathVariable("id") Long id,
-        @RequestBody Benutzer benutzer) {
-        return accessService.hasAccessOnBenutzer(user, id, () -> {
-            Optional<Benutzer> b = benutzerRepository.findById(id);
-
-            if (!b.isPresent()) {
-                throw new ResourceNotFoundException();
-            }
-
-            Benutzer loaded = b.get();
-            loaded.setEinkaeufer(benutzer.getEinkaeufer());
-            loaded.setMail(benutzer.getMail());
-            benutzerRepository.save(loaded);
-            return new HttpEntity<>(BenutzerHalJson.of(loaded));
-        });
+            @AuthenticationPrincipal WbsUser user,
+            @PathVariable("id") Long id,
+            @RequestBody BenutzerDtoImpl benutzer) {
+        return new HttpEntity<>(BenutzerHalJson.of(putAction.perform(user, id, benutzer)));
     }
 
     /**
      * Benutzer werden nicht gelöscht, sondern nur deaktiviert.
      *
      * @param user angemeldeter Benutzer
-     * @param id ID des Benutzers aus dem Pfad
+     * @param id   ID des Benutzers aus dem Pfad
      * @return Rückmeldung über den Erfolg durch den HttpStatus.
      */
     @DeleteMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
-    HttpEntity<HalJsonResource> delete(@AuthenticationPrincipal User user, @PathVariable("id") Long id) {
-        return accessService.hasAccessOnBenutzer(user, id, () -> {
-            Optional<Benutzer> b = benutzerRepository.findById(id);
-
-            if (!b.isPresent()) {
-                throw new ResourceNotFoundException();
-            }
-
-            Benutzer loaded = b.get();
-            loaded.setAktiv(false);
-            benutzerRepository.save(loaded);
-            return new ResponseEntity<>(HttpStatus.OK);
-        });
+    HttpEntity<HalJsonResource> delete(@AuthenticationPrincipal WbsUser user, @PathVariable("id") Long id) {
+        deleteAction.perform(user, id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

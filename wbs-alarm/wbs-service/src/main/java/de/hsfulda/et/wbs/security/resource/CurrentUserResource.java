@@ -1,7 +1,7 @@
 package de.hsfulda.et.wbs.security.resource;
 
 import de.hsfulda.et.wbs.core.HalJsonResource;
-import de.hsfulda.et.wbs.core.User;
+import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.http.haljson.BenutzerHalJson;
 import org.springframework.http.HttpEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,7 +24,7 @@ public class CurrentUserResource {
 
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")
-    HttpEntity<HalJsonResource> get(@AuthenticationPrincipal final User user) {
+    HttpEntity<HalJsonResource> get(@AuthenticationPrincipal final WbsUser user) {
         return new HttpEntity<>(BenutzerHalJson.ofCurrent(user));
     }
 }

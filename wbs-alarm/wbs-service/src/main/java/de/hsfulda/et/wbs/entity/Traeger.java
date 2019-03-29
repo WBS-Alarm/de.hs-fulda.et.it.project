@@ -111,13 +111,14 @@ public class Traeger implements TraegerData {
         this.benutzer = benutzer;
     }
 
-    public void addBenutzer(Benutzer b) {
+    public void addBenutzer(BenutzerData b) {
+        Benutzer cb = (Benutzer) b;
         if (benutzer == null) {
             benutzer = new ArrayList<>();
         }
         if (!benutzer.contains(b)) {
-            b.setTraeger(this);
-            benutzer.add(b);
+            cb.setTraeger(this);
+            benutzer.add(cb);
         }
     }
 

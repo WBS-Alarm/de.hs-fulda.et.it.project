@@ -1,16 +1,12 @@
 package de.hsfulda.et.wbs.core.data;
 
 
-public interface ZielortData {
+public interface ZielortData extends ZielortDto {
 
     Long getId();
-
-    String getName();
-
     boolean isAuto();
-
     boolean isAktiv();
-
+    boolean isErfasst();
     TraegerData getTraeger();
 
 }

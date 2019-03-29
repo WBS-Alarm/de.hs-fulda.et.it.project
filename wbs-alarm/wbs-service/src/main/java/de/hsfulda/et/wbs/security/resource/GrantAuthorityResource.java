@@ -1,23 +1,13 @@
 package de.hsfulda.et.wbs.security.resource;
 
-import de.hsfulda.et.wbs.core.AuthorityAlreadyGrantedException;
+import de.hsfulda.et.wbs.action.DeleteGrantedAuthorityAction;
+import de.hsfulda.et.wbs.action.GrantAuthorityAction;
 import de.hsfulda.et.wbs.core.HalJsonResource;
-import de.hsfulda.et.wbs.core.ResourceNotFoundException;
-import de.hsfulda.et.wbs.core.data.GrantedAuthorityData;
-import de.hsfulda.et.wbs.entity.Benutzer;
-import de.hsfulda.et.wbs.repository.BenutzerRepository;
-import de.hsfulda.et.wbs.security.entity.Authority;
-import de.hsfulda.et.wbs.security.entity.GrantedAuthority;
-import de.hsfulda.et.wbs.security.repository.AuthorityRepository;
-import de.hsfulda.et.wbs.security.repository.GrantedAuthorityRepository;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
 
 import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
 import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
@@ -31,41 +21,22 @@ public class GrantAuthorityResource {
 
     public static final String PATH = CONTEXT_ROOT + "/authority/{authorityId}/grant/{benutzerId}";
 
-    private final GrantedAuthorityRepository grantedAuthorityRepository;
-    private final AuthorityRepository authorityRepository;
-    private final BenutzerRepository benutzerRepository;
+    private final GrantAuthorityAction postAction;
+    private final DeleteGrantedAuthorityAction deleteAction;
 
-    public GrantAuthorityResource(
-        GrantedAuthorityRepository grantedAuthorityRepository,
-        AuthorityRepository authorityRepository,
-        BenutzerRepository benutzerRepository) {
-        this.grantedAuthorityRepository = grantedAuthorityRepository;
-        this.authorityRepository = authorityRepository;
-        this.benutzerRepository = benutzerRepository;
+    public GrantAuthorityResource(GrantAuthorityAction postAction, DeleteGrantedAuthorityAction deleteAction) {
+        this.postAction = postAction;
+        this.deleteAction = deleteAction;
     }
 
     @PostMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
     HttpEntity<HalJsonResource> post(
-        @PathVariable("authorityId") Long authorityId,
-        @PathVariable("benutzerId") Long benutzerId) {
-        Optional<Benutzer> benutzer = benutzerRepository.findById(benutzerId);
-        Optional<Authority> authority = authorityRepository.findById(authorityId);
+            @PathVariable("authorityId") Long authorityId,
+            @PathVariable("benutzerId") Long benutzerId) {
 
-        if (!(benutzer.isPresent() && authority.isPresent())) {
-            throw new ResourceNotFoundException();
-        }
+        postAction.perform(authorityId, benutzerId);
 
-        List<GrantedAuthorityData> granted = grantedAuthorityRepository.findByUserId(benutzerId);
-        boolean alreadyGranted = granted.stream().anyMatch(g -> authorityId.equals(g.getAuthorityId()));
-        if (alreadyGranted) {
-            throw new AuthorityAlreadyGrantedException();
-        }
-
-        GrantedAuthority toGrant = new GrantedAuthority();
-        toGrant.setAuthorityId(authorityId);
-        toGrant.setUserId(benutzerId);
-        grantedAuthorityRepository.save(toGrant);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -73,25 +44,10 @@ public class GrantAuthorityResource {
     @DeleteMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
     HttpEntity<HalJsonResource> delete(
-        @PathVariable("authorityId") Long authorityId,
-        @PathVariable("benutzerId") Long benutzerId) {
-        Optional<Benutzer> benutzer = benutzerRepository.findById(benutzerId);
-        Optional<Authority> authority = authorityRepository.findById(authorityId);
+            @PathVariable("authorityId") Long authorityId,
+            @PathVariable("benutzerId") Long benutzerId) {
 
-        if (!(benutzer.isPresent() && authority.isPresent())) {
-            throw new ResourceNotFoundException();
-        }
-
-        List<GrantedAuthorityData> granted = grantedAuthorityRepository.findByUserId(benutzerId);
-        Optional<GrantedAuthorityData> found = granted.stream()
-            .filter(g -> authorityId.equals(g.getAuthorityId()))
-            .findFirst();
-
-        if (!found.isPresent()) {
-            throw new ResourceNotFoundException();
-        }
-
-        grantedAuthorityRepository.delete((GrantedAuthority) found.get());
+        deleteAction.perform(authorityId, benutzerId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

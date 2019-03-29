@@ -6,6 +6,7 @@ import de.hsfulda.et.wbs.core.data.ZielortData;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,6 +24,8 @@ public class Zielort implements ZielortData {
     private boolean auto;
 
     private boolean aktiv;
+
+    private boolean erfasst;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TRAEGER_ID")
@@ -74,6 +77,15 @@ public class Zielort implements ZielortData {
     }
 
     @Override
+    public boolean isErfasst() {
+        return erfasst;
+    }
+
+    public void setErfasst(boolean erfasst) {
+        this.erfasst = erfasst;
+    }
+
+    @Override
     public TraegerData getTraeger() {
         return traeger;
     }
@@ -88,6 +100,16 @@ public class Zielort implements ZielortData {
 
     public void setBestaende(List<Bestand> bestaende) {
         this.bestaende = bestaende;
+    }
+
+    public void addBestand(Bestand bestand) {
+        if (bestaende == null) {
+            bestaende = new ArrayList<>();
+        }
+        if (!bestaende.contains(bestand)) {
+            bestand.setZielort(this);
+            bestaende.add(bestand);
+        }
     }
 
     public List<Kontakt> getKontakte() {
