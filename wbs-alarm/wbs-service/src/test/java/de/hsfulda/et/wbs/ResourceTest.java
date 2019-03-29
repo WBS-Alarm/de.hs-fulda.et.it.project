@@ -39,6 +39,9 @@ public abstract class ResourceTest {
     protected GroesseTestRepository groesseRepository;
 
     @Autowired
+    protected BestandTestRepository bestandRepository;
+
+    @Autowired
     protected BenutzerRepository benutzerRepository;
 
     @Autowired
@@ -57,8 +60,8 @@ public abstract class ResourceTest {
 
     private String getToken(String username, String password) {
         return "Bearer " + authentication
-                .login(username, password)
-                .orElseThrow(() -> new RuntimeException("invalid login and/or password"));
+            .login(username, password)
+            .orElseThrow(() -> new RuntimeException("invalid login and/or password"));
     }
 
     protected Long getBenutzerId(String name) {
@@ -79,6 +82,10 @@ public abstract class ResourceTest {
 
     protected Long getGroesseId(String name, String kategorie, String traeger) {
         return groesseRepository.findByName(name, kategorie, traeger).get(0).getId();
+    }
+
+    protected Long getBestandId(String traeger, String zielort, String groesse) {
+        return bestandRepository.findByName(traeger, zielort, groesse).get(0).getId();
     }
 
     protected boolean hasGrantedAuthority(Long userId, Long authorityId) {

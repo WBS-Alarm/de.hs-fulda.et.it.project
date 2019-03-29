@@ -81,6 +81,7 @@ public class Bestand implements BestandData {
     static Bestand makeTemplate(Bestand bestand) {
         Bestand templated = new Bestand();
         templated.anzahl = bestand.anzahl;
+        templated.groesse = bestand.groesse;
         return templated;
     }
 

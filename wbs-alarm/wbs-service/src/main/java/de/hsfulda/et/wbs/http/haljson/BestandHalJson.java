@@ -18,7 +18,7 @@ public class BestandHalJson extends HalJsonResource {
         addBestandProperties(bestand);
 
         if (embedded) {
-            addEmbeddedResource("traeger", new ZielortHalJson(bestand.getZielort(), false));
+            addEmbeddedResource("zielort", new ZielortHalJson(bestand.getZielort(), false));
             addEmbeddedResource("kategorie", new KategorieHalJson(bestand.getKategorie(), false));
             addEmbeddedResource("groesse", new GroesseHalJson(bestand.getGroesse(), false));
         }
