@@ -32,5 +32,6 @@ public class ZielortHalJson extends HalJsonResource {
 
         addProperty("id", zielort.getId());
         addProperty("name", zielort.getName());
+        addProperty("erfasst", zielort.isErfasst());
     }
 }

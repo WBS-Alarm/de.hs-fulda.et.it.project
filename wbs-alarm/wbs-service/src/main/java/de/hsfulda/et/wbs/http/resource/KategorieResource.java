@@ -40,8 +40,8 @@ public class KategorieResource {
     /**
      * Ermittelt einen Kategorie anhand der ID.
      *
-     * @param id ID des Zielorts aus dem Pfad
-     * @return gefundenen ZIelort. Anderfalls 404
+     * @param id ID der Kategorie aus dem Pfad
+     * @return gefundenen Kategorie. Anderfalls 404
      */
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")

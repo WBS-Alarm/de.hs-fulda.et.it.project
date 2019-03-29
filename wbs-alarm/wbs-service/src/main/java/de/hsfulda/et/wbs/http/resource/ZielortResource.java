@@ -41,7 +41,7 @@ public class ZielortResource {
      * Ermittelt einen Zielort anhand der ID.
      *
      * @param id ID des Zielorts aus dem Pfad
-     * @return gefundenen ZIelort. Anderfalls 404
+     * @return gefundenen Zielort. Anderfalls 404
      */
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")

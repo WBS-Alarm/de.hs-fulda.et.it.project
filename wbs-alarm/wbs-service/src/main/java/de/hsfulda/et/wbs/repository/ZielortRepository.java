@@ -30,4 +30,8 @@ public interface ZielortRepository extends CrudRepository<Zielort, Long> {
     @Modifying
     @Query("update Zielort z set z.aktiv = false where z.id = :id")
     void deactivate(@Param("id") Long id);
+
+    @Modifying(clearAutomatically = true)
+    @Query("update Zielort z set z.erfasst = true where z.id = :id")
+    void lock(@Param("id") Long id);
 }

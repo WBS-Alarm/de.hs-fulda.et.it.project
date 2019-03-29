@@ -40,8 +40,8 @@ public class GroesseResource {
     /**
      * Ermittelt einen Groesse anhand der ID.
      *
-     * @param id ID des Zielorts aus dem Pfad
-     * @return gefundenen ZIelort. Anderfalls 404
+     * @param id ID der Groesse aus dem Pfad
+     * @return gefundenen Groesse. Anderfalls 404
      */
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")

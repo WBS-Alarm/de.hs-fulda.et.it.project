@@ -41,7 +41,7 @@ public class BestandResource {
      * Ermittelt einen Bestand anhand der ID.
      *
      * @param id ID des Bestands aus dem Pfad
-     * @return gefundenen ZIelort. Anderfalls 404
+     * @return gefundener Bestand. Anderfalls 404
      */
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")
