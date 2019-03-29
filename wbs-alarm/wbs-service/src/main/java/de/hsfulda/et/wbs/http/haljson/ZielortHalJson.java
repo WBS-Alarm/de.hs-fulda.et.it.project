@@ -31,7 +31,9 @@ public class ZielortHalJson extends HalJsonResource {
             addLink(Link.create("add", ZielortListResource.PATH));
             addLink(Link.create("delete", zielortResource));
             addLink(Link.create("update", zielortResource));
-            addLink(Link.create("lock", zielortResource + "/lock"));
+            if(!zielort.isErfasst()) {
+                addLink(Link.create("lock", zielortResource + "/lock"));
+            }
         }
 
         addProperty("id", zielort.getId());
