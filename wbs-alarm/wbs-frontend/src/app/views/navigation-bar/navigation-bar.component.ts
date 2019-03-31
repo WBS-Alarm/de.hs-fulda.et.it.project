@@ -2,6 +2,8 @@ import {Component, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
 import {NavigationEnd} from "@angular/router";
 import {isNullOrUndefined} from "util";
+import {MenuDataInterface} from "./data/menu-data.interface";
+import {TranslationService} from "angular-l10n";
 
 @Component({
     selector:      'navigation-bar',
@@ -14,7 +16,21 @@ export class NavigationBarComponent implements OnInit
 
     private readonly gravatarUrl:string = 'https://www.gravatar.com/avatar/';
 
-    constructor(private router:Router)
+    private menu:Array<MenuDataInterface> = [
+    {
+        name: this.translation.translate('start'),
+        url: 'plugin/start',
+        isVisible: true
+    },
+    {
+        name: this.translation.translate('example'),
+        url: 'plugin/example',
+        isVisible: true
+    }
+];
+
+    constructor(private router:Router,
+                private translation:TranslationService)
     {
 
     }

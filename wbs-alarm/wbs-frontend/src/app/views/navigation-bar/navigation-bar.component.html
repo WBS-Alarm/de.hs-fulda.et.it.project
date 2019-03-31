@@ -1,9 +1,8 @@
 <div *ngIf="!isLoginActive" class="navigation-bar">
-    <div class="menu-entry">
-        <p>Start</p>
-    </div>
 
-
+<div *ngFor="let menuItem of menu" class="menu-entry">
+        <p class="caption">{{ menuItem.name }}</p>
+</div>
     <div class="menu-entry-user">
         <img id="user-icon" class="user-icon" [src]="userImageLink"/>
     </div>
