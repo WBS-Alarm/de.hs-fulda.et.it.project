@@ -37,6 +37,7 @@ import { WbsPreloadingStrategy } from './core/strategies/preloading-strategy';
 import { GlobalRegistryService } from './core/global-registry/global-registry.service';
 import { IsLoggedInGuard } from './core/guards/isLoggedInGuard';
 import { AppUsersComponent } from './views/app-users/app-users.component';
+import {NavigationBarComponent} from "./views/navigation-bar/navigation-bar.component";
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import { AppUsersComponent } from './views/app-users/app-users.component';
         FilterComponent,
         OverviewViewComponent,
         AppLoginComponent,
-        AppUsersComponent
+        AppUsersComponent,
+        NavigationBarComponent
     ],
     providers:    [
         {
