@@ -1,6 +1,6 @@
 <div *ngIf="!isLoginActive" class="navigation-bar">
 
-<div *ngFor="let menuItem of menu" class="menu-entry">
+<div *ngFor="let menuItem of menu" class="menu-entry" (click)="navigate(menuItem.url)">
         <p class="caption">{{ menuItem.name }}</p>
 </div>
     <div class="menu-entry-user">

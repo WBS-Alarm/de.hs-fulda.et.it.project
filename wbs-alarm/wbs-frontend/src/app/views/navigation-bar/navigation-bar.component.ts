@@ -62,4 +62,8 @@ export class NavigationBarComponent implements OnInit
         })
     }
 
+    protected navigate(url:string):void
+    {
+        this.router.navigateByUrl(url);
+    }
 }
