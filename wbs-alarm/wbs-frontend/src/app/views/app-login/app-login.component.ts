@@ -6,6 +6,7 @@ import {LoginService} from "../../core/service/rest/login/login.service";
 import {WbsSitemapHelper} from "../../core/service/rest/sitemap/data/wbs-sitemap.helper";
 import {Router} from "@angular/router";
 import { GlobalRegistryService } from '../../core/global-registry/global-registry.service';
+import { FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -15,6 +16,7 @@ import { GlobalRegistryService } from '../../core/global-registry/global-registr
 })
 export class AppLoginComponent implements OnInit
 {
+    private alert:TerraAlertComponent = TerraAlertComponent.getInstance();
 
     @Language()
     public lang:string;
@@ -74,6 +76,13 @@ export class AppLoginComponent implements OnInit
        this.loginService.login(this.user).subscribe(
            (result:string) =>
        {
+           this.alert.addAlert({
+               msg:              'Sie werden eingeloggt',
+               type:             'success',
+               dismissOnTimeout: 10,
+               identifier:       'login'
+           });
+
            localStorage.setItem('accessToken', result);
            this.sitemapHelper.Bearer = result;
            this.globalRegistryService.setisLoggedIn(true);
@@ -83,6 +92,12 @@ export class AppLoginComponent implements OnInit
        {
            console.log(error);
 
+           this.alert.addAlert({
+               msg:              'Falscher Benutzername oder Passwort',
+               type:             'danger',
+               dismissOnTimeout: 0,
+               identifier:       'loginError'
+           });
        });
     }
 }
