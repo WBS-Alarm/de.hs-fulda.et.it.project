@@ -38,6 +38,7 @@ import { GlobalRegistryService } from './core/global-registry/global-registry.se
 import { IsLoggedInGuard } from './core/guards/isLoggedInGuard';
 import { AppUsersComponent } from './views/app-users/app-users.component';
 import {NavigationBarComponent} from "./views/navigation-bar/navigation-bar.component";
+import {SystemComponent} from "./views/system/system.component";
 
 
 @NgModule({
@@ -63,6 +64,7 @@ import {NavigationBarComponent} from "./views/navigation-bar/navigation-bar.comp
         OverviewViewComponent,
         AppLoginComponent,
         AppUsersComponent,
+        SystemComponent,
         NavigationBarComponent
     ],
     providers:    [

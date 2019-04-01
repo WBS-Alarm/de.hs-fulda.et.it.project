@@ -9,6 +9,7 @@ import { ExampleViewComponent } from './views/example/example-view.component';
 import {AppLoginComponent} from "./views/app-login/app-login.component";
 import { GUARDS } from './core/guards/guards';
 import { WbsPreloadingStrategy } from './core/strategies/preloading-strategy';
+import {SystemComponent} from "./views/system/system.component";
 
 const appRoutes:Routes = [
     {
@@ -47,6 +48,22 @@ const appRoutes:Routes = [
                 canActivate: GUARDS,
                 data: {
                     label: 'example'
+                }
+            },
+            // {
+            //     path: 'booking',
+            //     component: ExampleViewComponent,
+            //     canActivate: GUARDS,
+            //     data: {
+            //         label: 'booking.booking'
+            //     }
+            // },
+            {
+                path: 'system',
+                component: SystemComponent,
+                canActivate: GUARDS,
+                data: {
+                    label: 'system.system'
                 }
             }
         ]

@@ -12,5 +12,18 @@
 		"username": "Benutzername",
 		"password": "Passwort",
 		"language": "Sprache"
+	},
+	"booking": {
+		"booking": "Buchung",
+		"bookNow": "Jetzt buchen",
+		"clothesType": "Art der Kleidung",
+		"quantity": "Menge",
+		"size": "Größe"
+	},
+	"system":
+	{
+		"system": "System",
+		"addUser": "Benutzer anlegen",
+		"editUser": "Benutzer bearbeiten"
 	}
 }
