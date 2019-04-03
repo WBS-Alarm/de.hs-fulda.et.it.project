@@ -2,6 +2,7 @@ import {AfterViewInit, Component, OnInit} from "../../../../node_modules/@angula
 import {TerraNodeInterface, TerraNodeTreeConfig} from "@plentymarkets/terra-components";
 import {TranslationService} from "angular-l10n";
 import {CarrierService} from "../../core/service/rest/carrier/carrier.service";
+import {Observable} from "rxjs";
 
 export interface resultData
 {
@@ -161,8 +162,10 @@ export class SystemComponent implements OnInit, AfterViewInit
             }];
     }
 
-    private getCarriers():void
+    private getCarriers():Observable<any>
     {
+        let obsi:Observable<any>;
+
        this.carrierService.getCarriers().subscribe((result:resultData) =>
        {
            result._embedded.elemente.forEach((element:any) =>
@@ -175,5 +178,7 @@ export class SystemComponent implements OnInit, AfterViewInit
                }
            );
        });
+
+       return obsi;
     }
 }
