@@ -23,7 +23,23 @@
 	"system":
 	{
 		"system": "System",
-		"addUser": "Benutzer anlegen",
-		"editUser": "Benutzer bearbeiten"
+		"user": {
+			"user": "Benutzer",
+			"addUser": "Benutzer anlegen",
+			"editUser": "Benutzer bearbeiten",
+			"deleteUser": "Benutzer löschen"
+		},
+		"clothes": {
+			"clothes": "Kleidungsverwaltung",
+			"addClothes": "Kleidungsart anlegen",
+			"editVillage": "Kleidungsart bearbeiten",
+			"removeClothes": "Kleidungsart löschen"
+		},
+		"village": {
+			"village": "Ortsteilverwaltung",
+			"addVillage": "Ortsteil anlegen",
+			"editVillage": "Ortsteil bearbeiten",
+			"removeVillage": "Ortsteil löschen"
+		}
 	}
 }

@@ -73,4 +73,14 @@ export class WbsSitemapHelper
     {
         return Object.values(this.siteMaps)[0]['logout'][0].href;
     }
+
+    public getUsersForCarrier(carrierId:number):string
+    {
+        return Object.values(this.siteMaps)[0]['user'][0].href;
+    }
+
+    public getCarrier():string
+    {
+        return Object.values(this.siteMaps)[0]['traegerList'][0].href;
+    }
 }

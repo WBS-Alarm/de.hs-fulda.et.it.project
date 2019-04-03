@@ -39,6 +39,7 @@ import { IsLoggedInGuard } from './core/guards/isLoggedInGuard';
 import { AppUsersComponent } from './views/app-users/app-users.component';
 import {NavigationBarComponent} from "./views/navigation-bar/navigation-bar.component";
 import {SystemComponent} from "./views/system/system.component";
+import {CarrierService} from "./core/service/rest/carrier/carrier.service";
 
 
 @NgModule({
@@ -88,6 +89,7 @@ import {SystemComponent} from "./views/system/system.component";
         UsersService,
         GlobalRegistryService,
         IsLoggedInGuard,
+        CarrierService,
         UserAndSystemDataService,
         WbsPreloadingStrategy,
         TerraNodeTreeConfig

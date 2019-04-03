@@ -19,9 +19,16 @@ export class UsersService
     {
         this.headers = this.sitemapHelper.setAuthorization();
 
-        console.log(this.headers);
-
         return this.http.get(this.sitemapHelper.getCurrentUsers(), {
+            headers: this.headers
+        })
+    }
+
+    public getAllUsersForCarrier(carrierId:number):Observable<any>
+    {
+        this.headers = this.sitemapHelper.setAuthorization();
+
+        return this.http.get(this.sitemapHelper.getUsersForCarrier(carrierId), {
             headers: this.headers
         })
     }
