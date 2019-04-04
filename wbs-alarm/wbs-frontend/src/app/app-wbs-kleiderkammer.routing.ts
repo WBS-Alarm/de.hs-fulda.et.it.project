@@ -10,6 +10,7 @@ import {AppLoginComponent} from "./views/app-login/app-login.component";
 import { GUARDS } from './core/guards/guards';
 import { WbsPreloadingStrategy } from './core/strategies/preloading-strategy';
 import {SystemComponent} from "./views/system/system.component";
+import { SystemCarrierComponent } from './views/system/components/carrier/system-carrier.component';
 
 const appRoutes:Routes = [
     {
@@ -64,7 +65,17 @@ const appRoutes:Routes = [
                 canActivate: GUARDS,
                 data: {
                     label: 'system.system'
-                }
+                },
+                children: [
+                    {
+                        path: 'carrier',
+                        component: SystemCarrierComponent,
+                        canActivate: GUARDS,
+                        data: {
+                            label: 'system.village.village'
+                        }
+                    }
+                ]
             }
         ]
     },

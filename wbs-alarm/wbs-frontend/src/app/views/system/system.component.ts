@@ -7,6 +7,7 @@ import { TranslationService } from "angular-l10n";
 import { CarrierService } from "../../core/service/rest/carrier/carrier.service";
 import { Observable } from "rxjs/observable";
 import { tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 export interface resultData
 {
@@ -40,6 +41,7 @@ export class SystemComponent implements OnInit
 {
     constructor(private nodeTreeConfig:TerraNodeTreeConfig<ExampleTreeData>,
                 private translation:TranslationService,
+                private router:Router,
                 private carrierService:CarrierService)
     {
     }
@@ -78,6 +80,7 @@ export class SystemComponent implements OnInit
                 name:       this.translation.translate('system.village.village'),
                 isVisible:  true,
                 children:   [],
+                onClick: ():void => { this.router.navigateByUrl('plugin/system/carrier') },
                 onLazyLoad: ():Observable<any> =>
                             {
                                 return this.getCarriers();
