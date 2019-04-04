@@ -2,7 +2,10 @@ import {AfterViewInit, Component, OnInit} from "../../../../node_modules/@angula
 import {TerraNodeInterface, TerraNodeTreeConfig} from "@plentymarkets/terra-components";
 import {TranslationService} from "angular-l10n";
 import {CarrierService} from "../../core/service/rest/carrier/carrier.service";
-import {Observable} from "rxjs";
+import {Observable} from "rxjs/observable";
+import {
+    tap
+} from 'rxjs/operators';
 
 export interface resultData
 {
@@ -32,7 +35,7 @@ export interface ExampleTreeData
     template: require('./system.component.html'),
     styles: [require('./system.component.scss')]
 })
-export class SystemComponent implements OnInit, AfterViewInit
+export class SystemComponent implements OnInit
 {
     private nodeCounter:number = 0;
 
@@ -48,14 +51,8 @@ export class SystemComponent implements OnInit, AfterViewInit
     public ngOnInit():void
     {
         this.createCompleteTree();
-
-
     }
 
-    public ngAfterViewInit():void
-    {
-        this.getCarriers();
-    }
 
     // protected addNode():void
     // {
@@ -130,16 +127,16 @@ export class SystemComponent implements OnInit, AfterViewInit
     {
         this.nodeTreeConfig.list = [
             {
-                id:        1,
+                id:        11,
                 name:      this.translation.translate('system.user.user'),
                 isVisible: true,
                 children:  [
                     {
-                        id:        12,
+                        id:        112,
                         name:      'Child1',
                         isVisible: true,
                         children:  [{
-                            id:        13,
+                            id:        113,
                             name:      'Subchild1',
                             isVisible: true,
                             onClick:   ():void =>
@@ -151,34 +148,32 @@ export class SystemComponent implements OnInit, AfterViewInit
                 ]
             },
             {
-                id: 2,
+                id: 21,
                 name: this.translation.translate('system.village.village'),
                 isVisible: true,
                 children: [],
-                onLazyLoad: ():void =>
-                {
-                    this.getCarriers()
-                }
+                onLazyLoad: ():Observable<any> =>
+                            {
+                                return this.getCarriers();
+                            }
             }];
     }
 
     private getCarriers():Observable<any>
     {
-        let obsi:Observable<any>;
-
-       this.carrierService.getCarriers().subscribe((result:resultData) =>
-       {
-           result._embedded.elemente.forEach((element:any) =>
-               {
-                    this.nodeTreeConfig.addNode({
-                        id: element.id,
-                        name: element.name,
-                        isVisible: true
+        return this.carrierService.getCarriers().pipe(
+            tap((result:resultData) =>
+            {
+                {
+                    result._embedded.elemente.forEach((element:any) =>
+                    {
+                        this.nodeTreeConfig.addChildToNodeById(21, {
+                            id: element.id,
+                            name: element.name,
+                            isVisible: true
+                        });
                     })
-               }
-           );
-       });
-
-       return obsi;
+                }
+            }));
     }
 }
