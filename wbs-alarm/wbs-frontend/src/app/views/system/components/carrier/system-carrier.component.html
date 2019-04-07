@@ -1,1 +1,16 @@
-<h1>HELLO WORLD</h1>
+<div class="view">
+    <div>
+        <h1></h1>
+    </div>
+    <div class="btn-toolbar">
+        <terra-button inputIcon='icon-save'
+                      [inputCaption]="'Speichern'"
+                      (outputClicked)="saveCarrier()">
+        </terra-button>
+    </div>
+    <div class="system-view-container">
+        <terra-text-input [inputName]="'Name'"
+                            [(ngModel)]="newCarrierName">
+        </terra-text-input>
+    </div>
+</div>

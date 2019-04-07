@@ -24,4 +24,17 @@ export class CarrierService
         })
     }
 
+    public createCarrier(newCarrier:string):Observable<any>
+    {
+        this.headers = this.sitemapHelper.setAuthorization();
+
+        return this.http.post(this.sitemapHelper.getCarrier(),
+            {
+                name: newCarrier
+            },
+            {
+                headers: this.headers
+            })
+    }
+
 }

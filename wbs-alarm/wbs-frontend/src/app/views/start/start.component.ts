@@ -45,7 +45,7 @@ export class StartComponent implements OnInit
                 this.alert.addAlert({
                     msg:              'Sie werden ausgeloggt',
                     type:             'success',
-                    dismissOnTimeout: 10,
+                    dismissOnTimeout: null,
                     identifier:       'logout'
                 });
 
@@ -56,7 +56,7 @@ export class StartComponent implements OnInit
                 this.alert.addAlert({
                     msg:              'Beim ausloggen ist ein Fehler aufgetreten',
                     type:             'danger',
-                    dismissOnTimeout: 0,
+                    dismissOnTimeout: null,
                     identifier:       'logoutError'
                 });
             }

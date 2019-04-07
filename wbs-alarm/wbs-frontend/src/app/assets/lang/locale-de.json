@@ -36,10 +36,10 @@
 			"removeClothes": "Kleidungsart löschen"
 		},
 		"village": {
-			"village": "Ortsteilverwaltung",
-			"addVillage": "Ortsteil anlegen",
-			"editVillage": "Ortsteil bearbeiten",
-			"removeVillage": "Ortsteil löschen"
+			"village": "Trägerverwaltung",
+			"addVillage": "Träger anlegen",
+			"editVillage": "Träger bearbeiten",
+			"removeVillage": "Träger löschen"
 		}
 	}
 }
