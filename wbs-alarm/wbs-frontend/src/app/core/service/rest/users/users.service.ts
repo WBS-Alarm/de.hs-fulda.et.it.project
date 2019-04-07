@@ -40,7 +40,7 @@ export class UsersService
 
         return this.http.post(this.sitemapHelper.registerUser().replace('{traegerId}', traegerId.toString()),
             {
-                username: user.name,
+                username: user.username,
                 password: user.password
             },
             {

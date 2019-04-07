@@ -14,7 +14,7 @@ export class SystemUserComponent implements OnInit
 {
     private editedUser:UserDataInterface =
         {
-            name: '',
+            username: '',
             password: '',
             mail: '',
             einkaeufer: null

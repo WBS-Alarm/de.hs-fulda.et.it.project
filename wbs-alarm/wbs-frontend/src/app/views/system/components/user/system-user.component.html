@@ -7,7 +7,8 @@
 
 <terra-portlet [inputPortletHeader]="'Benutzer bearbeiten'">
     <terra-text-input [inputName]="'Name'"
-                      [(ngModel)]="editedUser.name">
+                      [(ngModel)]="editedUser.username"
+                        [inputIsDisabled]="true">
     </terra-text-input>
 
     <terra-text-input [inputName]="'E-Mail'"

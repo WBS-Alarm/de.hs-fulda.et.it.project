@@ -14,7 +14,7 @@ export class SystemNewUserComponent
 {
     private newUser:UserDataInterface =
         {
-            name: '',
+            username: '',
             password: ''
         };
 
