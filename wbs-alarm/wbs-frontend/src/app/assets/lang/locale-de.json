@@ -30,10 +30,16 @@
 			"deleteUser": "Benutzer löschen"
 		},
 		"clothes": {
-			"clothes": "Kleidungsverwaltung",
+			"clothes": "Kleidungskategorien",
 			"addClothes": "Kleidungsart anlegen",
 			"editVillage": "Kleidungsart bearbeiten",
 			"removeClothes": "Kleidungsart löschen"
+		},
+		"targetPlaces":
+		{
+			"targetPlaces": "Zielort",
+			"addTargetPlace": "Zielort anlegen",
+			"deleteTargetPlace": "Zielort löschen"
 		},
 		"village": {
 			"village": "Trägerverwaltung",

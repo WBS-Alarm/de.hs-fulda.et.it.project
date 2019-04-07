@@ -84,12 +84,24 @@ export class SystemComponent implements OnInit
                             },
                             onLazyLoad: ():Observable<any> =>
                             {
-                                return this.getCarrierDetailForId(element.id);
+                                return this.getCarrierDetailForId(element.id, element.name);
                             },
                             children: [
                                 {
-                                    id:        11,
+                                    id:        element.name + 11,
                                     name:      this.translation.translate('system.user.user'),
+                                    isVisible: true,
+                                    children:  []
+                                },
+                                {
+                                    id:        element.name + 12,
+                                    name:      this.translation.translate('system.targetPlaces.targetPlaces'),
+                                    isVisible: true,
+                                    children:  []
+                                },
+                                {
+                                    id:        element.name + 13,
+                                    name:      this.translation.translate('system.clothes.clothes'),
                                     isVisible: true,
                                     children:  []
                                 }
@@ -99,12 +111,42 @@ export class SystemComponent implements OnInit
             }));
     }
 
-    private getCarrierDetailForId(id:number):Observable<any>
+    private getCarrierDetailForId(id:number, name:string):Observable<any>
     {
         return this.carrierService.getDetailsForCarrier(id).pipe(
             tap((result:any) =>
             {
                 console.log(result);
+
+                result._embedded.benutzer.forEach((benutzer:any) =>
+                {
+                    this.nodeTreeConfig.addChildToNodeById(name + 11,
+                        {
+                            id: 'benutzer ' + benutzer.id,
+                            name: benutzer.username,
+                            isVisible: true
+                        })
+                });
+
+                result._embedded.zielorte.forEach((zielort:any) =>
+                {
+                    this.nodeTreeConfig.addChildToNodeById(name + 12,
+                        {
+                            id: 'zielort ' + zielort.id,
+                            name: zielort.name,
+                            isVisible: true
+                        })
+                });
+
+                result._embedded.kategorien.forEach((kategorie:any) =>
+                {
+                    this.nodeTreeConfig.addChildToNodeById(name + 13,
+                        {
+                            id: 'kategorie ' + kategorie.id,
+                            name: kategorie.name,
+                            isVisible: true
+                        })
+                });
             })
         )
     }
