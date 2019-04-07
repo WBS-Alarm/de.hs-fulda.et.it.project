@@ -25,6 +25,7 @@ export interface traegerData
 {
     id:number;
     name:string;
+    _embedded:any;
     _links:Object;
 }
 
@@ -133,6 +134,10 @@ export class SystemComponent implements OnInit
             tap((result:any) =>
             {
                 console.log(result);
+
+                this.systemsGlobalSettingsService.setBenutzer(result._embedded.benutzer);
+                this.systemsGlobalSettingsService.setKategorien(result._embedded.kategorien);
+                this.systemsGlobalSettingsService.setZielOrte(result._embedded.zielorte);
 
                 result._embedded.benutzer.forEach((benutzer:any) =>
                 {

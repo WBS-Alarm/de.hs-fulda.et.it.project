@@ -1,1 +1,20 @@
-Benutzer
+<div class="btn-toolbar">
+    <terra-button [inputIcon]="'icon-save'"
+                  [inputCaption]="'Speichern'"
+                  (outputClicked)="save()">
+    </terra-button>
+</div>
+
+<terra-portlet [inputPortletHeader]="'Benutzer bearbeiten'">
+    <terra-text-input [inputName]="'Name'"
+                      [(ngModel)]="editedUser.name">
+    </terra-text-input>
+
+    <terra-text-input [inputName]="'E-Mail'"
+                      [(ngModel)]="editedUser.mail">
+    </terra-text-input>
+
+    <terra-checkbox [(ngModel)]="editedUser.einkaeufer"
+                    [inputCaption]="'Einkäufer'">
+    </terra-checkbox>
+</terra-portlet>
