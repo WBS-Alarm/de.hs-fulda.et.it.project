@@ -93,4 +93,9 @@ export class WbsSitemapHelper
     {
         return Object.values(this.siteMaps)[0]['registerUser'][0].href;
     }
+
+    public user():string
+    {
+        return Object.values(this.siteMaps)[0]['benutzer'][0].href;
+    }
 }

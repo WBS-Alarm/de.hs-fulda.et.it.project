@@ -38,13 +38,35 @@ export class UsersService
     {
         this.headers = this.sitemapHelper.setAuthorization();
 
-        console.log(this.sitemapHelper.registerUser().replace('{id}', traegerId.toString()));
-
         return this.http.post(this.sitemapHelper.registerUser().replace('{traegerId}', traegerId.toString()),
             {
                 username: user.name,
                 password: user.password
             },
+            {
+                headers: this.headers
+            })
+    }
+
+    public editUser(userId:number, user:UserDataInterface):Observable<any>
+    {
+        this.headers = this.sitemapHelper.setAuthorization();
+
+        return this.http.put(this.sitemapHelper.user().replace('{id}', userId.toString()),
+            {
+                mail: user.mail,
+                einkaeufer: user.einkaeufer
+            },
+            {
+                headers: this.headers
+            })
+    }
+
+    public deleteUser(userId:number):Observable<any>
+    {
+        this.headers = this.sitemapHelper.setAuthorization();
+
+        return this.http.delete(this.sitemapHelper.user().replace('{id}', userId.toString()),
             {
                 headers: this.headers
             })

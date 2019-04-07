@@ -1,5 +1,7 @@
 export interface UserDataInterface
 {
-    name:string,
-    password:string
+    name?:string;
+    password?:string;
+    mail?:string;
+    einkaeufer?:string;
 }
