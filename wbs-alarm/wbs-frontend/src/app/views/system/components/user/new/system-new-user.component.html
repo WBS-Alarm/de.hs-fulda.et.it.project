@@ -1,1 +1,15 @@
-Neuer Benutzer
+<div class="btn-toolbar">
+    <terra-button [inputIcon]="'icon-save'"
+                  [inputCaption]="'Speichern'"
+                  (outputClicked)="save()">
+    </terra-button>
+</div>
+
+<terra-portlet [inputPortletHeader]="'Neuen Benutzer anlegen'">
+    <terra-text-input [inputName]="'Name'"
+                      [(ngModel)]="newUser.name">
+    </terra-text-input>
+    <terra-text-input [inputName]="'Passwort'"
+                      [(ngModel)]="newUser.password">
+    </terra-text-input>
+</terra-portlet>

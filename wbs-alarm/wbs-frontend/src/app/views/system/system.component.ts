@@ -8,6 +8,7 @@ import { CarrierService } from "../../core/service/rest/carrier/carrier.service"
 import { Observable } from "rxjs/observable";
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import {SystemGlobalSettingsService} from "./system-global-settings.service";
 
 export interface resultData
 {
@@ -42,7 +43,8 @@ export class SystemComponent implements OnInit
     constructor(private nodeTreeConfig:TerraNodeTreeConfig<ExampleTreeData>,
                 private translation:TranslationService,
                 private router:Router,
-                private carrierService:CarrierService)
+                private carrierService:CarrierService,
+                private systemsGlobalSettingsService:SystemGlobalSettingsService)
     {
     }
 
@@ -80,7 +82,9 @@ export class SystemComponent implements OnInit
                             isVisible: true,
                             onClick: ():void =>
                             {
-                                // this.router.navigateByUrl('plugin/system/carrier/' + element.id)
+                                this.router.navigateByUrl('plugin/system/carrier/' + element.id);
+
+                                this.systemsGlobalSettingsService.setTraegerId(element.id);
                             },
                             onLazyLoad: ():Observable<any> =>
                             {

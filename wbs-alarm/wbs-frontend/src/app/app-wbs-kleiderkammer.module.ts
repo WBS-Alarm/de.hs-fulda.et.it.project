@@ -47,6 +47,7 @@ import {SystemNewUserComponent} from "./views/system/components/user/new/system-
 import {SystemNewCategoryComponent} from "./views/system/components/categories/new/system-new-category.component";
 import {SystemNewTargetplaceComponent} from "./views/system/components/targetplaces/new/system-new-targetplace.component";
 import {SystemTargetplacesComponent} from "./views/system/components/targetplaces/system-targetplaces.component";
+import {SystemGlobalSettingsService} from "./views/system/system-global-settings.service";
 
 
 @NgModule({
@@ -102,6 +103,7 @@ import {SystemTargetplacesComponent} from "./views/system/components/targetplace
         LoginService,
         UsersService,
         GlobalRegistryService,
+        SystemGlobalSettingsService,
         IsLoggedInGuard,
         CarrierService,
         UserAndSystemDataService,
