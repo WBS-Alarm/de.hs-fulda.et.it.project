@@ -37,4 +37,14 @@ export class CarrierService
             })
     }
 
+    public getDetailsForCarrier(id:number):Observable<any>
+    {
+        this.headers = this.sitemapHelper.setAuthorization();
+
+        return this.http.get(this.sitemapHelper.getCarrierForId().replace('{id}', id.toString()),
+                        {
+                headers: this.headers
+            })
+    }
+
 }

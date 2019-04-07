@@ -83,4 +83,9 @@ export class WbsSitemapHelper
     {
         return Object.values(this.siteMaps)[0]['traegerList'][0].href;
     }
+
+    public getCarrierForId():string
+    {
+        return Object.values(this.siteMaps)[0]['traeger'][0].href;
+    }
 }

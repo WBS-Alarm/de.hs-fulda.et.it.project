@@ -55,27 +55,6 @@ export class SystemComponent implements OnInit
     {
         this.nodeTreeConfig.list = [
             {
-                id:        11,
-                name:      this.translation.translate('system.user.user'),
-                isVisible: true,
-                children:  [
-                    {
-                        id:        112,
-                        name:      'Child1',
-                        isVisible: true,
-                        children:  [{
-                            id:        113,
-                            name:      'Subchild1',
-                            isVisible: true,
-                            onClick:   ():void =>
-                                       {
-                                           alert('Hello i am a click function');
-                                       }
-                        }]
-                    }
-                ]
-            },
-            {
                 id:         21,
                 name:       this.translation.translate('system.village.village'),
                 isVisible:  true,
@@ -93,16 +72,40 @@ export class SystemComponent implements OnInit
         return this.carrierService.getCarriers().pipe(
             tap((result:resultData) =>
             {
-                {
                     result._embedded.elemente.forEach((element:any) =>
                     {
                         this.nodeTreeConfig.addChildToNodeById(21, {
                             id:        element.id,
                             name:      element.name,
-                            isVisible: true
+                            isVisible: true,
+                            onClick: ():void =>
+                            {
+                                // this.router.navigateByUrl('plugin/system/carrier/' + element.id)
+                            },
+                            onLazyLoad: ():Observable<any> =>
+                            {
+                                return this.getCarrierDetailForId(element.id);
+                            },
+                            children: [
+                                {
+                                    id:        11,
+                                    name:      this.translation.translate('system.user.user'),
+                                    isVisible: true,
+                                    children:  []
+                                }
+                            ]
                         });
                     })
-                }
             }));
+    }
+
+    private getCarrierDetailForId(id:number):Observable<any>
+    {
+        return this.carrierService.getDetailsForCarrier(id).pipe(
+            tap((result:any) =>
+            {
+                console.log(result);
+            })
+        )
     }
 }
