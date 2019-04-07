@@ -9,6 +9,8 @@ import { ExampleViewComponent } from './views/example/example-view.component';
 import {AppLoginComponent} from "./views/app-login/app-login.component";
 import { GUARDS } from './core/guards/guards';
 import { WbsPreloadingStrategy } from './core/strategies/preloading-strategy';
+import {SystemComponent} from "./views/system/system.component";
+import { SystemCarrierComponent } from './views/system/components/carrier/system-carrier.component';
 
 const appRoutes:Routes = [
     {
@@ -48,6 +50,32 @@ const appRoutes:Routes = [
                 data: {
                     label: 'example'
                 }
+            },
+            // {
+            //     path: 'booking',
+            //     component: ExampleViewComponent,
+            //     canActivate: GUARDS,
+            //     data: {
+            //         label: 'booking.booking'
+            //     }
+            // },
+            {
+                path: 'system',
+                component: SystemComponent,
+                canActivate: GUARDS,
+                data: {
+                    label: 'system.system'
+                },
+                children: [
+                    {
+                        path: 'carrier',
+                        component: SystemCarrierComponent,
+                        canActivate: GUARDS,
+                        data: {
+                            label: 'system.village.village'
+                        }
+                    }
+                ]
             }
         ]
     },

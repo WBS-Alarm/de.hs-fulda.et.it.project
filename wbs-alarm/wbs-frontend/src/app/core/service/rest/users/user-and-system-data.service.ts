@@ -5,6 +5,8 @@ import {
 import { UsersService } from './users.service';
 import { Observable } from "rxjs/Observable";
 import { GlobalRegistryService } from '../../../global-registry/global-registry.service';
+import {GetSitemapService} from "../sitemap/wbs-sitemap.service";
+import {WbsSitemapHelper} from "../sitemap/data/wbs-sitemap.helper";
 
 
 @Injectable()
@@ -12,14 +14,23 @@ export class UserAndSystemDataService
 {
     private userService:UsersService;
 
+    private sitemapService:GetSitemapService;
+
     constructor(injector:Injector,
-                private globalRegistryService:GlobalRegistryService)
+                private globalRegistryService:GlobalRegistryService,
+                private sitemapHelper:WbsSitemapHelper)
     {
         this.userService = injector.get(UsersService);
+        this.sitemapService = injector.get(GetSitemapService);
     }
 
     public load():Promise<void | Error>
     {
+        this.sitemapService.getSitemaps().subscribe((result:any) =>
+        {
+            this.sitemapHelper.sitemaps = result;
+        });
+
         return Observable.combineLatest(
             this.userService.getCurrentUsers(),
             (userData) =>

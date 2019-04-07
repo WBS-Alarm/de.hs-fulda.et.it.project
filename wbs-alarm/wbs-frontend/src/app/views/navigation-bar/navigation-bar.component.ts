@@ -26,6 +26,16 @@ export class NavigationBarComponent implements OnInit
         name: this.translation.translate('example'),
         url: 'plugin/example',
         isVisible: true
+    },
+    {
+        name: this.translation.translate('booking.booking'),
+        url: 'plugin/booking',
+        isVisible: true
+    },
+    {
+        name: this.translation.translate('system.system'),
+        url: 'plugin/system',
+        isVisible: true
     }
 ];
 

@@ -38,6 +38,9 @@ import { GlobalRegistryService } from './core/global-registry/global-registry.se
 import { IsLoggedInGuard } from './core/guards/isLoggedInGuard';
 import { AppUsersComponent } from './views/app-users/app-users.component';
 import {NavigationBarComponent} from "./views/navigation-bar/navigation-bar.component";
+import {SystemComponent} from "./views/system/system.component";
+import {CarrierService} from "./core/service/rest/carrier/carrier.service";
+import { SystemCarrierComponent } from './views/system/components/carrier/system-carrier.component';
 
 
 @NgModule({
@@ -63,6 +66,8 @@ import {NavigationBarComponent} from "./views/navigation-bar/navigation-bar.comp
         OverviewViewComponent,
         AppLoginComponent,
         AppUsersComponent,
+        SystemComponent,
+        SystemCarrierComponent,
         NavigationBarComponent
     ],
     providers:    [
@@ -86,6 +91,7 @@ import {NavigationBarComponent} from "./views/navigation-bar/navigation-bar.comp
         UsersService,
         GlobalRegistryService,
         IsLoggedInGuard,
+        CarrierService,
         UserAndSystemDataService,
         WbsPreloadingStrategy,
         TerraNodeTreeConfig

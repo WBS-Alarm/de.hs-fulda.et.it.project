@@ -12,5 +12,34 @@
 		"username": "Benutzername",
 		"password": "Passwort",
 		"language": "Sprache"
+	},
+	"booking": {
+		"booking": "Buchung",
+		"bookNow": "Jetzt buchen",
+		"clothesType": "Art der Kleidung",
+		"quantity": "Menge",
+		"size": "Größe"
+	},
+	"system":
+	{
+		"system": "System",
+		"user": {
+			"user": "Benutzer",
+			"addUser": "Benutzer anlegen",
+			"editUser": "Benutzer bearbeiten",
+			"deleteUser": "Benutzer löschen"
+		},
+		"clothes": {
+			"clothes": "Kleidungsverwaltung",
+			"addClothes": "Kleidungsart anlegen",
+			"editVillage": "Kleidungsart bearbeiten",
+			"removeClothes": "Kleidungsart löschen"
+		},
+		"village": {
+			"village": "Ortsteilverwaltung",
+			"addVillage": "Ortsteil anlegen",
+			"editVillage": "Ortsteil bearbeiten",
+			"removeVillage": "Ortsteil löschen"
+		}
 	}
 }
