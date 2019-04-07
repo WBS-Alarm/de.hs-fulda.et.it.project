@@ -11,6 +11,14 @@ import { GUARDS } from './core/guards/guards';
 import { WbsPreloadingStrategy } from './core/strategies/preloading-strategy';
 import {SystemComponent} from "./views/system/system.component";
 import { SystemCarrierComponent } from './views/system/components/carrier/system-carrier.component';
+import {SystemUserComponent} from "./views/system/components/user/system-user.component";
+import {SystemCategoriesComponent} from "./views/system/components/categories/system-categories.component";
+import {SystemNewUserComponent} from "./views/system/components/user/new/system-new-user.component";
+import {SystemNewTargetplaceComponent} from "./views/system/components/targetplaces/new/system-new-targetplace.component";
+import {
+    SystemNewCategoryComponent
+} from "./views/system/components/categories/new/system-new-category.component";
+import {SystemTargetplacesComponent} from "./views/system/components/targetplaces/system-targetplaces.component";
 
 const appRoutes:Routes = [
     {
@@ -73,6 +81,62 @@ const appRoutes:Routes = [
                         canActivate: GUARDS,
                         data: {
                             label: 'system.village.village'
+                        }
+                    },
+                    {
+                        path: 'carrier/:carrierId',
+                        component: SystemCarrierComponent,
+                        canActivate: GUARDS,
+                        data: {
+                            label: 'system.village.village'
+                        }
+                    },
+                    {
+                        path: 'carrier/:carrierId/user',
+                        component: SystemNewUserComponent,
+                        canActivate: GUARDS,
+                        data: {
+                            label: 'system.user.addUser'
+                        }
+                    },
+                    {
+                        path: 'carrier/:carrierId/user/:userId',
+                        component: SystemUserComponent,
+                        canActivate: GUARDS,
+                        data: {
+                            label: 'system.user.user'
+                        }
+                    },
+                    {
+                        path: 'carrier/:carrierId/targetplace',
+                        component: SystemNewTargetplaceComponent,
+                        canActivate: GUARDS,
+                        data: {
+                            label: 'system.targetPlace.addTargetPlace'
+                        }
+                    },
+                    {
+                        path: 'carrier/:carrierId/targetplace/:targetplaceId',
+                        component: SystemTargetplacesComponent,
+                        canActivate: GUARDS,
+                        data: {
+                            label: 'system.targetPlace.targetPlace'
+                        }
+                    },
+                    {
+                        path: 'carrier/:carrierId/category',
+                        component: SystemNewCategoryComponent,
+                        canActivate: GUARDS,
+                        data: {
+                            label: 'system.clothes.addClothes'
+                        }
+                    },
+                    {
+                        path: 'carrier/:carrierId/category/:categoryId',
+                        component: SystemCategoriesComponent,
+                        canActivate: GUARDS,
+                        data: {
+                            label: 'system.clothes.clothes'
                         }
                     }
                 ]

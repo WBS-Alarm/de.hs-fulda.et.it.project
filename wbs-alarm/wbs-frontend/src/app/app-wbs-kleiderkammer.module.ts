@@ -41,6 +41,12 @@ import {NavigationBarComponent} from "./views/navigation-bar/navigation-bar.comp
 import {SystemComponent} from "./views/system/system.component";
 import {CarrierService} from "./core/service/rest/carrier/carrier.service";
 import { SystemCarrierComponent } from './views/system/components/carrier/system-carrier.component';
+import {SystemUserComponent} from "./views/system/components/user/system-user.component";
+import {SystemCategoriesComponent} from "./views/system/components/categories/system-categories.component";
+import {SystemNewUserComponent} from "./views/system/components/user/new/system-new-user.component";
+import {SystemNewCategoryComponent} from "./views/system/components/categories/new/system-new-category.component";
+import {SystemNewTargetplaceComponent} from "./views/system/components/targetplaces/new/system-new-targetplace.component";
+import {SystemTargetplacesComponent} from "./views/system/components/targetplaces/system-targetplaces.component";
 
 
 @NgModule({
@@ -68,6 +74,12 @@ import { SystemCarrierComponent } from './views/system/components/carrier/system
         AppUsersComponent,
         SystemComponent,
         SystemCarrierComponent,
+        SystemUserComponent,
+        SystemCategoriesComponent,
+        SystemNewUserComponent,
+        SystemNewCategoryComponent,
+        SystemNewTargetplaceComponent,
+        SystemTargetplacesComponent,
         NavigationBarComponent
     ],
     providers:    [

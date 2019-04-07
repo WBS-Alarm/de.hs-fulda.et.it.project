@@ -5,6 +5,7 @@ import {
 } from '@angular/core';
 import { WbsSitemapHelper } from "./core/service/rest/sitemap/data/wbs-sitemap.helper";
 import { GetSitemapService } from "./core/service/rest/sitemap/wbs-sitemap.service";
+import { Router } from '@angular/router';
 
 @Component({
     selector:      'app-terra-basic',
@@ -15,7 +16,8 @@ import { GetSitemapService } from "./core/service/rest/sitemap/wbs-sitemap.servi
 export class AppWbsKleiderkammer implements OnInit
 {
     constructor(private sitemapHelper:WbsSitemapHelper,
-                private sitemapService:GetSitemapService)
+                private sitemapService:GetSitemapService,
+                private router:Router)
     {
 
     }
@@ -26,5 +28,12 @@ export class AppWbsKleiderkammer implements OnInit
         {
             this.sitemapHelper.sitemaps = result;
         });
+
+        // Navigate to start of system on reload
+        if(window.location.href.indexOf('system') > 0)
+        {
+            this.router.navigateByUrl('plugin/system')
+        }
+
     }
 }
