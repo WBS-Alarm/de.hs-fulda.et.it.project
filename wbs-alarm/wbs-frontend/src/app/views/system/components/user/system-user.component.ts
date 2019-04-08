@@ -1,9 +1,20 @@
-import {Component, OnInit} from "../../../../../../node_modules/@angular/core";
-import {TerraAlertComponent, TerraNodeTreeConfig} from "@plentymarkets/terra-components";
-import {UserDataInterface} from "../../../../core/service/rest/users/user-data.interface";
-import {UsersService} from "../../../../core/service/rest/users/users.service";
-import {SystemGlobalSettingsService} from "../../system-global-settings.service";
-import {ExampleTreeData} from "../../system.component";
+import {
+    Component,
+    OnInit
+} from "../../../../../../node_modules/@angular/core";
+import {
+    TerraAlertComponent,
+    TerraNodeTreeConfig
+} from "@plentymarkets/terra-components";
+import { UserDataInterface } from "../../../../core/service/rest/users/user-data.interface";
+import { UsersService } from "../../../../core/service/rest/users/users.service";
+import { SystemGlobalSettingsService } from "../../system-global-settings.service";
+import { ExampleTreeData } from "../../system.component";
+import {
+    ActivatedRoute,
+    Data
+} from '@angular/router';
+import { Observable } from "rxjs";
 
 @Component({
     selector: 'system-user',
@@ -12,19 +23,14 @@ import {ExampleTreeData} from "../../system.component";
 })
 export class SystemUserComponent implements OnInit
 {
-    private editedUser:UserDataInterface =
-        {
-            username: '',
-            password: '',
-            mail: '',
-            einkaeufer: null
-        };
-
     private userId:number;
+
+    protected routeData$:Observable<Data>;
 
     private alert:TerraAlertComponent = TerraAlertComponent.getInstance();
 
-    constructor(private usersService:UsersService,
+    constructor(private route:ActivatedRoute,
+                private usersService:UsersService,
                 private systemTreeConfig:TerraNodeTreeConfig<ExampleTreeData>,
                 private systemGlobalSettings:SystemGlobalSettingsService)
     {
@@ -33,16 +39,16 @@ export class SystemUserComponent implements OnInit
 
     public ngOnInit():void
     {
-        this.userId = +this.systemTreeConfig.currentSelectedNode.id.toString().replace('benutzer ','');
+        this.userId = +this.systemTreeConfig.currentSelectedNode.id.toString().replace('benutzer ', '');
 
-        this.editedUser = this.systemGlobalSettings.getSingleUser(this.userId);
+        this.routeData$ = this.route.data;
     }
 
 
-    protected save():void
+    protected save(user:UserDataInterface):void
     {
-        this.usersService.editUser(this.userId,
-            this.editedUser).subscribe(
+        this.usersService.editUser(+user.id,
+            user).subscribe(
             (result:any) =>
             {
                 this.alert.addAlert(

@@ -48,6 +48,7 @@ import {SystemNewCategoryComponent} from "./views/system/components/categories/n
 import {SystemNewTargetplaceComponent} from "./views/system/components/targetplaces/new/system-new-targetplace.component";
 import {SystemTargetplacesComponent} from "./views/system/components/targetplaces/system-targetplaces.component";
 import {SystemGlobalSettingsService} from "./views/system/system-global-settings.service";
+import { SystemUserResolver } from './views/system/components/user/resolver/system-user.resolver';
 
 
 @NgModule({
@@ -108,6 +109,7 @@ import {SystemGlobalSettingsService} from "./views/system/system-global-settings
         CarrierService,
         UserAndSystemDataService,
         WbsPreloadingStrategy,
+        SystemUserResolver,
         TerraNodeTreeConfig
     ],
     bootstrap:    [

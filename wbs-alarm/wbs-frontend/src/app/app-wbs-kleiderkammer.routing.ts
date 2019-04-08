@@ -19,6 +19,7 @@ import {
     SystemNewCategoryComponent
 } from "./views/system/components/categories/new/system-new-category.component";
 import {SystemTargetplacesComponent} from "./views/system/components/targetplaces/system-targetplaces.component";
+import { SystemUserResolver } from './views/system/components/user/resolver/system-user.resolver';
 
 const appRoutes:Routes = [
     {
@@ -105,7 +106,11 @@ const appRoutes:Routes = [
                         canActivate: GUARDS,
                         data: {
                             label: 'system.user.user'
-                        }
+                        },
+                        resolve:
+                            {
+                                user: SystemUserResolver
+                            }
                     },
                     {
                         path: 'carrier/:carrierId/targetplace',
