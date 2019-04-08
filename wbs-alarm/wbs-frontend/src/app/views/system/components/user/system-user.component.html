@@ -1,10 +1,10 @@
 <ng-container *ngIf="routeData$ | async as routeData">
-    <div class="btn-toolbar">
+    <terra-base-toolbar>
         <terra-button [inputIcon]="'icon-save'"
                       [inputCaption]="'Speichern'"
                       (outputClicked)="save(routeData.user)">
         </terra-button>
-    </div>
+    </terra-base-toolbar>
     
     <terra-portlet [inputPortletHeader]="'Benutzer bearbeiten'">
         <terra-text-input [inputName]="'Name'"
