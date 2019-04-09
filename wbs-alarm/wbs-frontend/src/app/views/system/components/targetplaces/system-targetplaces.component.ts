@@ -37,7 +37,29 @@ export class SystemTargetplacesComponent implements OnInit
 
     private save(targetPlace:SystemZielortInterface):void
     {
-        this.carrierService.updateTargetplace(targetPlace)
+        this.carrierService.updateTargetplace(targetPlace).subscribe(
+            (result:any) =>
+            {
+                this.alert.addAlert(
+                    {
+                        msg:              'Änderungen gespeichert!',
+                        type:             'success',
+                        dismissOnTimeout: null,
+                        identifier:       'targetPlaceEdited'
+                    }
+                )
+            },
+            (error:any) =>
+            {
+                this.alert.addAlert(
+                    {
+                        msg:              'Änderungen konnten nicht gespeichert werden: ' + error.error.message,
+                        type:             'danger',
+                        dismissOnTimeout: null,
+                        identifier:       'targetPlaceNotEdited'
+                    }
+                )
+            })
     }
 
     private delete():void
