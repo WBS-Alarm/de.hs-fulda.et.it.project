@@ -1,10 +1,12 @@
 <div class="view">
-    <div class="btn-toolbar" role="toolbar">
+    
+    <terra-base-toolbar>
         <terra-button inputIcon='icon-save'
                       [inputCaption]="'Speichern'"
                       (outputClicked)="saveCarrier()">
         </terra-button>
-    </div>
+    </terra-base-toolbar>
+    
     <div class="system-view-container">
         <terra-portlet
                 [inputPortletHeader]="'Neuen Träger anlegen'">
@@ -13,4 +15,5 @@
             </terra-text-input>
         </terra-portlet>
     </div>
+    
 </div>
