@@ -1,12 +1,18 @@
+<ng-container *ngIf="routeData$ | async as routeData">
 <terra-base-toolbar>
     <terra-button [inputIcon]="'icon-save'"
                   [inputCaption]="'Speichern'"
-                  (outputClicked)="save()">
+                  (outputClicked)="save(routeData.targetPlace)">
+    </terra-button>
+    <terra-button [inputIcon]="'icon-delete'"
+                  [inputCaption]="'Inaktiv setzen'"
+                  (outputClicked)="delete()">
     </terra-button>
 </terra-base-toolbar>
 
-<terra-portlet [inputPortletHeader]="'Neuen Zielort anlegen'">
+<terra-portlet [inputPortletHeader]="'Zielort bearbeiten'">
     <terra-text-input [inputName]="'Name'"
-                      [(ngModel)]="newTargetplaceName">
+                      [(ngModel)]="routeData.targetPlace.name">
     </terra-text-input>
 </terra-portlet>
+</ng-container>

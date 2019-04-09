@@ -20,6 +20,7 @@ import {
 } from "./views/system/components/categories/new/system-new-category.component";
 import {SystemTargetplacesComponent} from "./views/system/components/targetplaces/system-targetplaces.component";
 import { SystemUserResolver } from './views/system/components/user/resolver/system-user.resolver';
+import { SystemTargetplacesResolver } from './views/system/components/targetplaces/resolver/system-targetplaces.resolver';
 
 const appRoutes:Routes = [
     {
@@ -126,7 +127,11 @@ const appRoutes:Routes = [
                         canActivate: GUARDS,
                         data: {
                             label: 'system.targetPlace.targetPlace'
-                        }
+                        },
+                        resolve:
+                            {
+                                targetPlace: SystemTargetplacesResolver
+                            }
                     },
                     {
                         path: 'carrier/:carrierId/category',

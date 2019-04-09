@@ -12,7 +12,7 @@ import { Observable } from "rxjs";
 import { SystemGlobalSettingsService } from '../../../system-global-settings.service';
 
 @Injectable()
-export class SystemUserResolver implements Resolve<UserDataInterface>
+export class SystemTargetplacesResolver implements Resolve<UserDataInterface>
 {
     constructor(private translation:TranslationService,
                 private userService:UsersService,
@@ -23,13 +23,13 @@ export class SystemUserResolver implements Resolve<UserDataInterface>
 
     public resolve(route:ActivatedRouteSnapshot):UserDataInterface
     {
-        let traegerId:number = +route.params['traegerId'];
+        let targetPlaceId:number = +route.params['targetplaceId'];
 
-        if(isNullOrUndefined(traegerId) || isNaN(traegerId))
+        if(isNullOrUndefined(targetPlaceId) || isNaN(targetPlaceId))
         {
             return;
         }
 
-        return this.systemGloabalSettingsService.getSingleTargetplace(traegerId)
+        return this.systemGloabalSettingsService.getSingleZielort(targetPlaceId)
     }
 }

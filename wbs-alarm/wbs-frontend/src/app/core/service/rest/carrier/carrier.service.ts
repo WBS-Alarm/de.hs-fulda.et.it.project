@@ -2,6 +2,7 @@ import {HttpClient, HttpHeaders} from "../../../../../../node_modules/@angular/c
 import {Injectable} from "../../../../../../node_modules/@angular/core";
 import {WbsSitemapHelper} from "../sitemap/data/wbs-sitemap.helper";
 import {Observable} from "rxjs";
+import { SystemZielortInterface } from '../../../../views/system/components/targetplaces/data/system-zielort.interface';
 
 @Injectable()
 export class CarrierService
@@ -54,6 +55,19 @@ export class CarrierService
         return this.http.post(this.sitemapHelper.getCarrierForId().replace('{id}', carrierId.toString()) + '/zielorte',
             {
                 name: targetplaceName
+            },
+            {
+                headers: this.headers
+            })
+    }
+
+    public updateTargetplace(targetPlace:SystemZielortInterface):Observable<any>
+    {
+        this.headers = this.sitemapHelper.setAuthorization();
+
+        return this.http.put(this.sitemapHelper.zielort().replace('{id}', targetPlace.id.toString()),
+            {
+                name: targetPlace.name
             },
             {
                 headers: this.headers

@@ -159,7 +159,11 @@ export class SystemComponent implements OnInit
                         {
                             id: 'zielort ' + zielort.id,
                             name: zielort.name,
-                            isVisible: true
+                            isVisible: true,
+                            onClick: ():void =>
+                                       {
+                                           this.router.navigateByUrl('plugin/system/carrier/' + name + 12 + '/targetplace/' + zielort.id)
+                                       }
                         })
                 });
 

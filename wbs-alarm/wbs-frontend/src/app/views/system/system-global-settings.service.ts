@@ -54,6 +54,8 @@ export class SystemGlobalSettingsService
 
     public getSingleZielort(id:number):SystemZielortInterface
     {
+        console.log(this.zielorte.find((zielort:any) => id === zielort.id));
+
         return this.zielorte.find((zielort:any) => id === zielort.id)
     }
 

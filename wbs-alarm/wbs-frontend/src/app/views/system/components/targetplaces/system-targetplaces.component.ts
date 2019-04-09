@@ -10,18 +10,18 @@ import {
 } from '@angular/router';
 import { Observable } from "rxjs";
 import { SystemGlobalSettingsService } from '../../system-global-settings.service';
+import { SystemZielortInterface } from './data/system-zielort.interface';
 
 @Component({
     selector: 'system-targetplace',
     template: require('./system-targetplaces.component.html'),
     styles:   [require('./system-targetplaces.component.scss')]
 })
-export class SystemTargetplacesComponent
+export class SystemTargetplacesComponent implements OnInit
 {
-    private newTargetplaceName:string = '';
-
     private alert:TerraAlertComponent = TerraAlertComponent.getInstance();
 
+    protected routeData$:Observable<Data>;
 
     constructor(private carrierService:CarrierService,
                 private route:ActivatedRoute,
@@ -30,26 +30,18 @@ export class SystemTargetplacesComponent
 
     }
 
-    private save():void
+    public ngOnInit():void
     {
-        this.carrierService.createTargetplace(this.systemGlobalSettings.getTraegerId(), this.newTargetplaceName)
-            .subscribe((result:any) =>
-                {
-                    this.alert.addAlert({
-                        msg:              'Der Zielort wurde angelegt!',
-                        type:             'success',
-                        dismissOnTimeout: null,
-                        identifier:       'targetPlaceCreated'
-                    })
-                },
-                (error:any) =>
-                {
-                    this.alert.addAlert({
-                        msg:              'Der Zielort wurde nicht angelegt!',
-                        type:             'danger',
-                        dismissOnTimeout: null,
-                        identifier:       'targetPlaceNotCreated'
-                    })
-                });
+        this.routeData$ = this.route.data;
+    }
+
+    private save(targetPlace:SystemZielortInterface):void
+    {
+        this.carrierService.updateTargetplace(targetPlace)
+    }
+
+    private delete():void
+    {
+
     }
 }

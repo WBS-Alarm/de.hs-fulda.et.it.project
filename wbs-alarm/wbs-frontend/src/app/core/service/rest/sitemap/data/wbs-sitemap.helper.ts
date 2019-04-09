@@ -98,4 +98,9 @@ export class WbsSitemapHelper
     {
         return Object.values(this.siteMaps)[0]['benutzer'][0].href;
     }
+
+    public zielort():string
+    {
+        return Object.values(this.siteMaps)[0]['zielort'][0].href;
+    }
 }
