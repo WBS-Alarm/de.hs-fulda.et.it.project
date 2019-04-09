@@ -52,6 +52,8 @@ import { SystemUserResolver } from './views/system/components/user/resolver/syst
 import { SystemTargetplacesResolver } from './views/system/components/targetplaces/resolver/system-targetplaces.resolver';
 import {SystemEditCarrierComponent} from "./views/system/components/carrier/edit-carrier/system-edit-carrier.component";
 import {SystemCarrierResolver} from "./views/system/components/carrier/resolver/system-carrier-resolver";
+import {CategoryService} from "./core/service/rest/categories/category.service";
+import {SystemCategoryResolver} from "./views/system/components/categories/resolver/system-category.resolver";
 
 
 @NgModule({
@@ -116,6 +118,8 @@ import {SystemCarrierResolver} from "./views/system/components/carrier/resolver/
         SystemUserResolver,
         SystemTargetplacesResolver,
         SystemCarrierResolver,
+        CategoryService,
+        SystemCategoryResolver,
         TerraNodeTreeConfig
     ],
     bootstrap:    [

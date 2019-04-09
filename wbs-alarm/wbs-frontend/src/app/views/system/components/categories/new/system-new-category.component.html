@@ -1,1 +1,12 @@
-Neue Kategorie
+<terra-base-toolbar>
+    <terra-button [inputIcon]="'icon-save'"
+                  [inputCaption]="'Speichern'"
+                  (outputClicked)="save()">
+    </terra-button>
+</terra-base-toolbar>
+
+<terra-portlet [inputPortletHeader]="'Neue Kategorie anlegen'">
+    <terra-text-input [inputName]="'Name'"
+                      [(ngModel)]="categoryName">
+    </terra-text-input>
+</terra-portlet>

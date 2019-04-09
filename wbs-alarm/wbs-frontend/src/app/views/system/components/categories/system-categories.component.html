@@ -1,1 +1,18 @@
-Kategorien
+<ng-container *ngIf="routeData$ | async as routeData">
+    <terra-base-toolbar>
+        <terra-button [inputIcon]="'icon-save'"
+                      [inputCaption]="'Speichern'"
+                      (outputClicked)="save(routeData.category)">
+        </terra-button>
+        <terra-button [inputIcon]="'icon-delete'"
+                      [inputCaption]="'Löschen'"
+                      (outputClicked)="delete(routeData.category)">
+        </terra-button>
+    </terra-base-toolbar>
+
+    <terra-portlet [inputPortletHeader]="'Kategorie bearbeiten'">
+        <terra-text-input [inputName]="'Name'"
+                          [(ngModel)]="routeData.category.name">
+        </terra-text-input>
+    </terra-portlet>
+</ng-container>

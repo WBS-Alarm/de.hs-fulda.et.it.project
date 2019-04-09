@@ -2,6 +2,7 @@ import {Injectable} from "../../../../node_modules/@angular/core";
 import {UserDataInterface} from "../../core/service/rest/users/user-data.interface";
 import { SystemZielortInterface } from './components/targetplaces/data/system-zielort.interface';
 import {SystemCarrierInterface} from "./components/carrier/data/system-carrier.interface";
+import {SystemCategoryInterface} from "./components/categories/data/system-category.interface";
 
 @Injectable()
 export class SystemGlobalSettingsService
@@ -74,6 +75,11 @@ export class SystemGlobalSettingsService
         {
             this.kategorien = this.kategorien.concat(kategorien);
         }
+    }
+
+    public getSingleCategory(categoryId:number):SystemCategoryInterface
+    {
+        return this.kategorien.find((kategorie) => kategorie.id === categoryId);
     }
 
     public getSingleUser(userId:number):UserDataInterface

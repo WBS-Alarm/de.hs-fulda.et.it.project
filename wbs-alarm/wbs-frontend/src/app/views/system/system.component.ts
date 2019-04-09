@@ -121,7 +121,7 @@ export class SystemComponent implements OnInit
                                     children:  [],
                                     onClick: ():void =>
                                     {
-                                        this.router.navigateByUrl('plugin/system/carrier/' + element.id + '/categories')
+                                        this.router.navigateByUrl('plugin/system/carrier/' + element.id + '/category')
                                     }
                                 }
                             ]
@@ -178,7 +178,7 @@ export class SystemComponent implements OnInit
                             isVisible: true,
                             onClick: ():void =>
                             {
-                                this.router.navigateByUrl('plugin/system/carrier/' + id + '/kategorie/' + kategorie.id)
+                                this.router.navigateByUrl('plugin/system/carrier/' + id + '/category/' + kategorie.id)
                             }
                         })
                 });

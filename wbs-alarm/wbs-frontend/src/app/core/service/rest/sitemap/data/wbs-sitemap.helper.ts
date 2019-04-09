@@ -103,4 +103,14 @@ export class WbsSitemapHelper
     {
         return Object.values(this.siteMaps)[0]['zielort'][0].href;
     }
+
+    public kategorie():string
+    {
+        return Object.values(this.siteMaps)[0]['kategorie'][0].href;
+    }
+
+    public kategorieList():string
+    {
+        return Object.values(this.siteMaps)[0]['kategorieList'][0].href;
+    }
 }

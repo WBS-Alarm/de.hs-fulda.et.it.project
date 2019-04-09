@@ -23,6 +23,7 @@ import { SystemUserResolver } from './views/system/components/user/resolver/syst
 import { SystemTargetplacesResolver } from './views/system/components/targetplaces/resolver/system-targetplaces.resolver';
 import {SystemEditCarrierComponent} from "./views/system/components/carrier/edit-carrier/system-edit-carrier.component";
 import {SystemCarrierResolver} from "./views/system/components/carrier/resolver/system-carrier-resolver";
+import {SystemCategoryResolver} from "./views/system/components/categories/resolver/system-category.resolver";
 
 const appRoutes:Routes = [
     {
@@ -153,7 +154,11 @@ const appRoutes:Routes = [
                         canActivate: GUARDS,
                         data: {
                             label: 'system.clothes.clothes'
-                        }
+                        },
+                        resolve:
+                            {
+                                category: SystemCategoryResolver
+                            }
                     }
                 ]
             }

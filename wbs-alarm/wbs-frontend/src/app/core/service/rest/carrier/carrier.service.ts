@@ -97,4 +97,17 @@ export class CarrierService
                 headers: this.headers
             })
     }
+
+    public createCategory(carrierId:number, categoryName:string)
+    {
+        this.headers = this.sitemapHelper.setAuthorization();
+
+        return this.http.post(this.sitemapHelper.kategorieList().replace('{traegerId}', carrierId.toString()),
+            {
+                name: categoryName
+            },
+            {
+                headers: this.headers
+            })
+    }
 }
