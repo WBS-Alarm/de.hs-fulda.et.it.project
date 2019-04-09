@@ -109,7 +109,7 @@ export class SystemComponent implements OnInit
                                     children:  [],
                                     onClick: ():void =>
                                     {
-                                        this.router.navigateByUrl('plugin/system/carrier/' + name + 12 + '/targetplaces')
+                                        this.router.navigateByUrl('plugin/system/carrier/' + name + 12 + '/targetplace')
                                     }
                                 },
                                 {

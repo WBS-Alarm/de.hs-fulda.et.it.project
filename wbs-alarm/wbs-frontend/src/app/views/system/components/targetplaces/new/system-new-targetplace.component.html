@@ -1,1 +1,12 @@
-Neuer Zielort
+<terra-base-toolbar>
+    <terra-button [inputIcon]="'icon-save'"
+                  [inputCaption]="'Speichern'"
+                  (outputClicked)="save()">
+    </terra-button>
+</terra-base-toolbar>
+
+<terra-portlet [inputPortletHeader]="'Neuen Zielort anlegen'">
+    <terra-text-input [inputName]="'Name'"
+                      [(ngModel)]="newTargetplaceName">
+    </terra-text-input>
+</terra-portlet>

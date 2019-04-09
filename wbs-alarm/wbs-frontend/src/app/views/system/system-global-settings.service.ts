@@ -1,11 +1,13 @@
 import {Injectable} from "../../../../node_modules/@angular/core";
 import {UserDataInterface} from "../../core/service/rest/users/user-data.interface";
+import { SystemZielortInterface } from './components/targetplaces/data/system-zielort.interface';
 
 @Injectable()
 export class SystemGlobalSettingsService
 {
     private traegerId:number;
 
+    private traegers:Array<any> = [];
     private benutzer:Array<any> = [];
     private zielorte:Array<any> = [];
     private kategorien:Array<any> = [];
@@ -23,6 +25,11 @@ export class SystemGlobalSettingsService
     public setTraegerId(id:number)
     {
         this.traegerId = id;
+    }
+
+    public getSingleTraeger()
+    {
+        return this.traegers.find((traeger:any) => this.traegerId === traeger.id)
     }
 
     public setBenutzer(benutzer:Array<any>)
@@ -43,6 +50,11 @@ export class SystemGlobalSettingsService
         {
             this.zielorte = this.zielorte.concat(zielorte);
         }
+    }
+
+    public getSingleZielort(id:number):SystemZielortInterface
+    {
+        return this.zielorte.find((zielort:any) => id === zielort.id)
     }
 
     public setKategorien(kategorien:Array<any>)

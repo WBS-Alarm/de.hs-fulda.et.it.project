@@ -47,4 +47,16 @@ export class CarrierService
             })
     }
 
+    public createTargetplace(carrierId:number, targetplaceName:string):Observable<any>
+    {
+        this.headers = this.sitemapHelper.setAuthorization();
+
+        return this.http.post(this.sitemapHelper.getCarrierForId().replace('{id}', carrierId.toString()) + '/zielorte',
+            {
+                name: targetplaceName
+            },
+            {
+                headers: this.headers
+            })
+    }
 }
