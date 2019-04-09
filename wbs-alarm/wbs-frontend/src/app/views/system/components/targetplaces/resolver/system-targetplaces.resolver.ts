@@ -10,9 +10,10 @@ import { UsersService } from '../../../../../core/service/rest/users/users.servi
 import { TranslationService } from "angular-l10n";
 import { Observable } from "rxjs";
 import { SystemGlobalSettingsService } from '../../../system-global-settings.service';
+import {SystemZielortInterface} from "../data/system-zielort.interface";
 
 @Injectable()
-export class SystemTargetplacesResolver implements Resolve<UserDataInterface>
+export class SystemTargetplacesResolver implements Resolve<SystemZielortInterface>
 {
     constructor(private translation:TranslationService,
                 private userService:UsersService,
@@ -21,7 +22,7 @@ export class SystemTargetplacesResolver implements Resolve<UserDataInterface>
     {
     }
 
-    public resolve(route:ActivatedRouteSnapshot):UserDataInterface
+    public resolve(route:ActivatedRouteSnapshot):SystemZielortInterface
     {
         let targetPlaceId:number = +route.params['targetplaceId'];
 

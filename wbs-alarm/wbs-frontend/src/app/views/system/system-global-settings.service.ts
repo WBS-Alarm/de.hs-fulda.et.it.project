@@ -1,6 +1,7 @@
 import {Injectable} from "../../../../node_modules/@angular/core";
 import {UserDataInterface} from "../../core/service/rest/users/user-data.interface";
 import { SystemZielortInterface } from './components/targetplaces/data/system-zielort.interface';
+import {SystemCarrierInterface} from "./components/carrier/data/system-carrier.interface";
 
 @Injectable()
 export class SystemGlobalSettingsService
@@ -27,9 +28,9 @@ export class SystemGlobalSettingsService
         this.traegerId = id;
     }
 
-    public getSingleTraeger()
+    public getSingleTraeger(id:number):SystemCarrierInterface
     {
-        return this.traegers.find((traeger:any) => this.traegerId === traeger.id)
+        return this.traegers.find((traeger:SystemCarrierInterface) => id === traeger.id)
     }
 
     public setBenutzer(benutzer:Array<any>)
@@ -41,6 +42,14 @@ export class SystemGlobalSettingsService
             console.log('Benutzer:');
             console.log(this.benutzer);
 
+        }
+    }
+
+    public setTraegers(traegers:Array<any>)
+    {
+        if(this.traegers.indexOf(traegers) === -1)
+        {
+            this.traegers = this.traegers.concat(traegers);
         }
     }
 

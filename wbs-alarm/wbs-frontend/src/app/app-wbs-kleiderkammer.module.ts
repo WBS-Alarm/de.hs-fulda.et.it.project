@@ -50,6 +50,8 @@ import {SystemTargetplacesComponent} from "./views/system/components/targetplace
 import {SystemGlobalSettingsService} from "./views/system/system-global-settings.service";
 import { SystemUserResolver } from './views/system/components/user/resolver/system-user.resolver';
 import { SystemTargetplacesResolver } from './views/system/components/targetplaces/resolver/system-targetplaces.resolver';
+import {SystemEditCarrierComponent} from "./views/system/components/carrier/edit-carrier/system-edit-carrier.component";
+import {SystemCarrierResolver} from "./views/system/components/carrier/resolver/system-carrier-resolver";
 
 
 @NgModule({
@@ -81,6 +83,7 @@ import { SystemTargetplacesResolver } from './views/system/components/targetplac
         SystemCategoriesComponent,
         SystemNewUserComponent,
         SystemNewCategoryComponent,
+        SystemEditCarrierComponent,
         SystemNewTargetplaceComponent,
         SystemTargetplacesComponent,
         NavigationBarComponent
@@ -112,6 +115,7 @@ import { SystemTargetplacesResolver } from './views/system/components/targetplac
         WbsPreloadingStrategy,
         SystemUserResolver,
         SystemTargetplacesResolver,
+        SystemCarrierResolver,
         TerraNodeTreeConfig
     ],
     bootstrap:    [

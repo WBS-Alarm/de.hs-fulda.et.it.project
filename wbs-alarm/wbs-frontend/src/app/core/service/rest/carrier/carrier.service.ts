@@ -3,6 +3,7 @@ import {Injectable} from "../../../../../../node_modules/@angular/core";
 import {WbsSitemapHelper} from "../sitemap/data/wbs-sitemap.helper";
 import {Observable} from "rxjs";
 import { SystemZielortInterface } from '../../../../views/system/components/targetplaces/data/system-zielort.interface';
+import {SystemCarrierInterface} from "../../../../views/system/components/carrier/data/system-carrier.interface";
 
 @Injectable()
 export class CarrierService
@@ -33,6 +34,29 @@ export class CarrierService
             {
                 name: newCarrier
             },
+            {
+                headers: this.headers
+            })
+    }
+
+    public updateCarrier(carrier:SystemCarrierInterface):Observable<any>
+    {
+        this.headers = this.sitemapHelper.setAuthorization();
+
+        return this.http.put(this.sitemapHelper.getCarrierForId().replace('{id}', carrier.id.toString()),
+            {
+                name: carrier.name
+            },
+            {
+                headers: this.headers
+            })
+    }
+
+    public deleteCarrier(carrier:SystemCarrierInterface):Observable<any>
+    {
+        this.headers = this.sitemapHelper.setAuthorization();
+
+        return this.http.delete(this.sitemapHelper.getCarrierForId().replace('{id}', carrier.id.toString()),
             {
                 headers: this.headers
             })

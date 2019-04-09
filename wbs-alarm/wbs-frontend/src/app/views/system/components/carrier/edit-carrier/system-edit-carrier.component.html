@@ -1,0 +1,21 @@
+<ng-container *ngIf="routeData$ | async as routeData">
+    <terra-base-toolbar>
+        <terra-button inputIcon='icon-save'
+                      [inputCaption]="'Speichern'"
+                      (outputClicked)="saveCarrier(routeData.carrier)">
+        </terra-button>
+        <terra-button inputIcon='icon-delete'
+                      [inputCaption]="'Löschen'"
+                      (outputClicked)="deleteCarrier(routeData.carrier)">
+        </terra-button>
+    </terra-base-toolbar>
+
+    <div class="system-view-container">
+        <terra-portlet
+                [inputPortletHeader]="'Träger bearbeiten'">
+            <terra-text-input [inputName]="'Name'"
+                              [(ngModel)]="routeData.carrier.name">
+            </terra-text-input>
+        </terra-portlet>
+    </div>
+</ng-container>

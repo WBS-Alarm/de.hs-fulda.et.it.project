@@ -21,6 +21,8 @@ import {
 import {SystemTargetplacesComponent} from "./views/system/components/targetplaces/system-targetplaces.component";
 import { SystemUserResolver } from './views/system/components/user/resolver/system-user.resolver';
 import { SystemTargetplacesResolver } from './views/system/components/targetplaces/resolver/system-targetplaces.resolver';
+import {SystemEditCarrierComponent} from "./views/system/components/carrier/edit-carrier/system-edit-carrier.component";
+import {SystemCarrierResolver} from "./views/system/components/carrier/resolver/system-carrier-resolver";
 
 const appRoutes:Routes = [
     {
@@ -82,16 +84,20 @@ const appRoutes:Routes = [
                         component: SystemCarrierComponent,
                         canActivate: GUARDS,
                         data: {
-                            label: 'system.village.village'
+                            label: 'system.village.addVillage'
                         }
                     },
                     {
                         path: 'carrier/:carrierId',
-                        component: SystemCarrierComponent,
+                        component: SystemEditCarrierComponent,
                         canActivate: GUARDS,
                         data: {
                             label: 'system.village.village'
-                        }
+                        },
+                        resolve:
+                            {
+                                carrier: SystemCarrierResolver
+                            }
                     },
                     {
                         path: 'carrier/:carrierId/user',
@@ -118,7 +124,7 @@ const appRoutes:Routes = [
                         component: SystemNewTargetplaceComponent,
                         canActivate: GUARDS,
                         data: {
-                            label: 'system.targetPlace.addTargetPlace'
+                            label: 'system.targetPlaces.addTargetPlace'
                         }
                     },
                     {
@@ -126,7 +132,7 @@ const appRoutes:Routes = [
                         component: SystemTargetplacesComponent,
                         canActivate: GUARDS,
                         data: {
-                            label: 'system.targetPlace.targetPlace'
+                            label: 'system.targetPlaces.targetPlaces'
                         },
                         resolve:
                             {

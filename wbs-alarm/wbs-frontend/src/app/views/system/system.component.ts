@@ -58,7 +58,7 @@ export class SystemComponent implements OnInit
     {
         this.nodeTreeConfig.list = [
             {
-                id:         21,
+                id:         0,
                 name:       this.translation.translate('system.village.village'),
                 isVisible:  true,
                 children:   [],
@@ -75,9 +75,11 @@ export class SystemComponent implements OnInit
         return this.carrierService.getCarriers().pipe(
             tap((result:resultData) =>
             {
+                this.systemsGlobalSettingsService.setTraegers(result._embedded.elemente);
+
                     result._embedded.elemente.forEach((element:any) =>
                     {
-                        this.nodeTreeConfig.addChildToNodeById(21, {
+                        this.nodeTreeConfig.addChildToNodeById(0, {
                             id:        element.id,
                             name:      element.name,
                             isVisible: true,
@@ -99,7 +101,7 @@ export class SystemComponent implements OnInit
                                     children:  [],
                                     onClick: ():void =>
                                     {
-                                        this.router.navigateByUrl('plugin/system/carrier/' + name + 11 + '/user');
+                                        this.router.navigateByUrl('plugin/system/carrier/' + element.id + '/user');
                                     }
                                 },
                                 {
@@ -109,7 +111,7 @@ export class SystemComponent implements OnInit
                                     children:  [],
                                     onClick: ():void =>
                                     {
-                                        this.router.navigateByUrl('plugin/system/carrier/' + name + 12 + '/targetplace')
+                                        this.router.navigateByUrl('plugin/system/carrier/' + element.id + '/targetplace')
                                     }
                                 },
                                 {
@@ -119,7 +121,7 @@ export class SystemComponent implements OnInit
                                     children:  [],
                                     onClick: ():void =>
                                     {
-                                        this.router.navigateByUrl('plugin/system/carrier/' + name + 13 + '/categories')
+                                        this.router.navigateByUrl('plugin/system/carrier/' + element.id + '/categories')
                                     }
                                 }
                             ]
@@ -148,7 +150,7 @@ export class SystemComponent implements OnInit
                             isVisible: true,
                             onClick: ():void =>
                             {
-                                this.router.navigateByUrl('plugin/system/carrier/' + name + 11 + '/user/' + benutzer.id)
+                                this.router.navigateByUrl('plugin/system/carrier/' + id + '/user/' + benutzer.id)
                             }
                         })
                 });
@@ -162,7 +164,7 @@ export class SystemComponent implements OnInit
                             isVisible: true,
                             onClick: ():void =>
                                        {
-                                           this.router.navigateByUrl('plugin/system/carrier/' + name + 12 + '/targetplace/' + zielort.id)
+                                           this.router.navigateByUrl('plugin/system/carrier/' + id + '/targetplace/' + zielort.id)
                                        }
                         })
                 });
@@ -173,7 +175,11 @@ export class SystemComponent implements OnInit
                         {
                             id: 'kategorie ' + kategorie.id,
                             name: kategorie.name,
-                            isVisible: true
+                            isVisible: true,
+                            onClick: ():void =>
+                            {
+                                this.router.navigateByUrl('plugin/system/carrier/' + id + '/kategorie/' + kategorie.id)
+                            }
                         })
                 });
             })
