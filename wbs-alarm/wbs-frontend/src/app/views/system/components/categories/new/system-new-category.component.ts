@@ -35,6 +35,8 @@ export class SystemNewCategoryComponent
                         identifier:       'categoryCreated'
                     }
                 )
+
+                this.categoryName = '';
             },
             (error:any) =>
             {

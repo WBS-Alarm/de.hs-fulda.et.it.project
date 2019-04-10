@@ -40,7 +40,10 @@ export class SystemNewUserComponent
                         dismissOnTimeout: null,
                         identifier:       'userCreated'
                     }
-                )
+                );
+
+                this.newUser.username = '';
+                this.newUser.password = '';
             },
             (error:any) =>
             {

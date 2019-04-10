@@ -33,7 +33,9 @@ export class SystemNewTargetplaceComponent
                         type:             'success',
                         dismissOnTimeout: null,
                         identifier:       'targetPlaceCreated'
-                    })
+                    });
+
+                    this.newTargetplaceName = '':
                 },
                 (error:any) =>
                 {

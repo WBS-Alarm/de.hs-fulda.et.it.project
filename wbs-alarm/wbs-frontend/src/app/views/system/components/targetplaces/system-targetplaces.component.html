@@ -11,8 +11,8 @@
                       [inputIsDisabled]="routeData.targetPlace.erfasst">
         </terra-button>
         <terra-button [inputIcon]="'icon-visibility_private'"
-                      [inputCaption]="'Für Erfassung sperren/entsperren'"
-                      (outputClicked)="delete(routeData.targetPlace)"
+                      [inputCaption]="'Für Erfassung sperren'"
+                      (outputClicked)="lock(routeData.targetPlace)"
                       [inputIsDisabled]="routeData.targetPlace.erfasst">
         </terra-button>
     </terra-base-toolbar>

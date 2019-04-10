@@ -36,6 +36,8 @@ export class SystemCarrierComponent implements OnInit
                     identifier:       'carrierCreated'
                 });
 
+                this.newCarrierName = '';
+
                 this.nodeTreeConfig.addChildToNodeById(21,{
                     id:        result.id,
                     name:      result.name,
