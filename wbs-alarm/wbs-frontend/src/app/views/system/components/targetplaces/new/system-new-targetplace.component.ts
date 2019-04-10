@@ -35,7 +35,7 @@ export class SystemNewTargetplaceComponent
                         identifier:       'targetPlaceCreated'
                     });
 
-                    this.newTargetplaceName = '':
+                    this.newTargetplaceName = '';
                 },
                 (error:any) =>
                 {
