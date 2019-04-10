@@ -8,6 +8,9 @@ import de.hsfulda.et.wbs.core.data.GrantedAuthorityData;
 import de.hsfulda.et.wbs.security.haljson.AuthorityHalJson;
 import de.hsfulda.et.wbs.util.UriUtil;
 
+import javax.xml.bind.DatatypeConverter;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,8 +37,8 @@ public class BenutzerHalJson extends HalJsonResource {
         BenutzerHalJson hal = new BenutzerHalJson(user, benutzer, true);
 
         hal.addEmbeddedResources("authorities", granted.stream()
-            .map(g -> new AuthorityHalJson(user, g.getGroup(), benutzer))
-            .collect(Collectors.toList()));
+                .map(g -> new AuthorityHalJson(user, g.getGroup(), benutzer))
+                .collect(Collectors.toList()));
 
         return hal;
     }
@@ -60,5 +63,17 @@ public class BenutzerHalJson extends HalJsonResource {
         addProperty("username", benutzer.getUsername());
         addProperty("einkaeufer", benutzer.getEinkaeufer());
         addProperty("mail", benutzer.getMail());
+        addProperty("gravatar", getGravatarHash(benutzer.getMail()));
+    }
+
+    private String getGravatarHash(String mail) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(mail.getBytes());
+            byte[] digest = md.digest();
+            return DatatypeConverter.printHexBinary(digest).toLowerCase();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("MD5 nicht verfügbar für Mail Hashing", e);
+        }
     }
 }

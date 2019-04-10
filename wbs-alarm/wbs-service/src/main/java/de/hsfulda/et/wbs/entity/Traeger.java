@@ -28,6 +28,7 @@ public class Traeger implements TraegerData {
     private List<Zielort> zielorte;
 
     @OneToMany(mappedBy = "traeger", fetch = FetchType.LAZY)
+    @Where(clause = "aktiv = true")
     private List<Kategorie> kategorien;
 
     @OneToMany(mappedBy = "traeger", fetch = FetchType.LAZY)
