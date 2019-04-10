@@ -3,7 +3,7 @@
 <div *ngFor="let menuItem of menu" class="menu-entry" (click)="navigate(menuItem.url)">
         <div class="caption">{{ menuItem.name }}</div>
 </div>
-    <div class="menu-entry-user">
+    <div class="menu-entry right">
         <img id="user-icon" class="user-icon" [src]="userImageLink"/>
     </div>
 </div>
