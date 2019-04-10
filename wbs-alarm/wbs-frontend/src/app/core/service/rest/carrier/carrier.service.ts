@@ -98,6 +98,27 @@ export class CarrierService
             })
     }
 
+    public deleteTargetplace(targetPlace:SystemZielortInterface):Observable<any>
+    {
+        this.headers = this.sitemapHelper.setAuthorization();
+
+        return this.http.delete(this.sitemapHelper.zielort().replace('{id}', targetPlace.id.toString()),
+            {
+                headers: this.headers
+            })
+    }
+
+    public lockTargetplace(targetplace:SystemZielortInterface):Observable<any>
+    {
+        this.headers = this.sitemapHelper.setAuthorization();
+
+        return this.http.post(this.sitemapHelper.zielortLock().replace('{id}', targetplace.id.toString()),
+            {},
+            {
+                headers: this.headers
+            })
+    }
+
     public createCategory(carrierId:number, categoryName:string)
     {
         this.headers = this.sitemapHelper.setAuthorization();

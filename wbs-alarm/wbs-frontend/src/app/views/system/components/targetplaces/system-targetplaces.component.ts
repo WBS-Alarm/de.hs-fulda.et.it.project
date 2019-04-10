@@ -62,8 +62,56 @@ export class SystemTargetplacesComponent implements OnInit
             })
     }
 
-    private delete():void
+    private delete(targetPlace:SystemZielortInterface):void
     {
+        this.carrierService.deleteTargetplace(targetPlace).subscribe((result:any) =>
+            {
+                this.alert.addAlert(
+                    {
+                        msg:              'Der Zielort wurde gelöscht!',
+                        type:             'success',
+                        dismissOnTimeout: null,
+                        identifier:       'targetPlaceDeleted'
+                    }
+                )
+            },
+            (error:any) =>
+            {
+                this.alert.addAlert(
+                    {
+                        msg:              'Der Zielort konnte nicht gelöscht werden!',
+                        type:             'danger',
+                        dismissOnTimeout: null,
+                        identifier:       'targetPlaceNotDeleted'
+                    }
+                )
+            })
+    }
 
+    private lock(targetPlace:SystemZielortInterface):void
+    {
+        this.carrierService.lockTargetplace(targetPlace).subscribe(
+            (result:any) =>
+            {
+                this.alert.addAlert(
+                    {
+                        msg:              'Der Zielort wurde für die Erfassung gesperrt!',
+                        type:             'success',
+                        dismissOnTimeout: null,
+                        identifier:       'targetplaceLocked'
+                    }
+                )
+            },
+            (error:any) =>
+            {
+                this.alert.addAlert(
+                    {
+                        msg:              'Der Zielort konnte nicht für die Erfassung gesperrt werden!',
+                        type:             'success',
+                        dismissOnTimeout: null,
+                        identifier:       'targetPlaceNotLocked'
+                    }
+                )
+            })
     }
 }

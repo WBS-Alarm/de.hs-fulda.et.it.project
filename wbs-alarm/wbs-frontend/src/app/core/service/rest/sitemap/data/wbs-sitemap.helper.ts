@@ -104,6 +104,11 @@ export class WbsSitemapHelper
         return Object.values(this.siteMaps)[0]['zielort'][0].href;
     }
 
+    public zielortLock():string
+    {
+        return Object.values(this.siteMaps)[0]['zielortLock'][0].href;
+    }
+
     public kategorie():string
     {
         return Object.values(this.siteMaps)[0]['kategorie'][0].href;

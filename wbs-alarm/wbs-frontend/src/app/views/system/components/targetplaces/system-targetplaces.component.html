@@ -1,18 +1,29 @@
 <ng-container *ngIf="routeData$ | async as routeData">
-<terra-base-toolbar>
-    <terra-button [inputIcon]="'icon-save'"
-                  [inputCaption]="'Speichern'"
-                  (outputClicked)="save(routeData.targetPlace)">
-    </terra-button>
-    <terra-button [inputIcon]="'icon-delete'"
-                  [inputCaption]="'Inaktiv setzen'"
-                  (outputClicked)="delete()">
-    </terra-button>
-</terra-base-toolbar>
-
-<terra-portlet [inputPortletHeader]="'Zielort bearbeiten'">
-    <terra-text-input [inputName]="'Name'"
-                      [(ngModel)]="routeData.targetPlace.name">
-    </terra-text-input>
-</terra-portlet>
+    <terra-base-toolbar>
+        <terra-button [inputIcon]="'icon-save'"
+                      [inputCaption]="'Speichern'"
+                      (outputClicked)="save(routeData.targetPlace)"
+                      [inputIsDisabled]="routeData.targetPlace.erfasst">
+        </terra-button>
+        <terra-button [inputIcon]="'icon-delete'"
+                      [inputCaption]="'Inaktiv setzen'"
+                      (outputClicked)="delete(routeData.targetPlace)"
+                      [inputIsDisabled]="routeData.targetPlace.erfasst">
+        </terra-button>
+        <terra-button [inputIcon]="'icon-visibility_private'"
+                      [inputCaption]="'Für Erfassung sperren/entsperren'"
+                      (outputClicked)="delete(routeData.targetPlace)"
+                      [inputIsDisabled]="routeData.targetPlace.erfasst">
+        </terra-button>
+    </terra-base-toolbar>
+    
+    <terra-portlet [inputPortletHeader]="'Zielort bearbeiten'">
+        <p *ngIf="routeData.targetPlace.erfasst">
+            Dieser Zielort wurde für die Erfassung gesperrt und kann daher nicht mehr bearbeitet werden
+        </p>
+        <terra-text-input [inputName]="'Name'"
+                          [(ngModel)]="routeData.targetPlace.name"
+                          [inputIsDisabled]="routeData.targetPlace.erfasst">
+        </terra-text-input>
+    </terra-portlet>
 </ng-container>
