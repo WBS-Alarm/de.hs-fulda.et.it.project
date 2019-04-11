@@ -35,12 +35,20 @@ public class BenutzerHalJson extends HalJsonResource {
 
     public static BenutzerHalJson ofGrantedAuthorities(WbsUser user, BenutzerData benutzer, List<GrantedAuthorityData> granted) {
         BenutzerHalJson hal = new BenutzerHalJson(user, benutzer, true);
+        addEmbeddedAuthorities(user, benutzer, granted, hal);
+        return hal;
+    }
 
+    public static BenutzerHalJson ofGrantedAuthoritiesNoEmbaddables(WbsUser user, BenutzerData benutzer, List<GrantedAuthorityData> granted) {
+        BenutzerHalJson hal = new BenutzerHalJson(user, benutzer, false);
+        addEmbeddedAuthorities(user, benutzer, granted, hal);
+        return hal;
+    }
+
+    private static void addEmbeddedAuthorities(WbsUser user, BenutzerData benutzer, List<GrantedAuthorityData> granted, BenutzerHalJson hal) {
         hal.addEmbeddedResources("authorities", granted.stream()
                 .map(g -> new AuthorityHalJson(user, g.getGroup(), benutzer))
                 .collect(Collectors.toList()));
-
-        return hal;
     }
 
     public static BenutzerHalJson ofCurrent(WbsUser benutzer) {

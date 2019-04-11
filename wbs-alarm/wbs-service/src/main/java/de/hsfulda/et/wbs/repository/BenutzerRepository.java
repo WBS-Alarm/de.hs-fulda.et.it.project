@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface BenutzerRepository extends CrudRepository<Benutzer, Long> {
@@ -16,6 +17,9 @@ public interface BenutzerRepository extends CrudRepository<Benutzer, Long> {
 
     @Query("select b from Benutzer b where b.id = :id")
     Optional<BenutzerData> findByIdAsData(@Param("id") Long id);
+
+    @Query("select b from Benutzer b join b.traeger t where t.id = :traegerId and b.aktiv = true")
+    List<BenutzerData> findAllByTraegerId(@Param("traegerId") Long traegerId);
 
     @Modifying(clearAutomatically = true)
     @Query("update Benutzer b set b.einkaeufer = :einkaeufer, b.mail = :mail where b.id = :id")

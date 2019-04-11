@@ -32,6 +32,17 @@ class BenutzerResourceTest extends ResourceTest {
         assertThat(resource).isNotNull();
     }
 
+    @DisplayName("Benutzer werden zu Träger aufgelistet")
+    @Test
+    void getBenutzerList() throws Exception {
+        Long traegerId = getTraegerId(FW_TRAEGER);
+        mockMvc.perform(get(BenutzerListResource.PATH, traegerId)
+                .header("Authorization", getTokenAsSuperuser())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
     @DisplayName("wird bei gleichen Träger angezeigt")
     @Test
     void getBenutzer() throws Exception {
