@@ -39,7 +39,8 @@ export class UserAndSystemDataService
                 {
                     console.log('user has permissions');
 
-                    this.globalRegistryService.setisLoggedIn(true)
+                    this.globalRegistryService.setisLoggedIn(true);
+                    this.globalRegistryService.setGravatarHash(userData.gravatar);
                 }
                 else
                 {

@@ -7,6 +7,8 @@ import {WbsSitemapHelper} from "../../core/service/rest/sitemap/data/wbs-sitemap
 import {Router} from "@angular/router";
 import { GlobalRegistryService } from '../../core/global-registry/global-registry.service';
 import { FormGroup } from '@angular/forms';
+import { UsersService } from '../../core/service/rest/users/users.service';
+import { UserDataInterface } from '../../core/service/rest/users/user-data.interface';
 
 
 @Component({
@@ -39,6 +41,7 @@ export class AppLoginComponent implements OnInit
                 private loginService:LoginService,
                 private globalRegistryService:GlobalRegistryService,
                 private sitemapHelper:WbsSitemapHelper,
+                private userService:UsersService,
                 private router:Router)
     {
     }
@@ -87,6 +90,13 @@ export class AppLoginComponent implements OnInit
            this.sitemapHelper.Bearer = result;
            this.globalRegistryService.setisLoggedIn(true);
            this.router.navigate(['plugin', 'start']);
+
+           this.userService.getCurrentUsers().subscribe(
+               (result:any) =>
+               {
+                   this.globalRegistryService.setGravatarHash(result.gravatar)
+               }
+           )
        },
        (error:any) =>
        {
