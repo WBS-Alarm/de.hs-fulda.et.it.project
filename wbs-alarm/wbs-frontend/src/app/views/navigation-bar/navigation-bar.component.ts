@@ -70,8 +70,6 @@ export class NavigationBarComponent implements OnInit
             link += hash;
         }
 
-        link += '?d=mm';
-
         return link;
 
     }
