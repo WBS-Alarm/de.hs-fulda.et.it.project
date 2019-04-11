@@ -54,6 +54,8 @@ import {SystemEditCarrierComponent} from "./views/system/components/carrier/edit
 import {SystemCarrierResolver} from "./views/system/components/carrier/resolver/system-carrier-resolver";
 import {CategoryService} from "./core/service/rest/categories/category.service";
 import {SystemCategoryResolver} from "./views/system/components/categories/resolver/system-category.resolver";
+import { AuthoritiesService } from './core/service/rest/authorities/authorities.service';
+import { SystemAuthoritiesCompontent } from './views/system/components/authorities/system-authorities.compontent';
 
 
 @NgModule({
@@ -84,6 +86,7 @@ import {SystemCategoryResolver} from "./views/system/components/categories/resol
         SystemUserComponent,
         SystemCategoriesComponent,
         SystemNewUserComponent,
+        SystemAuthoritiesCompontent,
         SystemNewCategoryComponent,
         SystemEditCarrierComponent,
         SystemNewTargetplaceComponent,
@@ -113,6 +116,7 @@ import {SystemCategoryResolver} from "./views/system/components/categories/resol
         SystemGlobalSettingsService,
         IsLoggedInGuard,
         CarrierService,
+        AuthoritiesService,
         UserAndSystemDataService,
         WbsPreloadingStrategy,
         SystemUserResolver,

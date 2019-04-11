@@ -118,4 +118,9 @@ export class WbsSitemapHelper
     {
         return Object.values(this.siteMaps)[0]['kategorieList'][0].href;
     }
+
+    public authorities():string
+    {
+        return Object.values(this.siteMaps)[0]['authorities'][0].href;
+    }
 }
