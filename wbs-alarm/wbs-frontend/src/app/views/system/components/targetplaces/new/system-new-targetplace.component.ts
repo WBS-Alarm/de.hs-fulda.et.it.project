@@ -1,8 +1,15 @@
 import {Component} from "../../../../../../../node_modules/@angular/core";
-import { TerraAlertComponent } from '@plentymarkets/terra-components';
+import {
+    TerraAlertComponent,
+    TerraNodeTreeConfig
+} from '@plentymarkets/terra-components';
 import { CarrierService } from '../../../../../core/service/rest/carrier/carrier.service';
-import { ActivatedRoute } from '@angular/router';
+import {
+    ActivatedRoute,
+    Router
+} from '@angular/router';
 import { SystemGlobalSettingsService } from '../../../system-global-settings.service';
+import { ExampleTreeData } from '../../../system.component';
 
 @Component({
     selector: 'system-new-targetplace',
@@ -18,7 +25,9 @@ export class SystemNewTargetplaceComponent
 
     constructor(private carrierService:CarrierService,
                 private route:ActivatedRoute,
-                private systemGlobalSettings:SystemGlobalSettingsService)
+                private router:Router,
+                private systemGlobalSettings:SystemGlobalSettingsService,
+                private systemTreeConfig:TerraNodeTreeConfig<ExampleTreeData>)
     {
 
     }
@@ -36,6 +45,20 @@ export class SystemNewTargetplaceComponent
                     });
 
                     this.newTargetplaceName = '';
+
+                    this.systemGlobalSettings.setZielOrte([result]);
+
+                    this.systemTreeConfig.addChildToNodeById(this.systemTreeConfig.currentSelectedNode.id,
+                        {
+                            id:        result.id,
+                            name:      result.name,
+                            isVisible: true,
+                            onClick: ():void =>
+                                     {
+                                         this.router.navigateByUrl('plugin/system/carrier/' + this.systemGlobalSettings.getTraegerId() + '/targetplace/' + result.id)
+                                     }
+                        }
+                    )
                 },
                 (error:any) =>
                 {

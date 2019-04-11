@@ -6,6 +6,7 @@ import {
     TerraNodeTreeConfig
 } from "@plentymarkets/terra-components";
 import { ExampleTreeData } from '../../../system.component';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'system-new-categories',
@@ -20,7 +21,8 @@ export class SystemNewCategoryComponent
 
     constructor(private carrierService:CarrierService,
                 private systemGlobalSettings:SystemGlobalSettingsService,
-                private nodeTreeConfig:TerraNodeTreeConfig<ExampleTreeData>)
+                private nodeTreeConfig:TerraNodeTreeConfig<ExampleTreeData>,
+                private router:Router)
     {
 
     }
@@ -40,6 +42,20 @@ export class SystemNewCategoryComponent
                         identifier:       'categoryCreated'
                     }
                 );
+
+                this.nodeTreeConfig.addChildToNodeById(this.nodeTreeConfig.currentSelectedNode.id,
+                    {
+                        id:        result.id,
+                        name:      result.name,
+                        isVisible: true,
+                        onClick: ():void =>
+                                   {
+                                       this.router.navigateByUrl('plugin/system/carrier/' + traegerId + '/category/' + result.id)
+                                   }
+                    }
+                );
+
+                this.systemGlobalSettings.setKategorien([result]);
 
                 this.categoryName = '';
             },

@@ -2,7 +2,11 @@ import {Component} from "../../../../../../../node_modules/@angular/core";
 import {UserDataInterface} from "../../../../../core/service/rest/users/user-data.interface";
 import {UsersService} from "../../../../../core/service/rest/users/users.service";
 import {SystemGlobalSettingsService} from "../../../system-global-settings.service";
-import {TerraAlertComponent} from "@plentymarkets/terra-components";
+import {
+    TerraAlertComponent,
+    TerraNodeTreeConfig
+} from "@plentymarkets/terra-components";
+import { ExampleTreeData } from '../../../system.component';
 
 
 @Component({
@@ -21,7 +25,8 @@ export class SystemNewUserComponent
     private alert:TerraAlertComponent = TerraAlertComponent.getInstance();
 
     constructor(private usersService:UsersService,
-                private systemGlobalSettings:SystemGlobalSettingsService)
+                private systemGlobalSettings:SystemGlobalSettingsService,
+                private systemTreeConfig:TerraNodeTreeConfig<ExampleTreeData>)
     {
 
     }
@@ -41,6 +46,14 @@ export class SystemNewUserComponent
                         identifier:       'userCreated'
                     }
                 );
+
+                //this.systemTreeConfig.addChildToNodeById(this.systemTreeConfig.currentSelectedNode.id,
+                //    {
+                //        id:        result.id,
+                //        name:      result.name,
+                //        isVisible: true
+                //    }
+                //);
 
                 this.newUser.username = '';
                 this.newUser.password = '';
