@@ -75,6 +75,9 @@ public class BenutzerHalJson extends HalJsonResource {
     }
 
     private String getGravatarHash(String mail) {
+        if (mail == null) {
+            return null;
+        }
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(mail.getBytes());
