@@ -1,14 +1,18 @@
-import {Component, OnInit} from "@angular/core";
-import {Router} from "@angular/router";
-import {NavigationEnd} from "@angular/router";
-import {isNullOrUndefined} from "util";
-import {MenuDataInterface} from "./data/menu-data.interface";
-import {TranslationService} from "angular-l10n";
+import {
+    Component,
+    OnInit
+} from "@angular/core";
+import { Router } from "@angular/router";
+import { NavigationEnd } from "@angular/router";
+import { isNullOrUndefined } from "util";
+import { MenuDataInterface } from "./data/menu-data.interface";
+import { TranslationService } from "angular-l10n";
+import { GlobalRegistryService } from '../../core/global-registry/global-registry.service';
 
 @Component({
-    selector:      'navigation-bar',
-    template:      require('./navigation-bar.component.html'),
-    styles:        [require('./navigation-bar.component.scss')],
+    selector: 'navigation-bar',
+    template: require('./navigation-bar.component.html'),
+    styles:   [require('./navigation-bar.component.scss')],
 })
 export class NavigationBarComponent implements OnInit
 {
@@ -17,30 +21,31 @@ export class NavigationBarComponent implements OnInit
     private readonly gravatarUrl:string = 'https://www.gravatar.com/avatar/';
 
     private menu:Array<MenuDataInterface> = [
-    {
-        name: this.translation.translate('start'),
-        url: 'plugin/start',
-        isVisible: true
-    },
-    {
-        name: this.translation.translate('example'),
-        url: 'plugin/example',
-        isVisible: true
-    },
-    {
-        name: this.translation.translate('booking.booking'),
-        url: 'plugin/booking',
-        isVisible: true
-    },
-    {
-        name: this.translation.translate('system.system'),
-        url: 'plugin/system',
-        isVisible: true
-    }
-];
+        {
+            name:      this.translation.translate('start'),
+            url:       'plugin/start',
+            isVisible: true
+        },
+        {
+            name:      this.translation.translate('example'),
+            url:       'plugin/example',
+            isVisible: true
+        },
+        {
+            name:      this.translation.translate('booking.booking'),
+            url:       'plugin/booking',
+            isVisible: true
+        },
+        {
+            name:      this.translation.translate('system.system'),
+            url:       'plugin/system',
+            isVisible: true
+        }
+    ];
 
     constructor(private router:Router,
-                private translation:TranslationService)
+                private translation:TranslationService,
+                private globalRegistryService:GlobalRegistryService)
     {
 
     }
@@ -54,11 +59,21 @@ export class NavigationBarComponent implements OnInit
 
     protected get userImageLink():string
     {
-        let url:string = this.gravatarUrl;
+        let hash:string = this.globalRegistryService.getGravatarHash();
 
-        url += '?d=mm';
+        let gravatarBaseUrl:string = 'https://www.gravatar.com/avatar/';
 
-        return url;
+        let link:string = gravatarBaseUrl;
+
+        if(!isNullOrUndefined(hash))
+        {
+            link += hash;
+        }
+
+        link += '?d=mm';
+
+        return link;
+
     }
 
     private subscribeToRouter():void
