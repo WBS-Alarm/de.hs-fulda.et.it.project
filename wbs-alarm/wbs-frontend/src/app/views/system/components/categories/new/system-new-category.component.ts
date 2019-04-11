@@ -1,7 +1,11 @@
 import {Component} from "../../../../../../../node_modules/@angular/core";
 import {CarrierService} from "../../../../../core/service/rest/carrier/carrier.service";
 import {SystemGlobalSettingsService} from "../../../system-global-settings.service";
-import {TerraAlertComponent} from "@plentymarkets/terra-components";
+import {
+    TerraAlertComponent,
+    TerraNodeTreeConfig
+} from "@plentymarkets/terra-components";
+import { ExampleTreeData } from '../../../system.component';
 
 @Component({
     selector: 'system-new-categories',
@@ -15,7 +19,8 @@ export class SystemNewCategoryComponent
     private alert:TerraAlertComponent = TerraAlertComponent.getInstance();
 
     constructor(private carrierService:CarrierService,
-                private systemGlobalSettings:SystemGlobalSettingsService)
+                private systemGlobalSettings:SystemGlobalSettingsService,
+                private nodeTreeConfig:TerraNodeTreeConfig<ExampleTreeData>)
     {
 
     }
@@ -34,7 +39,7 @@ export class SystemNewCategoryComponent
                         dismissOnTimeout: null,
                         identifier:       'categoryCreated'
                     }
-                )
+                );
 
                 this.categoryName = '';
             },
