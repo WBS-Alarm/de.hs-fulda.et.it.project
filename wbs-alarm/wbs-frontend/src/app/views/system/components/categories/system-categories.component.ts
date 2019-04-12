@@ -74,6 +74,8 @@ export class SystemCategoriesComponent
                         identifier:       'categoryDeleted'
                     }
                 )
+
+                this.systemTreeConfig.removeNodeById(this.systemTreeConfig.currentSelectedNode.id)
             },
             (error:any)=>
             {

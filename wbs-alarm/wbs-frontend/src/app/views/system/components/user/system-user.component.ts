@@ -73,4 +73,33 @@ export class SystemUserComponent implements OnInit
             }
         )
     }
+
+    protected delete(user:UserDataInterface)
+    {
+        this.usersService.deleteUser(user.id).subscribe(
+            (result:any) =>
+        {
+            this.alert.addAlert(
+                {
+                    msg:              'Der Benutzer wurde gelöscht',
+                    type:             'success',
+                    dismissOnTimeout: null,
+                    identifier:       'userDeleted'
+                }
+            );
+
+            this.systemTreeConfig.removeNodeById(this.systemTreeConfig.currentSelectedNode.id)
+        },
+            (error:any) =>
+            {
+                this.alert.addAlert(
+                    {
+                        msg:              'Der Benutzer konnte nicht gelöscht werden',
+                        type:             'danger',
+                        dismissOnTimeout: null,
+                        identifier:       'userNotDeleted'
+                    }
+                )
+            })
+    }
 }
