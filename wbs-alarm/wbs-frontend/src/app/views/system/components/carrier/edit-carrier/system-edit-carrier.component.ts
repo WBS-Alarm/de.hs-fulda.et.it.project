@@ -45,6 +45,8 @@ export class SystemEditCarrierComponent implements OnInit
                         identifier:       'carrierEdited'
                     }
                 )
+
+                this.systemTreeConfig.currentSelectedNode.name = carrier.name;
             },
             (error:any) =>
             {

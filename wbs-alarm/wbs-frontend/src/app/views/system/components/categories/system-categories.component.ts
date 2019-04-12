@@ -43,7 +43,8 @@ export class SystemCategoriesComponent
                     dismissOnTimeout: null,
                     identifier:       'categoryEdited'
                 }
-            )
+            );
+            this.systemTreeConfig.currentSelectedNode.name = category.name;
         },
             (error:any) =>
             {

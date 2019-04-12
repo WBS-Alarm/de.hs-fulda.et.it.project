@@ -50,7 +50,7 @@ export class SystemNewTargetplaceComponent
 
                     this.systemTreeConfig.addChildToNodeById(this.systemTreeConfig.currentSelectedNode.id,
                         {
-                            id:        result.id,
+                            id:        'zielort' + result.id,
                             name:      result.name,
                             isVisible: true,
                             onClick: ():void =>

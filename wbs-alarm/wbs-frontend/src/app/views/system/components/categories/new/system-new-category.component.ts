@@ -45,7 +45,7 @@ export class SystemNewCategoryComponent
 
                 this.nodeTreeConfig.addChildToNodeById(this.nodeTreeConfig.currentSelectedNode.id,
                     {
-                        id:        result.id,
+                        id:        'kategorie' + result.id,
                         name:      result.name,
                         isVisible: true,
                         onClick: ():void =>

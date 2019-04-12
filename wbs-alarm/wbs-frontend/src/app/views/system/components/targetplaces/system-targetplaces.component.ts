@@ -3,7 +3,10 @@ import {
     OnInit
 } from '@angular/core';
 import { CarrierService } from '../../../../core/service/rest/carrier/carrier.service';
-import { TerraAlertComponent } from '@plentymarkets/terra-components';
+import {
+    TerraAlertComponent,
+    TerraNodeTreeConfig
+} from '@plentymarkets/terra-components';
 import {
     ActivatedRoute,
     Data
@@ -11,6 +14,7 @@ import {
 import { Observable } from "rxjs";
 import { SystemGlobalSettingsService } from '../../system-global-settings.service';
 import { SystemZielortInterface } from './data/system-zielort.interface';
+import { ExampleTreeData } from '../../system.component';
 
 @Component({
     selector: 'system-targetplace',
@@ -25,7 +29,8 @@ export class SystemTargetplacesComponent implements OnInit
 
     constructor(private carrierService:CarrierService,
                 private route:ActivatedRoute,
-                private systemGlobalSettings:SystemGlobalSettingsService)
+                private systemGlobalSettings:SystemGlobalSettingsService,
+                private systemTreeConfig:TerraNodeTreeConfig<ExampleTreeData>)
     {
 
     }
@@ -48,6 +53,8 @@ export class SystemTargetplacesComponent implements OnInit
                         identifier:       'targetPlaceEdited'
                     }
                 )
+
+                this.systemTreeConfig.currentSelectedNode.name = targetPlace.name;
             },
             (error:any) =>
             {
@@ -73,7 +80,9 @@ export class SystemTargetplacesComponent implements OnInit
                         dismissOnTimeout: null,
                         identifier:       'targetPlaceDeleted'
                     }
-                )
+                );
+
+                this.systemTreeConfig.removeNodeById(targetPlace.id)
             },
             (error:any) =>
             {
