@@ -4,17 +4,20 @@ import de.hsfulda.et.wbs.action.zielort.CreateZielortAction;
 import de.hsfulda.et.wbs.action.zielort.GetZielortListAction;
 import de.hsfulda.et.wbs.core.HalJsonResource;
 import de.hsfulda.et.wbs.core.WbsUser;
-import de.hsfulda.et.wbs.http.haljson.ZielortHalJson;
+import de.hsfulda.et.wbs.core.data.ZielortData;
 import de.hsfulda.et.wbs.http.haljson.ZielortListHalJson;
 import de.hsfulda.et.wbs.http.resource.dto.ZielortDtoImpl;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
 import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
+import static de.hsfulda.et.wbs.util.HeaderUtil.locationHeader;
 
 /**
  * Auf der Resource Zielorte können alle Zielorte zu einem Träger abgerufen werden und neue Zielorte erstellt werden.
@@ -54,7 +57,6 @@ public class ZielortListResource {
      * @param zielort   Neuer Zielort.
      * @return Persistierter Zielort.
      */
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
     HttpEntity<HalJsonResource> post(
@@ -62,6 +64,8 @@ public class ZielortListResource {
             @PathVariable("traegerId") Long traegerId,
             @RequestBody ZielortDtoImpl zielort) {
 
-        return new HttpEntity<>(new ZielortHalJson(user, postAction.perform(user, traegerId, zielort)));
+        ZielortData newZielort = postAction.perform(user, traegerId, zielort);
+        MultiValueMap<String, String> header = locationHeader(ZielortResource.PATH, newZielort.getId());
+        return new ResponseEntity<>(header, HttpStatus.CREATED);
     }
 }

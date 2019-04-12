@@ -12,11 +12,11 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @DisplayName("Die Groesse Resource")
 class GroesseeResourceTest extends ResourceTest {
@@ -63,9 +63,7 @@ class GroesseeResourceTest extends ResourceTest {
             .contentType(MediaType.APPLICATION_JSON)
             .content("{\n \"name\": \"S\"\n}"))
             .andExpect(status().isCreated())
-            .andExpect(jsonPath("$._links.self[0].templated", is(false)))
-            .andExpect(jsonPath("$.name", is("S")))
-            .andExpect(jsonPath("$._embedded.kategorie[0].name", is("Polo-Hemd")));
+                .andExpect(header().string("Location", startsWith("/wbs/groesse/")));
     }
 
     @DisplayName("bei Änderungen")

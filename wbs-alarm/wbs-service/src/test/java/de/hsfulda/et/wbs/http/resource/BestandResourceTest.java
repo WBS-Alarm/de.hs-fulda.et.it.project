@@ -13,11 +13,11 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.junit.Assert.assertFalse;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @DisplayName("Die Bestand Resource")
 class BestandResourceTest extends ResourceTest {
@@ -85,9 +85,7 @@ class BestandResourceTest extends ResourceTest {
             .contentType(MediaType.APPLICATION_JSON)
             .content("{\n \"anzahl\": 5,\n \"groesseId\" : " + groesseId + "\n}"))
             .andExpect(status().isCreated())
-            .andExpect(jsonPath("$._links.self[0].templated", is(false)))
-            .andExpect(jsonPath("$.anzahl", is(5)))
-            .andExpect(jsonPath("$._embedded.zielort[0].name", is("Wäscherei")));
+            .andExpect(header().string("Location", startsWith("/wbs/bestand/")));
     }
 
     @DisplayName("bei Änderungen")

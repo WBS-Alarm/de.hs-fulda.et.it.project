@@ -10,9 +10,9 @@ import org.springframework.http.MediaType;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @DisplayName("Die Traeger Resource")
 class TraegerListResourceTest extends ResourceTest {
@@ -50,8 +50,7 @@ class TraegerListResourceTest extends ResourceTest {
                 .content("{\n \"name\": \"Kassel\"\n}")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$._links.self[0].templated", is(false)))
-                .andExpect(jsonPath("$.name", is("Kassel")));
+                .andExpect(header().string("Location", startsWith("/wbs/traeger/")));
     }
 
     @DisplayName("kann keinen neuen Träger als lesender Anwender erstellen")

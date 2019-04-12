@@ -10,8 +10,7 @@ import org.springframework.http.MediaType;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 @DisplayName("Registriertung eines Benutzers")
@@ -35,7 +34,8 @@ class RegisterUserIntegrationTest extends ResourceTest {
                     .contentType(MediaType.APPLICATION_JSON)
                     .content("{\n  \"username\": \"Paul\",\n  \"password\": \"1234\"\n}")
                     .header("Authorization", bearerToken))
-                    .andExpect(status().isCreated());
+                    .andExpect(status().isCreated())
+                    .andExpect(header().string("Location", startsWith("/wbs/benutzer/")));
         }
 
         @DisplayName("erstellt nicht Paul mit Password 1234 zu unbekannten Träger")
