@@ -4,6 +4,10 @@
                       [inputCaption]="'Speichern'"
                       (outputClicked)="save(routeData.user)">
         </terra-button>
+        <terra-button [inputIcon]="'icon-delete'"
+                      [inputCaption]="'Löschen'"
+                      (outputClicked)="delete(routeData.user)">
+        </terra-button>
     </terra-base-toolbar>
     
     <terra-portlet [inputPortletHeader]="'Benutzer bearbeiten'">

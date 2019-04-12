@@ -82,7 +82,7 @@ export class SystemTargetplacesComponent implements OnInit
                     }
                 );
 
-                this.systemTreeConfig.removeNodeById(targetPlace.id)
+                this.systemTreeConfig.removeNodeById(this.systemTreeConfig.currentSelectedNode.id)
             },
             (error:any) =>
             {

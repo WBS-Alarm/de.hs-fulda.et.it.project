@@ -74,6 +74,8 @@ export class SystemEditCarrierComponent implements OnInit
                         identifier:       'carrierDeleted'
                     }
                 )
+
+                this.systemTreeConfig.removeNodeById(this.systemTreeConfig.currentSelectedNode.id)
             },
             (error:any) =>
             {
