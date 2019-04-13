@@ -4,17 +4,20 @@ import de.hsfulda.et.wbs.action.bestand.CreateBestandAction;
 import de.hsfulda.et.wbs.action.bestand.GetBestandListAction;
 import de.hsfulda.et.wbs.core.HalJsonResource;
 import de.hsfulda.et.wbs.core.WbsUser;
-import de.hsfulda.et.wbs.http.haljson.BestandHalJson;
+import de.hsfulda.et.wbs.core.data.BestandData;
 import de.hsfulda.et.wbs.http.haljson.BestandListHalJson;
 import de.hsfulda.et.wbs.http.resource.dto.BestandCreateDtoImpl;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
 import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
+import static de.hsfulda.et.wbs.util.HeaderUtil.locationHeader;
 
 /**
  * Auf der Resource Bestände können alle Bestand zu einem Zielort aufgelistet werden.
@@ -54,7 +57,6 @@ public class BestandListResource {
      * @param bestand Neuer Bestand.
      * @return Persistierter Zielort.
      */
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
     HttpEntity<HalJsonResource> post(
@@ -62,6 +64,8 @@ public class BestandListResource {
         @PathVariable("zielortId") Long zielortId,
         @RequestBody BestandCreateDtoImpl bestand) {
 
-        return new HttpEntity<>(new BestandHalJson(user, postAction.perform(user, zielortId, bestand)));
+        BestandData newBestand = postAction.perform(user, zielortId, bestand);
+        MultiValueMap<String, String> header = locationHeader(BestandResource.PATH, newBestand.getId());
+        return new ResponseEntity<>(header, HttpStatus.CREATED);
     }
 }

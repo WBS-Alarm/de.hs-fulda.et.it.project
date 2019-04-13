@@ -4,17 +4,20 @@ import de.hsfulda.et.wbs.action.traeger.CreateTraegerAction;
 import de.hsfulda.et.wbs.action.traeger.GetTraegerListAction;
 import de.hsfulda.et.wbs.core.HalJsonResource;
 import de.hsfulda.et.wbs.core.WbsUser;
-import de.hsfulda.et.wbs.http.haljson.TraegerHalJson;
+import de.hsfulda.et.wbs.core.data.TraegerData;
 import de.hsfulda.et.wbs.http.haljson.TraegerListHalJson;
 import de.hsfulda.et.wbs.http.resource.dto.TraegerDtoImpl;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
 import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
+import static de.hsfulda.et.wbs.util.HeaderUtil.locationHeader;
 
 /**
  * Über die Träger Listen Resource können ale Träger aufgelistet werden und neue Träger hinzugefügt werden.
@@ -52,10 +55,11 @@ public class TraegerListResource {
      * @param traeger Neuer Träger.
      * @return Erstellter Träger.
      */
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('ADMIN')")
     HttpEntity<HalJsonResource> post(@AuthenticationPrincipal WbsUser user, @RequestBody TraegerDtoImpl traeger) {
-        return new HttpEntity<>(new TraegerHalJson(user, postAction.perform(traeger)));
+        TraegerData newTraeger = postAction.perform(traeger);
+        MultiValueMap<String, String> header = locationHeader(TraegerResource.PATH, newTraeger.getId());
+        return new ResponseEntity<>(header, HttpStatus.CREATED);
     }
 }

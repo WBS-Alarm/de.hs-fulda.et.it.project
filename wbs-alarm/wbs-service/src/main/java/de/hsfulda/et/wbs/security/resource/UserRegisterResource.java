@@ -2,7 +2,9 @@ package de.hsfulda.et.wbs.security.resource;
 
 import de.hsfulda.et.wbs.action.benutzer.CreateBenutzerAction;
 import de.hsfulda.et.wbs.core.data.BenutzerData;
+import de.hsfulda.et.wbs.http.resource.BenutzerResource;
 import de.hsfulda.et.wbs.security.resource.dto.BenutzerCreateDtoImpl;
+import de.hsfulda.et.wbs.util.UriUtil;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +44,7 @@ public class UserRegisterResource {
     ResponseEntity<Void> post(@PathVariable("traegerId") Long traegerId, @RequestBody final BenutzerCreateDtoImpl benutzer) {
         BenutzerData user = postAction.perform(traegerId, benutzer);
         MultiValueMap<String, String> header = new HttpHeaders();
-        header.put("Location", Collections.singletonList("../../" + user.getId()));
+        header.put("Location", Collections.singletonList(UriUtil.build(BenutzerResource.PATH, user.getId())));
         return new ResponseEntity<>(header, HttpStatus.CREATED);
     }
 
