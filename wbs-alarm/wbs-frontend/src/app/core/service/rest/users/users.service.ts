@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient,
     HttpHeaders } from "@angular/common/http";
 import { WbsSitemapHelper } from '../sitemap/data/wbs-sitemap.helper';
-import { Observable } from "rxjs/Observable";
+import { Observable } from "rxjs";
 import {UserDataInterface} from "./user-data.interface";
 
 @Injectable()

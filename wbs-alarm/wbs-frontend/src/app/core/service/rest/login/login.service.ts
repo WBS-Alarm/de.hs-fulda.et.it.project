@@ -4,7 +4,7 @@ import {
     HttpClient,
     HttpHeaders
 } from '../../../../../../node_modules/@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 
 @Injectable()
