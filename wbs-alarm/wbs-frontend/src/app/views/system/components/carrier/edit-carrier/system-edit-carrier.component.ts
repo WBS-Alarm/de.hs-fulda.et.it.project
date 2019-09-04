@@ -1,4 +1,4 @@
-import {Component, OnInit} from "../../../../../../../node_modules/@angular/core";
+import {Component, OnInit} from '../../../../../../../node_modules/@angular/core';
 import {ActivatedRoute, Data} from "../../../../../../../node_modules/@angular/router";
 import {TerraAlertComponent, TerraNodeTreeConfig} from "@plentymarkets/terra-components";
 import {UsersService} from "../../../../../core/service/rest/users/users.service";

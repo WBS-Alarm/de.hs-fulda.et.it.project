@@ -67,7 +67,7 @@ module.exports = {
                     {
                         loader: 'sass-resources-loader',
                         options: {
-                            resources: helpers.root('./node_modules/@plentymarkets/terra-components/app/styles/_variables.scss')
+                            resources: helpers.root('./node_modules/@plentymarkets/terra-components/styles/_variables.scss')
                         }
                     }
                 ]
