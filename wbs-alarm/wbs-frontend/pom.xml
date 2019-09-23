@@ -70,7 +70,7 @@
               <executable>npm</executable>
               <arguments>
                 <argument>run</argument>
-                <argument>build</argument>
+                <argument>just_build</argument>
               </arguments>
             </configuration>
           </execution>

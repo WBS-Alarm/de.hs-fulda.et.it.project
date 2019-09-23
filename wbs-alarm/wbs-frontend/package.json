@@ -4,6 +4,7 @@
 	"license": "MIT",
 	"scripts": {
 		"start": "webpack-dev-server --progress --watch --profile --config config/webpack.dev.js",
+		"just_build": "webpack --progress --profile --bail --display-error-details --config config/webpack.prod.js",
 		"build": "npm run clean:dist && webpack --progress --profile --bail --display-error-details --config config/webpack.prod.js",
 		"clean_all": "rm -rf node_modules/ && rm -rf node/ && rm -rf dist/",
 		"clean:dist": "npm run rimraf -- dist",
