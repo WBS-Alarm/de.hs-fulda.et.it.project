@@ -3,10 +3,14 @@ import {
     Injector
 } from "@angular/core";
 import { UsersService } from './users.service';
-import { Observable } from "rxjs/Observable";
 import { GlobalRegistryService } from '../../../global-registry/global-registry.service';
 import {GetSitemapService} from "../sitemap/wbs-sitemap.service";
 import {WbsSitemapHelper} from "../sitemap/data/wbs-sitemap.helper";
+import {
+    Observable,
+    of
+} from 'rxjs';
+import { combineLatest } from 'rxjs/operators';
 
 
 @Injectable()
@@ -31,27 +35,28 @@ export class UserAndSystemDataService
             this.sitemapHelper.sitemaps = result;
         });
 
-        return Observable.combineLatest(
-            this.userService.getCurrentUsers(),
-            (userData) =>
-            {
-                if(userData)
-                {
-                    console.log('user has permissions');
-
-                    this.globalRegistryService.setisLoggedIn(true);
-                    this.globalRegistryService.setGravatarHash(userData.gravatar);
-                }
-                else
-                {
-                    this.redirectToLoginPage()
-                }
-            }
-        ).catch((error:Error) =>
-        {
-            this.redirectToLoginPage();
-            return Observable.of(error);
-        }).toPromise()
+        return null;
+        //return combineLatest(
+        //    this.userService.getCurrentUsers(),
+        //    (userData) =>
+        //    {
+        //        if(userData)
+        //        {
+        //            console.log('user has permissions');
+        //
+        //            this.globalRegistryService.setisLoggedIn(true);
+        //            this.globalRegistryService.setGravatarHash(userData.gravatar);
+        //        }
+        //        else
+        //        {
+        //            this.redirectToLoginPage()
+        //        }
+        //    }
+        //).catch((error:Error) =>
+        //{
+        //    this.redirectToLoginPage();
+        //    return of(error);
+        //}).toPromise()
     }
 
     public redirectToLoginPage():void

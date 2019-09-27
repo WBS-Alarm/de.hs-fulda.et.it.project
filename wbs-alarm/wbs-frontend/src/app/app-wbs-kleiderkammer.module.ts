@@ -12,7 +12,7 @@ import {
 import { FormsModule } from '@angular/forms';
 import { l10nConfig } from './core/localization/l10n.config';
 import { HttpClientModule } from '@angular/common/http';
-import { TerraComponentsModule } from '@plentymarkets/terra-components/app';
+import { TerraComponentsModule } from '@plentymarkets/terra-components';
 import { RouterModule } from '@angular/router';
 import {
     appRoutingProviders,
@@ -66,7 +66,7 @@ import { SystemAuthoritiesCompontent } from './views/system/components/authoriti
         HttpClientModule,
         TranslationModule.forRoot(l10nConfig),
         //RouterModule.forRoot([]),
-        TerraComponentsModule.forRoot(),
+        TerraComponentsModule,
         routing
     ],
     declarations: [

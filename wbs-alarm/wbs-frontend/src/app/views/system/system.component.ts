@@ -5,7 +5,7 @@ import {
 import { TerraNodeTreeConfig } from "@plentymarkets/terra-components";
 import { TranslationService } from "angular-l10n";
 import { CarrierService } from "../../core/service/rest/carrier/carrier.service";
-import { Observable } from "rxjs/observable";
+import { Observable } from "rxjs";
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import {SystemGlobalSettingsService} from "./system-global-settings.service";

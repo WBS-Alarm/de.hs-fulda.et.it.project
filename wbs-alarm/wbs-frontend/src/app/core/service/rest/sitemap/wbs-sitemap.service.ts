@@ -1,6 +1,6 @@
 import {HttpClient} from "../../../../../../node_modules/@angular/common/http";
 import {Injectable} from "../../../../../../node_modules/@angular/core";
-import {Observable} from "rxjs/Observable";
+import {Observable} from "rxjs";
 
 @Injectable()
 export class GetSitemapService
