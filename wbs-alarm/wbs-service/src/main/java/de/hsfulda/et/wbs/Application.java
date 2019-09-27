@@ -1,22 +1,28 @@
 package de.hsfulda.et.wbs;
 
+import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = ErrorMvcAutoConfiguration.class)
 public class Application extends SpringBootServletInitializer {
 
     public static final String CONTEXT_ROOT = "/wbs";
 
-    public static void main(String[] args) {
-        SpringApplication.run(Application.class, args); // :8080
-    }
-
-    // Override the configure method from the SpringBootServletInitializer class
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-        return builder.sources(Application.class);
+        return configureApplication(builder);
+    }
+
+    public static void main(String[] args) {
+        configureApplication(new SpringApplicationBuilder()).run(args);
+    }
+
+    private static SpringApplicationBuilder configureApplication(SpringApplicationBuilder builder) {
+        return builder.sources(Application.class).bannerMode(Banner.Mode.OFF);
     }
 }

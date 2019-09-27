@@ -23,6 +23,9 @@
         <junit.vintage.version>5.1.1</junit.vintage.version>
         <junit.platform.version>1.1.1</junit.platform.version>
         <mockito.version>2.17.0</mockito.version>
+
+        <tomcat.version>9.0.26</tomcat.version>
+        <start-class>de.hsfulda.et.wbs.Application</start-class>
     </properties>
 
     <dependencies>
@@ -150,6 +153,7 @@
     </dependencies>
 
     <build>
+        <finalName>wbs-service</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
