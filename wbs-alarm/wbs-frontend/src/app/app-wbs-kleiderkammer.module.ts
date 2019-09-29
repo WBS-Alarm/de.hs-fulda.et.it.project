@@ -56,6 +56,7 @@ import {CategoryService} from "./core/service/rest/categories/category.service";
 import {SystemCategoryResolver} from "./views/system/components/categories/resolver/system-category.resolver";
 import { AuthoritiesService } from './core/service/rest/authorities/authorities.service';
 import { SystemAuthoritiesCompontent } from './views/system/components/authorities/system-authorities.compontent';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -67,6 +68,7 @@ import { SystemAuthoritiesCompontent } from './views/system/components/authoriti
         TranslationModule.forRoot(l10nConfig),
         //RouterModule.forRoot([]),
         TerraComponentsModule,
+        BrowserAnimationsModule,
         routing
     ],
     declarations: [
