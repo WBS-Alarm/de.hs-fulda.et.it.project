@@ -21,7 +21,8 @@ export class IsLoggedInGuard
 
     public canActivate(route:ActivatedRouteSnapshot, state:RouterStateSnapshot):boolean
     {
-        if(localStorage.getItem('accessToken') && this.globalRegistryService.getIsLoggedIn())
+        //if(localStorage.getItem('accessToken') && this.globalRegistryService.getIsLoggedIn())
+        if(localStorage.getItem('accessToken'))
         {
             return true
         }
