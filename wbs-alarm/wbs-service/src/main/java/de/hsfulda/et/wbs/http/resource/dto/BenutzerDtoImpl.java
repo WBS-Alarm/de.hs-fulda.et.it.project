@@ -1,6 +1,6 @@
 package de.hsfulda.et.wbs.http.resource.dto;
 
-import de.hsfulda.et.wbs.core.data.BenutzerDto;
+import de.hsfulda.et.wbs.core.dto.BenutzerDto;
 
 public class BenutzerDtoImpl implements BenutzerDto {
 

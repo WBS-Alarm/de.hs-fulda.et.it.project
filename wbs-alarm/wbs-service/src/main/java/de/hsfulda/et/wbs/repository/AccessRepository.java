@@ -48,4 +48,11 @@ public interface AccessRepository extends Repository<Traeger, Long> {
         "where b.id = :userId " +
         "and bs.id = :bestandId")
     Long findTraegerByUserAndBestandId(@Param("userId") Long id, @Param("bestandId") Long bestandId);
+
+    @Query("SELECT COUNT(t) FROM Traeger t " +
+        "JOIN t.benutzer b " +
+        "JOIN t.zielorte z " +
+        "where b.id = :userId " +
+        "and z.id = (SELECT v.id FROM Transaktion t JOIN t.von v WHERE t.id = :transaktionId)")
+    Long findTraegerByUserAndTransaktionId(@Param("userId") Long id, @Param("transaktionId") Long transaktionId);
 }

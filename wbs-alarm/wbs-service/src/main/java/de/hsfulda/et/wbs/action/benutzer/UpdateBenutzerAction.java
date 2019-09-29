@@ -2,7 +2,7 @@ package de.hsfulda.et.wbs.action.benutzer;
 
 import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.BenutzerData;
-import de.hsfulda.et.wbs.core.data.BenutzerDto;
+import de.hsfulda.et.wbs.core.dto.BenutzerDto;
 
 public interface UpdateBenutzerAction {
 

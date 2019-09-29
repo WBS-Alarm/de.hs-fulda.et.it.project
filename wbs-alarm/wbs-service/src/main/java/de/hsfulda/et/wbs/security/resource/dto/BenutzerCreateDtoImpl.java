@@ -1,6 +1,6 @@
 package de.hsfulda.et.wbs.security.resource.dto;
 
-import de.hsfulda.et.wbs.core.data.BenutzerCreateDto;
+import de.hsfulda.et.wbs.core.dto.BenutzerCreateDto;
 
 public class BenutzerCreateDtoImpl implements BenutzerCreateDto {
 

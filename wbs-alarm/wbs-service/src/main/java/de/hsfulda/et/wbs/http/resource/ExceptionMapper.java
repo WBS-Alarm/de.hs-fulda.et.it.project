@@ -30,6 +30,11 @@ public class ExceptionMapper {
         return toResponse(HttpStatus.LOCKED, exc);
     }
 
+    @ExceptionHandler(TransaktionValidationException.class)
+    public final ResponseEntity<HalJsonResource> transaktionValidationException(Throwable exc) {
+        return toResponse(HttpStatus.BAD_REQUEST, exc);
+    }
+
     private ResponseEntity<HalJsonResource> toResponse(HttpStatus status, Throwable exc) {
         HalJsonResource message = new HalJsonResource();
         message.addProperty("message", exc.getMessage());

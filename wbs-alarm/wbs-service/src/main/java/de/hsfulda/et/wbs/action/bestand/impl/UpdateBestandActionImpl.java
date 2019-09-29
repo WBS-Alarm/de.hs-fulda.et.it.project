@@ -3,7 +3,7 @@ package de.hsfulda.et.wbs.action.bestand.impl;
 import de.hsfulda.et.wbs.action.bestand.UpdateBestandAction;
 import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.BestandData;
-import de.hsfulda.et.wbs.core.data.BestandDto;
+import de.hsfulda.et.wbs.core.dto.BestandDto;
 import de.hsfulda.et.wbs.core.exception.ResourceNotFoundException;
 import de.hsfulda.et.wbs.core.exception.ZielortLockedException;
 import de.hsfulda.et.wbs.repository.BestandRepository;

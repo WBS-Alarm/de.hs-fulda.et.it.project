@@ -3,7 +3,7 @@ package de.hsfulda.et.wbs.action.zielort.impl;
 import de.hsfulda.et.wbs.action.zielort.CreateZielortAction;
 import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.ZielortData;
-import de.hsfulda.et.wbs.core.data.ZielortDto;
+import de.hsfulda.et.wbs.core.dto.ZielortDto;
 import de.hsfulda.et.wbs.entity.Traeger;
 import de.hsfulda.et.wbs.entity.Zielort;
 import de.hsfulda.et.wbs.repository.TraegerRepository;

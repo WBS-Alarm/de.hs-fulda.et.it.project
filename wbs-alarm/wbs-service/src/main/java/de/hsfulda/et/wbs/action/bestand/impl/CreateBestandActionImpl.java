@@ -2,8 +2,8 @@ package de.hsfulda.et.wbs.action.bestand.impl;
 
 import de.hsfulda.et.wbs.action.bestand.CreateBestandAction;
 import de.hsfulda.et.wbs.core.WbsUser;
-import de.hsfulda.et.wbs.core.data.BestandCreateDto;
 import de.hsfulda.et.wbs.core.data.BestandData;
+import de.hsfulda.et.wbs.core.dto.BestandCreateDto;
 import de.hsfulda.et.wbs.core.exception.BestandAlreadyExistsException;
 import de.hsfulda.et.wbs.core.exception.ResourceNotFoundException;
 import de.hsfulda.et.wbs.entity.Bestand;
@@ -70,7 +70,7 @@ public class CreateBestandActionImpl implements CreateBestandAction {
             throw new IllegalArgumentException("Die Anzahl im Bestand darf nicht negativ sein.");
         }
 
-        Optional<BestandData> existing = repo.findAllByZielortIdAndGroesseId(zielortId, groesseId);
+        Optional<BestandData> existing = repo.findByZielortIdAndGroesseId(zielortId, groesseId);
         if (existing.isPresent()) {
             throw new BestandAlreadyExistsException("Bestand kann nicht angelegt werden. Dieser existiert bereits.");
         }

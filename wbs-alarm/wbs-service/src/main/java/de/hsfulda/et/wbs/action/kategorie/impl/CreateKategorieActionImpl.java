@@ -3,7 +3,7 @@ package de.hsfulda.et.wbs.action.kategorie.impl;
 import de.hsfulda.et.wbs.action.kategorie.CreateKategorieAction;
 import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.KategorieData;
-import de.hsfulda.et.wbs.core.data.KategorieDto;
+import de.hsfulda.et.wbs.core.dto.KategorieDto;
 import de.hsfulda.et.wbs.entity.Kategorie;
 import de.hsfulda.et.wbs.entity.Traeger;
 import de.hsfulda.et.wbs.repository.KategorieRepository;

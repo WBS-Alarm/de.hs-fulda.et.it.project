@@ -1,11 +1,14 @@
 package de.hsfulda.et.wbs.entity;
 
 
+import de.hsfulda.et.wbs.core.data.GroesseData;
+import de.hsfulda.et.wbs.core.data.PositionData;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "POSITIONEN")
-public class Position {
+public class Position implements PositionData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,13 +23,10 @@ public class Position {
     @JoinColumn(name = "GROESSE_ID")
     private Groesse groesse;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "KATEGORIE_ID")
-    private Kategorie kategorie;
-
     protected Position() {
     }
 
+    @Override
     public Long getId() {
         return id;
     }
@@ -35,6 +35,7 @@ public class Position {
         this.id = id;
     }
 
+    @Override
     public Long getAnzahl() {
         return anzahl;
     }
@@ -51,19 +52,12 @@ public class Position {
         this.transaktion = transaktion;
     }
 
-    public Groesse getGroesse() {
+    @Override
+    public GroesseData getGroesse() {
         return groesse;
     }
 
     public void setGroesse(Groesse groesse) {
         this.groesse = groesse;
-    }
-
-    public Kategorie getKategorie() {
-        return kategorie;
-    }
-
-    public void setKategorie(Kategorie kategorie) {
-        this.kategorie = kategorie;
     }
 }

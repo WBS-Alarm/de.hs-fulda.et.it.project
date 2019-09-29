@@ -9,8 +9,10 @@ public enum Roles {
 
     ADMIN(new String[]{Auth.ADMIN}, RoleName.ADMIN),
     TR_MAN(new String[]{Auth.ADMIN, Auth.CONTROL}, RoleName.TRAEGER_MANAGER),
+    AC_MAN(new String[]{Auth.WRITE}, RoleName.ACCOUTANT),
     RE_ALL(new String[]{Auth.ADMIN, Auth.CONTROL, Auth.MANAGE, Auth.WRITE, Auth.READ}, RoleName.READ_ALL);
 
+    public static final String ACCOU = "ACCOUTANT";
     public static final String TRMAN = "TRAEGER_MANAGER";
     public static final String REALL = "READ_ALL";
 
@@ -41,6 +43,7 @@ public enum Roles {
     public interface RoleName {
         String ADMIN = "ADMIN";
         String TRAEGER_MANAGER = "TRAEGER_MANAGER";
+        String ACCOUTANT = "ACCOUNTANT";
         String READ_ALL = "READ_ALL";
     }
 

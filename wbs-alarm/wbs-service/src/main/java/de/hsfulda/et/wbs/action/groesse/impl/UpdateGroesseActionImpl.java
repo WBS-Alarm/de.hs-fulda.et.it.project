@@ -3,7 +3,7 @@ package de.hsfulda.et.wbs.action.groesse.impl;
 import de.hsfulda.et.wbs.action.groesse.UpdateGroesseAction;
 import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.GroesseData;
-import de.hsfulda.et.wbs.core.data.GroesseDto;
+import de.hsfulda.et.wbs.core.dto.GroesseDto;
 import de.hsfulda.et.wbs.core.exception.ResourceNotFoundException;
 import de.hsfulda.et.wbs.repository.GroesseRepository;
 import de.hsfulda.et.wbs.service.AccessService;

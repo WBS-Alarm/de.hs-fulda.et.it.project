@@ -1,6 +1,6 @@
 package de.hsfulda.et.wbs.http.resource.dto;
 
-import de.hsfulda.et.wbs.core.data.TraegerDto;
+import de.hsfulda.et.wbs.core.dto.TraegerDto;
 
 public class TraegerDtoImpl implements TraegerDto {
 

@@ -18,7 +18,7 @@ public interface ZielortRepository extends CrudRepository<Zielort, Long> {
     @Query("select z from Zielort z join z.traeger t where t.id = :traegerId")
     List<ZielortData> findAllByTraegerId(@Param("traegerId") Long traegerId);
 
-    Optional<Zielort> findByIdAndAktivIsTrue(Long id);
+    Optional<ZielortData> findByIdAndAktivIsTrue(Long id);
 
     @Query("select z.auto from Zielort z where z.id = :id")
     boolean isAutomated(@Param("id") Long id);

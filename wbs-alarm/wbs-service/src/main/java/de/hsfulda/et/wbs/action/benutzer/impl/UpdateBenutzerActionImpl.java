@@ -3,7 +3,7 @@ package de.hsfulda.et.wbs.action.benutzer.impl;
 import de.hsfulda.et.wbs.action.benutzer.UpdateBenutzerAction;
 import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.BenutzerData;
-import de.hsfulda.et.wbs.core.data.BenutzerDto;
+import de.hsfulda.et.wbs.core.dto.BenutzerDto;
 import de.hsfulda.et.wbs.core.exception.ResourceNotFoundException;
 import de.hsfulda.et.wbs.repository.BenutzerRepository;
 import de.hsfulda.et.wbs.service.AccessService;

@@ -2,7 +2,7 @@ package de.hsfulda.et.wbs.action.bestand;
 
 import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.BestandData;
-import de.hsfulda.et.wbs.core.data.BestandDto;
+import de.hsfulda.et.wbs.core.dto.BestandDto;
 
 public interface UpdateBestandAction {
 

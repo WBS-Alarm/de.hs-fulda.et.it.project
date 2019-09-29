@@ -47,6 +47,10 @@ public class User implements WbsUser {
     public boolean isTraegerManager() {
         return getAuthorities().stream().anyMatch(a -> Roles.RoleName.TRAEGER_MANAGER.equals(a.getAuthority()));
     }
+    @Override
+    public boolean isAccountant() {
+        return getAuthorities().stream().anyMatch(a -> Roles.RoleName.ACCOUTANT.equals(a.getAuthority()));
+    }
 
     @JsonIgnore
     @Override

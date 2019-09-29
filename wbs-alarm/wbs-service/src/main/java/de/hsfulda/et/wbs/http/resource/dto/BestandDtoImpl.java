@@ -1,6 +1,6 @@
 package de.hsfulda.et.wbs.http.resource.dto;
 
-import de.hsfulda.et.wbs.core.data.BestandDto;
+import de.hsfulda.et.wbs.core.dto.BestandDto;
 
 public class BestandDtoImpl implements BestandDto {
 

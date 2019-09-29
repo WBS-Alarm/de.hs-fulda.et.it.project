@@ -1,12 +1,20 @@
 package de.hsfulda.et.wbs.entity;
 
 
+import de.hsfulda.et.wbs.core.data.BenutzerData;
+import de.hsfulda.et.wbs.core.data.PositionData;
+import de.hsfulda.et.wbs.core.data.TransaktionData;
+import de.hsfulda.et.wbs.core.data.ZielortData;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "TRANSAKTIONEN")
-public class Transaktion {
+public class Transaktion implements TransaktionData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,9 +35,13 @@ public class Transaktion {
     @JoinColumn(name = "NACH_ZIELORT_ID")
     private Zielort nach;
 
+    @OneToMany(mappedBy = "transaktion", fetch = FetchType.LAZY)
+    private List<Position> positionen;
+
     protected Transaktion() {
     }
 
+    @Override
     public Long getId() {
         return id;
     }
@@ -38,6 +50,7 @@ public class Transaktion {
         this.id = id;
     }
 
+    @Override
     public LocalDateTime getDatum() {
         return datum;
     }
@@ -46,7 +59,8 @@ public class Transaktion {
         this.datum = datum;
     }
 
-    public Benutzer getBenutzer() {
+    @Override
+    public BenutzerData getBenutzer() {
         return benutzer;
     }
 
@@ -54,7 +68,8 @@ public class Transaktion {
         this.benutzer = benutzer;
     }
 
-    public Zielort getVon() {
+    @Override
+    public ZielortData getVon() {
         return von;
     }
 
@@ -62,11 +77,24 @@ public class Transaktion {
         this.von = von;
     }
 
-    public Zielort getNach() {
+    @Override
+    public ZielortData getNach() {
         return nach;
     }
 
     public void setNach(Zielort nach) {
         this.nach = nach;
+    }
+
+    @Override
+    public List<PositionData> getPositionen() {
+        if (positionen == null) {
+            positionen = new ArrayList<>();
+        }
+        return positionen.stream().map(p -> (PositionData) p).collect(Collectors.toList());
+    }
+
+    public void setPositionen(List<Position> positionen) {
+        this.positionen = positionen;
     }
 }

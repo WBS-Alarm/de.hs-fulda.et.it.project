@@ -12,4 +12,6 @@ public interface WbsUser extends UserDetails {
     boolean isAdmin();
 
     boolean isTraegerManager();
+
+    boolean isAccountant();
 }

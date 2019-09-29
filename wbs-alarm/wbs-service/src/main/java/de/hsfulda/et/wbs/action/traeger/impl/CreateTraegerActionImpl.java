@@ -2,7 +2,7 @@ package de.hsfulda.et.wbs.action.traeger.impl;
 
 import de.hsfulda.et.wbs.action.traeger.CreateTraegerAction;
 import de.hsfulda.et.wbs.core.data.TraegerData;
-import de.hsfulda.et.wbs.core.data.TraegerDto;
+import de.hsfulda.et.wbs.core.dto.TraegerDto;
 import de.hsfulda.et.wbs.entity.Traeger;
 import de.hsfulda.et.wbs.entity.Zielort;
 import de.hsfulda.et.wbs.repository.TraegerRepository;
