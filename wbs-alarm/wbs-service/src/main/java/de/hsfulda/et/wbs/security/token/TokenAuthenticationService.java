@@ -2,7 +2,6 @@ package de.hsfulda.et.wbs.security.token;
 
 import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.security.Password;
-import de.hsfulda.et.wbs.security.User;
 import de.hsfulda.et.wbs.security.service.UserAuthenticationService;
 import de.hsfulda.et.wbs.security.service.UserCrudService;
 import de.hsfulda.et.wbs.util.ImmutableMap;
@@ -30,10 +29,6 @@ final class TokenAuthenticationService implements UserAuthenticationService {
                 .filter(u -> Password.checkPassword(password, u.getPassword()))
                 .map(u -> tokens.expiring(ImmutableMap.of("username", username)));
 
-        if (user.isPresent() && createdToken.isPresent()) {
-            users.save(user.get(), createdToken.get());
-        }
-
         return createdToken;
     }
 
@@ -45,17 +40,8 @@ final class TokenAuthenticationService implements UserAuthenticationService {
                 .flatMap(users::findByUsername);
 
         if (user.isPresent()) {
-            Optional<String> loadedToken = users.getToken(user.get());
-            if (loadedToken.isPresent() && token.equals(loadedToken.get())) {
-                return user;
-            }
-
+            return user;
         }
         throw new UsernameNotFoundException("User not authorized");
-    }
-
-    @Override
-    public void logout(final WbsUser user) {
-        users.deleteToken((User) user);
     }
 }

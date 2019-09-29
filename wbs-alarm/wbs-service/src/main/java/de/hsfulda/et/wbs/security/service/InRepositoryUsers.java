@@ -38,29 +38,12 @@ final class InRepositoryUsers implements UserCrudService {
         return repository.save(benutzer);
     }
 
-    @Override
-    public WbsUser save(final WbsUser user, final String token) {
-        Benutzer benutzer = (Benutzer) repository.findByUsername(user.getUsername());
-        benutzer.setToken(token);
-        return as(repository.save(benutzer));
-    }
-
     private WbsUser as(BenutzerData benutzer) {
         Collection<GrantedAuthorityData> authorities = authorityRepository.findByUserId(benutzer.getId());
 
         User user = new User(benutzer);
         user.addAuthorities(Roles.getRoles(authorities));
         return user;
-    }
-
-    @Override
-    public Optional<String> getToken(WbsUser user) {
-        return Optional.ofNullable(repository.findByUsername(user.getUsername()).getToken());
-    }
-
-    @Override
-    public void deleteToken(WbsUser user) {
-        save(user, null);
     }
 
     @Override

@@ -6,7 +6,6 @@ import de.hsfulda.et.wbs.security.resource.*;
 public enum Relations {
 
     REL_USER_LIST("benutzerList", BenutzerListResource.PATH),
-    REL_USER_LOGOUT("logout", UserLogoutResource.PATH),
     REL_USER_CURRENT("current", CurrentUserResource.PATH),
     REL_USER_REGISTER("registerUser", UserRegisterResource.PATH),
     REL_AUTHORITIES("authorities", AuthorityResource.PATH),

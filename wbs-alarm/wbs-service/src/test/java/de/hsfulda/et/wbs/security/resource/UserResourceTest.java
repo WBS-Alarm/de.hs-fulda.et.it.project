@@ -16,9 +16,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class UserResourceTest extends ResourceTest {
 
     @Autowired
-    private UserLogoutResource userLogoutResource;
-
-    @Autowired
     private CurrentUserResource currentUserResource;
 
     @Autowired
@@ -30,7 +27,6 @@ class UserResourceTest extends ResourceTest {
     @DisplayName("werden im Spring Context geladen und gefunden")
     @Test
     void contextLoads() {
-        Assertions.assertThat(userLogoutResource).isNotNull();
         Assertions.assertThat(currentUserResource).isNotNull();
         Assertions.assertThat(loginResource).isNotNull();
         Assertions.assertThat(userRegisterResource).isNotNull();
@@ -40,18 +36,18 @@ class UserResourceTest extends ResourceTest {
     @Test
     void getCurrentUser() throws Exception {
         mockMvc.perform(get(CurrentUserResource.PATH)
-            .contentType(MediaType.APPLICATION_JSON)
-            .header("Authorization", getTokenAsSuperuser()))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.username", is("Superuser")));
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", getTokenAsSuperuser()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.username", is("Superuser")));
     }
 
     @DisplayName("können nicht von unangemeldeten Benutzern zugegriffen werden")
     @Test
     void getCurrentUserNoToken() throws Exception {
         mockMvc.perform(get(CurrentUserResource.PATH)
-            .contentType(MediaType.APPLICATION_JSON)
-            .header("Authorization", "Bearer "))
-            .andExpect(status().isUnauthorized());
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "Bearer "))
+                .andExpect(status().isUnauthorized());
     }
 }

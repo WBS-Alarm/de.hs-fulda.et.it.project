@@ -48,11 +48,6 @@ public class BenutzerGrantedAuthDataImpl implements BenutzerGrantedAuthData {
     }
 
     @Override
-    public String getToken() {
-        return benutzer.getToken();
-    }
-
-    @Override
     public TraegerData getTraeger() {
         return benutzer.getTraeger();
     }
