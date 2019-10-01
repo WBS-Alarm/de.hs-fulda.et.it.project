@@ -1,4 +1,5 @@
 import {
+    AfterViewInit,
     Component,
     OnInit,
     ViewEncapsulation
@@ -6,6 +7,8 @@ import {
 import { WbsSitemapHelper } from "./core/service/rest/sitemap/data/wbs-sitemap.helper";
 import { GetSitemapService } from "./core/service/rest/sitemap/wbs-sitemap.service";
 import { Router } from '@angular/router';
+import { GlobalRegistryService } from './core/global-registry/global-registry.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector:      'app-terra-basic',
@@ -16,6 +19,7 @@ import { Router } from '@angular/router';
 export class AppWbsKleiderkammer implements OnInit
 {
     constructor(private sitemapHelper:WbsSitemapHelper,
+                private globalRegistry:GlobalRegistryService,
                 private sitemapService:GetSitemapService,
                 private router:Router)
     {
@@ -34,6 +38,5 @@ export class AppWbsKleiderkammer implements OnInit
         {
             this.router.navigateByUrl('plugin/system')
         }
-
     }
 }

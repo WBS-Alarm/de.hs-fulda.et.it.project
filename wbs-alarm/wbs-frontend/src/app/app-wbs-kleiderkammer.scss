@@ -11,3 +11,16 @@
 //  height: 94%;
 //}
 
+body,
+html
+{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: #60a3bc;
+    
+    .isLoggedIn
+    {
+        background: white;
+    }
+}
