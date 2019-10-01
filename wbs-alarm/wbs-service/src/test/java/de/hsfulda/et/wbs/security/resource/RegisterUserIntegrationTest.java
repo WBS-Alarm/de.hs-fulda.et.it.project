@@ -52,20 +52,20 @@ class RegisterUserIntegrationTest extends ResourceTest {
         @Test
         void registerNewUserNoPassword() throws Exception {
             mockMvc.perform(post(UserRegisterResource.PATH, getTraegerId(FW_TRAEGER))
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\n  \"username\": \"Paul\"\n}")
-                .header("Authorization", bearerToken))
-                .andExpect(status().isBadRequest());
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content("{\n  \"username\": \"Paul\"\n}")
+                    .header("Authorization", bearerToken))
+                    .andExpect(status().isBadRequest());
         }
 
         @DisplayName("erstellt nicht Benutzer ohne angegebenen Namen mit Password 1234")
         @Test
         void registerNewUserNoName() throws Exception {
             mockMvc.perform(post(UserRegisterResource.PATH, getTraegerId(FW_TRAEGER))
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\n \"password\": \"1234\"\n}")
-                .header("Authorization", bearerToken))
-                .andExpect(status().isBadRequest());
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content("{\n \"password\": \"1234\"\n}")
+                    .header("Authorization", bearerToken))
+                    .andExpect(status().isBadRequest());
         }
 
         @Nested
@@ -76,10 +76,10 @@ class RegisterUserIntegrationTest extends ResourceTest {
             @Test
             void registerNewUser() throws Exception {
                 mockMvc.perform(post(UserRegisterResource.PATH, getTraegerId(FW_TRAEGER))
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content("{\n  \"username\": \"Paul\",\n  \"password\": \"2345\"\n}")
-                    .header("Authorization", bearerToken))
-                    .andExpect(status().isConflict());
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\n  \"username\": \"Paul\",\n  \"password\": \"2345\"\n}")
+                        .header("Authorization", bearerToken))
+                        .andExpect(status().isConflict());
             }
         }
 
@@ -87,32 +87,23 @@ class RegisterUserIntegrationTest extends ResourceTest {
         @DisplayName("Superuser abmelden")
         class LogoutSuperuser {
 
-            @BeforeEach
-            void logoutSuperuser() throws Exception {
-                mockMvc.perform(get(UserLogoutResource.PATH)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .header("Authorization", bearerToken))
-                    .andExpect(status().isOk());
-            }
-
-
             @DisplayName("ist Superuser abgemeldet")
             @Test
             void superuserIsLoggedOut() throws Exception {
                 mockMvc.perform(get(CurrentUserResource.PATH)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .header("Authorization", bearerToken))
-                    .andExpect(status().isUnauthorized());
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Bearer "))
+                        .andExpect(status().isUnauthorized());
             }
 
             @DisplayName("kann Paul anmelden")
             @Test
             void loginAsPaul() throws Exception {
                 mockMvc.perform(post(LoginResource.PATH)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content("{\n  \"username\": \"Paul\",\n  \"password\": \"1234\"\n}"))
-                    .andExpect(status().isOk())
-                    .andExpect(content().string(startsWith("ey")));
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\n  \"username\": \"Paul\",\n  \"password\": \"1234\"\n}"))
+                        .andExpect(status().isOk())
+                        .andExpect(content().string(startsWith("ey")));
 
             }
         }

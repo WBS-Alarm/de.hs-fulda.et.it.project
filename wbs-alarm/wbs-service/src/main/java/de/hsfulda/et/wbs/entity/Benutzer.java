@@ -20,8 +20,6 @@ public class Benutzer implements BenutzerData {
     private String username;
     @Size(max = 60)
     private String password;
-    @Size(max = 255)
-    private String token;
     @Size(max = 254)
     private String mail;
     private Boolean einkaeufer;
@@ -56,15 +54,6 @@ public class Benutzer implements BenutzerData {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    @Override
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
     @Override

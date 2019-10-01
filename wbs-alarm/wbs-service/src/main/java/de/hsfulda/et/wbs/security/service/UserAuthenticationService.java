@@ -22,11 +22,4 @@ public interface UserAuthenticationService {
      * @return Registered User
      */
     Optional<WbsUser> findByToken(String token);
-
-    /**
-     * Logs out the given input {@code user}.
-     *
-     * @param user the user to logout
-     */
-    void logout(WbsUser user);
 }

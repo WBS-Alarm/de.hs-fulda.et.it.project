@@ -15,11 +15,5 @@ public interface UserCrudService {
 
     BenutzerData register(BenutzerCreateDto user);
 
-    WbsUser save(WbsUser user, String token);
-
-    Optional<String> getToken(WbsUser user);
-
-    void deleteToken(WbsUser user);
-
     Optional<WbsUser> findByUsername(String username);
 }

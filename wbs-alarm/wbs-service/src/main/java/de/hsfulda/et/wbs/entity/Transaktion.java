@@ -2,7 +2,7 @@ package de.hsfulda.et.wbs.entity;
 
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "TRANSAKTIONEN")
@@ -13,15 +13,19 @@ public class Transaktion {
     private Long id;
 
     @Column(name = "DATE")
-    private Date datum;
+    private LocalDateTime datum;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BENUTZER_ID")
     private Benutzer benutzer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ZIELORT_ID")
-    private Zielort zielort;
+    @JoinColumn(name = "VON_ZIELORT_ID")
+    private Zielort von;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "NACH_ZIELORT_ID")
+    private Zielort nach;
 
     protected Transaktion() {
     }
@@ -34,11 +38,11 @@ public class Transaktion {
         this.id = id;
     }
 
-    public Date getDatum() {
+    public LocalDateTime getDatum() {
         return datum;
     }
 
-    public void setDatum(Date datum) {
+    public void setDatum(LocalDateTime datum) {
         this.datum = datum;
     }
 
@@ -50,11 +54,19 @@ public class Transaktion {
         this.benutzer = benutzer;
     }
 
-    public Zielort getZielort() {
-        return zielort;
+    public Zielort getVon() {
+        return von;
     }
 
-    public void setZielort(Zielort zielort) {
-        this.zielort = zielort;
+    public void setVon(Zielort von) {
+        this.von = von;
+    }
+
+    public Zielort getNach() {
+        return nach;
+    }
+
+    public void setNach(Zielort nach) {
+        this.nach = nach;
     }
 }
