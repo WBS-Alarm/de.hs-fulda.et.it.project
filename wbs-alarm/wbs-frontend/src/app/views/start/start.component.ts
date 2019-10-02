@@ -1,7 +1,9 @@
 import {
     Component,
+    EventEmitter,
     Input,
-    OnInit
+    OnInit,
+    Output
 } from '@angular/core';
 import { Language } from 'angular-l10n';
 import { LoginService } from '../../core/service/rest/login/login.service';
@@ -23,6 +25,9 @@ export class StartComponent implements OnInit
 
     @Input()
     public myTitle:string;
+
+    @Output()
+    private userIsLoggedIn:EventEmitter<boolean> = new EventEmitter();
 
     constructor(private loginService:LoginService,
                 private router:Router,
@@ -48,6 +53,12 @@ export class StartComponent implements OnInit
                     dismissOnTimeout: null,
                     identifier:       'logout'
                 });
+
+                let body:HTMLElement = document.getElementById('body');
+                let html:HTMLElement = document.getElementById('html');
+
+                body.classList.remove('isLoggedIn');
+                html.classList.remove('isLoggedIn');
 
                 this.router.navigate(['login']);
             },

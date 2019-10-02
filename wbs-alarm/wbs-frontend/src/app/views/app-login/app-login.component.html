@@ -1,21 +1,45 @@
-<div class="view">
-    <form>
-        <terra-portlet class="login-portlet">
-            <h2>Kleiderkammer-Login</h2>
-            <terra-text-input name="first"
-                              [inputName]="'Benutzername'"
-                              [(ngModel)]="user.name">
-            </terra-text-input>
-            <terra-text-input name="second"
-                              [inputName]="'Passwort'"
-                              [(ngModel)]="user.password"
-                              [inputIsPassword]="true">
-            </terra-text-input>
-            <terra-button name="third"
-                          [inputType]="submit"
-                          [inputCaption]="'Anmelden'"
-                          (outputClicked)="login()">
-            </terra-button>
-        </terra-portlet>
-    </form>
+<div class="container h-100 custom-position">
+    <div class="d-flex justify-content-center h-100">
+        <div class="user_card">
+            <div class="d-flex justify-content-center">
+                <div class="brand_logo_container">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Wappen_Deutscher_Feuerwehr_Verband.svg/2000px-Wappen_Deutscher_Feuerwehr_Verband.svg.png" class="brand_logo" alt="Logo">
+                </div>
+            </div>
+            <div class="d-flex justify-content-center form_container">
+                <form>
+                    <div class="input-group mb-3">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+                        <input type="text"
+                               name="user"
+                               class="form-control input_user"
+                               value=""
+                               [(ngModel)]="user.name"
+                               placeholder="{{'login.username' | translate:lang}}">
+                    </div>
+                    <div class="input-group mb-2">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        </div>
+                        <input type="password"
+                               name="password"
+                               class="form-control input_pass"
+                               value=""
+                               [(ngModel)] = "user.password"
+                               placeholder="{{'login.password' | translate:lang}}">
+                    </div>
+                </form>
+            </div>
+            <div class="d-flex justify-content-center mt-3 login_container">
+                <button type="button" name="button" class="btn login_btn" (click)="login()">Login</button>
+            </div>
+            <div class="mt-4">
+                <div class="d-flex justify-content-center links">
+                    <a href="#">Passwort vergessen?</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

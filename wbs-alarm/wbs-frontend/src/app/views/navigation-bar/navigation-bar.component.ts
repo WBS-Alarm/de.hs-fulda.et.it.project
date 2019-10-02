@@ -89,4 +89,9 @@ export class NavigationBarComponent implements OnInit
     {
         this.router.navigateByUrl(url);
     }
+
+    protected logout():void
+    {
+        console.log('Logout successful!')
+    }
 }

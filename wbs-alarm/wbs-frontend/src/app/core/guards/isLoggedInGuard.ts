@@ -1,4 +1,8 @@
-import { Injectable } from "@angular/core";
+import {
+    EventEmitter,
+    Injectable,
+    Output
+} from "@angular/core";
 import { TerraAlertComponent } from '@plentymarkets/terra-components';
 import {
     ActivatedRouteSnapshot,
@@ -21,12 +25,24 @@ export class IsLoggedInGuard
 
     public canActivate(route:ActivatedRouteSnapshot, state:RouterStateSnapshot):boolean
     {
-        if(localStorage.getItem('accessToken') && this.globalRegistryService.getIsLoggedIn())
+        //if(localStorage.getItem('accessToken') && this.globalRegistryService.getIsLoggedIn())
+        let body:HTMLElement = document.getElementById('body');
+        let html:HTMLElement = document.getElementById('html');
+
+        if(localStorage.getItem('accessToken'))
         {
+            if(!this.globalRegistryService.getIsLoggedIn())
+            {
+                this.globalRegistryService.setisLoggedIn(true);
+            }
+            body.classList.add('isLoggedIn');
+            html.classList.add('isLoggedIn');
             return true
         }
         else
         {
+            body.classList.remove('isLoggedIn');
+            html.classList.remove('isLoggedIn');
             this.router.navigate(['login']);
             return false;
         }
