@@ -24,6 +24,7 @@ import { SystemTargetplacesResolver } from './views/system/components/targetplac
 import {SystemEditCarrierComponent} from "./views/system/components/carrier/edit-carrier/system-edit-carrier.component";
 import {SystemCarrierResolver} from "./views/system/components/carrier/resolver/system-carrier-resolver";
 import {SystemCategoryResolver} from "./views/system/components/categories/resolver/system-category.resolver";
+import { BookingViewComponent } from './views/booking/booking-view.component';
 
 const appRoutes:Routes = [
     {
@@ -64,14 +65,14 @@ const appRoutes:Routes = [
                     label: 'example'
                 }
             },
-            // {
-            //     path: 'booking',
-            //     component: ExampleViewComponent,
-            //     canActivate: GUARDS,
-            //     data: {
-            //         label: 'booking.booking'
-            //     }
-            // },
+             {
+                 path: 'booking',
+                 component: BookingViewComponent,
+                 canActivate: GUARDS,
+                 data: {
+                     label: 'booking.booking'
+                 }
+             },
             {
                 path: 'system',
                 component: SystemComponent,
