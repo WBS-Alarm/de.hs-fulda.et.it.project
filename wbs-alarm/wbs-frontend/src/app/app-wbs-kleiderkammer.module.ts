@@ -57,6 +57,7 @@ import {SystemCategoryResolver} from "./views/system/components/categories/resol
 import { AuthoritiesService } from './core/service/rest/authorities/authorities.service';
 import { SystemAuthoritiesCompontent } from './views/system/components/authorities/system-authorities.compontent';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BookingViewComponent } from './views/booking/booking-view.component';
 
 
 @NgModule({
@@ -77,6 +78,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         MainMenuComponent,
         StartViewComponent,
         StartComponent,
+        BookingViewComponent,
         ExampleViewComponent,
         TableComponent,
         FilterComponent,
