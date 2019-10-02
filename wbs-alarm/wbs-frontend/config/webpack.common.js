@@ -90,7 +90,7 @@ module.exports = {
     },
     plugins: [
         new webpack.ContextReplacementPlugin(
-            /\@angular(\\|\/)core(\\|\/)esm5/,
+            /(.+)?angular(\\|\/)core(.+)?/,
             helpers.root('./src'),
             {}
         ),
@@ -98,27 +98,10 @@ module.exports = {
             template: 'src/index.html',
             inject: true
         }),
-        new ProvidePlugin({
-            $: "jquery",
-            jQuery: "jquery",
-            "window.jQuery": "jquery",
-            "window.Tether": 'tether',
-            Alert: "exports-loader?Alert!bootstrap/js/dist/alert",
-            Button: "exports-loader?Button!bootstrap/js/dist/button",
-            Carousel: "exports-loader?Carousel!bootstrap/js/dist/carousel",
-            Collapse: "exports-loader?Collapse!bootstrap/js/dist/collapse",
-            Dropdown: "exports-loader?Dropdown!bootstrap/js/dist/dropdown",
-            Modal: "exports-loader?Modal!bootstrap/js/dist/modal",
-            Popover: "exports-loader?Popover!bootstrap/js/dist/popover",
-            Scrollspy: "exports-loader?Scrollspy!bootstrap/js/dist/scrollspy",
-            Tab: "exports-loader?Tab!bootstrap/js/dist/tab",
-            Tooltip: "exports-loader?Tooltip!bootstrap/js/dist/tooltip",
-            Util: "exports-loader?Util!bootstrap/js/dist/util"
-        }),
         new CopyWebpackPlugin([
-            {from: 'src/app/assets', to: 'assets'},
-            {from: 'node_modules/@plentymarkets/terra-components/app/assets/lang/', to: 'assets/lang/terra-components/'},
-            {from: 'node_modules/@plentymarkets/terra-components/app/assets/', to: 'assets/'}
+            {from: 'src/app/assets/lang/', to: 'assets/lang/'},
+            {from: 'node_modules/@plentymarkets/terra-components/assets/lang/', to: 'assets/lang/terra-components/'},
+            {from: 'node_modules/@plentymarkets/terra-components/assets/fonts/', to: 'assets/fonts/'}
         ]),
         new ForkTsCheckerWebpackPlugin()
     ]
