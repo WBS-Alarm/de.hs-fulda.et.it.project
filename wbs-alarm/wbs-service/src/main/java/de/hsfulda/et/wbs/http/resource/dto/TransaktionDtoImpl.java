@@ -3,6 +3,7 @@ package de.hsfulda.et.wbs.http.resource.dto;
 import de.hsfulda.et.wbs.core.dto.PositionDto;
 import de.hsfulda.et.wbs.core.dto.TransaktionDto;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,6 +33,9 @@ public class TransaktionDtoImpl implements TransaktionDto {
 
     @Override
     public List<PositionDto> getPositions() {
+        if (positions == null) {
+            positions = new ArrayList<>();
+        }
         return positions.stream()
                 .map(p -> (PositionDto) p)
                 .collect(Collectors.toList());

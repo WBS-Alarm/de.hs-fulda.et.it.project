@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -145,7 +146,9 @@ public class AddTransaktionActionImpl implements AddTransaktionAction {
      * zugeordnet sind. Desweiteren wird geprüft, ob die Zielorte und die Größen existieren. Dabei ist zu beachten,
      * dass Zielorte und Größen aktiv sind. Auf inaktive darf nicht gebucht werden. Hierbei wird ein 404 ausgelöst über
      * die {@link ResourceNotFoundException}. Die Erfassung der Bestände muss zudem abgeschlossen sein. Dazu wird
-     * geprüft, ob genug Bestand im ausgehenden Zielort vorhanden ist.
+     * geprüft, ob genug Bestand im ausgehenden Zielort vorhanden ist. Es wird zudem geprüft, ob mindestens eine
+     * Position ind er Transaktion angegeben wurde. Gleiche Größen (und die dazugehörige Kategorie) darf nicht in
+     * verschiendenen Positionen auftauchen.
      *
      * @param dto Übergebene Daten einer Transaktion.
      */
@@ -172,21 +175,35 @@ public class AddTransaktionActionImpl implements AddTransaktionAction {
                             "Bitte wenden Sie sich an ihren Systembetreuer, ", nachZielort.getName());
         }
 
-        // Existiert genug Bestand für eine Position
-        dto.getPositions()
-                .forEach(p -> {
-                    BestandData bestand = context.getBestandData(vonZielort.getId(), p.getGroesse());
-                    GroesseData groesse = context.getGroesseData(p.getGroesse());
+        // Es wurde mindestens eine Position angegeben.
+        List<PositionDto> positions = dto.getPositions();
+        if (positions.isEmpty()) {
+            throw new TransaktionValidationException("Es muss mindestens eine Position angegeben werden.");
+        }
 
-                    if (bestand.getAnzahl() < p.getAnzahl()) {
-                        KategorieData kategorie = groesse.getKategorie();
-                        throw new TransaktionValidationException(
-                                "Die Position mit Kategorie \"{0}\", Größe \"{1}\", Anzahl {2} übersteigt den " +
-                                        "Bestand vom ausgehenden Zielort {3}.", kategorie.getName(), groesse.getName(),
-                                p.getAnzahl(), bestand.getZielort()
-                                .getName());
-                    }
-                });
+        // Eine Größe darf in den Positionen nur einmal vorkommen.
+        positions.forEach(p -> {
+            if (positions.stream()
+                    .anyMatch(pi -> Objects.equals(p.getGroesse(), pi.getGroesse()))) {
+                throw new TransaktionValidationException(
+                        "Die Größe mit der ID {0} wurde in den POsitionen doppelt " + "angegeben.", p.getGroesse());
+            }
+        });
+
+        // Existiert genug Bestand für eine Position
+        positions.forEach(p -> {
+            BestandData bestand = context.getBestandData(vonZielort.getId(), p.getGroesse());
+            GroesseData groesse = context.getGroesseData(p.getGroesse());
+
+            if (bestand.getAnzahl() < p.getAnzahl()) {
+                KategorieData kategorie = groesse.getKategorie();
+                throw new TransaktionValidationException(
+                        "Die Position mit Kategorie \"{0}\", Größe \"{1}\", Anzahl {2} übersteigt den " +
+                                "Bestand vom ausgehenden Zielort {3}.", kategorie.getName(), groesse.getName(),
+                        p.getAnzahl(), bestand.getZielort()
+                        .getName());
+            }
+        });
     }
 
     private boolean hasSameTraeger(ZielortData von, ZielortData nach) {
