@@ -37,7 +37,8 @@ public class UpdateKategorieActionImpl implements UpdateKategorieAction {
             }
 
             repo.updateName(id, kategorie.getName());
-            return repo.findByIdAndAktivIsTrue(id).get();
+            return repo.findByIdAndAktivIsTrue(id)
+                    .get();
         });
     }
 }

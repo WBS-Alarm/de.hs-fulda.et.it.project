@@ -37,11 +37,8 @@ public class BenutzerResource {
     private final DeleteBenutzerAction deleteAction;
     private final GetGrantedAuthorityListAction getAuthoritiesAction;
 
-    public BenutzerResource(
-            GetBenutzerAction getAction,
-            UpdateBenutzerAction putAction,
-            DeleteBenutzerAction deleteAction,
-            GetGrantedAuthorityListAction getAuthoritiesAction) {
+    public BenutzerResource(GetBenutzerAction getAction, UpdateBenutzerAction putAction,
+            DeleteBenutzerAction deleteAction, GetGrantedAuthorityListAction getAuthoritiesAction) {
         this.getAction = getAction;
         this.putAction = putAction;
         this.deleteAction = deleteAction;
@@ -52,7 +49,7 @@ public class BenutzerResource {
      * Ermittelt einen Benutzer anhand der ID.
      *
      * @param user angemeldeter Benutzer
-     * @param id   ID des Benutzers aus dem Pfad
+     * @param id ID des Benutzers aus dem Pfad
      * @return gefundenen Träger. Anderfalls 404
      */
     @GetMapping(produces = HAL_JSON)
@@ -69,16 +66,14 @@ public class BenutzerResource {
      * überschrieben die auch geändert werden dürfen. Password, Token und Benutzername bleiben von Änderungen
      * unbetroffen.
      *
-     * @param user     angemeldeter Benutzer
-     * @param id       ID des Benutzers aus dem Pfad
+     * @param user angemeldeter Benutzer
+     * @param id ID des Benutzers aus dem Pfad
      * @param benutzer geänderte Werte des Benutzers
      * @return Aktualisierter Benutzer.
      */
     @PutMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
-    HttpEntity<HalJsonResource> put(
-            @AuthenticationPrincipal WbsUser user,
-            @PathVariable("id") Long id,
+    HttpEntity<HalJsonResource> put(@AuthenticationPrincipal WbsUser user, @PathVariable("id") Long id,
             @RequestBody BenutzerDtoImpl benutzer) {
         return new HttpEntity<>(BenutzerHalJson.of(user, putAction.perform(user, id, benutzer)));
     }
@@ -87,7 +82,7 @@ public class BenutzerResource {
      * Benutzer werden nicht gelöscht, sondern nur deaktiviert.
      *
      * @param user angemeldeter Benutzer
-     * @param id   ID des Benutzers aus dem Pfad
+     * @param id ID des Benutzers aus dem Pfad
      * @return Rückmeldung über den Erfolg durch den HttpStatus.
      */
     @DeleteMapping(produces = HAL_JSON)

@@ -44,7 +44,8 @@ public class CreateBenutzerActionImpl implements CreateBenutzerAction {
 
         Optional<WbsUser> found = users.findByUsername(benutzer.getUsername());
         if (found.isPresent()) {
-            throw new UserAlreadyExistsException("Benutzer mit dem Namen {0} existiert bereits", benutzer.getUsername());
+            throw new UserAlreadyExistsException("Benutzer mit dem Namen {0} existiert bereits",
+                    benutzer.getUsername());
         }
 
         BenutzerData user = users.register(benutzer);

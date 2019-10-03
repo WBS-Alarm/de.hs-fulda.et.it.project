@@ -32,6 +32,7 @@ public class UpdateTraegerActionImpl implements UpdateTraegerAction {
         }
 
         repo.updateName(id, traeger.getName());
-        return repo.findByIdAsData(id).get();
+        return repo.findByIdAsData(id)
+                .get();
     }
 }

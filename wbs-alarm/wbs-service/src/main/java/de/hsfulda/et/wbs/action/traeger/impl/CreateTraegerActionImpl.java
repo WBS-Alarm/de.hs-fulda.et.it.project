@@ -25,11 +25,13 @@ public class CreateTraegerActionImpl implements CreateTraegerAction {
             throw new IllegalArgumentException("Name des Trägers muss angegeben werden");
         }
 
-        Traeger tr = Traeger.builder().
-                name(traeger.getName())
+        Traeger tr = Traeger.builder()
+                .
+                        name(traeger.getName())
                 .build();
 
-        Zielort.getStandardForNewTraeger().forEach(tr::addZielort);
+        Zielort.getStandardForNewTraeger()
+                .forEach(tr::addZielort);
         return repo.save(tr);
     }
 }

@@ -15,7 +15,7 @@ public class AuthoritiesHalJson extends HalJsonResource {
         addLink(Link.self(AuthorityResource.PATH));
 
         addEmbeddedResources("authorities", authorities.stream()
-            .map(a -> new AuthorityHalJson(user, a))
-            .collect(Collectors.toList()));
+                .map(a -> new AuthorityHalJson(user, a))
+                .collect(Collectors.toList()));
     }
 }

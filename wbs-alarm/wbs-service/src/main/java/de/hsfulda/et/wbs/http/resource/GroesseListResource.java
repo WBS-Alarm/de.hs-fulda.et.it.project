@@ -39,30 +39,29 @@ public class GroesseListResource {
     /**
      * Ermittlelt alle Groessen zu einem Träger.
      *
-     * @param user        Angemeldeter Benutzer.
+     * @param user Angemeldeter Benutzer.
      * @param kategorieId ID des Trägres.
      * @return Liste aller Groessen zu einem Träger.
      */
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")
-    HttpEntity<HalJsonResource> get(@AuthenticationPrincipal WbsUser user, @PathVariable("kategorieId") Long kategorieId) {
+    HttpEntity<HalJsonResource> get(@AuthenticationPrincipal WbsUser user,
+            @PathVariable("kategorieId") Long kategorieId) {
         return new HttpEntity<>(new GroesseListHalJson(user, getAction.perform(user, kategorieId)));
     }
 
     /**
      * Erstellt eine neue Groesse zu einem Träger.
      *
-     * @param user        Angemeldeter Benutzer.
+     * @param user Angemeldeter Benutzer.
      * @param kategorieId ID des Trägers.
-     * @param groesse     Neue Groesse.
+     * @param groesse Neue Groesse.
      * @return Persistierter Groesse.
      */
     @PostMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
-    HttpEntity<HalJsonResource> post(
-            @AuthenticationPrincipal WbsUser user,
-            @PathVariable("kategorieId") Long kategorieId,
-            @RequestBody GroesseDtoImpl groesse) {
+    HttpEntity<HalJsonResource> post(@AuthenticationPrincipal WbsUser user,
+            @PathVariable("kategorieId") Long kategorieId, @RequestBody GroesseDtoImpl groesse) {
         GroesseData newGroesse = postAction.perform(user, kategorieId, groesse);
         MultiValueMap<String, String> header = locationHeader(GroesseResource.PATH, newGroesse.getId());
         return new ResponseEntity<>(header, HttpStatus.CREATED);

@@ -37,7 +37,6 @@ public class HalJsonResource {
         return embedded;
     }
 
-
     /**
      * Liefert die Map zurück in der die Eigenschaften der HalJsonResource enthalten sind.
      *
@@ -60,7 +59,6 @@ public class HalJsonResource {
 
         links.add(link);
     }
-
 
     private List<Link> getLinksForRelation(final String relation) {
         return links.computeIfAbsent(relation, k -> new ArrayList<>());

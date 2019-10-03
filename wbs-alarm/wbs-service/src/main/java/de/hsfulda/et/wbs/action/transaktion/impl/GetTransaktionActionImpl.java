@@ -25,7 +25,8 @@ public class GetTransaktionActionImpl implements GetTransaktionAction {
     public TransaktionData perform(WbsUser user, Long id) {
         return accessService.hasAccessOnTransaktion(user, id, () -> {
             Optional<TransaktionData> managed = repo.findByIdAsData(id);
-            return managed.orElseThrow(() -> new ResourceNotFoundException("Transaktion mit ID {0} nicht gefunden.", id));
+            return managed.orElseThrow(
+                    () -> new ResourceNotFoundException("Transaktion mit ID {0} nicht gefunden.", id));
         });
     }
 }

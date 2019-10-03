@@ -31,7 +31,8 @@ public class ZielortResource {
     private final UpdateZielortAction putAction;
     private final DeleteZielortAction deleteAction;
 
-    public ZielortResource(GetZielortAction getAction, UpdateZielortAction putAction, DeleteZielortAction deleteAction) {
+    public ZielortResource(GetZielortAction getAction, UpdateZielortAction putAction,
+            DeleteZielortAction deleteAction) {
         this.getAction = getAction;
         this.putAction = putAction;
         this.deleteAction = deleteAction;
@@ -52,13 +53,14 @@ public class ZielortResource {
     /**
      * Bearbeitet einen Zielort. Hierbei wird nur der Name geändert.
      *
-     * @param id      ID des Zielorts aus dem Pfad
+     * @param id ID des Zielorts aus dem Pfad
      * @param zielort Zielort mit neuem Namen
      * @return gespeicherten Zielort. Anderfalls 404 oder 409
      */
     @PutMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
-    HttpEntity<HalJsonResource> put(@AuthenticationPrincipal WbsUser user, @PathVariable("id") Long id, @RequestBody ZielortDtoImpl zielort) {
+    HttpEntity<HalJsonResource> put(@AuthenticationPrincipal WbsUser user, @PathVariable("id") Long id,
+            @RequestBody ZielortDtoImpl zielort) {
         return new HttpEntity<>(new ZielortHalJson(user, putAction.perform(user, id, zielort)));
     }
 

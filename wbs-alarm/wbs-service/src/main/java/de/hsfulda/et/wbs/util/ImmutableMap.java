@@ -46,10 +46,10 @@ public class ImmutableMap<K, V> implements Map<K, V> {
         return new ImmutableMap<>();
     }
 
-
     public static <K, V> Map<K, V> of(K key, V value) {
         Builder<K, V> builder = builder();
-        return builder.put(key, value).build();
+        return builder.put(key, value)
+                .build();
     }
 
     // Delegates mit UOE für Änderungen

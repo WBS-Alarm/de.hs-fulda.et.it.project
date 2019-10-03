@@ -7,10 +7,9 @@ import java.util.*;
 
 public enum Roles {
 
-    ADMIN(new String[]{Auth.ADMIN}, RoleName.ADMIN),
-    TR_MAN(new String[]{Auth.ADMIN, Auth.CONTROL}, RoleName.TRAEGER_MANAGER),
-    AC_MAN(new String[]{Auth.WRITE}, RoleName.ACCOUTANT),
-    RE_ALL(new String[]{Auth.ADMIN, Auth.CONTROL, Auth.MANAGE, Auth.WRITE, Auth.READ}, RoleName.READ_ALL);
+    ADMIN(new String[]{Auth.ADMIN}, RoleName.ADMIN), TR_MAN(new String[]{Auth.ADMIN, Auth.CONTROL},
+            RoleName.TRAEGER_MANAGER), AC_MAN(new String[]{Auth.WRITE}, RoleName.ACCOUTANT), RE_ALL(
+            new String[]{Auth.ADMIN, Auth.CONTROL, Auth.MANAGE, Auth.WRITE, Auth.READ}, RoleName.READ_ALL);
 
     public static final String ACCOU = "ACCOUTANT";
     public static final String TRMAN = "TRAEGER_MANAGER";
@@ -32,7 +31,8 @@ public enum Roles {
         final Set<SimpleGrantedAuthority> rollen = new HashSet<>();
         for (Roles role : values()) {
             for (GrantedAuthorityData authority : authorities) {
-                if (role.contains(authority.getGroup().getCode())) {
+                if (role.contains(authority.getGroup()
+                        .getCode())) {
                     rollen.add(new SimpleGrantedAuthority(role.roleName));
                 }
             }

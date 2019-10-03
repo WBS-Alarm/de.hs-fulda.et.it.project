@@ -1,6 +1,5 @@
 package de.hsfulda.et.wbs.action.transaktion.impl;
 
-
 import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.BestandData;
 import de.hsfulda.et.wbs.core.data.GroesseData;
@@ -27,10 +26,7 @@ class TransaktionContext {
     private final BestandRepository bestaende;
     private final ZielortRepository zielorte;
 
-    private TransaktionContext(
-            BenutzerRepository benutzer,
-            GroesseRepository groessen,
-            BestandRepository bestaende,
+    private TransaktionContext(BenutzerRepository benutzer, GroesseRepository groessen, BestandRepository bestaende,
             ZielortRepository zielorte) {
         this.benutzer = benutzer;
         this.groessen = groessen;
@@ -40,7 +36,8 @@ class TransaktionContext {
 
     Benutzer getBenutzer(WbsUser user) {
         Optional<Benutzer> managed = benutzer.findById(user.getId());
-        return managed.orElseThrow(() -> new ResourceNotFoundException("Benutzer mit ID {0} nicht gefunden.", user.getId()));
+        return managed.orElseThrow(
+                () -> new ResourceNotFoundException("Benutzer mit ID {0} nicht gefunden.", user.getId()));
     }
 
     ZielortData getZielortData(Long id) {
@@ -73,8 +70,8 @@ class TransaktionContext {
 
     BestandData getBestandData(Long zielortId, Long groesseId) {
         Optional<BestandData> managed = findBestandByZielortIdAndGroesseId(zielortId, groesseId);
-        return managed.orElseThrow(() ->
-                new TransaktionValidationException("Für den Zielort {0} wurde kein Bestand gefunden (Größe {1}).",
+        return managed.orElseThrow(
+                () -> new TransaktionValidationException("Für den Zielort {0} wurde kein Bestand gefunden (Größe {1}).",
                         zielortId, groesseId));
     }
 
@@ -84,7 +81,8 @@ class TransaktionContext {
 
     Bestand getBestand(Long bestandId) {
         Optional<Bestand> managed = bestaende.findById(bestandId);
-        return managed.orElseThrow(() -> new ResourceNotFoundException("Bestand mit ID {0} nicht gefunden.", bestandId));
+        return managed.orElseThrow(
+                () -> new ResourceNotFoundException("Bestand mit ID {0} nicht gefunden.", bestandId));
     }
 
     private Optional<BestandData> findBestandByZielortIdAndGroesseId(Long zielortId, Long groesseId) {

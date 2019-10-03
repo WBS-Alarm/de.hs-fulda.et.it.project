@@ -56,7 +56,8 @@ public class TransaktionListResource {
      */
     @PostMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('ACCOUNTANT')")
-    HttpEntity<HalJsonResource> post(@AuthenticationPrincipal WbsUser user, @RequestBody TransaktionDtoImpl transaktion) {
+    HttpEntity<HalJsonResource> post(@AuthenticationPrincipal WbsUser user,
+            @RequestBody TransaktionDtoImpl transaktion) {
         TransaktionData newTransaktion = postAction.perform(user, transaktion);
         MultiValueMap<String, String> header = locationHeader(TransaktionResource.PATH, newTransaktion.getId());
         return new ResponseEntity<>(header, HttpStatus.CREATED);

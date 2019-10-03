@@ -31,9 +31,8 @@ public class LoginResource {
 
     @PostMapping
     ResponseEntity<String> post(@RequestBody final Benutzer user) {
-        Optional<String> login = authentication
-            .login(user.getUsername(), user.getPassword());
+        Optional<String> login = authentication.login(user.getUsername(), user.getPassword());
         return login.map(token -> new ResponseEntity<>(token, HttpStatus.OK))
-            .orElseGet(() -> new ResponseEntity<>("invalid post and/or password", HttpStatus.FORBIDDEN));
+                .orElseGet(() -> new ResponseEntity<>("invalid post and/or password", HttpStatus.FORBIDDEN));
     }
 }

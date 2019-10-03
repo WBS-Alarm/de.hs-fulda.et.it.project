@@ -1,6 +1,5 @@
 package de.hsfulda.et.wbs.entity;
 
-
 import de.hsfulda.et.wbs.core.data.GroesseData;
 import de.hsfulda.et.wbs.core.data.PositionData;
 
@@ -60,7 +59,6 @@ public class Position implements PositionData {
     public void setGroesse(Groesse groesse) {
         this.groesse = groesse;
     }
-
 
     public static PositionBuilder builder() {
         return new PositionBuilder();

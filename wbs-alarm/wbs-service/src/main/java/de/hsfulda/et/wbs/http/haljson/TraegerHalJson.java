@@ -21,20 +21,17 @@ public class TraegerHalJson extends HalJsonResource {
         addTraegerProperties(user, traeger);
 
         if (embedded) {
-            addEmbeddedResources("benutzer",
-                traeger.getBenutzer()
+            addEmbeddedResources("benutzer", traeger.getBenutzer()
                     .stream()
                     .map(b -> BenutzerHalJson.ofNoEmbaddables(user, b))
                     .collect(Collectors.toList()));
 
-            addEmbeddedResources("zielorte",
-                traeger.getZielorte()
+            addEmbeddedResources("zielorte", traeger.getZielorte()
                     .stream()
                     .map(z -> new ZielortHalJson(user, z, false))
                     .collect(Collectors.toList()));
 
-            addEmbeddedResources("kategorien",
-                traeger.getKategorien()
+            addEmbeddedResources("kategorien", traeger.getKategorien()
                     .stream()
                     .map(z -> new KategorieHalJson(user, z, false))
                     .collect(Collectors.toList()));

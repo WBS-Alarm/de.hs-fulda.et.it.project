@@ -33,19 +33,22 @@ public class BenutzerHalJson extends HalJsonResource {
         return new BenutzerHalJson(user, benutzer, false);
     }
 
-    public static BenutzerHalJson ofGrantedAuthorities(WbsUser user, BenutzerData benutzer, List<GrantedAuthorityData> granted) {
+    public static BenutzerHalJson ofGrantedAuthorities(WbsUser user, BenutzerData benutzer,
+            List<GrantedAuthorityData> granted) {
         BenutzerHalJson hal = new BenutzerHalJson(user, benutzer, true);
         addEmbeddedAuthorities(user, benutzer, granted, hal);
         return hal;
     }
 
-    public static BenutzerHalJson ofGrantedAuthoritiesNoEmbaddables(WbsUser user, BenutzerData benutzer, List<GrantedAuthorityData> granted) {
+    public static BenutzerHalJson ofGrantedAuthoritiesNoEmbaddables(WbsUser user, BenutzerData benutzer,
+            List<GrantedAuthorityData> granted) {
         BenutzerHalJson hal = new BenutzerHalJson(user, benutzer, false);
         addEmbeddedAuthorities(user, benutzer, granted, hal);
         return hal;
     }
 
-    private static void addEmbeddedAuthorities(WbsUser user, BenutzerData benutzer, List<GrantedAuthorityData> granted, BenutzerHalJson hal) {
+    private static void addEmbeddedAuthorities(WbsUser user, BenutzerData benutzer, List<GrantedAuthorityData> granted,
+            BenutzerHalJson hal) {
         hal.addEmbeddedResources("authorities", granted.stream()
                 .map(g -> new AuthorityHalJson(user, g.getGroup(), benutzer))
                 .collect(Collectors.toList()));
@@ -82,7 +85,8 @@ public class BenutzerHalJson extends HalJsonResource {
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(mail.getBytes());
             byte[] digest = md.digest();
-            return DatatypeConverter.printHexBinary(digest).toLowerCase();
+            return DatatypeConverter.printHexBinary(digest)
+                    .toLowerCase();
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("MD5 nicht verfügbar für Mail Hashing", e);
         }

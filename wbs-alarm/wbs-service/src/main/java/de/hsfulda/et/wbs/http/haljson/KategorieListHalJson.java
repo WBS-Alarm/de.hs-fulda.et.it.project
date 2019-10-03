@@ -15,8 +15,8 @@ public class KategorieListHalJson extends HalJsonResource {
         addLink(Link.self(KategorieListResource.PATH));
 
         List<HalJsonResource> resources = kategorien.stream()
-            .map(t -> new KategorieHalJson(user, t, false))
-            .collect(Collectors.toList());
+                .map(t -> new KategorieHalJson(user, t, false))
+                .collect(Collectors.toList());
 
         addEmbeddedResources("elemente", resources);
 

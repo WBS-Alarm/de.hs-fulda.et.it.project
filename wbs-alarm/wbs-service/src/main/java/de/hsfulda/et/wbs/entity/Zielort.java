@@ -1,6 +1,5 @@
 package de.hsfulda.et.wbs.entity;
 
-
 import de.hsfulda.et.wbs.core.data.TraegerData;
 import de.hsfulda.et.wbs.core.data.ZielortData;
 
@@ -136,7 +135,6 @@ public class Zielort implements ZielortData {
 
         private final Zielort template;
 
-
         private ZielortBuilder() {
             template = new Zielort();
         }
@@ -162,10 +160,18 @@ public class Zielort implements ZielortData {
     }
 
     public static List<Zielort> getStandardForNewTraeger() {
-        return Arrays.asList(
-            builder().name("Wäscherei").aktiv(true).auto(true).build(),
-            builder().name("Wareneingang").aktiv(true).auto(true).build(),
-            builder().name("Lager").aktiv(true).auto(true).build(),
-            builder().name("Aussonderung").aktiv(true).auto(true).build());
+        return Arrays.asList(builder().name("Wäscherei")
+                .aktiv(true)
+                .auto(true)
+                .build(), builder().name("Wareneingang")
+                .aktiv(true)
+                .auto(true)
+                .build(), builder().name("Lager")
+                .aktiv(true)
+                .auto(true)
+                .build(), builder().name("Aussonderung")
+                .aktiv(true)
+                .auto(true)
+                .build());
     }
 }

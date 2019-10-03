@@ -20,10 +20,8 @@ public class DeleteGrantedAuthorityActionImpl implements DeleteGrantedAuthorityA
     private final AuthorityRepository authorityRepository;
     private final BenutzerRepository benutzerRepository;
 
-    public DeleteGrantedAuthorityActionImpl(
-        GrantedAuthorityRepository repo,
-        AuthorityRepository authorityRepository,
-        BenutzerRepository benutzerRepository) {
+    public DeleteGrantedAuthorityActionImpl(GrantedAuthorityRepository repo, AuthorityRepository authorityRepository,
+            BenutzerRepository benutzerRepository) {
         this.repo = repo;
         this.authorityRepository = authorityRepository;
         this.benutzerRepository = benutzerRepository;
@@ -41,11 +39,12 @@ public class DeleteGrantedAuthorityActionImpl implements DeleteGrantedAuthorityA
 
         List<GrantedAuthorityData> granted = repo.findByUserId(benutzerId);
         Optional<GrantedAuthorityData> found = granted.stream()
-            .filter(g -> authorityId.equals(g.getAuthorityId()))
-            .findFirst();
+                .filter(g -> authorityId.equals(g.getAuthorityId()))
+                .findFirst();
 
         if (!found.isPresent()) {
-            throw new ResourceNotFoundException("Granted Authority für Authority {0} und Benutzer {1} nicht gefunden.", authorityId, benutzerId);
+            throw new ResourceNotFoundException("Granted Authority für Authority {0} und Benutzer {1} nicht gefunden.",
+                    authorityId, benutzerId);
         }
 
         repo.deleteById(authorityId, benutzerId);

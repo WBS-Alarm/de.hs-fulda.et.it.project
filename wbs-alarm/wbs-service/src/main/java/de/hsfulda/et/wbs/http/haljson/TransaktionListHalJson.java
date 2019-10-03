@@ -15,8 +15,8 @@ public class TransaktionListHalJson extends HalJsonResource {
         addLink(Link.self(ZielortListResource.PATH));
 
         List<HalJsonResource> resources = transaktionen.stream()
-            .map(t -> new TransaktionHalJson(user, t))
-            .collect(Collectors.toList());
+                .map(t -> new TransaktionHalJson(user, t))
+                .collect(Collectors.toList());
 
         addEmbeddedResources("elemente", resources);
 

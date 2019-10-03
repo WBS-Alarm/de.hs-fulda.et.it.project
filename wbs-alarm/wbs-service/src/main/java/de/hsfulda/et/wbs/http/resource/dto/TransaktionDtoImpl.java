@@ -32,7 +32,9 @@ public class TransaktionDtoImpl implements TransaktionDto {
 
     @Override
     public List<PositionDto> getPositions() {
-        return positions.stream().map(p -> (PositionDto) p).collect(Collectors.toList());
+        return positions.stream()
+                .map(p -> (PositionDto) p)
+                .collect(Collectors.toList());
     }
 
     public void setPositions(List<PositionDtoImpl> positions) {

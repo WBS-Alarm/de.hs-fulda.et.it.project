@@ -15,8 +15,8 @@ public class ZielortListHalJson extends HalJsonResource {
         addLink(Link.self(ZielortListResource.PATH));
 
         List<HalJsonResource> resources = zielorte.stream()
-            .map(t -> new ZielortHalJson(user, t, false))
-            .collect(Collectors.toList());
+                .map(t -> new ZielortHalJson(user, t, false))
+                .collect(Collectors.toList());
 
         addEmbeddedResources("elemente", resources);
 

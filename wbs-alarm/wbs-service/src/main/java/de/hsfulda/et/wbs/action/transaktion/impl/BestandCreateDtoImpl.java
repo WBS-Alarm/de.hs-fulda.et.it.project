@@ -15,7 +15,6 @@ class BestandCreateDtoImpl implements BestandCreateDto {
         return new BestandCreateDtoImpl(position);
     }
 
-
     @Override
     public Long getGroesseId() {
         return positionDto.getGroesse();

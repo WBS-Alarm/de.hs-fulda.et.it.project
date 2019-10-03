@@ -31,8 +31,7 @@ public class GrantAuthorityResource {
 
     @PostMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
-    HttpEntity<HalJsonResource> post(
-            @PathVariable("authorityId") Long authorityId,
+    HttpEntity<HalJsonResource> post(@PathVariable("authorityId") Long authorityId,
             @PathVariable("benutzerId") Long benutzerId) {
 
         postAction.perform(authorityId, benutzerId);
@@ -40,11 +39,9 @@ public class GrantAuthorityResource {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-
     @DeleteMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
-    HttpEntity<HalJsonResource> delete(
-            @PathVariable("authorityId") Long authorityId,
+    HttpEntity<HalJsonResource> delete(@PathVariable("authorityId") Long authorityId,
             @PathVariable("benutzerId") Long benutzerId) {
 
         deleteAction.perform(authorityId, benutzerId);

@@ -37,11 +37,13 @@ public class UpdateZielortActionImpl implements UpdateZielortAction {
             }
 
             if (repo.isAutomated(id)) {
-                throw new IllegalArgumentException("Zielort kann nicht geändert werden, da es sich um eine automatisierten Zielort handelt.");
+                throw new IllegalArgumentException(
+                        "Zielort kann nicht geändert werden, da es sich um eine automatisierten Zielort handelt.");
             }
 
             repo.updateName(id, zielort.getName());
-            return repo.findByIdAsData(id).get();
+            return repo.findByIdAsData(id)
+                    .get();
         });
     }
 }

@@ -1,6 +1,5 @@
 package de.hsfulda.et.wbs.entity;
 
-
 import de.hsfulda.et.wbs.core.data.BenutzerData;
 import de.hsfulda.et.wbs.core.data.KategorieData;
 import de.hsfulda.et.wbs.core.data.TraegerData;
@@ -61,7 +60,9 @@ public class Traeger implements TraegerData {
         if (zielorte == null) {
             zielorte = new ArrayList<>();
         }
-        return zielorte.stream().map(z -> (ZielortData) z).collect(Collectors.toList());
+        return zielorte.stream()
+                .map(z -> (ZielortData) z)
+                .collect(Collectors.toList());
     }
 
     public void setZielorte(List<Zielort> zielorte) {
@@ -83,7 +84,9 @@ public class Traeger implements TraegerData {
         if (kategorien == null) {
             kategorien = new ArrayList<>();
         }
-        return kategorien.stream().map(k -> (KategorieData) k).collect(Collectors.toList());
+        return kategorien.stream()
+                .map(k -> (KategorieData) k)
+                .collect(Collectors.toList());
     }
 
     public void setKategorien(List<Kategorie> kategorien) {
@@ -105,7 +108,9 @@ public class Traeger implements TraegerData {
         if (benutzer == null) {
             benutzer = new ArrayList<>();
         }
-        return benutzer.stream().map(b -> (BenutzerData) b).collect(Collectors.toList());
+        return benutzer.stream()
+                .map(b -> (BenutzerData) b)
+                .collect(Collectors.toList());
     }
 
     public void setBenutzer(List<Benutzer> benutzer) {
@@ -136,7 +141,6 @@ public class Traeger implements TraegerData {
     public static class TraegerBuilder {
 
         private final Traeger template;
-
 
         private TraegerBuilder() {
             template = new Traeger();

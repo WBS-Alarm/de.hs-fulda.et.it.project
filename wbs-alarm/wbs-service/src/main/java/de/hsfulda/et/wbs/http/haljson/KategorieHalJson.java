@@ -21,8 +21,7 @@ public class KategorieHalJson extends HalJsonResource {
         if (embedded) {
             addEmbeddedResource("traeger", new TraegerHalJson(user, kategorie.getTraeger(), false));
 
-            addEmbeddedResources("groessen",
-                kategorie.getGroessen()
+            addEmbeddedResources("groessen", kategorie.getGroessen()
                     .stream()
                     .map(g -> new GroesseHalJson(user, g, false))
                     .collect(Collectors.toList()));

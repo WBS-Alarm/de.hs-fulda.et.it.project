@@ -1,6 +1,5 @@
 package de.hsfulda.et.wbs.entity;
 
-
 import de.hsfulda.et.wbs.core.data.BestandData;
 import de.hsfulda.et.wbs.core.data.GroesseData;
 import de.hsfulda.et.wbs.core.data.KategorieData;
@@ -88,7 +87,6 @@ public class Bestand implements BestandData {
     public static class BestandBuilder {
 
         private final Bestand template;
-
 
         private BestandBuilder() {
             template = new Bestand();

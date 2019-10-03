@@ -18,9 +18,7 @@ public class UpdateBenutzerActionImpl implements UpdateBenutzerAction {
     private final BenutzerRepository repo;
     private final AccessService accessService;
 
-    public UpdateBenutzerActionImpl(
-            BenutzerRepository repo,
-            AccessService accessService) {
+    public UpdateBenutzerActionImpl(BenutzerRepository repo, AccessService accessService) {
         this.repo = repo;
         this.accessService = accessService;
     }
@@ -33,7 +31,8 @@ public class UpdateBenutzerActionImpl implements UpdateBenutzerAction {
             }
 
             repo.updateEinkaeuferAndMail(id, benutzer.getEinkaeufer(), benutzer.getMail());
-            return repo.findByIdAsData(id).get();
+            return repo.findByIdAsData(id)
+                    .get();
         });
     }
 }

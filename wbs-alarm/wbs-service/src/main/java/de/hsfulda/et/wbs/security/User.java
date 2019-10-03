@@ -1,6 +1,5 @@
 package de.hsfulda.et.wbs.security;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.BenutzerData;
@@ -40,16 +39,20 @@ public class User implements WbsUser {
 
     @Override
     public boolean isAdmin() {
-        return getAuthorities().stream().anyMatch(a -> Roles.RoleName.ADMIN.equals(a.getAuthority()));
+        return getAuthorities().stream()
+                .anyMatch(a -> Roles.RoleName.ADMIN.equals(a.getAuthority()));
     }
 
     @Override
     public boolean isTraegerManager() {
-        return getAuthorities().stream().anyMatch(a -> Roles.RoleName.TRAEGER_MANAGER.equals(a.getAuthority()));
+        return getAuthorities().stream()
+                .anyMatch(a -> Roles.RoleName.TRAEGER_MANAGER.equals(a.getAuthority()));
     }
+
     @Override
     public boolean isAccountant() {
-        return getAuthorities().stream().anyMatch(a -> Roles.RoleName.ACCOUTANT.equals(a.getAuthority()));
+        return getAuthorities().stream()
+                .anyMatch(a -> Roles.RoleName.ACCOUTANT.equals(a.getAuthority()));
     }
 
     @JsonIgnore

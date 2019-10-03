@@ -36,12 +36,13 @@ public class UserRegisterResource {
      * Träger existiert und ob es bereits einen Benutzer mit dem Username bereits vergeben ist.
      *
      * @param traegerId ID des Trägers zu dem der Benutzer angelegt werden soll.
-     * @param benutzer  Angemeldeter Benutzer.
+     * @param benutzer Angemeldeter Benutzer.
      * @return Status 201.
      */
     @PostMapping
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
-    ResponseEntity<Void> post(@PathVariable("traegerId") Long traegerId, @RequestBody final BenutzerCreateDtoImpl benutzer) {
+    ResponseEntity<Void> post(@PathVariable("traegerId") Long traegerId,
+            @RequestBody final BenutzerCreateDtoImpl benutzer) {
         BenutzerData user = postAction.perform(traegerId, benutzer);
         MultiValueMap<String, String> header = new HttpHeaders();
         header.put("Location", Collections.singletonList(UriUtil.build(BenutzerResource.PATH, user.getId())));

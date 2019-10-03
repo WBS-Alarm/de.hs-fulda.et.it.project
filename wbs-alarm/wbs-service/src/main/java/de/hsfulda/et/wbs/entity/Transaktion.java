@@ -1,6 +1,5 @@
 package de.hsfulda.et.wbs.entity;
 
-
 import de.hsfulda.et.wbs.core.data.BenutzerData;
 import de.hsfulda.et.wbs.core.data.PositionData;
 import de.hsfulda.et.wbs.core.data.TransaktionData;
@@ -91,7 +90,9 @@ public class Transaktion implements TransaktionData {
         if (positionen == null) {
             positionen = new ArrayList<>();
         }
-        return positionen.stream().map(p -> (PositionData) p).collect(Collectors.toList());
+        return positionen.stream()
+                .map(p -> (PositionData) p)
+                .collect(Collectors.toList());
     }
 
     public void addPosition(Position p) {

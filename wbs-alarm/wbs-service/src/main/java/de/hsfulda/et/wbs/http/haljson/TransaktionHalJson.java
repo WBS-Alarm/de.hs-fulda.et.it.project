@@ -18,20 +18,16 @@ public class TransaktionHalJson extends HalJsonResource {
     public TransaktionHalJson(WbsUser user, TransaktionData transaktion) {
         addTransaktionProperties(user, transaktion);
 
-        addEmbeddedResource("benutzer",
-                BenutzerHalJson.ofNoEmbaddables(user, transaktion.getBenutzer()));
+        addEmbeddedResource("benutzer", BenutzerHalJson.ofNoEmbaddables(user, transaktion.getBenutzer()));
 
-        addEmbeddedResource("von",
-                new ZielortHalJson(user, transaktion.getVon(), false));
+        addEmbeddedResource("von", new ZielortHalJson(user, transaktion.getVon(), false));
 
-        addEmbeddedResource("nach",
-                new ZielortHalJson(user, transaktion.getNach(), false));
+        addEmbeddedResource("nach", new ZielortHalJson(user, transaktion.getNach(), false));
 
-        addEmbeddedResources("positionen",
-                transaktion.getPositionen()
-                        .stream()
-                        .map(z -> new PositionHalJson(user, z))
-                        .collect(Collectors.toList()));
+        addEmbeddedResources("positionen", transaktion.getPositionen()
+                .stream()
+                .map(z -> new PositionHalJson(user, z))
+                .collect(Collectors.toList()));
 
     }
 
@@ -52,6 +48,7 @@ public class TransaktionHalJson extends HalJsonResource {
         if (datum == null) {
             return null;
         }
-        return Date.from(datum.atZone(ZoneId.systemDefault()).toInstant());
+        return Date.from(datum.atZone(ZoneId.systemDefault())
+                .toInstant());
     }
 }

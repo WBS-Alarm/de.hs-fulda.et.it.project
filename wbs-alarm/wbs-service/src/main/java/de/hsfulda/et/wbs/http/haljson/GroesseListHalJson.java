@@ -15,8 +15,8 @@ public class GroesseListHalJson extends HalJsonResource {
         addLink(Link.self(GroesseListResource.PATH));
 
         List<HalJsonResource> resources = groesssen.stream()
-            .map(t -> new GroesseHalJson(user, t, false))
-            .collect(Collectors.toList());
+                .map(t -> new GroesseHalJson(user, t, false))
+                .collect(Collectors.toList());
 
         addEmbeddedResources("elemente", resources);
 

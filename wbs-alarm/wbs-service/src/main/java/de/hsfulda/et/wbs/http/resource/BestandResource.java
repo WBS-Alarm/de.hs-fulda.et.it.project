@@ -31,7 +31,8 @@ public class BestandResource {
     private final UpdateBestandAction putAction;
     private final DeleteBestandAction deleteAction;
 
-    public BestandResource(GetBestandAction getAction, UpdateBestandAction putAction, DeleteBestandAction deleteAction) {
+    public BestandResource(GetBestandAction getAction, UpdateBestandAction putAction,
+            DeleteBestandAction deleteAction) {
         this.getAction = getAction;
         this.putAction = putAction;
         this.deleteAction = deleteAction;
@@ -58,7 +59,8 @@ public class BestandResource {
      */
     @PutMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
-    HttpEntity<HalJsonResource> put(@AuthenticationPrincipal WbsUser user, @PathVariable("id") Long id, @RequestBody BestandDtoImpl bestand) {
+    HttpEntity<HalJsonResource> put(@AuthenticationPrincipal WbsUser user, @PathVariable("id") Long id,
+            @RequestBody BestandDtoImpl bestand) {
         return new HttpEntity<>(new BestandHalJson(user, putAction.perform(user, id, bestand)));
     }
 

@@ -15,8 +15,8 @@ public class BestandListHalJson extends HalJsonResource {
         addLink(Link.self(BestandListResource.PATH));
 
         List<HalJsonResource> resources = bestaende.stream()
-            .map(t -> new BestandHalJson(user, t, false))
-            .collect(Collectors.toList());
+                .map(t -> new BestandHalJson(user, t, false))
+                .collect(Collectors.toList());
 
         addEmbeddedResources("elemente", resources);
 

@@ -22,7 +22,8 @@ public class CreateGroesseActionImpl implements CreateGroesseAction {
     private final KategorieRepository kategorieRepository;
     private final AccessService accessService;
 
-    public CreateGroesseActionImpl(GroesseRepository repo, KategorieRepository kategorieRepository, AccessService accessService) {
+    public CreateGroesseActionImpl(GroesseRepository repo, KategorieRepository kategorieRepository,
+            AccessService accessService) {
         this.repo = repo;
         this.kategorieRepository = kategorieRepository;
         this.accessService = accessService;
@@ -37,11 +38,10 @@ public class CreateGroesseActionImpl implements CreateGroesseAction {
 
             Optional<Kategorie> kategorie = kategorieRepository.findById(kategorieId);
 
-            Groesse saved =
-                    Groesse.builder()
-                            .name(groesse.getName())
-                            .aktiv(true)
-                            .build();
+            Groesse saved = Groesse.builder()
+                    .name(groesse.getName())
+                    .aktiv(true)
+                    .build();
 
             Kategorie tr = kategorie.get();
             tr.addGroesse(saved);

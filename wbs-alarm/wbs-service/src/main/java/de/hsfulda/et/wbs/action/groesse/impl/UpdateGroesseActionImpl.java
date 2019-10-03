@@ -25,7 +25,6 @@ public class UpdateGroesseActionImpl implements UpdateGroesseAction {
         this.accessService = accessService;
     }
 
-
     @Override
     public GroesseData perform(WbsUser user, Long id, GroesseDto groesse) {
         return accessService.hasAccessOnGroesse(user, id, () -> {
@@ -38,7 +37,8 @@ public class UpdateGroesseActionImpl implements UpdateGroesseAction {
             }
 
             repo.updateName(id, groesse.getName());
-            return repo.findById(id).get();
+            return repo.findById(id)
+                    .get();
         });
     }
 }

@@ -1,6 +1,5 @@
 package de.hsfulda.et.wbs.entity;
 
-
 import de.hsfulda.et.wbs.core.data.GroesseData;
 import de.hsfulda.et.wbs.core.data.KategorieData;
 
@@ -76,7 +75,6 @@ public class Groesse implements GroesseData {
     public static class GroesseBuilder {
 
         private final Groesse template;
-
 
         private GroesseBuilder() {
             template = new Groesse();

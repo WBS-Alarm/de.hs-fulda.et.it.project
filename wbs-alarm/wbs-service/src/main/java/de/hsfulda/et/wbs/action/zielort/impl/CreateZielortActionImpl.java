@@ -22,7 +22,8 @@ public class CreateZielortActionImpl implements CreateZielortAction {
     private final TraegerRepository traegerRepository;
     private final AccessService accessService;
 
-    public CreateZielortActionImpl(ZielortRepository repo, TraegerRepository traegerRepository, AccessService accessService) {
+    public CreateZielortActionImpl(ZielortRepository repo, TraegerRepository traegerRepository,
+            AccessService accessService) {
         this.repo = repo;
         this.traegerRepository = traegerRepository;
         this.accessService = accessService;
@@ -38,11 +39,10 @@ public class CreateZielortActionImpl implements CreateZielortAction {
 
             Optional<Traeger> traeger = traegerRepository.findById(traegerId);
 
-            Zielort saved =
-                    Zielort.builder()
-                            .name(zielort.getName())
-                            .aktiv(true)
-                            .build();
+            Zielort saved = Zielort.builder()
+                    .name(zielort.getName())
+                    .aktiv(true)
+                    .build();
 
             Traeger tr = traeger.get();
             tr.addZielort(saved);

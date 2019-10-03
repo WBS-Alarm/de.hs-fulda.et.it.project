@@ -37,11 +37,10 @@ public class KategorieListResource {
         this.postAction = postAction;
     }
 
-
     /**
      * Ermittlelt alle Kategorien zu einem Träger.
      *
-     * @param user      Angemeldeter Benutzer.
+     * @param user Angemeldeter Benutzer.
      * @param traegerId ID des Trägres.
      * @return Liste aller Kategorien zu einem Träger.
      */
@@ -54,16 +53,14 @@ public class KategorieListResource {
     /**
      * Erstellt eine neue Kategorie zu einem Träger.
      *
-     * @param user      Angemeldeter Benutzer.
+     * @param user Angemeldeter Benutzer.
      * @param traegerId ID des Trägers.
      * @param kategorie Neue Kategorie.
      * @return Persistierter Kategorie.
      */
     @PostMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
-    HttpEntity<HalJsonResource> post(
-            @AuthenticationPrincipal WbsUser user,
-            @PathVariable("traegerId") Long traegerId,
+    HttpEntity<HalJsonResource> post(@AuthenticationPrincipal WbsUser user, @PathVariable("traegerId") Long traegerId,
             @RequestBody KategorieDtoImpl kategorie) {
         KategorieData newKategorie = postAction.perform(user, traegerId, kategorie);
         MultiValueMap<String, String> header = locationHeader(KategorieResource.PATH, newKategorie.getId());

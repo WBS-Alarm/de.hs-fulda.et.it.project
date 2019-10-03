@@ -26,7 +26,8 @@ public class LockZielortActionImpl implements LockZielortAction {
         return accessService.hasAccessOnZielort(user, id, () -> {
 
             repo.lock(id);
-            return repo.findByIdAsData(id).get();
+            return repo.findByIdAsData(id)
+                    .get();
 
         });
     }

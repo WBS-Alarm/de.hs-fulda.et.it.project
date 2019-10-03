@@ -33,7 +33,7 @@ public class BenutzerListResource {
     /**
      * Ermittlelt alle Benutzer zu einem Träger.
      *
-     * @param user      Angemeldeter Benutzer.
+     * @param user Angemeldeter Benutzer.
      * @param traegerId ID des Trägres.
      * @return Liste aller Benutzer zu einem Träger.
      */

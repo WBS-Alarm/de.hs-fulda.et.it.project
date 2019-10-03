@@ -8,9 +8,7 @@ public class PositionHalJson extends HalJsonResource {
 
     public PositionHalJson(WbsUser user, PositionData position) {
 
-
-        addEmbeddedResource("groesse",
-                new GroesseHalJson(user, position.getGroesse()));
+        addEmbeddedResource("groesse", new GroesseHalJson(user, position.getGroesse()));
     }
 
     private void addPositionProperties(WbsUser user, PositionData position) {

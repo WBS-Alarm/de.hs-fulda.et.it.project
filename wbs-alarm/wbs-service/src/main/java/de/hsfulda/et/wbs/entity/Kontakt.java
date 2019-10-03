@@ -1,6 +1,5 @@
 package de.hsfulda.et.wbs.entity;
 
-
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
