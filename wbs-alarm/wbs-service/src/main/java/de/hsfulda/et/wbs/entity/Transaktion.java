@@ -94,7 +94,70 @@ public class Transaktion implements TransaktionData {
         return positionen.stream().map(p -> (PositionData) p).collect(Collectors.toList());
     }
 
+    public void addPosition(Position p) {
+        if (positionen == null) {
+            positionen = new ArrayList<>();
+        }
+        if (!positionen.contains(p)) {
+            p.setTransaktion(this);
+            positionen.add(p);
+        }
+    }
+
     public void setPositionen(List<Position> positionen) {
         this.positionen = positionen;
     }
+
+    public static TransaktionBuilder builder() {
+        return new TransaktionBuilder();
+    }
+
+    static Transaktion makeTemplate(Transaktion transaktion) {
+        Transaktion templated = new Transaktion();
+        templated.datum = transaktion.datum;
+        templated.benutzer = transaktion.benutzer;
+        templated.von = transaktion.von;
+        templated.nach = transaktion.nach;
+        templated.positionen = transaktion.positionen;
+        return templated;
+    }
+
+    public static class TransaktionBuilder {
+
+        private final Transaktion template;
+
+        private TransaktionBuilder() {
+            template = new Transaktion();
+        }
+
+        public TransaktionBuilder setDatum(LocalDateTime datum) {
+            template.setDatum(datum);
+            return this;
+        }
+
+        public TransaktionBuilder setBenutzer(Benutzer benutzer) {
+            template.setBenutzer(benutzer);
+            return this;
+        }
+
+        public TransaktionBuilder setVon(Zielort von) {
+            template.setVon(von);
+            return this;
+        }
+
+        public TransaktionBuilder setNach(Zielort nach) {
+            template.setNach(nach);
+            return this;
+        }
+
+        public TransaktionBuilder addPosition(Position position) {
+            template.addPosition(position);
+            return this;
+        }
+
+        public Transaktion build() {
+            return makeTemplate(template);
+        }
+    }
+
 }

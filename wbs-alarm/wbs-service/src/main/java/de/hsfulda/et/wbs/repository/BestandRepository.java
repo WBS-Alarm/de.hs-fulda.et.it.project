@@ -19,7 +19,10 @@ public interface BestandRepository extends CrudRepository<Bestand, Long> {
     List<BestandData> findAllByZielortId(@Param("zielortId") Long zielortId);
 
     @Query("select b from Bestand b join b.zielort z join b.groesse g where z.id = :zielortId and g.id = :groesseId")
-    Optional<BestandData> findByZielortIdAndGroesseId(@Param("zielortId") Long zielortId, @Param("groesseId") Long groesseId);
+    Optional<BestandData> findByZielortIdAndGroesseIdAsData(@Param("zielortId") Long zielortId, @Param("groesseId") Long groesseId);
+
+    @Query("select b from Bestand b join b.zielort z join b.groesse g where z.id = :zielortId and g.id = :groesseId")
+    Optional<Bestand> findByZielortIdAndGroesseId(@Param("zielortId") Long zielortId, @Param("groesseId") Long groesseId);
 
     @Modifying(clearAutomatically = true)
     @Query("update Bestand b set b.anzahl = :anzahl where b.id = :id")

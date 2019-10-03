@@ -23,7 +23,7 @@ public class GetBestandActionImpl implements GetBestandAction {
     public BestandData perform(WbsUser user, Long id) {
         return accessService.hasAccessOnBestand(user, id, () -> {
             return repo.findByIdAsData(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Bestand mit ID {0} nicht gefunden.", id));
+                    .orElseThrow(() -> new ResourceNotFoundException("Bestand mit ID {0} nicht gefunden.", id));
         });
     }
 }

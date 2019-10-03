@@ -37,11 +37,13 @@ public class UpdateBestandActionImpl implements UpdateBestandAction {
             }
 
             if (repo.isZielortErfasst(id)) {
-                throw new ZielortLockedException("Zielort wurde bereits vollständig erfasst und kann Bestände nicht mehr ändern");
+                throw new ZielortLockedException(
+                        "Zielort wurde bereits vollständig erfasst und kann Bestände nicht mehr ändern");
             }
 
             repo.updateAnzahl(id, bestand.getAnzahl());
-            return repo.findByIdAsData(id).get();
+            return repo.findByIdAsData(id)
+                    .get();
         });
     }
 }
