@@ -30,7 +30,7 @@ public class TransaktionListResource {
     private final GetTransaktionListAction getAction;
     private final AddTransaktionAction postAction;
 
-    public static final String PATH = CONTEXT_ROOT + "/transaktion";
+    public static final String PATH = CONTEXT_ROOT + "traeger/{traegerId}/transaktion";
 
     public TransaktionListResource(GetTransaktionListAction getAction, AddTransaktionAction postAction) {
         this.getAction = getAction;
@@ -44,8 +44,8 @@ public class TransaktionListResource {
      */
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")
-    HttpEntity<HalJsonResource> get(@AuthenticationPrincipal WbsUser user) {
-        return new HttpEntity<>(new TransaktionListHalJson(user, getAction.perform(user)));
+    HttpEntity<HalJsonResource> get(@AuthenticationPrincipal WbsUser user, @PathVariable("traegerId") Long traegerId) {
+        return new HttpEntity<>(new TransaktionListHalJson(user, getAction.perform(user, traegerId)));
     }
 
     /**

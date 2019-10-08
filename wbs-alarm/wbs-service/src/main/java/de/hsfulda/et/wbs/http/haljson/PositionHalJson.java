@@ -7,7 +7,7 @@ import de.hsfulda.et.wbs.core.data.PositionData;
 public class PositionHalJson extends HalJsonResource {
 
     public PositionHalJson(WbsUser user, PositionData position) {
-
+        addPositionProperties(user, position);
         addEmbeddedResource("groesse", new GroesseHalJson(user, position.getGroesse()));
     }
 

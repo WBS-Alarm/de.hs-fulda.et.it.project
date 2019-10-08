@@ -16,4 +16,7 @@ public interface TransaktionRepository extends CrudRepository<Transaktion, Long>
 
     @Query("SELECT t FROM Transaktion t where t.id = :id")
     Optional<TransaktionData> findByIdAsData(@Param("id") Long id);
+
+    @Query("SELECT t FROM Transaktion t JOIN t.von v JOIN v.traeger s where s.id = :traegerId")
+    List<TransaktionData> findAllAsDataByTraegerId(@Param("traegerId") Long traegerId);
 }

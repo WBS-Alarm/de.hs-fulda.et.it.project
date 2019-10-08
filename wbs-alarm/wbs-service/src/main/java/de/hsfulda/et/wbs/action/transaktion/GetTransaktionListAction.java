@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface GetTransaktionListAction {
 
-    List<TransaktionData> perform(WbsUser user);
+    List<TransaktionData> perform(WbsUser user, Long traegerId);
 }

@@ -26,7 +26,7 @@ public class TransaktionHalJson extends HalJsonResource {
 
         addEmbeddedResources("positionen", transaktion.getPositionen()
                 .stream()
-                .map(z -> new PositionHalJson(user, z))
+                .map(p -> new PositionHalJson(user, p))
                 .collect(Collectors.toList()));
 
     }

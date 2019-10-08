@@ -4,7 +4,7 @@ import de.hsfulda.et.wbs.core.HalJsonResource;
 import de.hsfulda.et.wbs.core.Link;
 import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.TransaktionData;
-import de.hsfulda.et.wbs.http.resource.ZielortListResource;
+import de.hsfulda.et.wbs.http.resource.TransaktionListResource;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class TransaktionListHalJson extends HalJsonResource {
 
     public TransaktionListHalJson(WbsUser user, List<TransaktionData> transaktionen) {
-        addLink(Link.self(ZielortListResource.PATH));
+        addLink(Link.self(TransaktionListResource.PATH));
 
         List<HalJsonResource> resources = transaktionen.stream()
                 .map(t -> new TransaktionHalJson(user, t))
