@@ -47,7 +47,7 @@ public class KategorieListResource {
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")
     HttpEntity<HalJsonResource> get(@AuthenticationPrincipal WbsUser user, @PathVariable("traegerId") Long traegerId) {
-        return new HttpEntity<>(new KategorieListHalJson(user, getAction.perform(user, traegerId)));
+        return new HttpEntity<>(new KategorieListHalJson(user, getAction.perform(user, traegerId), traegerId));
     }
 
     /**

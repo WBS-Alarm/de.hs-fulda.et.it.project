@@ -11,7 +11,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@DisplayName("Die Benutzer Resource")
+@DisplayName("Die Transaktion Resource")
 class TransaktionResourceTest extends ResourceTest {
 
     @Autowired
@@ -23,7 +23,7 @@ class TransaktionResourceTest extends ResourceTest {
         assertThat(resource).isNotNull();
     }
 
-    @DisplayName("Benutzer werden zu Träger aufgelistet")
+    @DisplayName("Transaktionen werden zu Träger aufgelistet")
     @Test
     void getTransaktionList() throws Exception {
         Long traegerId = getTraegerId(HE_TRAEGER);

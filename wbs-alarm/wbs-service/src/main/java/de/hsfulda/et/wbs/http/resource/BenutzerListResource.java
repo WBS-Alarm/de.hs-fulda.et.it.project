@@ -40,6 +40,6 @@ public class BenutzerListResource {
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
     HttpEntity<HalJsonResource> get(@AuthenticationPrincipal WbsUser user, @PathVariable("traegerId") Long traegerId) {
-        return new HttpEntity<>(new BenutzerListHalJson(user, getAction.perform(user, traegerId)));
+        return new HttpEntity<>(new BenutzerListHalJson(user, getAction.perform(user, traegerId), traegerId));
     }
 }

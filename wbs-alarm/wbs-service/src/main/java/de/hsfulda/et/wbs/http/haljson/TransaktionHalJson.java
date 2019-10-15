@@ -1,11 +1,13 @@
 package de.hsfulda.et.wbs.http.haljson;
 
-import de.hsfulda.et.wbs.Application;
 import de.hsfulda.et.wbs.core.HalJsonResource;
 import de.hsfulda.et.wbs.core.Link;
 import de.hsfulda.et.wbs.core.WbsUser;
+import de.hsfulda.et.wbs.core.data.TraegerData;
 import de.hsfulda.et.wbs.core.data.TransaktionData;
+import de.hsfulda.et.wbs.core.data.ZielortData;
 import de.hsfulda.et.wbs.http.resource.TransaktionListResource;
+import de.hsfulda.et.wbs.http.resource.TransaktionResource;
 import de.hsfulda.et.wbs.util.UriUtil;
 
 import java.time.LocalDateTime;
@@ -32,12 +34,14 @@ public class TransaktionHalJson extends HalJsonResource {
     }
 
     private void addTransaktionProperties(WbsUser user, TransaktionData transaktion) {
-        String traegerResource = UriUtil.build(Application.CONTEXT_ROOT + "/transaktion/{id}", transaktion.getId());
+        String traegerResource = UriUtil.build(TransaktionResource.PATH, transaktion.getId());
 
         addLink(Link.self(traegerResource));
 
         if (user.isAccountant()) {
-            addLink(Link.create("add", TransaktionListResource.PATH));
+            ZielortData von = transaktion.getVon();
+            TraegerData traeger = von.getTraeger();
+            addLink(Link.create("add", UriUtil.build(TransaktionListResource.PATH, traeger.getId())));
         }
 
         addProperty("id", transaktion.getId());

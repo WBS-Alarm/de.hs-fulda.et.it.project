@@ -47,7 +47,7 @@ public class GroesseListResource {
     @PreAuthorize("hasAuthority('READ_ALL')")
     HttpEntity<HalJsonResource> get(@AuthenticationPrincipal WbsUser user,
             @PathVariable("kategorieId") Long kategorieId) {
-        return new HttpEntity<>(new GroesseListHalJson(user, getAction.perform(user, kategorieId)));
+        return new HttpEntity<>(new GroesseListHalJson(user, getAction.perform(user, kategorieId), kategorieId));
     }
 
     /**

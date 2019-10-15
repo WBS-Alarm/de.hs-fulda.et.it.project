@@ -22,6 +22,10 @@ public class Zielort implements ZielortData {
 
     private boolean auto;
 
+    private boolean eingang;
+
+    private boolean lager;
+
     private boolean aktiv;
 
     private boolean erfasst;
@@ -64,6 +68,22 @@ public class Zielort implements ZielortData {
 
     public void setAuto(boolean auto) {
         this.auto = auto;
+    }
+
+    public boolean isEingang() {
+        return eingang;
+    }
+
+    public void setEingang(boolean eingang) {
+        this.eingang = eingang;
+    }
+
+    public boolean isLager() {
+        return lager;
+    }
+
+    public void setLager(boolean lager) {
+        this.lager = lager;
     }
 
     @Override
@@ -126,8 +146,11 @@ public class Zielort implements ZielortData {
     static Zielort makeTemplate(Zielort zielort) {
         Zielort templated = new Zielort();
         templated.name = zielort.name;
+        templated.eingang = zielort.eingang;
+        templated.lager = zielort.lager;
         templated.traeger = zielort.traeger;
         templated.aktiv = zielort.aktiv;
+        templated.erfasst = zielort.erfasst;
         return templated;
     }
 
@@ -144,6 +167,16 @@ public class Zielort implements ZielortData {
             return this;
         }
 
+        public ZielortBuilder eingang(boolean eingang) {
+            template.setEingang(eingang);
+            return this;
+        }
+
+        public ZielortBuilder lager(boolean lager) {
+            template.setLager(lager);
+            return this;
+        }
+
         public ZielortBuilder aktiv(boolean aktiv) {
             template.setAktiv(aktiv);
             return this;
@@ -151,6 +184,11 @@ public class Zielort implements ZielortData {
 
         public ZielortBuilder auto(boolean auto) {
             template.setAuto(auto);
+            return this;
+        }
+
+        public ZielortBuilder erfasst(boolean erfasst) {
+            template.setErfasst(erfasst);
             return this;
         }
 
@@ -164,9 +202,12 @@ public class Zielort implements ZielortData {
                 .aktiv(true)
                 .auto(true)
                 .build(), builder().name("Wareneingang")
+                .eingang(true)
+                .erfasst(true)
                 .aktiv(true)
                 .auto(true)
                 .build(), builder().name("Lager")
+                .lager(true)
                 .aktiv(true)
                 .auto(true)
                 .build(), builder().name("Aussonderung")

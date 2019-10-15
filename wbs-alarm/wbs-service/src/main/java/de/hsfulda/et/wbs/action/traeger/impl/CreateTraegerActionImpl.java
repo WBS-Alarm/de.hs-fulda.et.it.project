@@ -26,8 +26,7 @@ public class CreateTraegerActionImpl implements CreateTraegerAction {
         }
 
         Traeger tr = Traeger.builder()
-                .
-                        name(traeger.getName())
+                .name(traeger.getName())
                 .build();
 
         Zielort.getStandardForNewTraeger()

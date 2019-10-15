@@ -5,6 +5,7 @@ import de.hsfulda.et.wbs.core.Link;
 import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.BenutzerData;
 import de.hsfulda.et.wbs.core.data.GrantedAuthorityData;
+import de.hsfulda.et.wbs.http.resource.BenutzerResource;
 import de.hsfulda.et.wbs.security.haljson.AuthorityHalJson;
 import de.hsfulda.et.wbs.util.UriUtil;
 
@@ -13,8 +14,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
 
 public class BenutzerHalJson extends HalJsonResource {
 
@@ -61,7 +60,7 @@ public class BenutzerHalJson extends HalJsonResource {
     }
 
     private void addBenutzerProperies(WbsUser user, BenutzerData benutzer) {
-        String benutzerResource = UriUtil.build(CONTEXT_ROOT + "/benutzer/{id}", benutzer.getId());
+        String benutzerResource = UriUtil.build(BenutzerResource.PATH, benutzer.getId());
 
         addLink(Link.self(benutzerResource));
 

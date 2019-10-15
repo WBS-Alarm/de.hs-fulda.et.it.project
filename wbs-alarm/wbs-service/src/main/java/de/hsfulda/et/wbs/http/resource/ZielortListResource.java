@@ -46,7 +46,7 @@ public class ZielortListResource {
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")
     HttpEntity<HalJsonResource> get(@AuthenticationPrincipal WbsUser user, @PathVariable("traegerId") Long traegerId) {
-        return new HttpEntity<>(new ZielortListHalJson(user, getAction.perform(user, traegerId)));
+        return new HttpEntity<>(new ZielortListHalJson(user, getAction.perform(user, traegerId), traegerId));
     }
 
     /**

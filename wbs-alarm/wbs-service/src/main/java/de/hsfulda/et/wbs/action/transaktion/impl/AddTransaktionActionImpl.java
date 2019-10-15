@@ -186,7 +186,7 @@ public class AddTransaktionActionImpl implements AddTransaktionAction {
             if (positions.stream()
                     .anyMatch(pi -> Objects.equals(p.getGroesse(), pi.getGroesse()))) {
                 throw new TransaktionValidationException(
-                        "Die Größe mit der ID {0} wurde in den POsitionen doppelt " + "angegeben.", p.getGroesse());
+                        "Die Größe mit der ID {0} wurde in den Positionen doppelt " + "angegeben.", p.getGroesse());
             }
         });
 

@@ -43,7 +43,7 @@ class BestandResourceTest extends ResourceTest {
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andDo(print())
-            .andExpect(jsonPath("$._links.self[0].templated", is(true)))
+                .andExpect(jsonPath("$._links.self[0].templated", is(false)))
             .andExpect(jsonPath("$._embedded.elemente[0]._embedded.groesse[0].name", is("XXL")))
             .andExpect(jsonPath("$._embedded.elemente[0]._embedded.kategorie[0].name", is("Polo-Hemd")))
             .andExpect(jsonPath("$._embedded.elemente[0].anzahl", is(10)));
