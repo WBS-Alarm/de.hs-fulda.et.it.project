@@ -34,4 +34,10 @@ public interface ZielortRepository extends CrudRepository<Zielort, Long> {
     @Modifying(clearAutomatically = true)
     @Query("update Zielort z set z.erfasst = true where z.id = :id")
     void lock(@Param("id") Long id);
+
+    @Query("select z.id from Zielort z join z.traeger t where t.id = :traegerId and z.eingang = true")
+    Optional<Long> findWareneingangByTraegerId(@Param("traegerId") Long traegerId);
+
+    @Query("select z.id from Zielort z join z.traeger t where t.id = :traegerId and z.lager = true")
+    Optional<Long> findLagerByTraegerId(@Param("traegerId") Long traegerId);
 }

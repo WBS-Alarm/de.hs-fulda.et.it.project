@@ -70,6 +70,7 @@ public class Zielort implements ZielortData {
         this.auto = auto;
     }
 
+    @Override
     public boolean isEingang() {
         return eingang;
     }
@@ -78,6 +79,7 @@ public class Zielort implements ZielortData {
         this.eingang = eingang;
     }
 
+    @Override
     public boolean isLager() {
         return lager;
     }

@@ -8,6 +8,10 @@ public interface ZielortData extends ZielortDto {
 
     boolean isAuto();
 
+    boolean isEingang();
+
+    boolean isLager();
+
     boolean isAktiv();
 
     boolean isErfasst();

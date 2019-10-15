@@ -12,6 +12,7 @@ import de.hsfulda.et.wbs.core.exception.TransaktionValidationException;
 import de.hsfulda.et.wbs.entity.Bestand;
 import de.hsfulda.et.wbs.entity.Position;
 import de.hsfulda.et.wbs.entity.Transaktion;
+import de.hsfulda.et.wbs.entity.Zielort;
 import de.hsfulda.et.wbs.repository.TransaktionRepository;
 import de.hsfulda.et.wbs.service.AccessService;
 import org.springframework.stereotype.Component;
@@ -53,10 +54,11 @@ public class AddTransaktionActionImpl implements AddTransaktionAction {
     }
 
     private Transaktion createTransaktion(WbsUser user, TransaktionDto dto) {
+        Zielort vonZielort = context.getZielort(dto.getVon());
         Transaktion.TransaktionBuilder builder = Transaktion.builder()
                 .setBenutzer(context.getBenutzer(user))
                 .setDatum(LocalDateTime.now())
-                .setVon(context.getZielort(dto.getVon()))
+                .setVon(vonZielort)
                 .setNach(context.getZielort(dto.getNach()));
 
         dto.getPositions()
@@ -66,7 +68,10 @@ public class AddTransaktionActionImpl implements AddTransaktionAction {
                             .setGroesse(context.getGroesse(p.getGroesse()))
                             .build());
 
-                    updateVonBestand(user, p, dto.getVon());
+                    // Der Wareneingang soll nicht gebucht werden.
+                    if (!vonZielort.isEingang()) {
+                        updateVonBestand(user, p, dto.getVon());
+                    }
                     updateNachBestand(user, p, dto.getNach());
                 });
 
@@ -190,20 +195,23 @@ public class AddTransaktionActionImpl implements AddTransaktionAction {
             }
         });
 
-        // Existiert genug Bestand für eine Position
-        positions.forEach(p -> {
-            BestandData bestand = context.getBestandData(vonZielort.getId(), p.getGroesse());
-            GroesseData groesse = context.getGroesseData(p.getGroesse());
+        // Der Wareneingang in den BEständen nicht aktualisiert.
+        if (!vonZielort.isEingang()) {
+            // Existiert genug Bestand für eine Position
+            positions.forEach(p -> {
+                BestandData bestand = context.getBestandData(vonZielort.getId(), p.getGroesse());
+                GroesseData groesse = context.getGroesseData(p.getGroesse());
 
-            if (bestand.getAnzahl() < p.getAnzahl()) {
-                KategorieData kategorie = groesse.getKategorie();
-                throw new TransaktionValidationException(
-                        "Die Position mit Kategorie \"{0}\", Größe \"{1}\", Anzahl {2} übersteigt den " +
-                                "Bestand vom ausgehenden Zielort {3}.", kategorie.getName(), groesse.getName(),
-                        p.getAnzahl(), bestand.getZielort()
-                        .getName());
-            }
-        });
+                if (bestand.getAnzahl() < p.getAnzahl()) {
+                    KategorieData kategorie = groesse.getKategorie();
+                    throw new TransaktionValidationException(
+                            "Die Position mit Kategorie \"{0}\", Größe \"{1}\", Anzahl {2} übersteigt den " +
+                                    "Bestand vom ausgehenden Zielort {3}.", kategorie.getName(), groesse.getName(),
+                            p.getAnzahl(), bestand.getZielort()
+                            .getName());
+                }
+            });
+        }
     }
 
     private boolean hasSameTraeger(ZielortData von, ZielortData nach) {

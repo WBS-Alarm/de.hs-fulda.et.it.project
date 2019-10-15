@@ -21,8 +21,8 @@ public enum Relations {
     REL_BESTAND("bestand", BestandResource.PATH),
     REL_TRAEGER_LIST("traegerList", TraegerListResource.PATH),
     REL_TRAEGER("traeger", TraegerResource.PATH),
-    REL_TRANSAKTION_LIST("transaktionList", TransaktionListResource.PATH),
-    REL_TRANSAKTION("transaktion", TransaktionResource.PATH);
+    REL_TRANSAKTION_LIST("transaktionList", TransaktionListResource.PATH), REL_TRANSAKTION("transaktion",
+            TransaktionResource.PATH), REL_EINKAUF("einkauf", EinkaufResource.PATH);
 
     private final String rel;
     private final String href;

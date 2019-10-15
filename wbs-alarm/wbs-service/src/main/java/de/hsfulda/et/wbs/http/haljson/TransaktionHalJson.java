@@ -6,6 +6,7 @@ import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.TraegerData;
 import de.hsfulda.et.wbs.core.data.TransaktionData;
 import de.hsfulda.et.wbs.core.data.ZielortData;
+import de.hsfulda.et.wbs.http.resource.EinkaufResource;
 import de.hsfulda.et.wbs.http.resource.TransaktionListResource;
 import de.hsfulda.et.wbs.http.resource.TransaktionResource;
 import de.hsfulda.et.wbs.util.UriUtil;
@@ -42,6 +43,7 @@ public class TransaktionHalJson extends HalJsonResource {
             ZielortData von = transaktion.getVon();
             TraegerData traeger = von.getTraeger();
             addLink(Link.create("add", UriUtil.build(TransaktionListResource.PATH, traeger.getId())));
+            addLink(Link.create("einkauf", UriUtil.build(EinkaufResource.PATH, traeger.getId())));
         }
 
         addProperty("id", transaktion.getId());
