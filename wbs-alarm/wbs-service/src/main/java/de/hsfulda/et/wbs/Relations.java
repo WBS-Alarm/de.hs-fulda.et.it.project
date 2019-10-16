@@ -5,26 +5,30 @@ import de.hsfulda.et.wbs.security.resource.*;
 
 public enum Relations {
 
-    REL_USER_LIST("benutzerList", BenutzerListResource.PATH),
-    REL_USER_CURRENT("current", CurrentUserResource.PATH),
-    REL_USER_REGISTER("registerUser", UserRegisterResource.PATH),
-    REL_AUTHORITIES("authorities", AuthorityResource.PATH),
-    REL_GRANT_AUTHORITY("grantAuthority", GrantAuthorityResource.PATH),
-    REL_USER_LOGIN("userLogin", LoginResource.PATH),
-    REL_BENUTZER("benutzer", BenutzerResource.PATH),
-    REL_ZIELORT_LIST("zielortList", ZielortListResource.PATH),
-    REL_ZIELORT("zielort", ZielortResource.PATH),
-    REL_ZIELORT_LOCK("zielortLock", ZielortLockResource.PATH),
-    REL_KATEGORIE_LIST("kategorieList", KategorieListResource.PATH),
-    REL_KATEGORIE("kategorie", KategorieResource.PATH),
-    REL_GROESSE_LIST("groesseList", GroesseListResource.PATH),
-    REL_GROESSE("groesse", GroesseResource.PATH),
-    REL_BESTAND_LIST("bestandList", BestandListResource.PATH),
-    REL_BESTAND("bestand", BestandResource.PATH),
-    REL_TRAEGER_LIST("traegerList", TraegerListResource.PATH),
-    REL_TRAEGER("traeger", TraegerResource.PATH),
-    REL_TRANSAKTION_LIST("transaktionList", TransaktionListResource.PATH), REL_TRANSAKTION("transaktion",
-            TransaktionResource.PATH), REL_EINKAUF("einkauf", EinkaufResource.PATH);
+    // @formatter:off
+      REL_USER_LIST(       "benutzerList",    BenutzerListResource.PATH)
+    , REL_BENUTZER(        "benutzer",        BenutzerResource.PATH)
+    , REL_USER_CURRENT(    "current",         CurrentUserResource.PATH)
+    , REL_USER_REGISTER(   "registerUser",    UserRegisterResource.PATH)
+    , REL_AUTHORITIES(     "authorities",     AuthorityResource.PATH)
+    , REL_GRANT_AUTHORITY( "grantAuthority",  GrantAuthorityResource.PATH)
+    , REL_USER_LOGIN(      "userLogin",       LoginResource.PATH)
+    , REL_TRAEGER_LIST(    "traegerList",     TraegerListResource.PATH)
+    , REL_TRAEGER(         "traeger",         TraegerResource.PATH)
+    , REL_ZIELORT_LIST(    "zielortList",     ZielortListResource.PATH)
+    , REL_ZIELORT(         "zielort",         ZielortResource.PATH)
+    , REL_ZIELORT_LOCK(    "zielortLock",     ZielortLockResource.PATH)
+    , REL_KATEGORIE_LIST(  "kategorieList",   KategorieListResource.PATH)
+    , REL_KATEGORIE(       "kategorie",       KategorieResource.PATH)
+    , REL_GROESSE_LIST(    "groesseList",     GroesseListResource.PATH)
+    , REL_GROESSE(         "groesse",         GroesseResource.PATH)
+    , REL_BESTAND_LIST(    "bestandList",     BestandListResource.PATH)
+    , REL_BESTAND(         "bestand",         BestandResource.PATH)
+    , REL_TRANSAKTION_LIST("transaktionList", TransaktionListResource.PATH)
+    , REL_TRANSAKTION(     "transaktion",     TransaktionResource.PATH)
+    , REL_EINKAUF(         "einkauf",         EinkaufResource.PATH)
+    ;
+    // @formatter:on
 
     private final String rel;
     private final String href;
