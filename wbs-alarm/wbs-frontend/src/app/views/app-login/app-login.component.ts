@@ -9,6 +9,7 @@ import { GlobalRegistryService } from '../../core/global-registry/global-registr
 import { FormGroup } from '@angular/forms';
 import { UsersService } from '../../core/service/rest/users/users.service';
 import { UserDataInterface } from '../../core/service/rest/users/user-data.interface';
+import { getLocaleDateFormat } from '@angular/common';
 
 
 @Component({
@@ -89,7 +90,13 @@ export class AppLoginComponent implements OnInit
            });
 
 
-           localStorage.setItem('accessToken', result);
+           let today:Date = new Date(Date.now());
+
+           today.setTime(today.getTime() + 1*24*60*60*1000);
+
+           let expires:string = 'expires=' + today.toUTCString();
+
+           document.cookie = 'loginToken=' + result +  ';' + expires;
            this.sitemapHelper.Bearer = result;
            this.globalRegistryService.setisLoggedIn(true);
            this.router.navigate(['plugin', 'start']);

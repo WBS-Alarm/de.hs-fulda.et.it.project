@@ -41,37 +41,30 @@ export class StartComponent implements OnInit
 
     public logout():void
     {
-        this.loginService.logout().subscribe(
-            (result) =>
-            {
-                this.globalRegistry.setisLoggedIn(false);
-                this.globalRegistry.isLoginActive = false;
-                localStorage.removeItem('accessToken');
+        let today:Date = new Date(Date.now());
 
-                this.alert.addAlert({
-                    msg:              'Sie werden ausgeloggt',
-                    type:             'success',
-                    dismissOnTimeout: null,
-                    identifier:       'logout'
-                });
+        today.setTime(today.getTime() - 1);
 
-                let body:HTMLElement = document.getElementById('body');
-                let html:HTMLElement = document.getElementById('html');
+        let expires:string = 'expires=' + today.toUTCString();
 
-                body.classList.remove('isLoggedIn');
-                html.classList.remove('isLoggedIn');
+        document.cookie = 'loginToken=' +';' + expires;
 
-                this.router.navigate(['login']);
-            },
-            (error:Error) =>
-            {
-                this.alert.addAlert({
-                    msg:              'Beim ausloggen ist ein Fehler aufgetreten',
-                    type:             'danger',
-                    dismissOnTimeout: null,
-                    identifier:       'logoutError'
-                });
-            }
-        )
+        this.globalRegistry.setisLoggedIn(false);
+        this.globalRegistry.isLoginActive = false;
+
+        this.alert.addAlert({
+            msg:              'Sie werden ausgeloggt',
+            type:             'success',
+            dismissOnTimeout: null,
+            identifier:       'logout'
+        });
+
+        let body:HTMLElement = document.getElementById('body');
+        let html:HTMLElement = document.getElementById('html');
+
+        body.classList.remove('isLoggedIn');
+        html.classList.remove('isLoggedIn');
+
+        this.router.navigate(['login']);
     }
 }
