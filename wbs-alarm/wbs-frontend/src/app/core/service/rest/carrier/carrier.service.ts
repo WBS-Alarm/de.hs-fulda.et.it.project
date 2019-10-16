@@ -119,6 +119,16 @@ export class CarrierService
             })
     }
 
+    public listZielorteForTraeger(traegerId:number):Observable<any>
+    {
+        this.headers = this.sitemapHelper.setAuthorization();
+
+        return this.http.get(this.sitemapHelper.zielortForTraeger().replace('{traegerId}', traegerId.toString()),
+            {
+                headers: this.headers
+            })
+    }
+
     public createCategory(carrierId:number, categoryName:string)
     {
         this.headers = this.sitemapHelper.setAuthorization();

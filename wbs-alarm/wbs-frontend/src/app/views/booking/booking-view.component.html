@@ -36,20 +36,21 @@
 </terra-portlet>
 
 <terra-portlet>
-    <div class="auswahl">
-        <terra-select-box
+    <div class="headline">
+        <terra-select-box class = element
                           [inputName]="'Kategorie:'"
                           [inputListBoxValues]="_kategorien"
                           [(ngModel)]="_kategorie"
                           (ngModelChange)="fuelleGroesse(_kategorie)">
         </terra-select-box>
-        <terra-select-box
+        <terra-select-box class = element
                           [inputName]="'Größe:'"
                           [inputIsDisabled]="_groessen.length === 0"
                           [inputListBoxValues]="_groessen"
-                          [(ngModel)]="_nach">
+                          [(ngModel)]="_goresse">
         </terra-select-box>
-        <terra-number-input [inputName]="'Anzahl'"
+        <terra-number-input class = element
+                            [inputName]="'Anzahl'"
                             [(ngModel)]="_anzahl">
             
         </terra-number-input>
@@ -58,7 +59,19 @@
 
 <div>
     <terra-button inputCaption="Buchen"
-                  (outputClicked)="_buchen()">
+                  (outputClicked)="addRow()">
     </terra-button>
 </div>
+
+<div class="overview">
+    <terra-simple-table #table
+                        [inputIsStriped]="true"
+                        [inputHasCheckboxes]="true"
+                        [inputUseHighlighting]="true"
+                        [inputHeaderList]="_headerList"
+                        [inputRowList]="_rowList"
+                        (outputHighlightedRowChange)="selectRow($event)">
+    </terra-simple-table>
+</div>
+
 
