@@ -6,11 +6,23 @@ export class GlobalRegistryService
 {
     private isLoggedIn:boolean = false;
 
+    private _isLoginActive:boolean = true;
+
     private gravatarHash:string;
 
     constructor()
     {
 
+    }
+
+    public get isLoginActive():boolean
+    {
+        return this._isLoginActive;
+    }
+
+    public set isLoginActive(value:boolean)
+    {
+        this._isLoginActive = value;
     }
 
     public setisLoggedIn(value:boolean)

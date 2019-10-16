@@ -48,6 +48,8 @@ export class AppLoginComponent implements OnInit
 
     public ngOnInit():void
     {
+        this.globalRegistryService.isLoginActive = true;
+
         this.initTranslations();
         // this.initLanguageValues();
     }
@@ -86,10 +88,13 @@ export class AppLoginComponent implements OnInit
                identifier:       'login'
            });
 
+
            localStorage.setItem('accessToken', result);
            this.sitemapHelper.Bearer = result;
            this.globalRegistryService.setisLoggedIn(true);
            this.router.navigate(['plugin', 'start']);
+
+           this.globalRegistryService.isLoginActive = false;
 
            this.userService.getCurrentUsers().subscribe(
                (result:any) =>
