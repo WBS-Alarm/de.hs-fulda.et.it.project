@@ -1,21 +1,21 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="header">
-                <h1>Willkommen in der digitalen Kleiderkammer</h1>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-12">
-            <hr>
-            <h2>{{ 'startNow' | translate:lang }}</h2>
+<div class="infos">
+    <terra-portlet [inputIsCollapsable]="true"
+                   [inputCollapsed]="false"
+                   [inputPortletHeader]="'Informationen über das Programm'">
+        <div class="infoText">
+            Hallo und herzlich Willkommen in der digitalen Kleiderverwaltung! <br>
+            Dieses Programm wurde im Rahmen eines Sofwtareprojekts an der Hochschule Fulda von Achim Rose und Tim Wieder geschrieben.
+            Informationen dazu, sowie die Dokumentation des Quellcodes und der Schnittstellen können einfach<br>
+            <a href="https://github.com/argh87/de.hs-fulda.et.it.project/wiki">hier</a>
             <br>
-            <div class="center">
-                <terra-button [inputCaption]="'Logout'"
-                              (outputClicked)="logout()">
-                </terra-button>
-            </div>
+            eingesehen werden
         </div>
-    </div>
+    
+    </terra-portlet>
+</div>
+
+<div class="bottom-line">
+    <terra-button [inputCaption]="'Logout'"
+                  (outputClicked)="logout()">
+    </terra-button>
 </div>
