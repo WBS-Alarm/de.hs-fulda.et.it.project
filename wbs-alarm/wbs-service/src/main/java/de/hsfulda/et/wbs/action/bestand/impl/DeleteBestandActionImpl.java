@@ -30,7 +30,8 @@ public class DeleteBestandActionImpl implements DeleteBestandAction {
             }
 
             if (repo.isZielortErfasst(id)) {
-                throw new IllegalStateException("Zielort wurde bereits vollständig erfasst und kann Bestände nicht mehr löschen");
+                throw new IllegalStateException(
+                        "Zielort wurde bereits vollständig erfasst und kann Bestände nicht mehr löschen");
             }
 
             repo.deleteById(id);

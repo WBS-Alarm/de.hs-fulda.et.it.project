@@ -31,7 +31,8 @@ public class KategorieResource {
     private final UpdateKategorieAction putAction;
     private final DeleteKategorieAction deleteAction;
 
-    public KategorieResource(GetKategorieAction getAction, UpdateKategorieAction putAction, DeleteKategorieAction deleteAction) {
+    public KategorieResource(GetKategorieAction getAction, UpdateKategorieAction putAction,
+            DeleteKategorieAction deleteAction) {
         this.getAction = getAction;
         this.putAction = putAction;
         this.deleteAction = deleteAction;
@@ -52,13 +53,14 @@ public class KategorieResource {
     /**
      * Ermittelt eine Kategorie anhand der ID.
      *
-     * @param id        ID des Kategories aus dem Pfad
+     * @param id ID des Kategories aus dem Pfad
      * @param kategorie Kategorie mit neuem Namen
      * @return gespeicherten Kategorie. Anderfalls 404 oder 409
      */
     @PutMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
-    HttpEntity<HalJsonResource> put(@AuthenticationPrincipal WbsUser user, @PathVariable("id") Long id, @RequestBody KategorieDtoImpl kategorie) {
+    HttpEntity<HalJsonResource> put(@AuthenticationPrincipal WbsUser user, @PathVariable("id") Long id,
+            @RequestBody KategorieDtoImpl kategorie) {
         return new HttpEntity<>(new KategorieHalJson(user, putAction.perform(user, id, kategorie)));
     }
 

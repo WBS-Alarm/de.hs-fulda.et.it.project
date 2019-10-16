@@ -15,6 +15,11 @@ public class ExceptionMapper {
         return toResponse(HttpStatus.NOT_FOUND, exc);
     }
 
+    @ExceptionHandler({IllegalStateException.class})
+    public final ResponseEntity<HalJsonResource> illegalStateException(Throwable exc) {
+        return toResponse(HttpStatus.INTERNAL_SERVER_ERROR, exc);
+    }
+
     @ExceptionHandler({IllegalArgumentException.class})
     public final ResponseEntity<HalJsonResource> illegalArgumentException(Throwable exc) {
         return toResponse(HttpStatus.BAD_REQUEST, exc);
@@ -28,6 +33,11 @@ public class ExceptionMapper {
     @ExceptionHandler(ZielortLockedException.class)
     public final ResponseEntity<HalJsonResource> zielortLockedException(Throwable exc) {
         return toResponse(HttpStatus.LOCKED, exc);
+    }
+
+    @ExceptionHandler(TransaktionValidationException.class)
+    public final ResponseEntity<HalJsonResource> transaktionValidationException(Throwable exc) {
+        return toResponse(HttpStatus.BAD_REQUEST, exc);
     }
 
     private ResponseEntity<HalJsonResource> toResponse(HttpStatus status, Throwable exc) {

@@ -25,27 +25,20 @@ final class TokenAuthenticationFilter extends AbstractAuthenticationProcessingFi
     }
 
     @Override
-    public Authentication attemptAuthentication(
-        final HttpServletRequest request,
-        final HttpServletResponse response) {
-        final String param = ofNullable(request.getHeader(AUTHORIZATION))
-            .orElse(request.getParameter("t"));
+    public Authentication attemptAuthentication(final HttpServletRequest request, final HttpServletResponse response) {
+        final String param = ofNullable(request.getHeader(AUTHORIZATION)).orElse(request.getParameter("t"));
 
-        final String token = ofNullable(param)
-            .map(value -> removeStart(value, BEARER))
-            .map(String::trim)
-            .orElseThrow(() -> new BadCredentialsException("Missing Authentication Token"));
+        final String token = ofNullable(param).map(value -> removeStart(value, BEARER))
+                .map(String::trim)
+                .orElseThrow(() -> new BadCredentialsException("Missing Authentication Token"));
 
         final Authentication auth = new UsernamePasswordAuthenticationToken(token, token);
         return getAuthenticationManager().authenticate(auth);
     }
 
     @Override
-    protected void successfulAuthentication(
-        final HttpServletRequest request,
-        final HttpServletResponse response,
-        final FilterChain chain,
-        final Authentication authResult) throws IOException, ServletException {
+    protected void successfulAuthentication(final HttpServletRequest request, final HttpServletResponse response,
+            final FilterChain chain, final Authentication authResult) throws IOException, ServletException {
         super.successfulAuthentication(request, response, chain, authResult);
         chain.doFilter(request, response);
     }

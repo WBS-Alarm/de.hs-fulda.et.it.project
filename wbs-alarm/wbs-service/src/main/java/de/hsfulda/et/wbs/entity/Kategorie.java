@@ -1,6 +1,5 @@
 package de.hsfulda.et.wbs.entity;
 
-
 import de.hsfulda.et.wbs.core.data.GroesseData;
 import de.hsfulda.et.wbs.core.data.KategorieData;
 import de.hsfulda.et.wbs.core.data.TraegerData;
@@ -74,7 +73,9 @@ public class Kategorie implements KategorieData {
         if (groessen == null) {
             groessen = new ArrayList<>();
         }
-        return groessen.stream().map(g -> (GroesseData) g).collect(Collectors.toList());
+        return groessen.stream()
+                .map(g -> (GroesseData) g)
+                .collect(Collectors.toList());
     }
 
     public void setGroessen(List<Groesse> groessen) {
@@ -92,7 +93,6 @@ public class Kategorie implements KategorieData {
 
     }
 
-
     public static KategorieBuilder builder() {
         return new KategorieBuilder();
     }
@@ -108,7 +108,6 @@ public class Kategorie implements KategorieData {
     public static class KategorieBuilder {
 
         private final Kategorie template;
-
 
         private KategorieBuilder() {
             template = new Kategorie();

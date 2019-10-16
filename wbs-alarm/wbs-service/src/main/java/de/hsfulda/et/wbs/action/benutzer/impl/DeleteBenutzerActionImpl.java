@@ -16,9 +16,7 @@ public class DeleteBenutzerActionImpl implements DeleteBenutzerAction {
     private final BenutzerRepository repo;
     private final AccessService accessService;
 
-    public DeleteBenutzerActionImpl(
-            BenutzerRepository repo,
-            AccessService accessService) {
+    public DeleteBenutzerActionImpl(BenutzerRepository repo, AccessService accessService) {
         this.repo = repo;
         this.accessService = accessService;
     }

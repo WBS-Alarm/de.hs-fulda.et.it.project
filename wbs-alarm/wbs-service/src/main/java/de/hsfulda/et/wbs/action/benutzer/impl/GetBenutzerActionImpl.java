@@ -16,9 +16,7 @@ public class GetBenutzerActionImpl implements GetBenutzerAction {
     private final BenutzerRepository repo;
     private final AccessService accessService;
 
-    public GetBenutzerActionImpl(
-            BenutzerRepository repo,
-            AccessService accessService) {
+    public GetBenutzerActionImpl(BenutzerRepository repo, AccessService accessService) {
         this.repo = repo;
         this.accessService = accessService;
     }

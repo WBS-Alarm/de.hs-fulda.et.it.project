@@ -3,7 +3,7 @@ package de.hsfulda.et.wbs.action.kategorie.impl;
 import de.hsfulda.et.wbs.action.kategorie.UpdateKategorieAction;
 import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.KategorieData;
-import de.hsfulda.et.wbs.core.data.KategorieDto;
+import de.hsfulda.et.wbs.core.dto.KategorieDto;
 import de.hsfulda.et.wbs.core.exception.ResourceNotFoundException;
 import de.hsfulda.et.wbs.repository.KategorieRepository;
 import de.hsfulda.et.wbs.service.AccessService;
@@ -37,7 +37,8 @@ public class UpdateKategorieActionImpl implements UpdateKategorieAction {
             }
 
             repo.updateName(id, kategorie.getName());
-            return repo.findByIdAndAktivIsTrue(id).get();
+            return repo.findByIdAndAktivIsTrue(id)
+                    .get();
         });
     }
 }

@@ -13,8 +13,7 @@ import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
 public class AuthorityHalJson extends HalJsonResource {
 
     public AuthorityHalJson(WbsUser user, final AuthorityData authority, final BenutzerData benutzer) {
-        addLink(Link.create("delete",
-            UriUtil.build(GrantAuthorityResource.PATH, authority.getId(), benutzer.getId())));
+        addLink(Link.create("delete", UriUtil.build(GrantAuthorityResource.PATH, authority.getId(), benutzer.getId())));
 
         addProperties(user, authority);
     }

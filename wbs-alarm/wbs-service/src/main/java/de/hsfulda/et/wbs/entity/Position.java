@@ -1,11 +1,13 @@
 package de.hsfulda.et.wbs.entity;
 
+import de.hsfulda.et.wbs.core.data.GroesseData;
+import de.hsfulda.et.wbs.core.data.PositionData;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "POSITIONEN")
-public class Position {
+public class Position implements PositionData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,13 +22,10 @@ public class Position {
     @JoinColumn(name = "GROESSE_ID")
     private Groesse groesse;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "KATEGORIE_ID")
-    private Kategorie kategorie;
-
     protected Position() {
     }
 
+    @Override
     public Long getId() {
         return id;
     }
@@ -35,6 +34,7 @@ public class Position {
         this.id = id;
     }
 
+    @Override
     public Long getAnzahl() {
         return anzahl;
     }
@@ -51,7 +51,8 @@ public class Position {
         this.transaktion = transaktion;
     }
 
-    public Groesse getGroesse() {
+    @Override
+    public GroesseData getGroesse() {
         return groesse;
     }
 
@@ -59,11 +60,37 @@ public class Position {
         this.groesse = groesse;
     }
 
-    public Kategorie getKategorie() {
-        return kategorie;
+    public static PositionBuilder builder() {
+        return new PositionBuilder();
     }
 
-    public void setKategorie(Kategorie kategorie) {
-        this.kategorie = kategorie;
+    static Position makeTemplate(Position position) {
+        Position templated = new Position();
+        templated.anzahl = position.anzahl;
+        templated.groesse = position.groesse;
+        return templated;
+    }
+
+    public static class PositionBuilder {
+
+        private final Position template;
+
+        private PositionBuilder() {
+            template = new Position();
+        }
+
+        public PositionBuilder setAnzahl(Long anzahl) {
+            template.setAnzahl(anzahl);
+            return this;
+        }
+
+        public PositionBuilder setGroesse(Groesse groesse) {
+            template.setGroesse(groesse);
+            return this;
+        }
+
+        public Position build() {
+            return makeTemplate(template);
+        }
     }
 }

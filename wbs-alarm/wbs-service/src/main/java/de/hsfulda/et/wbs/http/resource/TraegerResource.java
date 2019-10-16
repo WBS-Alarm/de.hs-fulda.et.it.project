@@ -30,7 +30,8 @@ public class TraegerResource {
     private final UpdateTraegerAction putAction;
     private final DeleteTraegerAction deleteAction;
 
-    public TraegerResource(GetTraegerAction getAction, UpdateTraegerAction putAction, DeleteTraegerAction deleteAction) {
+    public TraegerResource(GetTraegerAction getAction, UpdateTraegerAction putAction,
+            DeleteTraegerAction deleteAction) {
         this.getAction = getAction;
         this.putAction = putAction;
         this.deleteAction = deleteAction;
@@ -51,13 +52,14 @@ public class TraegerResource {
     /**
      * Bearbeitet einen Träger. Hierbei wird nur der Name geändert.
      *
-     * @param id      ID des Trägers aus dem Pfad
+     * @param id ID des Trägers aus dem Pfad
      * @param traeger Träger mit neuem Namen
      * @return gespeicherten Träger. Anderfalls 404 oder 409
      */
     @PutMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
-    HttpEntity<HalJsonResource> put(@AuthenticationPrincipal WbsUser user, @PathVariable("id") Long id, @RequestBody TraegerDtoImpl traeger) {
+    HttpEntity<HalJsonResource> put(@AuthenticationPrincipal WbsUser user, @PathVariable("id") Long id,
+            @RequestBody TraegerDtoImpl traeger) {
         return new HttpEntity<>(new TraegerHalJson(user, putAction.perform(id, traeger)));
     }
 

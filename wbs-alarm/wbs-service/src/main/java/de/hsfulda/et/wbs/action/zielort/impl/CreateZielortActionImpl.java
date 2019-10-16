@@ -3,7 +3,7 @@ package de.hsfulda.et.wbs.action.zielort.impl;
 import de.hsfulda.et.wbs.action.zielort.CreateZielortAction;
 import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.ZielortData;
-import de.hsfulda.et.wbs.core.data.ZielortDto;
+import de.hsfulda.et.wbs.core.dto.ZielortDto;
 import de.hsfulda.et.wbs.entity.Traeger;
 import de.hsfulda.et.wbs.entity.Zielort;
 import de.hsfulda.et.wbs.repository.TraegerRepository;
@@ -22,7 +22,8 @@ public class CreateZielortActionImpl implements CreateZielortAction {
     private final TraegerRepository traegerRepository;
     private final AccessService accessService;
 
-    public CreateZielortActionImpl(ZielortRepository repo, TraegerRepository traegerRepository, AccessService accessService) {
+    public CreateZielortActionImpl(ZielortRepository repo, TraegerRepository traegerRepository,
+            AccessService accessService) {
         this.repo = repo;
         this.traegerRepository = traegerRepository;
         this.accessService = accessService;
@@ -38,11 +39,10 @@ public class CreateZielortActionImpl implements CreateZielortAction {
 
             Optional<Traeger> traeger = traegerRepository.findById(traegerId);
 
-            Zielort saved =
-                    Zielort.builder()
-                            .name(zielort.getName())
-                            .aktiv(true)
-                            .build();
+            Zielort saved = Zielort.builder()
+                    .name(zielort.getName())
+                    .aktiv(true)
+                    .build();
 
             Traeger tr = traeger.get();
             tr.addZielort(saved);

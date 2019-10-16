@@ -1,6 +1,5 @@
 package de.hsfulda.et.wbs.security.entity;
 
-
 import de.hsfulda.et.wbs.core.data.TokenConfigData;
 
 import javax.persistence.Entity;

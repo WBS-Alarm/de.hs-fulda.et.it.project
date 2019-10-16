@@ -5,11 +5,10 @@ import de.hsfulda.et.wbs.core.Link;
 import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.TraegerData;
 import de.hsfulda.et.wbs.http.resource.TraegerListResource;
+import de.hsfulda.et.wbs.http.resource.TraegerResource;
 import de.hsfulda.et.wbs.util.UriUtil;
 
 import java.util.stream.Collectors;
-
-import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
 
 public class TraegerHalJson extends HalJsonResource {
 
@@ -21,20 +20,17 @@ public class TraegerHalJson extends HalJsonResource {
         addTraegerProperties(user, traeger);
 
         if (embedded) {
-            addEmbeddedResources("benutzer",
-                traeger.getBenutzer()
+            addEmbeddedResources("benutzer", traeger.getBenutzer()
                     .stream()
                     .map(b -> BenutzerHalJson.ofNoEmbaddables(user, b))
                     .collect(Collectors.toList()));
 
-            addEmbeddedResources("zielorte",
-                traeger.getZielorte()
+            addEmbeddedResources("zielorte", traeger.getZielorte()
                     .stream()
                     .map(z -> new ZielortHalJson(user, z, false))
                     .collect(Collectors.toList()));
 
-            addEmbeddedResources("kategorien",
-                traeger.getKategorien()
+            addEmbeddedResources("kategorien", traeger.getKategorien()
                     .stream()
                     .map(z -> new KategorieHalJson(user, z, false))
                     .collect(Collectors.toList()));
@@ -42,7 +38,7 @@ public class TraegerHalJson extends HalJsonResource {
     }
 
     private void addTraegerProperties(WbsUser user, TraegerData traeger) {
-        String traegerResource = UriUtil.build(CONTEXT_ROOT + "/traeger/{id}", traeger.getId());
+        String traegerResource = UriUtil.build(TraegerResource.PATH, traeger.getId());
 
         addLink(Link.self(traegerResource));
         if (user.isAdmin()) {

@@ -46,7 +46,7 @@ public class BestandListResource {
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")
     HttpEntity<HalJsonResource> get(@AuthenticationPrincipal WbsUser user, @PathVariable("zielortId") Long zielortId) {
-        return new HttpEntity<>(new BestandListHalJson(user, getAction.perform(user, zielortId)));
+        return new HttpEntity<>(new BestandListHalJson(user, getAction.perform(user, zielortId), zielortId));
     }
 
     /**
@@ -59,10 +59,8 @@ public class BestandListResource {
      */
     @PostMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
-    HttpEntity<HalJsonResource> post(
-        @AuthenticationPrincipal WbsUser user,
-        @PathVariable("zielortId") Long zielortId,
-        @RequestBody BestandCreateDtoImpl bestand) {
+    HttpEntity<HalJsonResource> post(@AuthenticationPrincipal WbsUser user, @PathVariable("zielortId") Long zielortId,
+            @RequestBody BestandCreateDtoImpl bestand) {
 
         BestandData newBestand = postAction.perform(user, zielortId, bestand);
         MultiValueMap<String, String> header = locationHeader(BestandResource.PATH, newBestand.getId());

@@ -19,7 +19,8 @@ public class GetBenutzerListActionImpl implements GetBenutzerListAction {
     private final GrantedAuthorityRepository grantedAuthorityRepository;
     private final AccessService accessService;
 
-    public GetBenutzerListActionImpl(BenutzerRepository repo, GrantedAuthorityRepository grantedAuthorityRepository, AccessService accessService) {
+    public GetBenutzerListActionImpl(BenutzerRepository repo, GrantedAuthorityRepository grantedAuthorityRepository,
+            AccessService accessService) {
         this.repo = repo;
         this.grantedAuthorityRepository = grantedAuthorityRepository;
         this.accessService = accessService;

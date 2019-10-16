@@ -25,8 +25,7 @@ final class TokenAuthenticationService implements UserAuthenticationService {
     public Optional<String> login(final String username, final String password) {
         Optional<WbsUser> user = users.findByUsername(username);
 
-        Optional<String> createdToken = user
-                .filter(u -> Password.checkPassword(password, u.getPassword()))
+        Optional<String> createdToken = user.filter(u -> Password.checkPassword(password, u.getPassword()))
                 .map(u -> tokens.expiring(ImmutableMap.of("username", username)));
 
         return createdToken;
@@ -34,8 +33,7 @@ final class TokenAuthenticationService implements UserAuthenticationService {
 
     @Override
     public Optional<WbsUser> findByToken(final String token) {
-        Optional<WbsUser> user = Optional
-                .of(tokens.verify(token))
+        Optional<WbsUser> user = Optional.of(tokens.verify(token))
                 .map(map -> map.get("username"))
                 .flatMap(users::findByUsername);
 

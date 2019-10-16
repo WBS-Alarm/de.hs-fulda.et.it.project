@@ -2,8 +2,8 @@ package de.hsfulda.et.wbs.action.bestand.impl;
 
 import de.hsfulda.et.wbs.action.bestand.CreateBestandAction;
 import de.hsfulda.et.wbs.core.WbsUser;
-import de.hsfulda.et.wbs.core.data.BestandCreateDto;
 import de.hsfulda.et.wbs.core.data.BestandData;
+import de.hsfulda.et.wbs.core.dto.BestandCreateDto;
 import de.hsfulda.et.wbs.core.exception.BestandAlreadyExistsException;
 import de.hsfulda.et.wbs.core.exception.ResourceNotFoundException;
 import de.hsfulda.et.wbs.entity.Bestand;
@@ -27,11 +27,8 @@ public class CreateBestandActionImpl implements CreateBestandAction {
     private final GroesseRepository groesseRepository;
     private final AccessService accessService;
 
-    public CreateBestandActionImpl(
-        BestandRepository repo,
-        ZielortRepository zielortRepository,
-        GroesseRepository groesseRepository,
-        AccessService accessService) {
+    public CreateBestandActionImpl(BestandRepository repo, ZielortRepository zielortRepository,
+            GroesseRepository groesseRepository, AccessService accessService) {
 
         this.repo = repo;
         this.zielortRepository = zielortRepository;
@@ -48,13 +45,13 @@ public class CreateBestandActionImpl implements CreateBestandAction {
             Optional<Zielort> zielort = zielortRepository.findById(zielortId);
             Optional<Groesse> groesse = groesseRepository.findById(bestand.getGroesseId());
 
-            Bestand saved =
-                Bestand.builder()
+            Bestand saved = Bestand.builder()
                     .anzahl(bestand.getAnzahl())
                     .groesse(groesse.get())
                     .build();
 
-            zielort.get().addBestand(saved);
+            zielort.get()
+                    .addBestand(saved);
             return repo.save(saved);
         });
     }
@@ -70,7 +67,7 @@ public class CreateBestandActionImpl implements CreateBestandAction {
             throw new IllegalArgumentException("Die Anzahl im Bestand darf nicht negativ sein.");
         }
 
-        Optional<BestandData> existing = repo.findAllByZielortIdAndGroesseId(zielortId, groesseId);
+        Optional<BestandData> existing = repo.findByZielortIdAndGroesseIdAsData(zielortId, groesseId);
         if (existing.isPresent()) {
             throw new BestandAlreadyExistsException("Bestand kann nicht angelegt werden. Dieser existiert bereits.");
         }

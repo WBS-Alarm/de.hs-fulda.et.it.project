@@ -1,6 +1,6 @@
 package de.hsfulda.et.wbs.http.resource.dto;
 
-import de.hsfulda.et.wbs.core.data.KategorieDto;
+import de.hsfulda.et.wbs.core.dto.KategorieDto;
 
 public class KategorieDtoImpl implements KategorieDto {
 

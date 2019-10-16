@@ -1,9 +1,9 @@
 package de.hsfulda.et.wbs.security.service;
 
 import de.hsfulda.et.wbs.core.WbsUser;
-import de.hsfulda.et.wbs.core.data.BenutzerCreateDto;
 import de.hsfulda.et.wbs.core.data.BenutzerData;
 import de.hsfulda.et.wbs.core.data.GrantedAuthorityData;
+import de.hsfulda.et.wbs.core.dto.BenutzerCreateDto;
 import de.hsfulda.et.wbs.entity.Benutzer;
 import de.hsfulda.et.wbs.repository.BenutzerRepository;
 import de.hsfulda.et.wbs.security.Password;

@@ -31,7 +31,8 @@ public class GroesseResource {
     private final UpdateGroesseAction putAction;
     private final DeleteGroesseAction deleteAction;
 
-    public GroesseResource(GetGroesseAction getAction, UpdateGroesseAction putAction, DeleteGroesseAction deleteAction) {
+    public GroesseResource(GetGroesseAction getAction, UpdateGroesseAction putAction,
+            DeleteGroesseAction deleteAction) {
         this.getAction = getAction;
         this.putAction = putAction;
         this.deleteAction = deleteAction;
@@ -52,15 +53,13 @@ public class GroesseResource {
     /**
      * Ermittelt eine Groesse anhand der ID.
      *
-     * @param id      ID des Groesses aus dem Pfad
+     * @param id ID des Groesses aus dem Pfad
      * @param groesse Groesse mit neuem Namen
      * @return gespeicherten Groesse. Anderfalls 404 oder 409
      */
     @PutMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
-    HttpEntity<HalJsonResource> put(
-            @AuthenticationPrincipal WbsUser user,
-            @PathVariable("id") Long id,
+    HttpEntity<HalJsonResource> put(@AuthenticationPrincipal WbsUser user, @PathVariable("id") Long id,
             @RequestBody GroesseDtoImpl groesse) {
         return new HttpEntity<>(new GroesseHalJson(user, putAction.perform(user, id, groesse)));
     }

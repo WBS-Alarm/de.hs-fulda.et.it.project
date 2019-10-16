@@ -2,7 +2,7 @@ package de.hsfulda.et.wbs.action.zielort;
 
 import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.ZielortData;
-import de.hsfulda.et.wbs.core.data.ZielortDto;
+import de.hsfulda.et.wbs.core.dto.ZielortDto;
 
 public interface CreateZielortAction {
 

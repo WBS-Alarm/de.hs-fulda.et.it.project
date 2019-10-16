@@ -1,6 +1,6 @@
 package de.hsfulda.et.wbs.http.resource.dto;
 
-import de.hsfulda.et.wbs.core.data.ZielortDto;
+import de.hsfulda.et.wbs.core.dto.ZielortDto;
 
 public class ZielortDtoImpl implements ZielortDto {
 

@@ -5,6 +5,7 @@ import de.hsfulda.et.wbs.core.Link;
 import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.BenutzerData;
 import de.hsfulda.et.wbs.core.data.GrantedAuthorityData;
+import de.hsfulda.et.wbs.http.resource.BenutzerResource;
 import de.hsfulda.et.wbs.security.haljson.AuthorityHalJson;
 import de.hsfulda.et.wbs.util.UriUtil;
 
@@ -13,8 +14,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
 
 public class BenutzerHalJson extends HalJsonResource {
 
@@ -33,19 +32,22 @@ public class BenutzerHalJson extends HalJsonResource {
         return new BenutzerHalJson(user, benutzer, false);
     }
 
-    public static BenutzerHalJson ofGrantedAuthorities(WbsUser user, BenutzerData benutzer, List<GrantedAuthorityData> granted) {
+    public static BenutzerHalJson ofGrantedAuthorities(WbsUser user, BenutzerData benutzer,
+            List<GrantedAuthorityData> granted) {
         BenutzerHalJson hal = new BenutzerHalJson(user, benutzer, true);
         addEmbeddedAuthorities(user, benutzer, granted, hal);
         return hal;
     }
 
-    public static BenutzerHalJson ofGrantedAuthoritiesNoEmbaddables(WbsUser user, BenutzerData benutzer, List<GrantedAuthorityData> granted) {
+    public static BenutzerHalJson ofGrantedAuthoritiesNoEmbaddables(WbsUser user, BenutzerData benutzer,
+            List<GrantedAuthorityData> granted) {
         BenutzerHalJson hal = new BenutzerHalJson(user, benutzer, false);
         addEmbeddedAuthorities(user, benutzer, granted, hal);
         return hal;
     }
 
-    private static void addEmbeddedAuthorities(WbsUser user, BenutzerData benutzer, List<GrantedAuthorityData> granted, BenutzerHalJson hal) {
+    private static void addEmbeddedAuthorities(WbsUser user, BenutzerData benutzer, List<GrantedAuthorityData> granted,
+            BenutzerHalJson hal) {
         hal.addEmbeddedResources("authorities", granted.stream()
                 .map(g -> new AuthorityHalJson(user, g.getGroup(), benutzer))
                 .collect(Collectors.toList()));
@@ -58,7 +60,7 @@ public class BenutzerHalJson extends HalJsonResource {
     }
 
     private void addBenutzerProperies(WbsUser user, BenutzerData benutzer) {
-        String benutzerResource = UriUtil.build(CONTEXT_ROOT + "/benutzer/{id}", benutzer.getId());
+        String benutzerResource = UriUtil.build(BenutzerResource.PATH, benutzer.getId());
 
         addLink(Link.self(benutzerResource));
 
@@ -82,7 +84,8 @@ public class BenutzerHalJson extends HalJsonResource {
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(mail.getBytes());
             byte[] digest = md.digest();
-            return DatatypeConverter.printHexBinary(digest).toLowerCase();
+            return DatatypeConverter.printHexBinary(digest)
+                    .toLowerCase();
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("MD5 nicht verfügbar für Mail Hashing", e);
         }

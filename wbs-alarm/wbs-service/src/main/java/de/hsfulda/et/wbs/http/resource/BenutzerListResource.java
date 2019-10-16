@@ -33,13 +33,13 @@ public class BenutzerListResource {
     /**
      * Ermittlelt alle Benutzer zu einem Träger.
      *
-     * @param user      Angemeldeter Benutzer.
+     * @param user Angemeldeter Benutzer.
      * @param traegerId ID des Trägres.
      * @return Liste aller Benutzer zu einem Träger.
      */
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
     HttpEntity<HalJsonResource> get(@AuthenticationPrincipal WbsUser user, @PathVariable("traegerId") Long traegerId) {
-        return new HttpEntity<>(new BenutzerListHalJson(user, getAction.perform(user, traegerId)));
+        return new HttpEntity<>(new BenutzerListHalJson(user, getAction.perform(user, traegerId), traegerId));
     }
 }

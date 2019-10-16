@@ -39,29 +39,27 @@ public class ZielortListResource {
     /**
      * Ermittlelt alle Zielorte zu einem Träger.
      *
-     * @param user      Angemeldeter Benutzer.
+     * @param user Angemeldeter Benutzer.
      * @param traegerId ID des Trägres.
      * @return Liste aller Zielorte zu einem Träger.
      */
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")
     HttpEntity<HalJsonResource> get(@AuthenticationPrincipal WbsUser user, @PathVariable("traegerId") Long traegerId) {
-        return new HttpEntity<>(new ZielortListHalJson(user, getAction.perform(user, traegerId)));
+        return new HttpEntity<>(new ZielortListHalJson(user, getAction.perform(user, traegerId), traegerId));
     }
 
     /**
      * Erstellt einen neuen Zielort zu einem Träger.
      *
-     * @param user      Angemeldeter Benutzer.
+     * @param user Angemeldeter Benutzer.
      * @param traegerId ID des Trägers.
-     * @param zielort   Neuer Zielort.
+     * @param zielort Neuer Zielort.
      * @return Persistierter Zielort.
      */
     @PostMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
-    HttpEntity<HalJsonResource> post(
-            @AuthenticationPrincipal WbsUser user,
-            @PathVariable("traegerId") Long traegerId,
+    HttpEntity<HalJsonResource> post(@AuthenticationPrincipal WbsUser user, @PathVariable("traegerId") Long traegerId,
             @RequestBody ZielortDtoImpl zielort) {
 
         ZielortData newZielort = postAction.perform(user, traegerId, zielort);

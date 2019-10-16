@@ -1,6 +1,5 @@
 package de.hsfulda.et.wbs.entity;
 
-
 import de.hsfulda.et.wbs.core.data.TraegerData;
 import de.hsfulda.et.wbs.core.data.ZielortData;
 
@@ -22,6 +21,10 @@ public class Zielort implements ZielortData {
     private String name;
 
     private boolean auto;
+
+    private boolean eingang;
+
+    private boolean lager;
 
     private boolean aktiv;
 
@@ -65,6 +68,24 @@ public class Zielort implements ZielortData {
 
     public void setAuto(boolean auto) {
         this.auto = auto;
+    }
+
+    @Override
+    public boolean isEingang() {
+        return eingang;
+    }
+
+    public void setEingang(boolean eingang) {
+        this.eingang = eingang;
+    }
+
+    @Override
+    public boolean isLager() {
+        return lager;
+    }
+
+    public void setLager(boolean lager) {
+        this.lager = lager;
     }
 
     @Override
@@ -127,8 +148,11 @@ public class Zielort implements ZielortData {
     static Zielort makeTemplate(Zielort zielort) {
         Zielort templated = new Zielort();
         templated.name = zielort.name;
+        templated.eingang = zielort.eingang;
+        templated.lager = zielort.lager;
         templated.traeger = zielort.traeger;
         templated.aktiv = zielort.aktiv;
+        templated.erfasst = zielort.erfasst;
         return templated;
     }
 
@@ -136,13 +160,22 @@ public class Zielort implements ZielortData {
 
         private final Zielort template;
 
-
         private ZielortBuilder() {
             template = new Zielort();
         }
 
         public ZielortBuilder name(String name) {
             template.setName(name);
+            return this;
+        }
+
+        public ZielortBuilder eingang(boolean eingang) {
+            template.setEingang(eingang);
+            return this;
+        }
+
+        public ZielortBuilder lager(boolean lager) {
+            template.setLager(lager);
             return this;
         }
 
@@ -156,16 +189,32 @@ public class Zielort implements ZielortData {
             return this;
         }
 
+        public ZielortBuilder erfasst(boolean erfasst) {
+            template.setErfasst(erfasst);
+            return this;
+        }
+
         public Zielort build() {
             return makeTemplate(template);
         }
     }
 
     public static List<Zielort> getStandardForNewTraeger() {
-        return Arrays.asList(
-            builder().name("Wäscherei").aktiv(true).auto(true).build(),
-            builder().name("Wareneingang").aktiv(true).auto(true).build(),
-            builder().name("Lager").aktiv(true).auto(true).build(),
-            builder().name("Aussonderung").aktiv(true).auto(true).build());
+        return Arrays.asList(builder().name("Wäscherei")
+                .aktiv(true)
+                .auto(true)
+                .build(), builder().name("Wareneingang")
+                .eingang(true)
+                .erfasst(true)
+                .aktiv(true)
+                .auto(true)
+                .build(), builder().name("Lager")
+                .lager(true)
+                .aktiv(true)
+                .auto(true)
+                .build(), builder().name("Aussonderung")
+                .aktiv(true)
+                .auto(true)
+                .build());
     }
 }

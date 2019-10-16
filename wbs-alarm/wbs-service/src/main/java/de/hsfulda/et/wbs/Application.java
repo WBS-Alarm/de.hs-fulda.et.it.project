@@ -1,8 +1,6 @@
 package de.hsfulda.et.wbs;
 
 import org.springframework.boot.Banner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -23,6 +21,7 @@ public class Application extends SpringBootServletInitializer {
     }
 
     private static SpringApplicationBuilder configureApplication(SpringApplicationBuilder builder) {
-        return builder.sources(Application.class).bannerMode(Banner.Mode.OFF);
+        return builder.sources(Application.class)
+                .bannerMode(Banner.Mode.OFF);
     }
 }

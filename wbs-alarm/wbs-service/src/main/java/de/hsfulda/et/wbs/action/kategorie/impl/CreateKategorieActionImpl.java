@@ -3,7 +3,7 @@ package de.hsfulda.et.wbs.action.kategorie.impl;
 import de.hsfulda.et.wbs.action.kategorie.CreateKategorieAction;
 import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.KategorieData;
-import de.hsfulda.et.wbs.core.data.KategorieDto;
+import de.hsfulda.et.wbs.core.dto.KategorieDto;
 import de.hsfulda.et.wbs.entity.Kategorie;
 import de.hsfulda.et.wbs.entity.Traeger;
 import de.hsfulda.et.wbs.repository.KategorieRepository;
@@ -22,7 +22,8 @@ public class CreateKategorieActionImpl implements CreateKategorieAction {
     private final TraegerRepository traegerRepository;
     private final AccessService accessService;
 
-    public CreateKategorieActionImpl(KategorieRepository repo, TraegerRepository traegerRepository, AccessService accessService) {
+    public CreateKategorieActionImpl(KategorieRepository repo, TraegerRepository traegerRepository,
+            AccessService accessService) {
         this.repo = repo;
         this.traegerRepository = traegerRepository;
         this.accessService = accessService;
@@ -38,11 +39,10 @@ public class CreateKategorieActionImpl implements CreateKategorieAction {
 
             Optional<Traeger> traeger = traegerRepository.findById(traegerId);
 
-            Kategorie saved =
-                    Kategorie.builder()
-                            .name(kategorie.getName())
-                            .aktiv(true)
-                            .build();
+            Kategorie saved = Kategorie.builder()
+                    .name(kategorie.getName())
+                    .aktiv(true)
+                    .build();
 
             Traeger tr = traeger.get();
             tr.addKategorie(saved);

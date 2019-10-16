@@ -2,8 +2,8 @@ package de.hsfulda.et.wbs.action.benutzer.impl;
 
 import de.hsfulda.et.wbs.action.benutzer.CreateBenutzerAction;
 import de.hsfulda.et.wbs.core.WbsUser;
-import de.hsfulda.et.wbs.core.data.BenutzerCreateDto;
 import de.hsfulda.et.wbs.core.data.BenutzerData;
+import de.hsfulda.et.wbs.core.dto.BenutzerCreateDto;
 import de.hsfulda.et.wbs.core.exception.ResourceNotFoundException;
 import de.hsfulda.et.wbs.core.exception.UserAlreadyExistsException;
 import de.hsfulda.et.wbs.entity.Traeger;
@@ -44,7 +44,8 @@ public class CreateBenutzerActionImpl implements CreateBenutzerAction {
 
         Optional<WbsUser> found = users.findByUsername(benutzer.getUsername());
         if (found.isPresent()) {
-            throw new UserAlreadyExistsException("Benutzer mit dem Namen {0} existiert bereits", benutzer.getUsername());
+            throw new UserAlreadyExistsException("Benutzer mit dem Namen {0} existiert bereits",
+                    benutzer.getUsername());
         }
 
         BenutzerData user = users.register(benutzer);

@@ -1,6 +1,6 @@
 package de.hsfulda.et.wbs.http.resource.dto;
 
-import de.hsfulda.et.wbs.core.data.GroesseDto;
+import de.hsfulda.et.wbs.core.dto.GroesseDto;
 
 public class GroesseDtoImpl implements GroesseDto {
 
