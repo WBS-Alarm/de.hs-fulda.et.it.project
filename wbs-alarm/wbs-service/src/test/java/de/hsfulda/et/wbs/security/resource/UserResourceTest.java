@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -38,8 +39,19 @@ class UserResourceTest extends ResourceTest {
         mockMvc.perform(get(CurrentUserResource.PATH)
                 .contentType(MediaType.APPLICATION_JSON)
                 .header("Authorization", getTokenAsSuperuser()))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.username", is("Superuser")));
+    }
+
+    @DisplayName("ermitteln den angemeldeten Benutzer (HelsaBuchung)")
+    @Test
+    void getCurrentUserBooker() throws Exception {
+        mockMvc.perform(get(CurrentUserResource.PATH).contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", getToken(BO_USER)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.username", is("HelsaBuchung")));
     }
 
     @DisplayName("können nicht von unangemeldeten Benutzern zugegriffen werden")

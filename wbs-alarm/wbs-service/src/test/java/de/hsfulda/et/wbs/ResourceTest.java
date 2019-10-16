@@ -19,6 +19,7 @@ public abstract class ResourceTest {
     protected static final String LE_USER = "Leser";
     protected static final String HE_USER = "HelsaUser";
     protected static final String FD_USER = "ForDelete";
+    protected static final String BO_USER = "HelsaBuchung";
 
     protected static final String FW_TRAEGER = "Feuerwehr";
     protected static final String HE_TRAEGER = "Helsa";

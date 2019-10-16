@@ -98,7 +98,7 @@ insert into granted_authority (user_id, authority_id)
 values ((select id from benutzer where name = 'HelsaUser'), 2);
 
 insert into granted_authority (user_id, authority_id)
-values ((select id from benutzer where name = 'HelsaBuchung'), 3);
+values ((select id from benutzer where name = 'HelsaBuchung'), 4);
 
 
 -- Eine Beispielbuchung
