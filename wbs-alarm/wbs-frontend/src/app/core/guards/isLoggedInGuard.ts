@@ -25,16 +25,18 @@ export class IsLoggedInGuard
 
     public canActivate(route:ActivatedRouteSnapshot, state:RouterStateSnapshot):boolean
     {
-        //if(localStorage.getItem('accessToken') && this.globalRegistryService.getIsLoggedIn())
         let body:HTMLElement = document.getElementById('body');
         let html:HTMLElement = document.getElementById('html');
 
-        if(localStorage.getItem('accessToken'))
+        if(this.globalRegistryService.getCookie('loginToken').length > 0)
         {
             if(!this.globalRegistryService.getIsLoggedIn())
             {
                 this.globalRegistryService.setisLoggedIn(true);
             }
+
+            this.globalRegistryService.isLoginActive = false;
+
             body.classList.add('isLoggedIn');
             html.classList.add('isLoggedIn');
             return true

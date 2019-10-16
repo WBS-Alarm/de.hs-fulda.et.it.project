@@ -44,4 +44,21 @@ export class GlobalRegistryService
     {
         return this.gravatarHash;
     }
+
+    public getCookie(name:string):any
+    {
+        let cookiename = name + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(cookiename) == 0) {
+                return c.substring(cookiename.length, c.length);
+            }
+        }
+        return "";
+    }
 }
