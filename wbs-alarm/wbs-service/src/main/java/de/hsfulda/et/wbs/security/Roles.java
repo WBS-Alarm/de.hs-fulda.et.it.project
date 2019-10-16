@@ -7,9 +7,12 @@ import java.util.*;
 
 public enum Roles {
 
-    ADMIN(new String[]{Auth.ADMIN}, RoleName.ADMIN), TR_MAN(new String[]{Auth.ADMIN, Auth.CONTROL},
-            RoleName.TRAEGER_MANAGER), AC_MAN(new String[]{Auth.WRITE}, RoleName.ACCOUTANT), RE_ALL(
-            new String[]{Auth.ADMIN, Auth.CONTROL, Auth.MANAGE, Auth.WRITE, Auth.READ}, RoleName.READ_ALL);
+    // @formatter:off
+    ADMIN(new String[]{Auth.ADMIN}, RoleName.ADMIN),
+    TR_MAN(new String[]{Auth.ADMIN, Auth.CONTROL}, RoleName.TRAEGER_MANAGER),
+    AC_MAN(new String[]{Auth.WRITE},RoleName.ACCOUTANT),
+    RE_ALL(new String[]{Auth.ADMIN, Auth.CONTROL, Auth.MANAGE, Auth.WRITE, Auth.READ}, RoleName.READ_ALL);
+    // @formatter:on
 
     public static final String ACCOU = "ACCOUTANT";
     public static final String TRMAN = "TRAEGER_MANAGER";

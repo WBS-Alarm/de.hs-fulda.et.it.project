@@ -1,5 +1,6 @@
 import {HttpHeaders} from "@angular/common/http";
 import {isNullOrUndefined} from 'util';
+import { GlobalRegistryService } from '../../../../global-registry/global-registry.service';
 
 export class WbsSitemapHelper
 {
@@ -9,7 +10,7 @@ export class WbsSitemapHelper
 
     constructor()
     {
-       this.headers = new HttpHeaders({'Content-Type': 'application/hal+json'});
+        this.headers = new HttpHeaders({'Content-Type': 'application/hal+json'});
     }
 
     public set Bearer(value:string)
@@ -34,9 +35,13 @@ export class WbsSitemapHelper
 
     public setAuthorization():HttpHeaders
     {
-        if(localStorage.getItem('accessToken'))
+        let bearer:string;
+
+        bearer = this.getCookie('loginToken');
+
+        if(bearer)
         {
-            this.setToHeader('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
+            this.setToHeader('Authorization', 'Bearer ' + bearer);
         }
 
         return this.headers;
@@ -126,6 +131,23 @@ export class WbsSitemapHelper
 
     public groesseForCategory():string
     {
-        return Object.values(this.siteMaps)[0]['authorities'][0].href;
+        return Object.values(this.siteMaps)[0]['groesseList'][0].href;
+    }
+
+    private getCookie(name:string)
+    {
+        let cookiename = name + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(cookiename) == 0) {
+                return c.substring(cookiename.length, c.length);
+            }
+        }
+        return "";
     }
 }
