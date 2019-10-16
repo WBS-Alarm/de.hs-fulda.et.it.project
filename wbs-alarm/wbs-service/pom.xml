@@ -131,6 +131,20 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>3.1.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>3.1.0</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Only required to run tests in an IDE that bundles an older version -->
         <dependency>
             <groupId>org.junit.platform</groupId>
