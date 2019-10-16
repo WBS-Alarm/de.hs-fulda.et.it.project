@@ -1,1 +1,37 @@
-This shall be a booking view later on
+<div class="headline">
+    <terra-radio-button inputCaption="Buchen"
+                        [inputValue]="'buchen'"
+                        [(ngModel)]="_modus">
+    </terra-radio-button>
+    <terra-radio-button inputCaption="Einkauf"
+                        [inputValue]="'einkauf'"
+                        [(ngModel)]="_modus">
+    </terra-radio-button>
+    <terra-radio-button inputCaption="Aussonderung"
+                        [inputValue]="'aussonderung'"
+                        [(ngModel)]="_modus">
+    </terra-radio-button>
+</div>
+
+<div class="headline">
+    <terra-text-input class = element
+                      [inputIsDisabled]="true"
+                      [ngModel]="_traeger">
+    </terra-text-input>
+    
+    <terra-select-box class = element
+                      [inputName]="'von:'"
+                      [inputListBoxValues]="_zielorte"
+                      [(ngModel)]="_von">
+    </terra-select-box>
+    <terra-select-box class = element
+                      [inputName]="'nach:'"
+                      [inputListBoxValues]="_zielorte"
+                      [(ngModel)]="_nach">
+    </terra-select-box>
+</div>
+
+<div>
+    <terra-button inputCaption="Buchen"
+                    (outputClicked)="_buchen()"></terra-button>
+</div>
