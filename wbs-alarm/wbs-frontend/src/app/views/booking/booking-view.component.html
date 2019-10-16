@@ -1,37 +1,64 @@
-<div class="headline">
-    <terra-radio-button inputCaption="Buchen"
-                        [inputValue]="'buchen'"
-                        [(ngModel)]="_modus">
-    </terra-radio-button>
-    <terra-radio-button inputCaption="Einkauf"
-                        [inputValue]="'einkauf'"
-                        [(ngModel)]="_modus">
-    </terra-radio-button>
-    <terra-radio-button inputCaption="Aussonderung"
-                        [inputValue]="'aussonderung'"
-                        [(ngModel)]="_modus">
-    </terra-radio-button>
-</div>
+<terra-portlet>
+    <div class="mode-chooser">
+        <terra-radio-button inputCaption="Buchen"
+                            [inputValue]="'buchen'"
+                            [(ngModel)]="_modus">
+        </terra-radio-button>
+        <terra-radio-button inputCaption="Einkauf"
+                            [inputValue]="'einkauf'"
+                            [(ngModel)]="_modus">
+        </terra-radio-button>
+        <terra-radio-button inputCaption="Aussonderung"
+                            [inputValue]="'aussonderung'"
+                            [(ngModel)]="_modus">
+        </terra-radio-button>
+    </div>
+</terra-portlet>
 
-<div class="headline">
-    <terra-text-input class = element
-                      [inputIsDisabled]="true"
-                      [ngModel]="_traeger">
-    </terra-text-input>
-    
-    <terra-select-box class = element
-                      [inputName]="'von:'"
-                      [inputListBoxValues]="_zielorte"
-                      [(ngModel)]="_von">
-    </terra-select-box>
-    <terra-select-box class = element
-                      [inputName]="'nach:'"
-                      [inputListBoxValues]="_zielorte"
-                      [(ngModel)]="_nach">
-    </terra-select-box>
-</div>
+<terra-portlet>
+    <div class="headline">
+        <terra-text-input class=element
+                          [inputIsDisabled]="true"
+                          [ngModel]="_traeger">
+        </terra-text-input>
+        
+        <terra-select-box class=element
+                          [inputName]="'von:'"
+                          [inputListBoxValues]="_zielorte"
+                          [(ngModel)]="_von">
+        </terra-select-box>
+        <terra-select-box class=element
+                          [inputName]="'nach:'"
+                          [inputListBoxValues]="_zielorte"
+                          [(ngModel)]="_nach">
+        </terra-select-box>
+    </div>
+</terra-portlet>
+
+<terra-portlet>
+    <div class="auswahl">
+        <terra-select-box class=element
+                          [inputName]="'Kategorie:'"
+                          [inputListBoxValues]="_kategorien"
+                          [(ngModel)]="_kategorie"
+                            (ngOnChanges)="fuelleGroesse(_kategorie)">
+        </terra-select-box>
+        <terra-select-box class=element
+                          [inputName]="'Größe:'"
+                          [inputIsDisabled]="_groessen.length === 0"
+                          [inputListBoxValues]="_groessen"
+                          [(ngModel)]="_nach">
+        </terra-select-box>
+        <terra-number-input [inputName]="'Anzahl'"
+                            [(ngModel)]="_anzahl">
+            
+        </terra-number-input>
+    </div>
+</terra-portlet>
 
 <div>
     <terra-button inputCaption="Buchen"
-                    (outputClicked)="_buchen()"></terra-button>
+                  (outputClicked)="_buchen()">
+    </terra-button>
 </div>
+

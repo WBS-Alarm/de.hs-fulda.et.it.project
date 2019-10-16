@@ -123,4 +123,9 @@ export class WbsSitemapHelper
     {
         return Object.values(this.siteMaps)[0]['authorities'][0].href;
     }
+
+    public groesseForCategory():string
+    {
+        return Object.values(this.siteMaps)[0]['authorities'][0].href;
+    }
 }

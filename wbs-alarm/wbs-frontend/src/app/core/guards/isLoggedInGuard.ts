@@ -18,6 +18,7 @@ export class IsLoggedInGuard
     private alert:TerraAlertComponent = TerraAlertComponent.getInstance();
 
     constructor(private globalRegistryService:GlobalRegistryService,
+                private userService:UsersService,
                 private router:Router)
     {
 
@@ -39,7 +40,8 @@ export class IsLoggedInGuard
 
             body.classList.add('isLoggedIn');
             html.classList.add('isLoggedIn');
-            return true
+
+            return true;
         }
         else
         {

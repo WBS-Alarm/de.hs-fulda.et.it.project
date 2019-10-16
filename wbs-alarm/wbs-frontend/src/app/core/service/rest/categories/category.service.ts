@@ -15,6 +15,16 @@ export class CategoryService
 
     }
 
+    public getCategories(traegerId:number):Observable<any>
+    {
+        this.headers = this.sitemapHelper.setAuthorization();
+
+        return this.http.get(this.sitemapHelper.kategorieList().replace('{traegerId}', traegerId.toString()),
+            {
+                headers: this.headers
+            });
+    }
+
     public deleteCategory(category:SystemCategoryInterface):Observable<any>
     {
         this.headers = this.sitemapHelper.setAuthorization();
@@ -36,5 +46,12 @@ export class CategoryService
             {
                 headers: this.headers
             })
+    }
+
+    public getGroesseForCategory(kategorieId:number):Observable<any>
+    {
+        this.headers = this.sitemapHelper.setAuthorization();
+
+        return this.http.get()
     }
 }

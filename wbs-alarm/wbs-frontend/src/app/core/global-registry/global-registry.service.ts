@@ -10,6 +10,8 @@ export class GlobalRegistryService
 
     private gravatarHash:string;
 
+    public currentUser:any;
+
     constructor()
     {
 
