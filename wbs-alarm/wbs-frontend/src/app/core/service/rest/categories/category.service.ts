@@ -52,6 +52,9 @@ export class CategoryService
     {
         this.headers = this.sitemapHelper.setAuthorization();
 
-        return this.http.get()
+        return this.http.get(this.sitemapHelper.groesseForCategory().replace('{kategorieId}', kategorieId.toString()),
+            {
+                headers: this.headers
+            })
     }
 }

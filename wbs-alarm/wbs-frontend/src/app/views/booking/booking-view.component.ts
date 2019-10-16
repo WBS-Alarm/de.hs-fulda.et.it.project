@@ -20,7 +20,7 @@ export class BookingViewComponent implements OnInit
     public _nach:TerraSelectBoxValueInterface;
     public _modus:string ='buchen';
 
-    public _kategorien:Array<TerraSelectBoxValueInterface> = [];
+    public _kategorien:Array<TerraSelectBoxValueInterface> = [{value: null, caption: 'Bitte wählen'}];
     public _kategorie:TerraSelectBoxValueInterface;
     public _groessen:Array<TerraSelectBoxValueInterface> = []
     public _anzahl:number;
@@ -77,7 +77,24 @@ export class BookingViewComponent implements OnInit
 
     public fuelleGroesse(kategroie:any):void
     {
-        //this._groessen =
+        if(kategroie === null)
+        {
+            this._groessen = [];
+        }
+        else
+        {
+            this.categoryService.getGroesseForCategory(kategroie.id).subscribe((groessen) =>
+            {
+                groessen._embedded.elemente.forEach((groesse) =>
+                {
+                    this._groessen.push({
+                        value: groesse,
+                        caption: groesse.name
+                    })
+                })
+            });
+        }
+
     }
 
     private addCategoriesToSelectBox(kategorien:Array<any>):void

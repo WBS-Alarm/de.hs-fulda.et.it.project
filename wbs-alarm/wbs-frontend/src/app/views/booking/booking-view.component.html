@@ -37,13 +37,13 @@
 
 <terra-portlet>
     <div class="auswahl">
-        <terra-select-box class=element
+        <terra-select-box
                           [inputName]="'Kategorie:'"
                           [inputListBoxValues]="_kategorien"
                           [(ngModel)]="_kategorie"
-                            (ngOnChanges)="fuelleGroesse(_kategorie)">
+                          (ngModelChange)="fuelleGroesse(_kategorie)">
         </terra-select-box>
-        <terra-select-box class=element
+        <terra-select-box
                           [inputName]="'Größe:'"
                           [inputIsDisabled]="_groessen.length === 0"
                           [inputListBoxValues]="_groessen"
