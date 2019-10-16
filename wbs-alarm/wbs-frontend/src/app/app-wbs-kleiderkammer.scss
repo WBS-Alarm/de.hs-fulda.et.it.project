@@ -45,10 +45,11 @@ html
     margin: 0;
     padding: 0;
     height: 100%;
-    background: #60a3bc;
+    //background: #60a3bc;
+    background: var(--color-structure-3);
     
     .isLoggedIn
     {
-        background: white;
+        background: var(--color-structure-3);
     }
 }
