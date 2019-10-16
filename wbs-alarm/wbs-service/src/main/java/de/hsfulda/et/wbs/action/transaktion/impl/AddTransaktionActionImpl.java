@@ -147,7 +147,7 @@ public class AddTransaktionActionImpl implements AddTransaktionAction {
     }
 
     /**
-     * Die Transaktion wird an dieser Stelle validiert. Dabei wird geprüft ob die beiden Zielorte dem gleichen  Träger
+     * Die Transaktion wird an dieser Stelle validiert. Dabei wird geprüft ob die beiden Zielorte dem gleichen Träger
      * zugeordnet sind. Desweiteren wird geprüft, ob die Zielorte und die Größen existieren. Dabei ist zu beachten,
      * dass Zielorte und Größen aktiv sind. Auf inaktive darf nicht gebucht werden. Hierbei wird ein 404 ausgelöst über
      * die {@link ResourceNotFoundException}. Die Erfassung der Bestände muss zudem abgeschlossen sein. Dazu wird
@@ -177,7 +177,14 @@ public class AddTransaktionActionImpl implements AddTransaktionAction {
         if (!nachZielort.isErfasst()) {
             throw new TransaktionValidationException(
                     "Der Zielort \"{0}\" muss in der Erfassung der Bestände abgeschlossen sein. " +
-                            "Bitte wenden Sie sich an ihren Systembetreuer, ", nachZielort.getName());
+                            "Bitte wenden Sie sich an ihren Systembetreuer.", nachZielort.getName());
+        }
+
+        // Zielort ist nicht der Wareneingang
+        if (!nachZielort.isEingang()) {
+            throw new TransaktionValidationException(
+                    "Der Zielort \"{0}\" ist als Wareneingang definiert. Dieser kann nicht als Zielort angegeben " +
+                            "werden,", nachZielort.getName());
         }
 
         // Es wurde mindestens eine Position angegeben.

@@ -3,13 +3,13 @@ values('Feuerwehr');
 
 
 insert into zielorte(name, eingang, lager, auto, aktiv, erfasst, traeger_id)
-values ('Wäscherei', false, false, true, true, false, (select id from traeger where name = 'Feuerwehr'));
+values ('Wäscherei', false, false, true, true, true, (select id from traeger where name = 'Feuerwehr'));
 insert into zielorte(name, eingang, lager, auto, aktiv, erfasst, traeger_id)
 values ('Wareneingang', true, false, true, true, true, (select id from traeger where name = 'Feuerwehr'));
 insert into zielorte(name, eingang, lager, auto, aktiv, erfasst, traeger_id)
-values ('Lager', false, true, true, true, false, (select id from traeger where name = 'Feuerwehr'));
+values ('Lager', false, true, true, true, true, (select id from traeger where name = 'Feuerwehr'));
 insert into zielorte(name, eingang, lager, auto, aktiv, erfasst, traeger_id)
-values ('Aussonderung', false, false, true, true, false, (select id from traeger where name = 'Feuerwehr'));
+values ('Aussonderung', false, false, true, true, true, (select id from traeger where name = 'Feuerwehr'));
 
 insert into kategorien(name, aktiv, traeger_id)
 values('Polo-Hemd', true, (select id from traeger where name = 'Feuerwehr'));
@@ -30,13 +30,13 @@ insert into traeger (name)
 values('Helsa');
 
 insert into zielorte(name, eingang, lager, auto, aktiv, erfasst, traeger_id)
-values ('Wäscherei', false, false, true, true, false, (select id from traeger where name = 'Helsa'));
+values ('Wäscherei', false, false, true, true, true, (select id from traeger where name = 'Helsa'));
 insert into zielorte(name, eingang, lager, auto, aktiv, erfasst, traeger_id)
 values ('Wareneingang', true, false, true, true, true, (select id from traeger where name = 'Helsa'));
 insert into zielorte(name, eingang, lager, auto, aktiv, erfasst, traeger_id)
-values ('Lager', false, true, true, true, false, (select id from traeger where name = 'Helsa'));
+values ('Lager', false, true, true, true, true, (select id from traeger where name = 'Helsa'));
 insert into zielorte(name, eingang, lager, auto, aktiv, erfasst, traeger_id)
-values ('Aussonderung', false, false, true, true, false, (select id from traeger where name = 'Helsa'));
+values ('Aussonderung', false, false, true, true, true, (select id from traeger where name = 'Helsa'));
 
 insert into kategorien(name, aktiv, traeger_id)
 values('Polo-Hemd', true, (select id from traeger where name = 'Helsa'));
