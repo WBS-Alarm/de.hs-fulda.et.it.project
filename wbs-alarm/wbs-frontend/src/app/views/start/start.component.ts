@@ -45,6 +45,7 @@ export class StartComponent implements OnInit
             (result) =>
             {
                 this.globalRegistry.setisLoggedIn(false);
+                this.globalRegistry.isLoginActive = false;
                 localStorage.removeItem('accessToken');
 
                 this.alert.addAlert({

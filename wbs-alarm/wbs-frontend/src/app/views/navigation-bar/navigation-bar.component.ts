@@ -52,7 +52,7 @@ export class NavigationBarComponent implements OnInit
 
     public ngOnInit():void
     {
-        this.isLoginActive = this.router.isActive('login', true);
+        this.isLoginActive = this.router.isActive('login', true) && !this.globalRegistryService.getIsLoggedIn();
 
         this.subscribeToRouter();
     }
