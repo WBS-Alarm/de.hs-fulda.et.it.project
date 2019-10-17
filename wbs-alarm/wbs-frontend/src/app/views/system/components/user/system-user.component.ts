@@ -15,6 +15,7 @@ import {
     Data
 } from '@angular/router';
 import { Observable } from "rxjs";
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'system-user',
@@ -26,6 +27,9 @@ export class SystemUserComponent implements OnInit
     private userId:number;
 
     protected routeData$:Observable<Data>;
+
+    public mulitValues:any;
+
 
     private alert:TerraAlertComponent = TerraAlertComponent.getInstance();
 

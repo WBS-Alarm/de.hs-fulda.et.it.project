@@ -59,6 +59,8 @@ import { SystemAuthoritiesCompontent } from './views/system/components/authoriti
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BookingViewComponent } from './views/booking/booking-view.component';
 import { TransaktionService } from './core/service/rest/transaktions/transaktion.service';
+import { SystemAuthorityResolver } from './views/system/components/user/resolver/system-authority.resolver';
+import { SystemAuthorityUserResolver } from './views/system/components/user/resolver/system-authority-user.resolver';
 
 
 @NgModule({
@@ -130,6 +132,8 @@ import { TransaktionService } from './core/service/rest/transaktions/transaktion
         SystemCarrierResolver,
         CategoryService,
         SystemCategoryResolver,
+        SystemAuthorityResolver,
+        SystemAuthorityUserResolver,
         TerraNodeTreeConfig
     ],
     bootstrap:    [

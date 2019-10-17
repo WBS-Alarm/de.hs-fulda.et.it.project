@@ -25,6 +25,9 @@ import {SystemEditCarrierComponent} from "./views/system/components/carrier/edit
 import {SystemCarrierResolver} from "./views/system/components/carrier/resolver/system-carrier-resolver";
 import {SystemCategoryResolver} from "./views/system/components/categories/resolver/system-category.resolver";
 import { BookingViewComponent } from './views/booking/booking-view.component';
+import { SystemAuthorityResolver } from './views/system/components/user/resolver/system-authority.resolver';
+import { SystemAuthoritiesCompontent } from './views/system/components/authorities/system-authorities.compontent';
+import { SystemAuthorityUserResolver } from './views/system/components/user/resolver/system-authority-user.resolver';
 
 const appRoutes:Routes = [
     {
@@ -119,6 +122,20 @@ const appRoutes:Routes = [
                         resolve:
                             {
                                 user: SystemUserResolver
+                            }
+                    },
+                    {
+                        path: 'carrier/:carrierId/user/:userId/authority/:userId',
+                        component: SystemAuthoritiesCompontent,
+                        canActivate: GUARDS,
+                        data: {
+                            label: 'system.user.user'
+                        },
+                        resolve:
+                            {
+                                authority: SystemAuthorityResolver,
+                                user: SystemUserResolver,
+                                userWithAuthorities: SystemAuthorityUserResolver
                             }
                     },
                     {

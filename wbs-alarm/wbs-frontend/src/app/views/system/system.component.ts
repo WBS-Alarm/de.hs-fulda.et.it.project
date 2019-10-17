@@ -151,7 +151,19 @@ export class SystemComponent implements OnInit
                             onClick: ():void =>
                             {
                                 this.router.navigateByUrl('plugin/system/carrier/' + id + '/user/' + benutzer.id)
-                            }
+                            },
+                            children:
+                            [
+                                {
+                                    id: 'benutzer ' + benutzer.id + '/authority/' + benutzer.id,
+                                    name: 'Berechtigungen',
+                                    isVisible: true,
+                                    onClick: ():void =>
+                                        {
+                                            this.router.navigateByUrl('plugin/system/carrier/' + id + '/user/' + benutzer.id + '/authority/' + benutzer.id)
+                                        },
+                                }
+                            ]
                         })
                 });
 

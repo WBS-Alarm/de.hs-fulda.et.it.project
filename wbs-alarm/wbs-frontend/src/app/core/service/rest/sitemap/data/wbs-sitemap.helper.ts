@@ -144,6 +144,11 @@ export class WbsSitemapHelper
         return Object.values(this.siteMaps)[0]['transaktionList'][0].href;
     }
 
+    public grantAuthority():string
+    {
+        return Object.values(this.siteMaps)[0]['grantAuthority'][0].href;
+    }
+
     private getCookie(name:string)
     {
         let cookiename = name + "=";

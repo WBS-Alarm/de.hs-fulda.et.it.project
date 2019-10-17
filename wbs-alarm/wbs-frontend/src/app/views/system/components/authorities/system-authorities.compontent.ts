@@ -8,6 +8,13 @@ import { AuthoritiesService } from '../../../../core/service/rest/authorities/au
 import { TerraMultiCheckBoxValueInterface } from '@plentymarkets/terra-components';
 import { UsersService } from '../../../../core/service/rest/users/users.service';
 import { isNullOrUndefined } from 'util';
+import { Observable } from 'rxjs';
+import {
+    ActivatedRoute,
+    Data,
+    Route
+} from '@angular/router';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'system-authorities',
@@ -16,20 +23,16 @@ import { isNullOrUndefined } from 'util';
 })
 export class SystemAuthoritiesCompontent implements OnInit
 {
-    @Input()
-    public userId:number;
-
-    @Output()
-    public authorityId:string;
-
-    @Input()
-    public user:any
+   private userId:number
 
     private user1:any;
 
     protected values:Array<TerraMultiCheckBoxValueInterface> = [];
 
+    protected routeData$:Observable<Data>;
+
     constructor(private authorityService:AuthoritiesService,
+                private route:ActivatedRoute,
                 private userService:UsersService)
     {
 
@@ -37,29 +40,30 @@ export class SystemAuthoritiesCompontent implements OnInit
 
     public ngOnInit()
     {
-        this.userService.getOneUser(this.userId).subscribe((result:any) =>
+        this.routeData$ = this.route.data;
+
+
+
+        this.route.data.subscribe((data:Data) =>
         {
-            this.user1 = result
-        });
+            console.log('Das ist die Route Data');
+            console.log(data);
 
+            this.userId = data.user.id;
 
-        this.authorityService.getAuthorities().subscribe((result:any) =>
+            this.user1 = data.userWithAuthorities;
+
+            data.authority._embedded.authorities.forEach((authority:any) =>
             {
-                result._embedded.authorities.forEach((authority:any) =>
-                {
-                    this.values.push(
-                        {
-                            value:    authority.id,
-                            caption:  authority.bezeichnung,
-                            selected: this.isSelected(authority)
-                        }
-                    )
-                });
-            },
-            (error:any) =>
-            {
-                console.log(error)
+                this.values.push(
+                    {
+                        value:    authority.id,
+                        caption:  authority.bezeichnung,
+                        selected: this.isSelected(authority)
+                    }
+                )
             })
+        })
     }
 
     public isSelected(authority:any):boolean
@@ -76,6 +80,41 @@ export class SystemAuthoritiesCompontent implements OnInit
 
     public saveBerechtigungen():void
     {
+        this.values.forEach((value:TerraMultiCheckBoxValueInterface) =>
+        {
+            let userHasAuthority:any = this.user1._embedded.authorities.find((authority:any) =>
+            {
+                return authority.id === value.value;
+            })
 
+            if(value.selected && isNullOrUndefined(userHasAuthority))
+            {
+                this.authorityService.grantAuthorities(this.userId, value.value).subscribe((result:any) =>
+                {
+                    console.log(result);
+                })
+            }
+        })
+
+        this.removeBerechtigungen();
+    }
+
+    private removeBerechtigungen():void
+    {
+        this.values.forEach((value:TerraMultiCheckBoxValueInterface) =>
+        {
+            let userHasAuthority:any = this.user1._embedded.authorities.find((authority:any) =>
+            {
+                return authority.id === value.value;
+            })
+
+            if(!value.selected && !isNullOrUndefined(userHasAuthority))
+            {
+                this.authorityService.removeAuthorities(this.userId, value.value).subscribe((result:any) =>
+                {
+                    console.log(result);
+                })
+            }
+        })
     }
 }
