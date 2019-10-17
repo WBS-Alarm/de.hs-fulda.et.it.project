@@ -128,11 +128,22 @@ export class BookingViewComponent implements OnInit
         else if(this._modus === 'einkauf')
         {
             this._zielorte = this._zielorteEinkauf;
+            this._von = this._zielorteKomplett.find((zielort:any) =>
+            {
+                return zielort.caption === 'Wareneingang';
+            }).value
         }
         else
         {
             this._zielorte = this._zielorteAussonderung;
+
+            this._nach = this._zielorteKomplett.find((zielort:any) =>
+            {
+                return zielort.caption === 'Aussonderung';
+            }).value
         }
+
+        this._rowList = [];
     }
 
     private loadCategories():void
@@ -313,7 +324,7 @@ export class BookingViewComponent implements OnInit
                 buchungsKombination.positions.push(
                     {
                         groesse: this._goresse.id,
-                        anzahl: this._anzahl
+                        anzahl:  this._anzahl
                     }
                 )
             }
@@ -353,14 +364,14 @@ export class BookingViewComponent implements OnInit
         toBeDeletedList.forEach((row:TerraSimpleTableRowInterface<any>) =>
         {
             this.deleteFromBuchungsliste({
-                von: row.cellList[0].caption.toString(),
-                nach: row.cellList[1].caption.toString(),
+                von:     row.cellList[0].caption.toString(),
+                nach:    row.cellList[1].caption.toString(),
                 groesse: row.cellList[3].caption.toString(),
-                anzahl: +row.cellList[4].caption })
+                anzahl:  +row.cellList[4].caption
+            })
         });
 
         this._rowList = newRowList;
-
 
 
     }
@@ -372,42 +383,58 @@ export class BookingViewComponent implements OnInit
 
     private deleteFromBuchungsliste(toBeDeleted:{ von:string, nach:string, groesse:string, anzahl:number }):void
     {
-        let vonId:number = this._zielorteKomplett.find((zielort:any) =>
-        {
-            return zielort.caption === toBeDeleted.von
-        }).value.id
+        let vonId:number;
 
-        let nachId:number = this._zielorteKomplett.find((zielort:any) =>
+        if(this._modus === 'einkauf')
         {
-            return zielort.caption === toBeDeleted.nach
-        }).value.id
+            vonId = this._von.id
+        }
+        else
+        {
+            vonId = this._zielorteKomplett.find((zielort:any) =>
+            {
+                return zielort.caption === toBeDeleted.von
+            }).value.id;
+        }
+
+
+        let nachId:number;
+
+        if(this._modus === 'aussonderung')
+        {
+            nachId = this._nach.id;
+        }
+        else
+        {
+           nachId = this._zielorteKomplett.find((zielort:any) =>
+           {
+               return zielort.caption === toBeDeleted.nach
+           }).value.id;
+        }
 
         let groesseId:number = this._groessen.find((groesse:any) =>
         {
             return groesse.caption === toBeDeleted.groesse
-        }).value.id
+        }).value.id;
 
-        let remainedBuchungen:Array<{ von:number, nach:number, positions:Array<{ groesse:number, anzahl:number }> } > = [];
-        let tbdBuchungen:Array<{ von:number, nach:number, positions:Array<{ groesse:number, anzahl:number }> } > = [];
+        let tbdBuchungen:Array<{ von:number, nach:number, positions:Array<{ groesse:number, anzahl:number }> }>;
 
-        tbdBuchungen = this.buchungsliste.filter((buchung:{ von:number, nach:number, positions:Array<{ groesse:number, anzahl:number }> } ) =>
+        tbdBuchungen = this.buchungsliste.filter((buchung:{ von:number, nach:number, positions:Array<{ groesse:number, anzahl:number }> }) =>
         {
             return buchung.von === vonId && buchung.nach === nachId;
-        })
+        });
 
         tbdBuchungen.forEach((buchung:{ von:number, nach:number, positions:Array<{ groesse:number, anzahl:number }> }) =>
         {
             let newPositions:Array<{ groesse:number, anzahl:number }> = buchung.positions.filter((position:{ groesse:number, anzahl:number }) =>
             {
                 return position.groesse === groesseId;
-            })
+            });
 
             newPositions.forEach((position:{ groesse:number, anzahl:number }) =>
             {
                 position.anzahl -= toBeDeleted.anzahl;
             })
-
-
         });
 
         this.buchungsliste = tbdBuchungen;
