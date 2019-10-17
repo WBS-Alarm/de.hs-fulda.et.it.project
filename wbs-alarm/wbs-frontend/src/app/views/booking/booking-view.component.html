@@ -2,15 +2,18 @@
     <div class="mode-chooser">
         <terra-radio-button inputCaption="Buchen"
                             [inputValue]="'buchen'"
-                            [(ngModel)]="_modus">
+                            [(ngModel)]="_modus"
+                            (ngModelChange)="leereTabelleUndAendereZielorte()">
         </terra-radio-button>
         <terra-radio-button inputCaption="Einkauf"
                             [inputValue]="'einkauf'"
-                            [(ngModel)]="_modus">
+                            [(ngModel)]="_modus"
+                            (ngModelChange)="leereTabelleUndAendereZielorte()">
         </terra-radio-button>
         <terra-radio-button inputCaption="Aussonderung"
                             [inputValue]="'aussonderung'"
-                            [(ngModel)]="_modus">
+                            [(ngModel)]="_modus"
+                            (ngModelChange)="leereTabelleUndAendereZielorte()">
         </terra-radio-button>
     </div>
 </terra-portlet>
@@ -22,12 +25,14 @@
                           [ngModel]="_traeger">
         </terra-text-input>
         
-        <terra-select-box class=element
+        <terra-select-box *ngIf="!(_modus==='einkauf')"
+                          class=element
                           [inputName]="'von:'"
                           [inputListBoxValues]="_zielorte"
                           [(ngModel)]="_von">
         </terra-select-box>
-        <terra-select-box class=element
+        <terra-select-box *ngIf="!(_modus==='aussonderung')"
+                          class=element
                           [inputName]="'nach:'"
                           [inputListBoxValues]="_zielorte"
                           [(ngModel)]="_nach">
@@ -37,29 +42,34 @@
 
 <terra-portlet>
     <div class="headline">
-        <terra-select-box class = element
+        <terra-select-box class=element
                           [inputName]="'Kategorie:'"
                           [inputListBoxValues]="_kategorien"
                           [(ngModel)]="_kategorie"
                           (ngModelChange)="fuelleGroesse(_kategorie)">
         </terra-select-box>
-        <terra-select-box class = element
+        <terra-select-box class=element
                           [inputName]="'Größe:'"
                           [inputIsDisabled]="_groessen.length === 0"
                           [inputListBoxValues]="_groessen"
                           [(ngModel)]="_goresse">
         </terra-select-box>
-        <terra-number-input class = element
+        <terra-number-input class=element
                             [inputName]="'Anzahl'"
                             [(ngModel)]="_anzahl">
-            
+        
         </terra-number-input>
     </div>
 </terra-portlet>
 
 <div>
-    <terra-button inputCaption="Buchen"
+    <terra-button inputCaption="In die Liste"
                   (outputClicked)="addRow()">
+    </terra-button>
+    
+    <terra-button inputCaption="Auswahl löschen"
+                  [inputIcon]="'icon-delete'"
+                  (outputClicked)="deleteRow()">
     </terra-button>
 </div>
 
@@ -74,4 +84,10 @@
     </terra-simple-table>
 </div>
 
+<div>
+    <terra-button inputCaption="Buchen"
+                  (outputClicked)="_buchen()"
+                  [inputIsDisabled]="_rowList.length === 0">
+    </terra-button>
+</div>
 
