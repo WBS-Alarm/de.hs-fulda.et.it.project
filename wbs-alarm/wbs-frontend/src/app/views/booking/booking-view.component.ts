@@ -61,7 +61,7 @@ export class BookingViewComponent implements OnInit
     public _headerList:Array<TerraSimpleTableHeaderCellInterface> = [];
     private _rowList:Array<TerraSimpleTableRowInterface<any>> = [];
 
-    private buchungsliste:Array<{ von:string, nach:string, positions:Array<{ groesse:string, anzahl:number }> }> = []
+    private buchungsliste:Array<{ von:number, nach:number, positions:Array<{ groesse:number, anzahl:number }> }> = []
 
 
     @ViewChild('table')
@@ -80,6 +80,8 @@ export class BookingViewComponent implements OnInit
         this.loadCategories();
 
         this.buildTableStructure();
+
+        console.log(this._zielorteKomplett);
     }
 
     public _buchen():void
@@ -288,16 +290,16 @@ export class BookingViewComponent implements OnInit
 
     private addRowToBuchungsListe():void
     {
-        let buchungsKombination:{ von:string, nach:string, positions:Array<{ groesse:string, anzahl:number }> } = this.buchungsliste.find(
-            (buchung:{ von:string, nach:string, positions:Array<{ groesse:string, anzahl:number }> }) =>
+        let buchungsKombination:{ von:number, nach:number, positions:Array<{ groesse:number, anzahl:number }> } = this.buchungsliste.find(
+            (buchung:{ von:number, nach:number, positions:Array<{ groesse:number, anzahl:number }> }) =>
             {
                 return buchung.von === this._von.id && buchung.nach === this._nach.id;
             });
 
         if(buchungsKombination)
         {
-            let kombination:{ groesse:string, anzahl:number } =
-                buchungsKombination.positions.find((position:{ groesse:string, anzahl:number }) =>
+            let kombination:{ groesse:number, anzahl:number } =
+                buchungsKombination.positions.find((position:{ groesse:number, anzahl:number }) =>
                 {
                     return position.groesse === this._goresse.id;
                 });
@@ -336,30 +338,78 @@ export class BookingViewComponent implements OnInit
     private deleteRow():void
     {
         let newRowList:Array<TerraSimpleTableRowInterface<any>>;
+        let toBeDeletedList:Array<TerraSimpleTableRowInterface<any>>;
 
         newRowList = this._rowList.filter((row:TerraSimpleTableRowInterface<any>) =>
         {
             return row.selected === false;
         });
 
+        toBeDeletedList = this._rowList.filter((row:TerraSimpleTableRowInterface<any>) =>
+        {
+            return row.selected === true;
+        });
+
+        toBeDeletedList.forEach((row:TerraSimpleTableRowInterface<any>) =>
+        {
+            this.deleteFromBuchungsliste({
+                von: row.cellList[0].caption.toString(),
+                nach: row.cellList[1].caption.toString(),
+                groesse: row.cellList[3].caption.toString(),
+                anzahl: +row.cellList[4].caption })
+        });
+
         this._rowList = newRowList;
 
-        //this._rowList.forEach((row:TerraSimpleTableRowInterface<any>) =>
-        //{
-        //    if(row.selected)
-        //    {
-        //        let index:number = this._rowList.indexOf(row);
-        //
-        //        if(index > -1)
-        //        {
-        //            this._rowList.splice(index, 1);
-        //        }
-        //    }
-        //})
+
+
     }
 
     private selectRow(event:any)
     {
         event.selected = true;
+    }
+
+    private deleteFromBuchungsliste(toBeDeleted:{ von:string, nach:string, groesse:string, anzahl:number }):void
+    {
+        let vonId:number = this._zielorteKomplett.find((zielort:any) =>
+        {
+            return zielort.caption === toBeDeleted.von
+        }).value.id
+
+        let nachId:number = this._zielorteKomplett.find((zielort:any) =>
+        {
+            return zielort.caption === toBeDeleted.nach
+        }).value.id
+
+        let groesseId:number = this._groessen.find((groesse:any) =>
+        {
+            return groesse.caption === toBeDeleted.groesse
+        }).value.id
+
+        let remainedBuchungen:Array<{ von:number, nach:number, positions:Array<{ groesse:number, anzahl:number }> } > = [];
+        let tbdBuchungen:Array<{ von:number, nach:number, positions:Array<{ groesse:number, anzahl:number }> } > = [];
+
+        tbdBuchungen = this.buchungsliste.filter((buchung:{ von:number, nach:number, positions:Array<{ groesse:number, anzahl:number }> } ) =>
+        {
+            return buchung.von === vonId && buchung.nach === nachId;
+        })
+
+        tbdBuchungen.forEach((buchung:{ von:number, nach:number, positions:Array<{ groesse:number, anzahl:number }> }) =>
+        {
+            let newPositions:Array<{ groesse:number, anzahl:number }> = buchung.positions.filter((position:{ groesse:number, anzahl:number }) =>
+            {
+                return position.groesse === groesseId;
+            })
+
+            newPositions.forEach((position:{ groesse:number, anzahl:number }) =>
+            {
+                position.anzahl -= toBeDeleted.anzahl;
+            })
+
+
+        });
+
+        this.buchungsliste = tbdBuchungen;
     }
 }
