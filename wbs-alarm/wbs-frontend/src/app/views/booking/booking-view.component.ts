@@ -16,6 +16,7 @@ import { GlobalRegistryService } from '../../core/global-registry/global-registr
 import { UsersService } from '../../core/service/rest/users/users.service';
 import { CarrierService } from '../../core/service/rest/carrier/carrier.service';
 import { isNullOrUndefined } from 'util';
+import { TransaktionService } from '../../core/service/rest/transaktions/transaktion.service';
 
 @Component({
     selector: 'booking',
@@ -25,6 +26,7 @@ import { isNullOrUndefined } from 'util';
 export class BookingViewComponent implements OnInit
 {
     public _traeger:string = 'Eschenstruth';
+
     public _zielorte:Array<TerraSelectBoxValueInterface> = [{
         value:   null,
         caption: 'Bitte wählen'
@@ -61,7 +63,9 @@ export class BookingViewComponent implements OnInit
     public _headerList:Array<TerraSimpleTableHeaderCellInterface> = [];
     private _rowList:Array<TerraSimpleTableRowInterface<any>> = [];
 
-    private buchungsliste:Array<{ von:number, nach:number, positions:Array<{ groesse:number, anzahl:number }> }> = []
+    private buchungsliste:Array<{ von:number, nach:number, positions:Array<{ groesse:number, anzahl:number }> }> = [];
+
+    private _traegerId:number;
 
 
     @ViewChild('table')
@@ -71,7 +75,8 @@ export class BookingViewComponent implements OnInit
     constructor(private categoryService:CategoryService,
                 private userService:UsersService,
                 private carrierService:CarrierService,
-                private globalRegistryService:GlobalRegistryService)
+                private globalRegistryService:GlobalRegistryService,
+                private transaktionService:TransaktionService)
     {
     }
 
@@ -86,13 +91,25 @@ export class BookingViewComponent implements OnInit
 
     public _buchen():void
     {
-        this._rowList.forEach((row:TerraSimpleTableRowInterface<any>) =>
-        {
-            row.cellList.forEach((cell:TerraSimpleTableCellInterface) =>
+        this.transaktionService.postTransaktion(this._traegerId, this.buchungsliste).subscribe(
+            (result:any) =>
             {
-                console.log(cell);
+                console.log('Erfolg')
+                console.log(result)
+            },
+            (error:any) =>
+            {
+                console.log('Fehler')
+                console.log(error)
             })
-        })
+
+        //this._rowList.forEach((row:TerraSimpleTableRowInterface<any>) =>
+        //{
+        //    row.cellList.forEach((cell:TerraSimpleTableCellInterface) =>
+        //    {
+        //        console.log(cell);
+        //    })
+        //})
     }
 
 
@@ -153,6 +170,7 @@ export class BookingViewComponent implements OnInit
         if(this.globalRegistryService.currentUser)
         {
             traegerId = this.globalRegistryService.currentUser._embedded.traeger[0].id;
+            this._traegerId = this.globalRegistryService.currentUser._embedded.traeger[0].id;
 
             this.loadZielorte(traegerId);
 
@@ -167,6 +185,7 @@ export class BookingViewComponent implements OnInit
             {
                 this.globalRegistryService.currentUser = user;
                 traegerId = user._embedded.traeger[0].id;
+                this._traegerId = user._embedded.traeger[0].id;
 
                 this.loadZielorte(traegerId);
 
@@ -406,10 +425,10 @@ export class BookingViewComponent implements OnInit
         }
         else
         {
-           nachId = this._zielorteKomplett.find((zielort:any) =>
-           {
-               return zielort.caption === toBeDeleted.nach
-           }).value.id;
+            nachId = this._zielorteKomplett.find((zielort:any) =>
+            {
+                return zielort.caption === toBeDeleted.nach
+            }).value.id;
         }
 
         let groesseId:number = this._groessen.find((groesse:any) =>
