@@ -1,1 +1,11 @@
-<terra-multi-check-box [(ngModel)]="values"></terra-multi-check-box>
+<div class="save-button">
+    <terra-button [inputCaption]="'Berechtigungen speichern'"
+                  [inputIcon]="'icon-save'"
+                  (outPutClicked)="saveBerechtigungen()">
+    
+    </terra-button>
+</div>
+
+<div>
+    <terra-multi-check-box [(ngModel)]="values"></terra-multi-check-box>
+</div>

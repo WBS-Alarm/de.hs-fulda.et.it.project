@@ -16,6 +16,15 @@ export class UsersService
 
     }
 
+    public getOneUser(benutzerId:number):Observable<any>
+    {
+        this.headers = this.sitemapHelper.setAuthorization();
+
+        return this.http.get('/wbs/benutzer/' + benutzerId.toString(), {
+            headers: this.headers
+        })
+    }
+
     public getCurrentUsers():Observable<any>
     {
         this.headers = this.sitemapHelper.setAuthorization();
