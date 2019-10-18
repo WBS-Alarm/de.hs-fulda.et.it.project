@@ -1,0 +1,22 @@
+<ng-container *ngIf="routeData$ | async as routeData">
+    <terra-portlet>
+        
+        <terra-text-input [inputName]="'Größe eingeben'"
+                          [(ngModel)]="_groesse">
+        </terra-text-input>
+        
+        <terra-button [inputCaption]="'Größe speichern'"
+                      [inputIcon]="'icon-save'"
+                      (outputClicked)="addGroesse()"></terra-button>
+    </terra-portlet>
+    
+    <terra-simple-table #table
+                        [inputIsStriped]="true"
+                        [inputHasCheckboxes]="true"
+                        [inputUseHighlighting]="true"
+                        [inputHeaderList]="_headerList"
+                        [inputRowList]="_rowList"
+                        (outputHighlightedRowChange)="selectRow($event)">
+    </terra-simple-table>
+</ng-container>
+

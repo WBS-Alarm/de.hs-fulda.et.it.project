@@ -15,4 +15,8 @@
                           [(ngModel)]="routeData.category.name">
         </terra-text-input>
     </terra-portlet>
+    
+    <terra-portlet [inputPortletHeader]="'Größen'">
+        <system-groessen [categoryId]="routeData.category.id" [alert]="alert"></system-groessen>
+    </terra-portlet>
 </ng-container>

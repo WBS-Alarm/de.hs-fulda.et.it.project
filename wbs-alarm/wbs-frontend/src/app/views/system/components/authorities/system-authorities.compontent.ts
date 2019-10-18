@@ -1,20 +1,20 @@
 import {
     Component,
-    Input,
-    OnInit,
-    Output
+    OnInit
 } from '@angular/core';
 import { AuthoritiesService } from '../../../../core/service/rest/authorities/authorities.service';
-import { TerraMultiCheckBoxValueInterface } from '@plentymarkets/terra-components';
+import {
+    TerraAlertComponent,
+    TerraMultiCheckBoxValueInterface
+} from '@plentymarkets/terra-components';
 import { UsersService } from '../../../../core/service/rest/users/users.service';
 import { isNullOrUndefined } from 'util';
 import { Observable } from 'rxjs';
 import {
     ActivatedRoute,
-    Data,
-    Route
+    Data
 } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { AlertType } from '@plentymarkets/terra-components/components/alert/alert-type.enum';
 
 @Component({
     selector: 'system-authorities',
@@ -23,7 +23,7 @@ import { map } from 'rxjs/operators';
 })
 export class SystemAuthoritiesCompontent implements OnInit
 {
-   private userId:number
+    private userId:number
 
     private user1:any;
 
@@ -33,6 +33,7 @@ export class SystemAuthoritiesCompontent implements OnInit
 
     constructor(private authorityService:AuthoritiesService,
                 private route:ActivatedRoute,
+                private alert:TerraAlertComponent,
                 private userService:UsersService)
     {
 
@@ -41,7 +42,6 @@ export class SystemAuthoritiesCompontent implements OnInit
     public ngOnInit()
     {
         this.routeData$ = this.route.data;
-
 
 
         this.route.data.subscribe((data:Data) =>
@@ -90,9 +90,21 @@ export class SystemAuthoritiesCompontent implements OnInit
             if(value.selected && isNullOrUndefined(userHasAuthority))
             {
                 this.authorityService.grantAuthorities(this.userId, value.value).subscribe((result:any) =>
-                {
-                    console.log(result);
-                })
+                    {
+                        this.alert.addAlert({
+                            type:             AlertType.success,
+                            msg:              'Die Berechtigungen wurden erfolgreich gespeichert',
+                            dismissOnTimeout: 0
+                        })
+                    },
+                    (error:any) =>
+                    {
+                        this.alert.addAlert({
+                            type:             AlertType.error,
+                            msg:              'Beim Speichern der Berechtigungen ist ein Fehler aufgetreten!',
+                            dismissOnTimeout: 0
+                        })
+                    })
             }
         })
 

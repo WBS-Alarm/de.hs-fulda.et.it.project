@@ -28,6 +28,7 @@ import { BookingViewComponent } from './views/booking/booking-view.component';
 import { SystemAuthorityResolver } from './views/system/components/user/resolver/system-authority.resolver';
 import { SystemAuthoritiesCompontent } from './views/system/components/authorities/system-authorities.compontent';
 import { SystemAuthorityUserResolver } from './views/system/components/user/resolver/system-authority-user.resolver';
+import { SystemGroessenResolver } from './views/system/components/sizes/system-groessen.resolver';
 
 const appRoutes:Routes = [
     {
@@ -175,7 +176,8 @@ const appRoutes:Routes = [
                         },
                         resolve:
                             {
-                                category: SystemCategoryResolver
+                                category: SystemCategoryResolver,
+                                groesse: SystemGroessenResolver
                             }
                     }
                 ]
