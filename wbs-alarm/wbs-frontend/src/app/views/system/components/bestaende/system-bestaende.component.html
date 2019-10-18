@@ -1,0 +1,60 @@
+<ng-container *ngIf="routeData$ | async as routeData">
+    <terra-portlet>
+        <terra-button [inputCaption]="'Bestand erfassen'"
+                      [inputIcon]="'icon-save'"
+                      (outputClicked)="addBestand()">
+        </terra-button>
+    
+        <terra-button [inputCaption]="'Bestand ändern'"
+                      [inputIcon]="'icon-edit'"
+                      (outputClicked)="aendereBestand()">
+        </terra-button>
+        
+        <terra-button [inputCaption]="'Bestand löschen'"
+                      [inputIcon]="'icon-delete'"
+                      (outputClicked)="loescheBestand()">
+        </terra-button>
+        
+        <div>
+            <terra-select-box [inputName]="'Kategorie'"
+                              [inputListBoxValues]="_kategorien"
+                              [(ngModel)]="_kategorie"
+                              (ngModelChange)="ladeGroessen()">
+            
+            </terra-select-box>
+            
+            <terra-select-box [inputName]="'Größen'"
+                              [inputIsDisabled]="_groessen.length === 0"
+                              [inputListBoxValues]="_groessen"
+                              [(ngModel)]="_groesse">
+            
+            </terra-select-box>
+            
+            <terra-number-input [inputName]="'Anzahl'"
+                                [(ngModel)]="_anzahl"></terra-number-input>
+        </div>
+    </terra-portlet>
+    
+    
+    <terra-portlet>
+        <terra-simple-table #table
+                            [inputIsStriped]="true"
+                            [inputHasCheckboxes]="true"
+                            [inputUseHighlighting]="true"
+                            [inputHeaderList]="_headerList"
+                            [inputRowList]="_rowList"
+                            (outputHighlightedRowChange)="selectRow($event)">
+        </terra-simple-table>
+    </terra-portlet>
+    
+    <terra-overlay #bearbeitenOverlay
+                   inputOverlayTitle="Bestand ändern"
+                   [inputIsLarge]="true"
+                   [inputPrimaryButtonInterface]="primaryButtonInterface">
+        
+        <terra-number-input [inputName]="'Bestand ändern'"
+                            [(ngModel)]="_bestandAendernAnzahl">
+        </terra-number-input>
+    
+    </terra-overlay>
+</ng-container>

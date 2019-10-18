@@ -26,4 +26,8 @@
                           [inputIsDisabled]="routeData.targetPlace.erfasst">
         </terra-text-input>
     </terra-portlet>
+    
+    <terra-portlet [inputPortletHeader]="'Bestände'">
+                <system-bestaende [zielortId]="routeData.targetPlace.id"></system-bestaende>
+    </terra-portlet>
 </ng-container>

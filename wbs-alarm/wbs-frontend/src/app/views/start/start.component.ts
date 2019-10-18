@@ -7,9 +7,15 @@ import {
 } from '@angular/core';
 import { Language } from 'angular-l10n';
 import { LoginService } from '../../core/service/rest/login/login.service';
-import { Router } from '@angular/router';
+import {
+    ActivatedRoute,
+    Data,
+    Router
+} from '@angular/router';
 import { TerraAlertComponent } from '@plentymarkets/terra-components';
 import { GlobalRegistryService } from '../../core/global-registry/global-registry.service';
+import { TransaktionService } from '../../core/service/rest/transaktions/transaktion.service';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'start',
@@ -29,14 +35,32 @@ export class StartComponent implements OnInit
     @Output()
     private userIsLoggedIn:EventEmitter<boolean> = new EventEmitter();
 
+    public routeData$:Observable<Data>;
+
+    public _buchungen:Array<any> = [];
+
     constructor(private loginService:LoginService,
                 private router:Router,
-                private globalRegistry:GlobalRegistryService)
+                private route:ActivatedRoute,
+                private globalRegistry:GlobalRegistryService,
+                private transaktionsService:TransaktionService)
     {
     }
 
     public ngOnInit():void
     {
+        this.routeData$ = this.route.data;
+
+        this.route.data.subscribe((data:any) =>
+        {
+            let traegerId = data.user._embedded.traeger[0].id
+
+            this.transaktionsService.getTransaktionenForTraeger(traegerId).subscribe((result:any) =>
+            {
+                console.log(result);
+            })
+
+        })
     }
 
     public logout():void

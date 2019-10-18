@@ -29,6 +29,8 @@ import { SystemAuthorityResolver } from './views/system/components/user/resolver
 import { SystemAuthoritiesCompontent } from './views/system/components/authorities/system-authorities.compontent';
 import { SystemAuthorityUserResolver } from './views/system/components/user/resolver/system-authority-user.resolver';
 import { SystemGroessenResolver } from './views/system/components/sizes/system-groessen.resolver';
+import { SystemBestaendeResolver } from './views/system/components/bestaende/system-bestaende.resolver';
+import { StartUserResolver } from './views/start/start-user.resolver';
 
 const appRoutes:Routes = [
     {
@@ -59,7 +61,11 @@ const appRoutes:Routes = [
                 canActivate: GUARDS,
                 data: {
                     label: 'start'
-                }
+                },
+                resolve:
+                    {
+                        user: StartUserResolver
+                    }
             },
             {
                 path: 'example',
@@ -156,7 +162,8 @@ const appRoutes:Routes = [
                         },
                         resolve:
                             {
-                                targetPlace: SystemTargetplacesResolver
+                                targetPlace: SystemTargetplacesResolver,
+                                bestaende: SystemBestaendeResolver
                             }
                     },
                     {
