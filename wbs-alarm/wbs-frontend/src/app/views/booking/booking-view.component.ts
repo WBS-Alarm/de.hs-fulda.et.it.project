@@ -69,6 +69,7 @@ export class BookingViewComponent implements OnInit
 
     private _traegerId:number;
 
+    private alert:TerraAlertComponent = TerraAlertComponent.getInstance();
 
     @ViewChild('table')
     public table:TerraSimpleTableComponent<any>;
@@ -77,7 +78,6 @@ export class BookingViewComponent implements OnInit
     constructor(private categoryService:CategoryService,
                 private userService:UsersService,
                 private carrierService:CarrierService,
-                private alert:TerraAlertComponent,
                 private globalRegistryService:GlobalRegistryService,
                 private transaktionService:TransaktionService)
     {

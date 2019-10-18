@@ -31,9 +31,10 @@ export class SystemAuthoritiesCompontent implements OnInit
 
     protected routeData$:Observable<Data>;
 
+    private alert:TerraAlertComponent = TerraAlertComponent.getInstance()
+
     constructor(private authorityService:AuthoritiesService,
                 private route:ActivatedRoute,
-                private alert:TerraAlertComponent,
                 private userService:UsersService)
     {
 
