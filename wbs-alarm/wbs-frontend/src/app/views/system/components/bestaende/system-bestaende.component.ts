@@ -169,7 +169,7 @@ export class SystemBestaendeComponent implements OnInit
                 groesseId: this._groesse.id,
                 groesse: this._groesse.name,
                 anzahl: this._anzahl,
-                bestandId: null
+                bestandId: result.headers.get('Location').split('/wbs/bestand/')[1]
             })
 
             this.alert.addAlert(

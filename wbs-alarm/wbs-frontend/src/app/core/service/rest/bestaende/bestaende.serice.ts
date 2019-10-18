@@ -35,7 +35,11 @@ export class BestaendeService
 
         let url:string = this.sitemapHelper.bestandList().replace('{zielortId}', zielortId.toString());
 
-        return this.http.post(url, {anzahl: anzahl, groesseId: groesseId}, {headers: this.headers})
+        return this.http.post(url, {anzahl: anzahl, groesseId: groesseId},
+            {
+                headers: this.headers,
+                observe: 'response'
+        })
 
     }
 
