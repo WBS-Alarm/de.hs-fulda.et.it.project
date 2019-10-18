@@ -81,6 +81,9 @@ export class SystemBestaendeComponent implements OnInit
 
         this.route.data.subscribe((data:any) =>
         {
+            this._headerList = [];
+            this._rowList = [];
+
             this.erstelleTabellenStruktur();
 
             data.bestaende._embedded.elemente.forEach((element:any) =>
