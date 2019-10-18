@@ -58,6 +58,7 @@ import { AuthoritiesService } from './core/service/rest/authorities/authorities.
 import { SystemAuthoritiesCompontent } from './views/system/components/authorities/system-authorities.compontent';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BookingViewComponent } from './views/booking/booking-view.component';
+import { TransaktionService } from './core/service/rest/transaktions/transaktion.service';
 
 
 @NgModule({
@@ -122,6 +123,7 @@ import { BookingViewComponent } from './views/booking/booking-view.component';
         CarrierService,
         AuthoritiesService,
         UserAndSystemDataService,
+        TransaktionService,
         WbsPreloadingStrategy,
         SystemUserResolver,
         SystemTargetplacesResolver,

@@ -107,6 +107,7 @@ export class AppLoginComponent implements OnInit
                (result:any) =>
                {
                    this.globalRegistryService.setGravatarHash(result.gravatar)
+                   this.globalRegistryService.currentUser = result;
                }
            )
        },

@@ -134,6 +134,16 @@ export class WbsSitemapHelper
         return Object.values(this.siteMaps)[0]['groesseList'][0].href;
     }
 
+    public zielortForTraeger():string
+    {
+        return Object.values(this.siteMaps)[0]['zielortList'][0].href;
+    }
+
+    public transaktionForTraeger():string
+    {
+        return Object.values(this.siteMaps)[0]['transaktionList'][0].href;
+    }
+
     private getCookie(name:string)
     {
         let cookiename = name + "=";

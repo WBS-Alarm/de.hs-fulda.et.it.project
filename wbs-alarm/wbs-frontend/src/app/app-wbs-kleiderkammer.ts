@@ -9,6 +9,7 @@ import { GetSitemapService } from "./core/service/rest/sitemap/wbs-sitemap.servi
 import { Router } from '@angular/router';
 import { GlobalRegistryService } from './core/global-registry/global-registry.service';
 import { Subscription } from 'rxjs';
+import { UsersService } from './core/service/rest/users/users.service';
 
 @Component({
     selector:      'app-terra-basic',
@@ -19,6 +20,7 @@ import { Subscription } from 'rxjs';
 export class AppWbsKleiderkammer implements OnInit
 {
     constructor(private sitemapHelper:WbsSitemapHelper,
+                private userService:UsersService,
                 private globalRegistry:GlobalRegistryService,
                 private sitemapService:GetSitemapService,
                 private router:Router)
@@ -32,6 +34,13 @@ export class AppWbsKleiderkammer implements OnInit
         {
             this.sitemapHelper.sitemaps = result;
         });
+
+        this.userService.getCurrentUsers().subscribe(
+            (result:any) =>
+            {
+                this.globalRegistry.currentUser = result;
+            }
+        );
 
         // Navigate to start of system on reload
         if(window.location.href.indexOf('system') > 0)
