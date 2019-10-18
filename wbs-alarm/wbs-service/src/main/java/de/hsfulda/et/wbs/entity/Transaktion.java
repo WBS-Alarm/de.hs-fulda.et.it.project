@@ -34,7 +34,7 @@ public class Transaktion implements TransaktionData {
     @JoinColumn(name = "NACH_ZIELORT_ID")
     private Zielort nach;
 
-    @OneToMany(mappedBy = "transaktion", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "transaktion", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Position> positionen;
 
     protected Transaktion() {
@@ -119,7 +119,7 @@ public class Transaktion implements TransaktionData {
         templated.benutzer = transaktion.benutzer;
         templated.von = transaktion.von;
         templated.nach = transaktion.nach;
-        templated.positionen = transaktion.positionen;
+        transaktion.positionen.forEach(templated::addPosition);
         return templated;
     }
 
