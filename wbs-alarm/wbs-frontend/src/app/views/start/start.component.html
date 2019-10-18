@@ -1,3 +1,4 @@
+<ng-container *ngIf="routeData$ | async as routeData">
 <div class="infos">
     <terra-portlet [inputIsCollapsable]="true"
                    [inputCollapsed]="false"
@@ -12,6 +13,14 @@
         </div>
     
     </terra-portlet>
+    
+    <terra-portlet [inputIsCollapsable]="true"
+                   [inputCollapsed]="false"
+                   [inputPortletHeader]="'Letzte Buchungen'">
+        <div *ngFor="let buchung of _buchungen">
+            <span></span>
+        </div>
+    </terra-portlet>
 </div>
 
 <div class="bottom-line">
@@ -19,3 +28,4 @@
                   (outputClicked)="logout()">
     </terra-button>
 </div>
+</ng-container>

@@ -33,4 +33,15 @@ export class TransaktionService
             })
     }
 
+    public getTransaktionenForTraeger(traegerId:number):Observable<any>
+    {
+        this.headers = this.sitemapHelper.setAuthorization();
+
+        return this.http.get(this.sitemapHelper.transaktionForTraeger().replace('{traegerId}', traegerId.toString()),
+            {
+                headers: this.headers
+            }
+        )
+    }
+
 }

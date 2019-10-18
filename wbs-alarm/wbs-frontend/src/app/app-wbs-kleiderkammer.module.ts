@@ -67,6 +67,7 @@ import { GroesseService } from './core/service/rest/groesse/groesse.service';
 import { SystemBestaendeComponent } from './views/system/components/bestaende/system-bestaende.component';
 import { BestaendeService } from './core/service/rest/bestaende/bestaende.serice';
 import { SystemBestaendeResolver } from './views/system/components/bestaende/system-bestaende.resolver';
+import { StartUserResolver } from './views/start/start-user.resolver';
 
 
 @NgModule({
@@ -145,6 +146,7 @@ import { SystemBestaendeResolver } from './views/system/components/bestaende/sys
         SystemCategoryResolver,
         SystemAuthorityResolver,
         SystemGroessenResolver,
+        StartUserResolver,
         SystemAuthorityUserResolver,
         TerraNodeTreeConfig
     ],

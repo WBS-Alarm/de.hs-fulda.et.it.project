@@ -10,6 +10,11 @@
                       (outputClicked)="aendereBestand()">
         </terra-button>
         
+        <terra-button [inputCaption]="'Bestand löschen'"
+                      [inputIcon]="'icon-delete'"
+                      (outputClicked)="loescheBestand()">
+        </terra-button>
+        
         <div>
             <terra-select-box [inputName]="'Kategorie'"
                               [inputListBoxValues]="_kategorien"

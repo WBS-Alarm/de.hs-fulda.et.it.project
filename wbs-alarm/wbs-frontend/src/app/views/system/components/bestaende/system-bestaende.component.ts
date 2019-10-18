@@ -295,4 +295,36 @@ export class SystemBestaendeComponent implements OnInit
                 )
             })
     }
+
+    public loescheBestand():void
+    {
+        let datensatz:TerraSimpleTableRowInterface<any> = this._rowList.find((row:TerraSimpleTableRowInterface<any>) =>
+        {
+            return row.selected;
+        });
+
+        let bestandId:number = +datensatz.cellList[5].caption;
+
+        this.bestandService.loescheBestand(bestandId).subscribe(
+            (result:any) =>
+        {
+            this.alert.addAlert({
+                msg: 'Der Bestand wurde gelöscht',
+                type: AlertType.success,
+                dismissOnTimeout: 0
+            })
+        },
+            (error:any) =>
+            {
+                this.alert.addAlert({
+                    msg: 'Der Bestand wurde nicht gelöscht',
+                    type: AlertType.error,
+                    dismissOnTimeout: 0
+                })
+            })
+
+        let index:number = this._rowList.indexOf(datensatz);
+
+        this._rowList.splice(index, 1);
+    }
 }

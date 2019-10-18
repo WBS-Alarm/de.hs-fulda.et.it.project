@@ -51,4 +51,13 @@ export class BestaendeService
 
         return this.http.put(url, {anzahl: neuerBestand}, {headers:this.headers} )
     }
+
+    public loescheBestand(bestandId:number):Observable<any>
+    {
+        this.headers = this.sitemapHelper.setAuthorization();
+
+        let url:string = this.sitemapHelper.bestand().replace('{id}', bestandId.toString());
+
+        return this.http.delete(url, {headers: this.headers});
+    }
 }
