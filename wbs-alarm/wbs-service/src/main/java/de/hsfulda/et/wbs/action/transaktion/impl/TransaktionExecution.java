@@ -1,7 +1,5 @@
 package de.hsfulda.et.wbs.action.transaktion.impl;
 
-import de.hsfulda.et.wbs.action.bestand.CreateBestandAction;
-import de.hsfulda.et.wbs.action.bestand.UpdateBestandAction;
 import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.BestandData;
 import de.hsfulda.et.wbs.core.dto.PositionDto;
@@ -20,11 +18,11 @@ import java.util.Optional;
 class TransaktionExecution {
 
     private final TransaktionContext context;
-    private final CreateBestandAction createBestand;
-    private final UpdateBestandAction updateBestand;
+    private final CreateBestandForTransaktion createBestand;
+    private final UpdateBestandForTransaktion updateBestand;
 
-    TransaktionExecution(TransaktionContext context, CreateBestandAction createBestand,
-            UpdateBestandAction updateBestand) {
+    TransaktionExecution(TransaktionContext context, CreateBestandForTransaktion createBestand,
+                         UpdateBestandForTransaktion updateBestand) {
         this.context = context;
         this.createBestand = createBestand;
         this.updateBestand = updateBestand;
@@ -47,9 +45,9 @@ class TransaktionExecution {
 
                     // Der Wareneingang soll nicht gebucht werden.
                     if (!vonZielort.isEingang()) {
-                        updateVonBestand(user, p, dto.getVon());
+                        updateVonBestand(p, dto.getVon());
                     }
-                    updateNachBestand(user, p, dto.getNach());
+                    updateNachBestand(p, dto.getNach());
                 });
 
         return builder.build();
@@ -60,26 +58,26 @@ class TransaktionExecution {
      * Wenn Bestand nicht existiert, wird ein Fehler geworfen.
      *
      * @param position Position, die verarbeitet wird.
-     * @param von Zielort von dem eine Bestandteil an einen anderen Zielort übergeben werden soll.
+     * @param von      Zielort von dem eine Bestandteil an einen anderen Zielort übergeben werden soll.
      */
-    private void updateVonBestand(WbsUser user, PositionDto position, Long von) {
+    private void updateVonBestand(PositionDto position, Long von) {
         Optional<Bestand> vonBestand = context.getBestand(von, position.getGroesse());
         if (!vonBestand.isPresent()) {
             throw new ResourceNotFoundException(
                     "Es gibt keinen Bestand von dem die eine Position nicht abgebucht werden kann.");
         }
 
-        substractAnzahl(user, position, vonBestand.get());
+        substractAnzahl(position, vonBestand.get());
     }
 
     /**
      * Aktualisieren der Anzahl indem die in der Position übergebene Anzahl abgezogen wird.
      *
      * @param position Position, die verarbeitet wird.
-     * @param bestand Zu aktualisierender Bestand.
+     * @param bestand  Zu aktualisierender Bestand.
      */
-    private void substractAnzahl(WbsUser user, PositionDto position, Bestand bestand) {
-        updateBestand.perform(user, bestand.getId(), () -> bestand.getAnzahl() - position.getAnzahl());
+    private void substractAnzahl(PositionDto position, Bestand bestand) {
+        updateBestand.perform(bestand.getId(), () -> bestand.getAnzahl() - position.getAnzahl());
     }
 
     /**
@@ -87,27 +85,25 @@ class TransaktionExecution {
      * Zielort wird dieser erstellt und mit keinem Bestand initialisiert. danach wird die Anzahl der aktuellen
      * Position dem Bestand hinzugerechnet.
      *
-     * @param user Aktueller Anwender.
      * @param position Position, die verarbeitet wird.
-     * @param nach Zielort, an den die Position geht.
+     * @param nach     Zielort, an den die Position geht.
      */
-    private void updateNachBestand(WbsUser user, PositionDto position, Long nach) {
-        Bestand nachBestand = getNachBestand(user, position, nach);
-        addAnzahl(user, position, nachBestand);
+    private void updateNachBestand(PositionDto position, Long nach) {
+        Bestand nachBestand = getNachBestand(position, nach);
+        addAnzahl(position, nachBestand);
     }
 
     /**
      * Ermittelt den Bestand anhan des Zielorts und der Position. Sollte der Bestand nciht existieren wird er angelegt.
      *
-     * @param user Aktueller Anwender.
      * @param position Position, die verarbeitet wird.
-     * @param nach Zielort, an den die Position geht.
+     * @param nach     Zielort, an den die Position geht.
      * @return Persitierter Bestand.
      */
-    private Bestand getNachBestand(WbsUser user, PositionDto position, Long nach) {
+    private Bestand getNachBestand(PositionDto position, Long nach) {
         Optional<Bestand> nachBestand = context.getBestand(nach, position.getGroesse());
         if (!nachBestand.isPresent()) {
-            BestandData created = createBestand.perform(user, nach, BestandCreateDtoImpl.of(position));
+            BestandData created = createBestand.perform(nach, BestandCreateDtoImpl.of(position));
             return context.getBestand(created.getId());
         }
         return nachBestand.get();
@@ -117,9 +113,9 @@ class TransaktionExecution {
      * Aktualisieren der Anzahl indem die in der Position übergebene Anzahl hinzugefügt wird.
      *
      * @param position Position, die verarbeitet wird.
-     * @param bestand Zu aktualisierender Bestand.
+     * @param bestand  Zu aktualisierender Bestand.
      */
-    private void addAnzahl(WbsUser user, PositionDto position, Bestand bestand) {
-        updateBestand.perform(user, bestand.getId(), () -> bestand.getAnzahl() + position.getAnzahl());
+    private void addAnzahl(PositionDto position, Bestand bestand) {
+        updateBestand.perform(bestand.getId(), () -> bestand.getAnzahl() + position.getAnzahl());
     }
 }
