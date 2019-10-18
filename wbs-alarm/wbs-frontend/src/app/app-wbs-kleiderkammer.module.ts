@@ -64,6 +64,9 @@ import { SystemAuthorityUserResolver } from './views/system/components/user/reso
 import { SystemGroessenComponent } from './views/system/components/sizes/system-groessen.component';
 import { SystemGroessenResolver } from './views/system/components/sizes/system-groessen.resolver';
 import { GroesseService } from './core/service/rest/groesse/groesse.service';
+import { SystemBestaendeComponent } from './views/system/components/bestaende/system-bestaende.component';
+import { BestaendeService } from './core/service/rest/bestaende/bestaende.serice';
+import { SystemBestaendeResolver } from './views/system/components/bestaende/system-bestaende.resolver';
 
 
 @NgModule({
@@ -93,6 +96,7 @@ import { GroesseService } from './core/service/rest/groesse/groesse.service';
         AppUsersComponent,
         SystemComponent,
         SystemCarrierComponent,
+        SystemBestaendeComponent,
         SystemUserComponent,
         SystemCategoriesComponent,
         SystemNewUserComponent,
@@ -136,6 +140,8 @@ import { GroesseService } from './core/service/rest/groesse/groesse.service';
         SystemCarrierResolver,
         CategoryService,
         GroesseService,
+        BestaendeService,
+        SystemBestaendeResolver,
         SystemCategoryResolver,
         SystemAuthorityResolver,
         SystemGroessenResolver,

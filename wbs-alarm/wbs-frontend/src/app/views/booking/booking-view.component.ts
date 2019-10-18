@@ -110,7 +110,7 @@ export class BookingViewComponent implements OnInit
             {
                 this.alert.addAlert({
                     type:             AlertType.error,
-                    msg:              'Beim Speichern der Berechtigungen ist ein Fehler aufgetreten: ' + error.msg,
+                    msg:              'Beim der Buchung ist ein Fehler aufgetreten: ' + error.msg,
                     dismissOnTimeout: 0
                 })
 

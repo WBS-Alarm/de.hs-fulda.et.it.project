@@ -22,8 +22,11 @@ export class TransaktionService
 
         let entry:any = buchungen[0];
 
-        return this.http.post(this.sitemapHelper.transaktionForTraeger().replace('{traegerId}', traegerId.toString()), {
-                entry
+        return this.http.post(this.sitemapHelper.transaktionForTraeger().replace('{traegerId}', traegerId.toString()),
+            {
+                von: entry.von,
+                nach: entry.nach,
+                positions: entry.positions
             },
             {
                 headers: this.headers

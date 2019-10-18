@@ -29,6 +29,7 @@ import { SystemAuthorityResolver } from './views/system/components/user/resolver
 import { SystemAuthoritiesCompontent } from './views/system/components/authorities/system-authorities.compontent';
 import { SystemAuthorityUserResolver } from './views/system/components/user/resolver/system-authority-user.resolver';
 import { SystemGroessenResolver } from './views/system/components/sizes/system-groessen.resolver';
+import { SystemBestaendeResolver } from './views/system/components/bestaende/system-bestaende.resolver';
 
 const appRoutes:Routes = [
     {
@@ -156,7 +157,8 @@ const appRoutes:Routes = [
                         },
                         resolve:
                             {
-                                targetPlace: SystemTargetplacesResolver
+                                targetPlace: SystemTargetplacesResolver,
+                                bestaende: SystemBestaendeResolver
                             }
                     },
                     {

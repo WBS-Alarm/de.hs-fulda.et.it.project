@@ -159,6 +159,16 @@ export class WbsSitemapHelper
         return Object.values(this.siteMaps)[0]['groesse'][0].href;
     }
 
+    public bestandList():string
+    {
+        return Object.values(this.siteMaps)[0]['bestandList'][0].href;
+    }
+
+    public bestand():string
+    {
+        return Object.values(this.siteMaps)[0]['bestand'][0].href;
+    }
+
     private getCookie(name:string)
     {
         let cookiename = name + "=";
