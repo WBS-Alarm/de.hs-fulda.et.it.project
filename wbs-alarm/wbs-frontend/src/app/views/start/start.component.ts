@@ -37,7 +37,7 @@ export class StartComponent implements OnInit
 
     public routeData$:Observable<Data>;
 
-    public _buchungen:Array<any> = [];
+    public _buchungen:Array<{benutzer:string, von:string, nach:string, date:Date}> = [];
 
     constructor(private loginService:LoginService,
                 private router:Router,
@@ -57,7 +57,18 @@ export class StartComponent implements OnInit
 
             this.transaktionsService.getTransaktionenForTraeger(traegerId).subscribe((result:any) =>
             {
-                console.log(result);
+                result._embedded.elemente.forEach((element:any) =>
+                {
+                    let buchung:{benutzer:string, von:string, nach:string, date:Date} =
+                        {
+                            benutzer: element._embedded.benutzer[0].username,
+                            date: element.datum,
+                            nach: element._embedded.nach[0].name,
+                            von: element._embedded.von[0].name,
+                    };
+
+                    this._buchungen.push(buchung);
+                })
             })
 
         })

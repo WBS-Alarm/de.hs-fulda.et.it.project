@@ -94,29 +94,33 @@ export class BookingViewComponent implements OnInit
 
     public _buchen():void
     {
-        this.transaktionService.postTransaktion(this._traegerId, this.buchungsliste).subscribe(
-            (result:any) =>
-            {
-                this.alert.addAlert({
-                    type:             AlertType.success,
-                    msg:              'Die Buchung wurde erfolgreich durchgeführt',
-                    dismissOnTimeout: 0
-                });
+        this.buchungsliste.forEach((buchung:any) =>
+        {
+            this.transaktionService.postTransaktion(this._traegerId, buchung).subscribe(
+                (result:any) =>
+                {
+                    this.alert.addAlert({
+                        type:             AlertType.success,
+                        msg:              'Die Buchung wurde erfolgreich durchgeführt',
+                        dismissOnTimeout: 0
+                    });
 
-                console.log('Erfolg')
-                console.log(result)
-            },
-            (error:any) =>
-            {
-                this.alert.addAlert({
-                    type:             AlertType.error,
-                    msg:              'Beim der Buchung ist ein Fehler aufgetreten: ' + error.msg,
-                    dismissOnTimeout: 0
+                    console.log('Erfolg')
+                    console.log(result)
+                },
+                (error:any) =>
+                {
+                    this.alert.addAlert({
+                        type:             AlertType.error,
+                        msg:              'Beim der Buchung ist ein Fehler aufgetreten: ' + error.message,
+                        dismissOnTimeout: 0
+                    })
+
+                    console.log('Fehler')
+                    console.log(error)
                 })
+        })
 
-                console.log('Fehler')
-                console.log(error)
-            })
 
         //this._rowList.forEach((row:TerraSimpleTableRowInterface<any>) =>
         //{

@@ -16,17 +16,15 @@ export class TransaktionService
     {
     }
 
-    public postTransaktion(traegerId:number, buchungen:Array<{ von:number, nach:number, positions:Array<{ groesse:number, anzahl:number }> }>):Observable<any>
+    public postTransaktion(traegerId:number, buchungen:{ von:number, nach:number, positions:Array<{ groesse:number, anzahl:number }>}):Observable<any>
     {
         this.headers = this.sitemapHelper.setAuthorization();
 
-        let entry:any = buchungen[0];
-
         return this.http.post(this.sitemapHelper.transaktionForTraeger().replace('{traegerId}', traegerId.toString()),
             {
-                von: entry.von,
-                nach: entry.nach,
-                positions: entry.positions
+                von: buchungen.von,
+                nach: buchungen.nach,
+                positions: buchungen.positions
             },
             {
                 headers: this.headers

@@ -82,7 +82,7 @@ export class SystemGroessenComponent implements OnInit
             {
                 this.alert.addAlert({
                     type: AlertType.success,
-                    msg:  'Beim Speichern der Größe ist ein Fehler aufgetreten: ' + error.msg,
+                    msg:  'Beim Speichern der Größe ist ein Fehler aufgetreten: ' + error.message,
                     dismissOnTimeout: 0
                 })
             })

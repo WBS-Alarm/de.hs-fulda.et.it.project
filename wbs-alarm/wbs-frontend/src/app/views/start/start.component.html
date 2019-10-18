@@ -18,7 +18,7 @@
                    [inputCollapsed]="false"
                    [inputPortletHeader]="'Letzte Buchungen'">
         <div *ngFor="let buchung of _buchungen">
-            <span></span>
+            <span>{{buchung.benutzer}} hat am {{buchung.date}} die Positionen {{buchung.positionen}} von {{buchung.von}} nach {{buchung.nach}} gebucht!</span>
         </div>
     </terra-portlet>
 </div>
