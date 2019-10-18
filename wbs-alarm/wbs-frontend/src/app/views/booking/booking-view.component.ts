@@ -189,7 +189,7 @@ export class BookingViewComponent implements OnInit
 
                 this.loadZielorte(traegerId);
 
-                this.categoryService.getCategories(1).subscribe((kategorien:any) =>
+                this.categoryService.getCategories(this._traegerId).subscribe((kategorien:any) =>
                 {
                     this.addCategoriesToSelectBox(kategorien._embedded.elemente);
                 });
