@@ -55,6 +55,9 @@ export class SystemBestaendeComponent implements OnInit
     @Input()
     private zielortId:number;
 
+    @Input()
+    private gesperrt:boolean = false;
+
     private alert:TerraAlertComponent = TerraAlertComponent.getInstance();
 
     @ViewChild('bearbeitenOverlay')
@@ -78,6 +81,9 @@ export class SystemBestaendeComponent implements OnInit
 
         this.route.data.subscribe((data:any) =>
         {
+            this._headerList = [];
+            this._rowList = [];
+
             this.erstelleTabellenStruktur();
 
             data.bestaende._embedded.elemente.forEach((element:any) =>
