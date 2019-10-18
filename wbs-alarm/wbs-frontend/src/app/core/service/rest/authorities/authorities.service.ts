@@ -26,4 +26,29 @@ export class AuthoritiesService
                 headers: this.headers
             })
     }
+
+    public grantAuthorities(userId:number, authorityId:number):Observable<any>
+    {
+        this.headers = this.sitemapHelper.setAuthorization();
+
+        let url:string = this.sitemapHelper.grantAuthority().replace('{authorityId}', authorityId.toString());
+
+        return this.http.post(url.replace('{benutzerId}', userId.toString()),
+            {},
+            {
+                headers: this.headers
+            });
+    }
+
+    public removeAuthorities(userId:number, authorityId:number):Observable<any>
+    {
+        this.headers = this.sitemapHelper.setAuthorization();
+
+        let url:string = this.sitemapHelper.grantAuthority().replace('{authorityId}', authorityId.toString());
+
+        return this.http.delete(url.replace('{benutzerId}', userId.toString()),
+            {
+                headers: this.headers
+            });
+    }
 }

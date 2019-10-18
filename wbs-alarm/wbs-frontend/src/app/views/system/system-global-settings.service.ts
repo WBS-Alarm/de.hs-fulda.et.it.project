@@ -3,6 +3,7 @@ import {UserDataInterface} from "../../core/service/rest/users/user-data.interfa
 import { SystemZielortInterface } from './components/targetplaces/data/system-zielort.interface';
 import {SystemCarrierInterface} from "./components/carrier/data/system-carrier.interface";
 import {SystemCategoryInterface} from "./components/categories/data/system-category.interface";
+import { UsersService } from '../../core/service/rest/users/users.service';
 
 @Injectable()
 export class SystemGlobalSettingsService
@@ -14,7 +15,7 @@ export class SystemGlobalSettingsService
     private zielorte:Array<any> = [];
     private kategorien:Array<any> = [];
 
-    constructor()
+    constructor(private userService:UsersService)
     {
 
     }

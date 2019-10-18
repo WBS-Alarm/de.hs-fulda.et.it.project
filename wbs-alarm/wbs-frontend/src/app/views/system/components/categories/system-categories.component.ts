@@ -16,7 +16,7 @@ export class SystemCategoriesComponent
 {
     protected routeData$:Observable<Data>;
 
-    private alert:TerraAlertComponent = TerraAlertComponent.getInstance();
+    public alert:TerraAlertComponent = TerraAlertComponent.getInstance();
 
     constructor(private route:ActivatedRoute,
                 private categoryService:CategoryService,

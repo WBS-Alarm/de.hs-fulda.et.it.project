@@ -4,6 +4,7 @@ import {
     ViewChild
 } from '@angular/core';
 import {
+    TerraAlertComponent,
     TerraButtonInterface,
     TerraSelectBoxValueInterface,
     TerraSimpleTableCellInterface,
@@ -17,6 +18,7 @@ import { UsersService } from '../../core/service/rest/users/users.service';
 import { CarrierService } from '../../core/service/rest/carrier/carrier.service';
 import { isNullOrUndefined } from 'util';
 import { TransaktionService } from '../../core/service/rest/transaktions/transaktion.service';
+import { AlertType } from '@plentymarkets/terra-components/components/alert/alert-type.enum';
 
 @Component({
     selector: 'booking',
@@ -67,6 +69,7 @@ export class BookingViewComponent implements OnInit
 
     private _traegerId:number;
 
+    private alert:TerraAlertComponent = TerraAlertComponent.getInstance();
 
     @ViewChild('table')
     public table:TerraSimpleTableComponent<any>;
@@ -94,11 +97,23 @@ export class BookingViewComponent implements OnInit
         this.transaktionService.postTransaktion(this._traegerId, this.buchungsliste).subscribe(
             (result:any) =>
             {
+                this.alert.addAlert({
+                    type:             AlertType.success,
+                    msg:              'Die Buchung wurde erfolgreich durchgeführt',
+                    dismissOnTimeout: 0
+                });
+
                 console.log('Erfolg')
                 console.log(result)
             },
             (error:any) =>
             {
+                this.alert.addAlert({
+                    type:             AlertType.error,
+                    msg:              'Beim Speichern der Berechtigungen ist ein Fehler aufgetreten: ' + error.msg,
+                    dismissOnTimeout: 0
+                })
+
                 console.log('Fehler')
                 console.log(error)
             })

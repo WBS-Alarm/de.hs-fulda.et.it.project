@@ -23,8 +23,10 @@
         <terra-checkbox [(ngModel)]="routeData.user.einkaeufer"
                         [inputCaption]="'Einkäufer'">
         </terra-checkbox>
-        <terra-portlet [inputPortletHeader]="'Berechtigungen'">
-            <system-authorities [userId]="routeData.user.id"></system-authorities>
-        </terra-portlet>
+<!--        <terra-portlet [inputPortletHeader]="'Berechtigungen'">-->
+<!--    -->
+<!--            <system-authorities [user]="routeData.user" [userId]="routeData.user.id" [mulitValues]="mulitValues"></system-authorities>-->
+<!--            -->
+<!--        </terra-portlet>-->
     </terra-portlet>
 </ng-container>

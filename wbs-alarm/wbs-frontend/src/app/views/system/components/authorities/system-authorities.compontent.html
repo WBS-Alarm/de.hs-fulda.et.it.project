@@ -1,1 +1,18 @@
-<terra-multi-check-box [(ngModel)]="values"></terra-multi-check-box>
+<ng-container *ngIf="routeData$ | async as routeData">
+
+<terra-portlet [inputPortletHeader]="'Berechtigungen'">
+    
+    <div class="save-button">
+        <terra-button [inputCaption]="'Berechtigungen speichern'"
+                      [inputIcon]="'icon-save'"
+                      (outputClicked)="saveBerechtigungen()">
+        
+        </terra-button>
+    </div>
+    
+    <div>
+        <terra-multi-check-box [(ngModel)]="values"></terra-multi-check-box>
+    </div>
+    
+</terra-portlet>
+</ng-container>

@@ -59,6 +59,11 @@ import { SystemAuthoritiesCompontent } from './views/system/components/authoriti
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BookingViewComponent } from './views/booking/booking-view.component';
 import { TransaktionService } from './core/service/rest/transaktions/transaktion.service';
+import { SystemAuthorityResolver } from './views/system/components/user/resolver/system-authority.resolver';
+import { SystemAuthorityUserResolver } from './views/system/components/user/resolver/system-authority-user.resolver';
+import { SystemGroessenComponent } from './views/system/components/sizes/system-groessen.component';
+import { SystemGroessenResolver } from './views/system/components/sizes/system-groessen.resolver';
+import { GroesseService } from './core/service/rest/groesse/groesse.service';
 
 
 @NgModule({
@@ -96,6 +101,7 @@ import { TransaktionService } from './core/service/rest/transaktions/transaktion
         SystemEditCarrierComponent,
         SystemNewTargetplaceComponent,
         SystemTargetplacesComponent,
+        SystemGroessenComponent,
         NavigationBarComponent
     ],
     providers:    [
@@ -129,7 +135,11 @@ import { TransaktionService } from './core/service/rest/transaktions/transaktion
         SystemTargetplacesResolver,
         SystemCarrierResolver,
         CategoryService,
+        GroesseService,
         SystemCategoryResolver,
+        SystemAuthorityResolver,
+        SystemGroessenResolver,
+        SystemAuthorityUserResolver,
         TerraNodeTreeConfig
     ],
     bootstrap:    [
