@@ -55,6 +55,9 @@ export class SystemBestaendeComponent implements OnInit
     @Input()
     private zielortId:number;
 
+    @Input()
+    private gesperrt:boolean = false;
+
     private alert:TerraAlertComponent = TerraAlertComponent.getInstance();
 
     @ViewChild('bearbeitenOverlay')

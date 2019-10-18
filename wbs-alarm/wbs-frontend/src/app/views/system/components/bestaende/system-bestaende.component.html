@@ -1,5 +1,5 @@
 <ng-container *ngIf="routeData$ | async as routeData">
-    <terra-portlet>
+    <terra-portlet *ngIf="!gesperrt">
         <terra-button [inputCaption]="'Bestand erfassen'"
                       [inputIcon]="'icon-save'"
                       (outputClicked)="addBestand()">
