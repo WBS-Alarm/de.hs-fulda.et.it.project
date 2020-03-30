@@ -8,14 +8,14 @@ import { UsersService } from '../../core/service/rest/users/users.service';
 @Injectable()
 export class SystemGlobalSettingsService
 {
-    private traegerId:number;
+    public traegerId:number;
 
-    private traegers:Array<any> = [];
-    private benutzer:Array<any> = [];
-    private zielorte:Array<any> = [];
-    private kategorien:Array<any> = [];
+    public traegers:Array<any> = [];
+    public benutzer:Array<any> = [];
+    public zielorte:Array<any> = [];
+    public kategorien:Array<any> = [];
 
-    constructor(private userService:UsersService)
+    constructor(public userService:UsersService)
     {
 
     }

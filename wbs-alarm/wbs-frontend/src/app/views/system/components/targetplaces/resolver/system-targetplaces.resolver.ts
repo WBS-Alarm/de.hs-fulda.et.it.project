@@ -15,10 +15,10 @@ import {SystemZielortInterface} from "../data/system-zielort.interface";
 @Injectable()
 export class SystemTargetplacesResolver implements Resolve<SystemZielortInterface>
 {
-    constructor(private translation:TranslationService,
-                private userService:UsersService,
-                private systemGloabalSettingsService:SystemGlobalSettingsService,
-                private router:Router)
+    constructor(public translation:TranslationService,
+                public userService:UsersService,
+                public systemGloabalSettingsService:SystemGlobalSettingsService,
+                public router:Router)
     {
     }
 

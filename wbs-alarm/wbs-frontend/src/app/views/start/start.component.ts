@@ -19,12 +19,12 @@ import { Observable } from 'rxjs';
 
 @Component({
     selector: 'start',
-    template: require('./start.component.html'),
-    styles:   [require('./start.component.scss')],
+    templateUrl: './start.component.html',
+    styleUrls:   ['./start.component.scss'],
 })
 export class StartComponent implements OnInit
 {
-    private alert:TerraAlertComponent = TerraAlertComponent.getInstance();
+    public alert:TerraAlertComponent = TerraAlertComponent.getInstance();
 
     @Language()
     public lang:string;
@@ -33,17 +33,17 @@ export class StartComponent implements OnInit
     public myTitle:string;
 
     @Output()
-    private userIsLoggedIn:EventEmitter<boolean> = new EventEmitter();
+    public userIsLoggedIn:EventEmitter<boolean> = new EventEmitter();
 
     public routeData$:Observable<Data>;
 
     public _buchungen:Array<{benutzer:string, von:string, nach:string, date:Date}> = [];
 
-    constructor(private loginService:LoginService,
-                private router:Router,
-                private route:ActivatedRoute,
-                private globalRegistry:GlobalRegistryService,
-                private transaktionsService:TransaktionService)
+    constructor(public loginService:LoginService,
+                public router:Router,
+                public route:ActivatedRoute,
+                public globalRegistry:GlobalRegistryService,
+                public transaktionsService:TransaktionService)
     {
     }
 

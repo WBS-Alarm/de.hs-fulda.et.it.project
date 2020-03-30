@@ -1,9 +1,19 @@
 {
-	"extends": "./node_modules/@plentymarkets/terra-components/tslint-rules.json",
+	"extends": "./node_modules/@plentymarkets/terra-lint-rules/tslint-rules.json",
 	"rulesDirectory":
 	[
-		"node_modules/@plentymarkets/terra-components",
+		"node_modules/@plentymarkets/terra-lint-rules",
 		"node_modules/codelyzer",
 		"node_modules/tslint-eslint-rules/dist/rules"
-	]
+	],
+	"rules": {
+		"component-selector": [
+			true,
+			"element",
+			[
+				"ptb"
+			],
+			"kebab-case"
+		]
+	}
 }

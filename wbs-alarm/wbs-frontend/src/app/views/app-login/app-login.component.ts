@@ -1,15 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import { Language,
-         TranslationService } from 'angular-l10n';
+import {Language, TranslationService} from 'angular-l10n';
 import {TerraAlertComponent, TerraSelectBoxValueInterface} from "@plentymarkets/terra-components";
 import {LoginService} from "../../core/service/rest/login/login.service";
 import {WbsSitemapHelper} from "../../core/service/rest/sitemap/data/wbs-sitemap.helper";
 import {Router} from "@angular/router";
-import { GlobalRegistryService } from '../../core/global-registry/global-registry.service';
-import { FormGroup } from '@angular/forms';
-import { UsersService } from '../../core/service/rest/users/users.service';
-import { UserDataInterface } from '../../core/service/rest/users/user-data.interface';
-import { getLocaleDateFormat } from '@angular/common';
+import {GlobalRegistryService} from '../../core/global-registry/global-registry.service';
+import {UsersService} from '../../core/service/rest/users/users.service';
 
 
 @Component({
@@ -19,31 +15,31 @@ import { getLocaleDateFormat } from '@angular/common';
 })
 export class AppLoginComponent implements OnInit
 {
-    private alert:TerraAlertComponent = TerraAlertComponent.getInstance();
+    public alert:TerraAlertComponent = TerraAlertComponent.getInstance();
 
     @Language()
     public lang:string;
 
-    protected user:Object =
+    public user:any =
         {
             name: '',
             password: '',
             language: 'de'
         };
 
-    protected languages:Array<TerraSelectBoxValueInterface> = [];
+    public languages:Array<TerraSelectBoxValueInterface> = [];
 
-    protected username:string;
-    protected password:string;
+    public username:string;
+    public password:string;
 
-    protected languageCaption:string;
+    public languageCaption:string;
 
-    constructor(private translation:TranslationService,
-                private loginService:LoginService,
-                private globalRegistryService:GlobalRegistryService,
-                private sitemapHelper:WbsSitemapHelper,
-                private userService:UsersService,
-                private router:Router)
+    constructor(public translation:TranslationService,
+                public loginService:LoginService,
+                public globalRegistryService:GlobalRegistryService,
+                public sitemapHelper:WbsSitemapHelper,
+                public userService:UsersService,
+                public router:Router)
     {
     }
 
@@ -69,14 +65,14 @@ export class AppLoginComponent implements OnInit
         });
     }
 
-    private initTranslations():void
+    public initTranslations():void
     {
         this.username = this.translation.translate('login.username', this.lang);
         this.password = this.translation.translate('login.password', this.lang);
         this.languageCaption = this.translation.translate('login.language', this.lang);
     }
 
-    // private initLanguageValues():void
+    // public initLanguageValues():void
     // {
     //     this.languages =
     //         [
@@ -91,7 +87,7 @@ export class AppLoginComponent implements OnInit
     //         ];
     // }
 
-    protected login():void
+    public login():void
     {
        this.loginService.login(this.user).subscribe(
            (result:string) =>

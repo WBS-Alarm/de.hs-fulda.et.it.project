@@ -14,10 +14,10 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class SystemAuthorityResolver implements Resolve<Array<TerraMultiCheckBoxValueInterface>>
 {
-    constructor(private translation:TranslationService,
-                private userService:UsersService,
-                private authorityService:AuthoritiesService,
-                private router:Router)
+    constructor(public translation:TranslationService,
+                public userService:UsersService,
+                public authorityService:AuthoritiesService,
+                public router:Router)
     {
     }
 

@@ -29,8 +29,8 @@ import { AlertType } from '@plentymarkets/terra-components/components/alert/aler
 
 @Component({
     selector: 'system-bestaende',
-    template: require('./system-bestaende.component.html'),
-    styles:   [require('./system-bestaende.component.scss')]
+    templateUrl: './system-bestaende.component.html',
+    styleUrls:   ['./system-bestaende.component.scss']
 })
 export class SystemBestaendeComponent implements OnInit
 {
@@ -53,22 +53,22 @@ export class SystemBestaendeComponent implements OnInit
     public primaryButtonInterface:TerraOverlayButtonInterface;
 
     @Input()
-    private zielortId:number;
+    public zielortId:number;
 
     @Input()
-    private gesperrt:boolean = false;
+    public gesperrt:boolean = false;
 
-    private alert:TerraAlertComponent = TerraAlertComponent.getInstance();
+    // public alert:TerraAlertComponent = TerraAlertComponent.getInstance();
 
-    @ViewChild('bearbeitenOverlay')
-    private bearbeitenOverlay:TerraOverlayComponent;
+    @ViewChild('bearbeitenOverlay', {static:true})
+    public bearbeitenOverlay:TerraOverlayComponent;
 
 
-    constructor(private route:ActivatedRoute,
-                private groessenService:GroesseService,
-                private categoryService:CategoryService,
-                private bestandService:BestaendeService,
-                private systemGlobalSettingsService:SystemGlobalSettingsService)
+    constructor(public route:ActivatedRoute,
+                public groessenService:GroesseService,
+                public categoryService:CategoryService,
+                public bestandService:BestaendeService,
+                public systemGlobalSettingsService:SystemGlobalSettingsService)
     {
 
     }
@@ -178,23 +178,23 @@ export class SystemBestaendeComponent implements OnInit
                 bestandId: result.headers.get('Location').split('/wbs/bestand/')[1]
             })
 
-            this.alert.addAlert(
-                {
-                    msg: 'Der Bestand wurde erfolgreich erfasst',
-                    type: AlertType.success,
-                    dismissOnTimeout: 0
-                }
-            )
+            // this.alert.addAlert(
+            //     {
+            //         msg: 'Der Bestand wurde erfolgreich erfasst',
+            //         type: AlertType.success,
+            //         dismissOnTimeout: 0
+            //     }
+            // )
         },
             (error:any) =>
             {
-                this.alert.addAlert(
-                    {
-                        msg: 'Der Bestand konnte nicht erfasst werden: ' + error,
-                        type: AlertType.error,
-                        dismissOnTimeout: 0
-                    }
-                )
+                // this.alert.addAlert(
+                //     {
+                //         msg: 'Der Bestand konnte nicht erfasst werden: ' + error,
+                //         type: AlertType.error,
+                //         dismissOnTimeout: 0
+                //     }
+                // )
             })
 
 
@@ -282,23 +282,23 @@ export class SystemBestaendeComponent implements OnInit
     {
         this.bestandService.aendereBestand(neuerBestand, this._bestandAendernBestand).subscribe((result:any) =>
         {
-            this.alert.addAlert(
-                {
-                    msg: 'Der Bestand wurde erfolgreich geändert',
-                    type: AlertType.success,
-                    dismissOnTimeout: 0
-                }
-            )
+            // this.alert.addAlert(
+            //     {
+            //         msg: 'Der Bestand wurde erfolgreich geändert',
+            //         type: AlertType.success,
+            //         dismissOnTimeout: 0
+            //     }
+            // )
         },
             (error:any) =>
             {
-                this.alert.addAlert(
-                    {
-                        msg: 'Der Bestand wurde nicht erfolgreich geändert: ' + error,
-                        type: AlertType.error,
-                        dismissOnTimeout: 0
-                    }
-                )
+                // this.alert.addAlert(
+                //     {
+                //         msg: 'Der Bestand wurde nicht erfolgreich geändert: ' + error,
+                //         type: AlertType.error,
+                //         dismissOnTimeout: 0
+                //     }
+                // )
             })
     }
 
@@ -314,20 +314,20 @@ export class SystemBestaendeComponent implements OnInit
         this.bestandService.loescheBestand(bestandId).subscribe(
             (result:any) =>
         {
-            this.alert.addAlert({
-                msg: 'Der Bestand wurde gelöscht',
-                type: AlertType.success,
-                dismissOnTimeout: 0
-            })
+            // this.alert.addAlert({
+            //     msg: 'Der Bestand wurde gelöscht',
+            //     type: AlertType.success,
+            //     dismissOnTimeout: 0
+            // })
         },
             (error:any) =>
             {
-                this.alert.addAlert({
-                    msg: 'Der Bestand wurde nicht gelöscht',
-                    type: AlertType.error,
-                    dismissOnTimeout: 0
-                })
-            })
+                // this.alert.addAlert({
+                //     msg: 'Der Bestand wurde nicht gelöscht',
+                //     type: AlertType.error,
+                //     dismissOnTimeout: 0
+                // })
+            });
 
         let index:number = this._rowList.indexOf(datensatz);
 

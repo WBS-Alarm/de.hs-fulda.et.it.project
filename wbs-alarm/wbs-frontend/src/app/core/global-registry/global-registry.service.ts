@@ -4,11 +4,11 @@ import { UserDataInterface } from '../service/rest/users/user-data.interface';
 @Injectable()
 export class GlobalRegistryService
 {
-    private isLoggedIn:boolean = false;
+    public isLoggedIn:boolean = false;
 
-    private _isLoginActive:boolean = true;
+    public _isLoginActive:boolean = true;
 
-    private gravatarHash:string;
+    public gravatarHash:string;
 
     public currentUser:any;
 

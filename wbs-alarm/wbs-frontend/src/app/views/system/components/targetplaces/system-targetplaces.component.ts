@@ -18,19 +18,19 @@ import { ExampleTreeData } from '../../system.component';
 
 @Component({
     selector: 'system-targetplace',
-    template: require('./system-targetplaces.component.html'),
-    styles:   [require('./system-targetplaces.component.scss')]
+    templateUrl: './system-targetplaces.component.html',
+    styleUrls:   ['./system-targetplaces.component.scss']
 })
 export class SystemTargetplacesComponent implements OnInit
 {
-    private alert:TerraAlertComponent = TerraAlertComponent.getInstance();
+    public alert:TerraAlertComponent = TerraAlertComponent.getInstance();
 
-    protected routeData$:Observable<Data>;
+    public routeData$:Observable<Data>;
 
-    constructor(private carrierService:CarrierService,
-                private route:ActivatedRoute,
-                private systemGlobalSettings:SystemGlobalSettingsService,
-                private systemTreeConfig:TerraNodeTreeConfig<ExampleTreeData>)
+    constructor(public carrierService:CarrierService,
+                public route:ActivatedRoute,
+                public systemGlobalSettings:SystemGlobalSettingsService,
+                public systemTreeConfig:TerraNodeTreeConfig<ExampleTreeData>)
     {
 
     }
@@ -40,7 +40,7 @@ export class SystemTargetplacesComponent implements OnInit
         this.routeData$ = this.route.data;
     }
 
-    private save(targetPlace:SystemZielortInterface):void
+    public save(targetPlace:SystemZielortInterface):void
     {
         this.carrierService.updateTargetplace(targetPlace).subscribe(
             (result:any) =>
@@ -69,7 +69,7 @@ export class SystemTargetplacesComponent implements OnInit
             })
     }
 
-    private delete(targetPlace:SystemZielortInterface):void
+    public delete(targetPlace:SystemZielortInterface):void
     {
         this.carrierService.deleteTargetplace(targetPlace).subscribe((result:any) =>
             {
@@ -97,7 +97,7 @@ export class SystemTargetplacesComponent implements OnInit
             })
     }
 
-    private lock(targetPlace:SystemZielortInterface):void
+    public lock(targetPlace:SystemZielortInterface):void
     {
         this.carrierService.lockTargetplace(targetPlace).subscribe(
             (result:any) =>

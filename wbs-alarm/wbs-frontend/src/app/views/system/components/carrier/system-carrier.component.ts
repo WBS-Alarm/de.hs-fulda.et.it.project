@@ -7,19 +7,19 @@ import { SystemGlobalSettingsService } from '../../system-global-settings.servic
 
 @Component({
     selector: 'carrier',
-    template: require('./system-carrier.component.html'),
-    styles:   [require('./system-carrier.component.scss')]
+    templateUrl: './system-carrier.component.html',
+    styleUrls:   ['./system-carrier.component.scss']
 })
 export class SystemCarrierComponent implements OnInit
 {
-    protected newCarrierName:string;
+    public newCarrierName:string;
 
-    private alert:TerraAlertComponent = TerraAlertComponent.getInstance();
+    public alert:TerraAlertComponent = TerraAlertComponent.getInstance();
 
-    constructor(private carrierService:CarrierService,
-                private nodeTreeConfig:TerraNodeTreeConfig<ExampleTreeData>,
-                private router:Router,
-                private systemTreeSettings:SystemGlobalSettingsService)
+    constructor(public carrierService:CarrierService,
+                public nodeTreeConfig:TerraNodeTreeConfig<ExampleTreeData>,
+                public router:Router,
+                public systemTreeSettings:SystemGlobalSettingsService)
     {
 
     }
@@ -29,7 +29,7 @@ export class SystemCarrierComponent implements OnInit
 
     }
 
-    protected saveCarrier():void
+    public saveCarrier():void
     {
         this.carrierService.createCarrier(this.newCarrierName).subscribe((result:any) =>
             {

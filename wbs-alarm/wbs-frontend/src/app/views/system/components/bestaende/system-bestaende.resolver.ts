@@ -15,9 +15,9 @@ import { BestaendeService } from '../../../../core/service/rest/bestaende/bestae
 @Injectable()
 export class SystemBestaendeResolver implements Resolve<Observable<any>>
 {
-    constructor(private translation:TranslationService,
-                private bestaendeService:BestaendeService,
-                private router:Router)
+    constructor(public translation:TranslationService,
+                public bestaendeService:BestaendeService,
+                public router:Router)
     {
     }
 

@@ -13,9 +13,9 @@ import { UsersService } from '../../core/service/rest/users/users.service';
 @Injectable()
 export class StartUserResolver implements Resolve<Observable<any>>
 {
-    constructor(private translation:TranslationService,
-                private userService:UsersService,
-                private router:Router)
+    constructor(public translation:TranslationService,
+                public userService:UsersService,
+                public router:Router)
     {
     }
 

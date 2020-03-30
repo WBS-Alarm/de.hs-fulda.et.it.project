@@ -15,12 +15,11 @@ import {
     TerraSimpleTableRowInterface
 } from '@plentymarkets/terra-components';
 import { GroesseService } from '../../../../core/service/rest/groesse/groesse.service';
-import { AlertType } from '@plentymarkets/terra-components/components/alert/alert-type.enum';
 
 @Component({
     selector: 'system-groessen',
-    template: require('./system-groessen.component.html'),
-    styles:   [require('./system-groessen.component.scss')]
+    templateUrl: './system-groessen.component.html',
+    styleUrls:   ['./system-groessen.component.scss']
 })
 export class SystemGroessenComponent implements OnInit
 {
@@ -36,12 +35,12 @@ export class SystemGroessenComponent implements OnInit
     @Input()
     public categoryId:number;
 
-    @Input()
-    public alert:TerraAlertComponent;
+    // @Input()
+    // public alert:TerraAlertComponent;
 
 
-    constructor(private route:ActivatedRoute,
-                private groessenService:GroesseService)
+    constructor(public route:ActivatedRoute,
+                public groessenService:GroesseService)
     {}
 
     public ngOnInit():void
@@ -70,21 +69,21 @@ export class SystemGroessenComponent implements OnInit
     {
         this.groessenService.addGroesseForTraeger(this.categoryId, this._groesse).subscribe((result:any) =>
         {
-            this.alert.addAlert({
-                    type:             AlertType.success,
-                    msg:              'Die Größe wurde gespeichert.',
-                    dismissOnTimeout: 0
-            })
+            // this.alert.addAlert({
+            //         type:             AlertType.success,
+            //         msg:              'Die Größe wurde gespeichert.',
+            //         dismissOnTimeout: 0
+            // })
 
             //this.groessenZurTabelleHinzufuegen(result);
         },
             (error:any) =>
             {
-                this.alert.addAlert({
-                    type: AlertType.success,
-                    msg:  'Beim Speichern der Größe ist ein Fehler aufgetreten: ' + error.message,
-                    dismissOnTimeout: 0
-                })
+                // this.alert.addAlert({
+                //     type: AlertType.success,
+                //     msg:  'Beim Speichern der Größe ist ein Fehler aufgetreten: ' + error.message,
+                //     dismissOnTimeout: 0
+                // })
             })
     }
 

@@ -18,24 +18,23 @@ import { AlertType } from '@plentymarkets/terra-components/components/alert/aler
 
 @Component({
     selector: 'system-authorities',
-    template: require('./system-authorities.compontent.html'),
-    styles:   [require('./system-authorities.compontent.scss')]
+    templateUrl: './system-authorities.compontent.html',
+    styleUrls:   ['./system-authorities.compontent.scss']
 })
 export class SystemAuthoritiesCompontent implements OnInit
 {
-    private userId:number
+    public userId:number;
 
-    private user1:any;
+    public user1:any;
 
-    protected values:Array<TerraMultiCheckBoxValueInterface> = [];
+    public values:Array<TerraMultiCheckBoxValueInterface> = [];
 
-    protected routeData$:Observable<Data>;
+    public routeData$:Observable<Data>;
 
-    private alert:TerraAlertComponent = TerraAlertComponent.getInstance()
 
-    constructor(private authorityService:AuthoritiesService,
-                private route:ActivatedRoute,
-                private userService:UsersService)
+    constructor(public authorityService:AuthoritiesService,
+                public route:ActivatedRoute,
+                public userService:UsersService)
     {
 
     }
@@ -92,19 +91,19 @@ export class SystemAuthoritiesCompontent implements OnInit
             {
                 this.authorityService.grantAuthorities(this.userId, value.value).subscribe((result:any) =>
                     {
-                        this.alert.addAlert({
-                            type:             AlertType.success,
-                            msg:              'Die Berechtigungen wurden erfolgreich gespeichert',
-                            dismissOnTimeout: 0
-                        })
+                        // this.alert.addAlert({
+                        //     type:             AlertType.success,
+                        //     msg:              'Die Berechtigungen wurden erfolgreich gespeichert',
+                        //     dismissOnTimeout: 0
+                        // })
                     },
                     (error:any) =>
                     {
-                        this.alert.addAlert({
-                            type:             AlertType.error,
-                            msg:              'Beim Speichern der Berechtigungen ist ein Fehler aufgetreten!',
-                            dismissOnTimeout: 0
-                        })
+                        // this.alert.addAlert({
+                        //     type:             AlertType.error,
+                        //     msg:              'Beim Speichern der Berechtigungen ist ein Fehler aufgetreten!',
+                        //     dismissOnTimeout: 0
+                        // })
                     })
             }
         })
@@ -112,7 +111,7 @@ export class SystemAuthoritiesCompontent implements OnInit
         this.removeBerechtigungen();
     }
 
-    private removeBerechtigungen():void
+    public removeBerechtigungen():void
     {
         this.values.forEach((value:TerraMultiCheckBoxValueInterface) =>
         {

@@ -9,10 +9,10 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class BestaendeService
 {
-    private headers:HttpHeaders;
+    public headers:HttpHeaders;
 
-    constructor(private http:HttpClient,
-                private sitemapHelper:WbsSitemapHelper)
+    constructor(public http:HttpClient,
+                public sitemapHelper:WbsSitemapHelper)
     {
 
     }

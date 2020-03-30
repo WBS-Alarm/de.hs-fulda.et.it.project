@@ -18,11 +18,11 @@ import { GroesseService } from '../../../../core/service/rest/groesse/groesse.se
 @Injectable()
 export class SystemGroessenResolver implements Resolve<Observable<any>>
 {
-    constructor(private translation:TranslationService,
-                private userService:UsersService,
-                private groessenService:GroesseService,
-                private authorityService:AuthoritiesService,
-                private router:Router)
+    constructor(public translation:TranslationService,
+                public userService:UsersService,
+                public groessenService:GroesseService,
+                public authorityService:AuthoritiesService,
+                public router:Router)
     {
     }
 
