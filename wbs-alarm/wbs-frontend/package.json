@@ -6,12 +6,14 @@
 		"start": "ng serve --aot",
 		"just_build": "ng build --prod",
 		"build": "ng build --prod",
-		"clean_all": "rd /s /q \"node_modules/\" && rd /s /q \"node/\" && rd /s /q \"dist/\"",
+		"clean_all_win": "rd /s /q \"node_modules/\" && rd /s /q \"node/\" && rd /s /q \"dist/\"",
+		"clean_all_ux": "rm -rf node_modules/ && rm -rf node/ && rm -rf dist/",
 		"clean:dist": "npm run rimraf -- dist",
 		"rimraf": "rimraf",
 		"test": "ng test",
 		"lint": "ng lint",
-		"reinstall": "rd /s /q \"node_modules\" && npm i"
+		"reinstall_win": "rd /s /q \"node_modules\" && npm i",
+		"reinstall_ux": "rm -rf node_modules/ && npm i"
 	},
 	"private": true,
 	"dependencies": {
