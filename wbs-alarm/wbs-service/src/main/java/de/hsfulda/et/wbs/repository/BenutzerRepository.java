@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +26,11 @@ public interface BenutzerRepository extends CrudRepository<Benutzer, Long> {
     @Query("update Benutzer b set b.einkaeufer = :einkaeufer, b.mail = :mail where b.id = :id")
     void updateEinkaeuferAndMail(@Param("id") Long id, @Param("einkaeufer") Boolean einkaeufer,
             @Param("mail") String mail);
+
+    @Modifying(clearAutomatically = true)
+    @Query("update Benutzer b set b.token = :uuid, b.valid = :until where b.id = :id")
+    void updateForgottokenAndForgotvalid(@Param("id") Long id, @Param("uuid") String uuid,
+            @Param("until") LocalDateTime until);
 
     @Modifying
     @Query("update Benutzer b set b.aktiv = false where id = :id")

@@ -2,6 +2,8 @@ package de.hsfulda.et.wbs.core.data;
 
 import de.hsfulda.et.wbs.core.dto.BenutzerDto;
 
+import java.time.LocalDateTime;
+
 public interface BenutzerData extends BenutzerDto {
 
     Long getId();
@@ -13,4 +15,8 @@ public interface BenutzerData extends BenutzerDto {
     TraegerData getTraeger();
 
     Boolean getAktiv();
+
+    String getToken();
+
+    LocalDateTime getValid();
 }

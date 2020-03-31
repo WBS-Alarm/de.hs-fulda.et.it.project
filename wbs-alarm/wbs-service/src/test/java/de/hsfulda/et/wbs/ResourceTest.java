@@ -1,5 +1,6 @@
 package de.hsfulda.et.wbs;
 
+import de.hsfulda.et.wbs.core.data.BenutzerData;
 import de.hsfulda.et.wbs.repository.*;
 import de.hsfulda.et.wbs.security.repository.GrantedAuthorityRepository;
 import de.hsfulda.et.wbs.security.service.UserAuthenticationService;
@@ -60,21 +61,28 @@ public abstract class ResourceTest {
     }
 
     private String getToken(String username, String password) {
-        return "Bearer " + authentication
-            .login(username, password)
-            .orElseThrow(() -> new RuntimeException("invalid login and/or password"));
+        return "Bearer " + authentication.login(username, password)
+                .orElseThrow(() -> new RuntimeException("invalid login and/or password"));
     }
 
     protected Long getBenutzerId(String name) {
-        return benutzerRepository.findByUsername(name).getId();
+        return getBenutzer(name).getId();
+    }
+
+    protected BenutzerData getBenutzer(String name) {
+        return benutzerRepository.findByUsername(name);
     }
 
     protected Long getTraegerId(String name) {
-        return traegerRepository.findByName(name).get(0).getId();
+        return traegerRepository.findByName(name)
+                .get(0)
+                .getId();
     }
 
     protected Long getZielortId(String name, String traeger) {
-        return zielortRepository.findByName(name, traeger).get(0).getId();
+        return zielortRepository.findByName(name, traeger)
+                .get(0)
+                .getId();
     }
 
     protected Long getKategorieId(String name, String traeger) {
