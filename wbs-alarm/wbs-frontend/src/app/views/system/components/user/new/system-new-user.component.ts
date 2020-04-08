@@ -1,4 +1,4 @@
-import {Component} from "../../../../../../../node_modules/@angular/core";
+import {Component} from "@angular/core";
 import {UserDataInterface} from "../../../../../core/service/rest/users/user-data.interface";
 import {UsersService} from "../../../../../core/service/rest/users/users.service";
 import {SystemGlobalSettingsService} from "../../../system-global-settings.service";
@@ -11,27 +11,27 @@ import { ExampleTreeData } from '../../../system.component';
 
 @Component({
     selector: 'system-new-user',
-    template: require('./system-new-user.component.html'),
-    styles:   [require('./system-new-user.component.scss')]
+    templateUrl: './system-new-user.component.html',
+    styleUrls:   ['./system-new-user.component.scss']
 })
 export class SystemNewUserComponent
 {
-    private newUser:UserDataInterface =
+    public newUser:UserDataInterface =
         {
             username: '',
             password: ''
         };
 
-    private alert:TerraAlertComponent = TerraAlertComponent.getInstance();
+    public alert:TerraAlertComponent = TerraAlertComponent.getInstance();
 
-    constructor(private usersService:UsersService,
-                private systemGlobalSettings:SystemGlobalSettingsService,
-                private systemTreeConfig:TerraNodeTreeConfig<ExampleTreeData>)
+    constructor(public usersService:UsersService,
+                public systemGlobalSettings:SystemGlobalSettingsService,
+                public systemTreeConfig:TerraNodeTreeConfig<ExampleTreeData>)
     {
 
     }
 
-    protected save():void
+    public save():void
     {
         let traegerId:number = this.systemGlobalSettings.getTraegerId();
 

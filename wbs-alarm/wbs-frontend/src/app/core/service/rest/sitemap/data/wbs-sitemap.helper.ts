@@ -4,8 +4,8 @@ import { GlobalRegistryService } from '../../../../global-registry/global-regist
 
 export class WbsSitemapHelper
 {
-    private siteMaps:any;
-    private bearer:string;
+    public siteMaps:any;
+    public bearer:string;
     public headers:HttpHeaders;
 
     constructor()
@@ -47,7 +47,7 @@ export class WbsSitemapHelper
         return this.headers;
     }
 
-    protected setToHeader(key:string, value:string):void
+    public setToHeader(key:string, value:string):void
     {
         this.headers = this.headers.set(key, value);
     }
@@ -169,7 +169,7 @@ export class WbsSitemapHelper
         return Object.values(this.siteMaps)[0]['bestand'][0].href;
     }
 
-    private getCookie(name:string)
+    public getCookie(name:string)
     {
         let cookiename = name + "=";
         let decodedCookie = decodeURIComponent(document.cookie);

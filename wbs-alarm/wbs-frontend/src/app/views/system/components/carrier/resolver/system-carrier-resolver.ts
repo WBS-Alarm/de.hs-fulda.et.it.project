@@ -9,10 +9,10 @@ import {SystemCarrierInterface} from "../data/system-carrier.interface";
 @Injectable()
 export class SystemCarrierResolver implements Resolve<SystemCarrierInterface>
 {
-    constructor(private translation:TranslationService,
-                private userService:UsersService,
-                private systemGloabalSettingsService:SystemGlobalSettingsService,
-                private router:Router)
+    constructor(public translation:TranslationService,
+                public userService:UsersService,
+                public systemGloabalSettingsService:SystemGlobalSettingsService,
+                public router:Router)
     {
     }
 

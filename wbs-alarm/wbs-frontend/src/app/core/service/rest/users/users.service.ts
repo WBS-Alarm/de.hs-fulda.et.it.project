@@ -8,10 +8,10 @@ import {UserDataInterface} from "./user-data.interface";
 @Injectable()
 export class UsersService
 {
-    private headers:HttpHeaders;
+    public headers:HttpHeaders;
 
-    constructor(private http:HttpClient,
-                private sitemapHelper:WbsSitemapHelper)
+    constructor(public http:HttpClient,
+                public sitemapHelper:WbsSitemapHelper)
     {
 
     }

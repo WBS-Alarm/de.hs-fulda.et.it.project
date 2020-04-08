@@ -10,10 +10,10 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class LoginService
 {
-    private headers:HttpHeaders;
+    public headers:HttpHeaders;
 
-    constructor(private sitemapHelper:WbsSitemapHelper,
-                private http:HttpClient)
+    constructor(public sitemapHelper:WbsSitemapHelper,
+                public http:HttpClient)
     {
 
     }

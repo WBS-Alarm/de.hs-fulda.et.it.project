@@ -5,7 +5,7 @@ import {Observable} from "rxjs";
 @Injectable()
 export class GetSitemapService
 {
-    constructor(private http:HttpClient)
+    constructor(public http:HttpClient)
     {
 
     }

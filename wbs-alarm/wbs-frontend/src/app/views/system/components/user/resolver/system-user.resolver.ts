@@ -14,10 +14,10 @@ import { SystemGlobalSettingsService } from '../../../system-global-settings.ser
 @Injectable()
 export class SystemUserResolver implements Resolve<UserDataInterface>
 {
-    constructor(private translation:TranslationService,
-                private userService:UsersService,
-                private systemGloabalSettingsService:SystemGlobalSettingsService,
-                private router:Router)
+    constructor(public translation:TranslationService,
+                public userService:UsersService,
+                public systemGloabalSettingsService:SystemGlobalSettingsService,
+                public router:Router)
     {
     }
 

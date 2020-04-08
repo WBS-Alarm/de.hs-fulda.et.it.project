@@ -1,7 +1,7 @@
 import {
     Component,
     OnInit
-} from '../../../../node_modules/@angular/core';
+} from '@angular/core';
 import { TerraNodeTreeConfig } from "@plentymarkets/terra-components";
 import { TranslationService } from "angular-l10n";
 import { CarrierService } from "../../core/service/rest/carrier/carrier.service";
@@ -36,16 +36,16 @@ export interface ExampleTreeData
 
 @Component({
     selector: 'system',
-    template: require('./system.component.html'),
-    styles:   [require('./system.component.scss')]
+    templateUrl: './system.component.html',
+    styleUrls:   ['./system.component.scss']
 })
 export class SystemComponent implements OnInit
 {
-    constructor(private nodeTreeConfig:TerraNodeTreeConfig<ExampleTreeData>,
-                private translation:TranslationService,
-                private router:Router,
-                private carrierService:CarrierService,
-                private systemsGlobalSettingsService:SystemGlobalSettingsService)
+    constructor(public nodeTreeConfig:TerraNodeTreeConfig<ExampleTreeData>,
+                public translation:TranslationService,
+                public router:Router,
+                public carrierService:CarrierService,
+                public systemsGlobalSettingsService:SystemGlobalSettingsService)
     {
     }
 
@@ -54,7 +54,7 @@ export class SystemComponent implements OnInit
         this.createCompleteTree();
     }
 
-    protected createCompleteTree():void
+    public createCompleteTree():void
     {
         this.nodeTreeConfig.list = [
             {
@@ -70,7 +70,7 @@ export class SystemComponent implements OnInit
             }];
     }
 
-    private getCarriers():Observable<any>
+    public getCarriers():Observable<any>
     {
         return this.carrierService.getCarriers().pipe(
             tap((result:resultData) =>
@@ -130,7 +130,7 @@ export class SystemComponent implements OnInit
             }));
     }
 
-    private getCarrierDetailForId(id:number, name:string):Observable<any>
+    public getCarrierDetailForId(id:number, name:string):Observable<any>
     {
         return this.carrierService.getDetailsForCarrier(id).pipe(
             tap((result:any) =>

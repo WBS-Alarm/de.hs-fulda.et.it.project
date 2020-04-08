@@ -16,13 +16,13 @@ import { combineLatest } from 'rxjs/operators';
 @Injectable()
 export class UserAndSystemDataService
 {
-    private userService:UsersService;
+    public userService:UsersService;
 
-    private sitemapService:GetSitemapService;
+    public sitemapService:GetSitemapService;
 
     constructor(injector:Injector,
-                private globalRegistryService:GlobalRegistryService,
-                private sitemapHelper:WbsSitemapHelper)
+                public globalRegistryService:GlobalRegistryService,
+                public sitemapHelper:WbsSitemapHelper)
     {
         this.userService = injector.get(UsersService);
         this.sitemapService = injector.get(GetSitemapService);

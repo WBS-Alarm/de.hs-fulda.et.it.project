@@ -1,26 +1,26 @@
 {
+	"compileOnSave": false,
 	"compilerOptions": {
-		"declaration": false,
-		"target": "es5",
-		"module": "commonjs",
-		"moduleResolution": "node",
+		"baseUrl": "./",
+		"outDir": "./dist/out-tsc",
 		"sourceMap": true,
-		"emitDecoratorMetadata": true,
+		"declaration": false,
+		"downlevelIteration": true,
 		"experimentalDecorators": true,
-		"removeComments": false,
-		"noImplicitAny": false,
-		"noStrictGenericChecks": true,
-		"suppressImplicitAnyIndexErrors": true,
-		"lib": [
-			"es2017",
-			"dom"
-		],
+		"module": "esnext",
+		"moduleResolution": "node",
+		"importHelpers": true,
+		"target": "es2015",
 		"typeRoots": [
-			"./node_modules/@types"
+			"node_modules/@types"
+		],
+		"lib": [
+			"es2018",
+			"dom"
 		]
 	},
-	"exclude": [
-		"node_modules",
-		"dist"
-	]
+	"angularCompilerOptions": {
+		"fullTemplateTypeCheck": true,
+		"strictInjectionParameters": true
+	}
 }

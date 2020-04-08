@@ -31,7 +31,8 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final RequestMatcher PUBLIC_URLS = new OrRequestMatcher(
             new AntPathRequestMatcher(CONTEXT_ROOT + "/public/**"), new AntPathRequestMatcher("/"),
             new AntPathRequestMatcher("/index.html"), new AntPathRequestMatcher("/*.js"),
-            new AntPathRequestMatcher("/assets/**"), new AntPathRequestMatcher("/favicon.ico"));
+            new AntPathRequestMatcher("/*.css"), new AntPathRequestMatcher("/assets/**"),
+            new AntPathRequestMatcher("/favicon.ico"));
 
     private static final RequestMatcher PROTECTED_URLS = new NegatedRequestMatcher(PUBLIC_URLS);
 

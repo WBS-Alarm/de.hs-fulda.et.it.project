@@ -1,4 +1,4 @@
-import {Component} from "../../../../../../../node_modules/@angular/core";
+import {Component} from "@angular/core";
 import {CarrierService} from "../../../../../core/service/rest/carrier/carrier.service";
 import {SystemGlobalSettingsService} from "../../../system-global-settings.service";
 import {
@@ -10,19 +10,19 @@ import { Router } from '@angular/router';
 
 @Component({
     selector: 'system-new-categories',
-    template: require('./system-new-category.component.html'),
-    styles:   [require('./system-new-category.component.scss')]
+    templateUrl: './system-new-category.component.html',
+    styleUrls:   ['./system-new-category.component.scss']
 })
 export class SystemNewCategoryComponent
 {
-    private categoryName:string;
+    public categoryName:string;
 
-    private alert:TerraAlertComponent = TerraAlertComponent.getInstance();
+    public alert:TerraAlertComponent = TerraAlertComponent.getInstance();
 
-    constructor(private carrierService:CarrierService,
-                private systemGlobalSettings:SystemGlobalSettingsService,
-                private nodeTreeConfig:TerraNodeTreeConfig<ExampleTreeData>,
-                private router:Router)
+    constructor(public carrierService:CarrierService,
+                public systemGlobalSettings:SystemGlobalSettingsService,
+                public nodeTreeConfig:TerraNodeTreeConfig<ExampleTreeData>,
+                public router:Router)
     {
 
     }

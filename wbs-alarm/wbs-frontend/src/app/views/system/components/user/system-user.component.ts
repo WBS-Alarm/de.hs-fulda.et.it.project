@@ -1,7 +1,7 @@
 import {
     Component,
     OnInit
-} from "../../../../../../node_modules/@angular/core";
+} from "@angular/core";
 import {
     TerraAlertComponent,
     TerraNodeTreeConfig
@@ -19,24 +19,24 @@ import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'system-user',
-    template: require('./system-user.component.html'),
-    styles:   [require('./system-user.component.scss')]
+    templateUrl: './system-user.component.html',
+    styleUrls:   ['./system-user.component.scss']
 })
 export class SystemUserComponent implements OnInit
 {
-    private userId:number;
+    public userId:number;
 
-    protected routeData$:Observable<Data>;
+    public routeData$:Observable<Data>;
 
     public mulitValues:any;
 
 
-    private alert:TerraAlertComponent = TerraAlertComponent.getInstance();
+    public alert:TerraAlertComponent = TerraAlertComponent.getInstance();
 
-    constructor(private route:ActivatedRoute,
-                private usersService:UsersService,
-                private systemTreeConfig:TerraNodeTreeConfig<ExampleTreeData>,
-                private systemGlobalSettings:SystemGlobalSettingsService)
+    constructor(public route:ActivatedRoute,
+                public usersService:UsersService,
+                public systemTreeConfig:TerraNodeTreeConfig<ExampleTreeData>,
+                public systemGlobalSettings:SystemGlobalSettingsService)
     {
 
     }
@@ -49,7 +49,7 @@ export class SystemUserComponent implements OnInit
     }
 
 
-    protected save(user:UserDataInterface):void
+    public save(user:UserDataInterface):void
     {
         this.usersService.editUser(+user.id,
             user).subscribe(
@@ -78,7 +78,7 @@ export class SystemUserComponent implements OnInit
         )
     }
 
-    protected delete(user:UserDataInterface)
+    public delete(user:UserDataInterface)
     {
         this.usersService.deleteUser(user.id).subscribe(
             (result:any) =>

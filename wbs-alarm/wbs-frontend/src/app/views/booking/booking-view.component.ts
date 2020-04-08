@@ -1,29 +1,24 @@
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {
-    Component,
-    OnInit,
-    ViewChild
-} from '@angular/core';
-import {
+    AlertService,
     TerraAlertComponent,
-    TerraButtonInterface,
     TerraSelectBoxValueInterface,
     TerraSimpleTableCellInterface,
     TerraSimpleTableComponent,
     TerraSimpleTableHeaderCellInterface,
     TerraSimpleTableRowInterface
 } from '@plentymarkets/terra-components';
-import { CategoryService } from '../../core/service/rest/categories/category.service';
-import { GlobalRegistryService } from '../../core/global-registry/global-registry.service';
-import { UsersService } from '../../core/service/rest/users/users.service';
-import { CarrierService } from '../../core/service/rest/carrier/carrier.service';
-import { isNullOrUndefined } from 'util';
-import { TransaktionService } from '../../core/service/rest/transaktions/transaktion.service';
-import { AlertType } from '@plentymarkets/terra-components/components/alert/alert-type.enum';
+import {CategoryService} from '../../core/service/rest/categories/category.service';
+import {GlobalRegistryService} from '../../core/global-registry/global-registry.service';
+import {UsersService} from '../../core/service/rest/users/users.service';
+import {CarrierService} from '../../core/service/rest/carrier/carrier.service';
+import {TransaktionService} from '../../core/service/rest/transaktions/transaktion.service';
+import {AlertType} from '@plentymarkets/terra-components/components/alert/alert-type.enum';
 
 @Component({
     selector: 'booking',
-    template: require('./booking-view.component.html'),
-    styles:   [require('./booking-view.component.scss')]
+    templateUrl: './booking-view.component.html',
+    styleUrls:   ['./booking-view.component.scss']
 })
 export class BookingViewComponent implements OnInit
 {
@@ -63,23 +58,22 @@ export class BookingViewComponent implements OnInit
     public _anzahl:number = 0;
 
     public _headerList:Array<TerraSimpleTableHeaderCellInterface> = [];
-    private _rowList:Array<TerraSimpleTableRowInterface<any>> = [];
+    public _rowList:Array<TerraSimpleTableRowInterface<any>> = [];
 
-    private buchungsliste:Array<{ von:number, nach:number, positions:Array<{ groesse:number, anzahl:number }> }> = [];
+    public buchungsliste:Array<{ von:number, nach:number, positions:Array<{ groesse:number, anzahl:number }> }> = [];
 
-    private _traegerId:number;
+    public _traegerId:number;
 
-    private alert:TerraAlertComponent = TerraAlertComponent.getInstance();
-
-    @ViewChild('table')
+    @ViewChild('table', {static:true})
     public table:TerraSimpleTableComponent<any>;
 
 
-    constructor(private categoryService:CategoryService,
-                private userService:UsersService,
-                private carrierService:CarrierService,
-                private globalRegistryService:GlobalRegistryService,
-                private transaktionService:TransaktionService)
+    constructor(public categoryService:CategoryService,
+                public userService:UsersService,
+                public alert:AlertService,
+                public carrierService:CarrierService,
+                public globalRegistryService:GlobalRegistryService,
+                public transaktionService:TransaktionService)
     {
     }
 
@@ -99,22 +93,14 @@ export class BookingViewComponent implements OnInit
             this.transaktionService.postTransaktion(this._traegerId, buchung).subscribe(
                 (result:any) =>
                 {
-                    this.alert.addAlert({
-                        type:             AlertType.success,
-                        msg:              'Die Buchung wurde erfolgreich durchgeführt',
-                        dismissOnTimeout: 0
-                    });
+                    this.alert.success('Die Buchung wurde erfolgreich durchgeführt');
 
                     console.log('Erfolg')
                     console.log(result)
                 },
                 (error:any) =>
                 {
-                    this.alert.addAlert({
-                        type:             AlertType.error,
-                        msg:              'Beim der Buchung ist ein Fehler aufgetreten: ' + error.message,
-                        dismissOnTimeout: 0
-                    })
+                    this.alert.error('Beim der Buchung ist ein Fehler aufgetreten: ' + error.message);
 
                     console.log('Fehler')
                     console.log(error)
@@ -182,7 +168,7 @@ export class BookingViewComponent implements OnInit
         this._rowList = [];
     }
 
-    private loadCategories():void
+    public loadCategories():void
     {
         let traegerId:number;
 
@@ -216,7 +202,7 @@ export class BookingViewComponent implements OnInit
         }
     }
 
-    private addCategoriesToSelectBox(kategorien:Array<any>):void
+    public addCategoriesToSelectBox(kategorien:Array<any>):void
     {
         kategorien.forEach((kategorie:any) =>
         {
@@ -227,7 +213,7 @@ export class BookingViewComponent implements OnInit
         })
     }
 
-    private loadZielorte(traegerId:number):void
+    public loadZielorte(traegerId:number):void
     {
         this.carrierService.listZielorteForTraeger(traegerId).subscribe((zielorte:any) =>
         {
@@ -261,7 +247,7 @@ export class BookingViewComponent implements OnInit
         })
     }
 
-    private buildTableStructure():void
+    public buildTableStructure():void
     {
         let vonCell:TerraSimpleTableHeaderCellInterface = {
             caption: 'Von',
@@ -288,7 +274,7 @@ export class BookingViewComponent implements OnInit
         this._headerList.push(vonCell, nachCell, kategorieCell, groesseCell, anzahlCell);
     }
 
-    private addRow():void
+    public addRow():void
     {
         let vonCell:TerraSimpleTableCellInterface = {caption: ''};
 
@@ -337,7 +323,7 @@ export class BookingViewComponent implements OnInit
 
     }
 
-    private addRowToBuchungsListe():void
+    public addRowToBuchungsListe():void
     {
         let buchungsKombination:{ von:number, nach:number, positions:Array<{ groesse:number, anzahl:number }> } = this.buchungsliste.find(
             (buchung:{ von:number, nach:number, positions:Array<{ groesse:number, anzahl:number }> }) =>
@@ -384,7 +370,7 @@ export class BookingViewComponent implements OnInit
         console.log(this.buchungsliste)
     }
 
-    private deleteRow():void
+    public deleteRow():void
     {
         let newRowList:Array<TerraSimpleTableRowInterface<any>>;
         let toBeDeletedList:Array<TerraSimpleTableRowInterface<any>>;
@@ -414,12 +400,12 @@ export class BookingViewComponent implements OnInit
 
     }
 
-    private selectRow(event:any)
+    public selectRow(event:any)
     {
         event.selected = true;
     }
 
-    private deleteFromBuchungsliste(toBeDeleted:{ von:string, nach:string, groesse:string, anzahl:number }):void
+    public deleteFromBuchungsliste(toBeDeleted:{ von:string, nach:string, groesse:string, anzahl:number }):void
     {
         let vonId:number;
 

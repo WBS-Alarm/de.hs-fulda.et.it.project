@@ -10,10 +10,10 @@ import {SystemCategoryInterface} from "../data/system-category.interface";
 @Injectable()
 export class SystemCategoryResolver
 {
-    constructor(private translation:TranslationService,
-                private userService:UsersService,
-                private systemGloabalSettingsService:SystemGlobalSettingsService,
-                private router:Router)
+    constructor(public translation:TranslationService,
+                public userService:UsersService,
+                public systemGloabalSettingsService:SystemGlobalSettingsService,
+                public router:Router)
     {
     }
 

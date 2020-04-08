@@ -5,7 +5,6 @@ import {
 } from '@angular/router';
 import { StartViewComponent } from './views/start-view.component';
 import { RouterViewComponent } from './views/router/router-view.component';
-import { ExampleViewComponent } from './views/example/example-view.component';
 import {AppLoginComponent} from "./views/app-login/app-login.component";
 import { GUARDS } from './core/guards/guards';
 import { WbsPreloadingStrategy } from './core/strategies/preloading-strategy';
@@ -68,14 +67,6 @@ const appRoutes:Routes = [
                     }
             },
             {
-                path: 'example',
-                component: ExampleViewComponent,
-                canActivate: GUARDS,
-                data: {
-                    label: 'example'
-                }
-            },
-             {
                  path: 'booking',
                  component: BookingViewComponent,
                  canActivate: GUARDS,

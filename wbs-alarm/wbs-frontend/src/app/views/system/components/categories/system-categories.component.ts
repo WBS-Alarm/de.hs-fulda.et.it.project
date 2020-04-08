@@ -1,5 +1,5 @@
-import {Component} from "../../../../../../node_modules/@angular/core";
-import {ActivatedRoute, Data} from "../../../../../../node_modules/@angular/router";
+import {Component} from "@angular/core";
+import {ActivatedRoute, Data} from "@angular/router";
 import {TerraAlertComponent, TerraNodeTreeConfig} from "@plentymarkets/terra-components";
 import {SystemGlobalSettingsService} from "../../system-global-settings.service";
 import {ExampleTreeData} from "../../system.component";
@@ -9,19 +9,19 @@ import {SystemCategoryInterface} from "./data/system-category.interface";
 
 @Component({
     selector: 'system-categories',
-    template: require('./system-categories.component.html'),
-    styles:   [require('./system-categories.component.scss')]
+    templateUrl: './system-categories.component.html',
+    styleUrls:   ['./system-categories.component.scss']
 })
 export class SystemCategoriesComponent
 {
-    protected routeData$:Observable<Data>;
+    public routeData$:Observable<Data>;
 
     public alert:TerraAlertComponent = TerraAlertComponent.getInstance();
 
-    constructor(private route:ActivatedRoute,
-                private categoryService:CategoryService,
-                private systemTreeConfig:TerraNodeTreeConfig<ExampleTreeData>,
-                private systemGlobalSettings:SystemGlobalSettingsService)
+    constructor(public route:ActivatedRoute,
+                public categoryService:CategoryService,
+                public systemTreeConfig:TerraNodeTreeConfig<ExampleTreeData>,
+                public systemGlobalSettings:SystemGlobalSettingsService)
     {
 
     }
