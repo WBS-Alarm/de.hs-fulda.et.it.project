@@ -53,17 +53,19 @@ import {SystemNewCategoryComponent} from "./views/system/components/categories/n
 import {SystemEditCarrierComponent} from "./views/system/components/carrier/edit-carrier/system-edit-carrier.component";
 import {SystemNewTargetplaceComponent} from "./views/system/components/targetplaces/new/system-new-targetplace.component";
 import {TranslationProvider} from "./core/localization/translation-provider";
+import {MatExpansionModule} from "@angular/material/expansion";
 
 
 @NgModule({
-    imports:      [
+    imports: [
         BrowserModule,
         FormsModule,
         HttpClientModule,
-        TranslationModule.forRoot(l10nConfig, { translationProvider: TranslationProvider }),
+        TranslationModule.forRoot(l10nConfig, {translationProvider: TranslationProvider}),
         TerraComponentsModule,
         BrowserAnimationsModule,
-        routing
+        routing,
+        MatExpansionModule
     ],
     declarations: [
         AppWbsKleiderkammer,
