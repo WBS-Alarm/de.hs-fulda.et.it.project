@@ -4,7 +4,7 @@ public interface Mail {
 
     String getSubject();
 
-    String getTo();
+    String[] getTo();
 
     String getText();
 }

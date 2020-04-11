@@ -16,6 +16,7 @@ public class Groesse implements GroesseData {
     @Size(max = 20)
     private String name;
     private boolean aktiv;
+    private int bestandsgrenze;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "KATEGORIE_ID")
@@ -52,6 +53,15 @@ public class Groesse implements GroesseData {
     }
 
     @Override
+    public int getBestandsgrenze() {
+        return bestandsgrenze;
+    }
+
+    public void setBestandsgrenze(int bestandsgrenze) {
+        this.bestandsgrenze = bestandsgrenze;
+    }
+
+    @Override
     public KategorieData getKategorie() {
         return kategorie;
     }
@@ -69,6 +79,7 @@ public class Groesse implements GroesseData {
         templated.name = groesse.name;
         templated.kategorie = groesse.kategorie;
         templated.aktiv = groesse.aktiv;
+        templated.bestandsgrenze = groesse.bestandsgrenze;
         return templated;
     }
 
@@ -87,6 +98,11 @@ public class Groesse implements GroesseData {
 
         public GroesseBuilder aktiv(boolean aktiv) {
             template.setAktiv(aktiv);
+            return this;
+        }
+
+        public GroesseBuilder bestandsgrenze(int bestandsgrenze) {
+            template.setBestandsgrenze(bestandsgrenze);
             return this;
         }
 

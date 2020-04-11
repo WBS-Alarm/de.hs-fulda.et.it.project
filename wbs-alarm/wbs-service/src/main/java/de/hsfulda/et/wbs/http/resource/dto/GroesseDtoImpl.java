@@ -5,6 +5,7 @@ import de.hsfulda.et.wbs.core.dto.GroesseDto;
 public class GroesseDtoImpl implements GroesseDto {
 
     private String name;
+    private int bestandsgrenze;
 
     @Override
     public String getName() {
@@ -13,5 +14,14 @@ public class GroesseDtoImpl implements GroesseDto {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public int getBestandsgrenze() {
+        return bestandsgrenze;
+    }
+
+    public void setBestandsgrenze(int bestandsgrenze) {
+        this.bestandsgrenze = bestandsgrenze;
     }
 }

@@ -55,7 +55,7 @@ class TransaktionResourceTest extends ResourceTest {
                 .andExpect(jsonPath("$.totalElements", is(1)));
     }
 
-    @DisplayName("JSON kann interpretiert werden, invalide Daten.")
+    @DisplayName("Eine neue Transaktion an legen - Fehler.")
     @Test
     void putAendernEinesZielorts() throws Exception {
         Long traegerId = getTraegerId(HE_TRAEGER);

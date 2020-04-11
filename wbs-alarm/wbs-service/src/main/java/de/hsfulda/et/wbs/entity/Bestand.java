@@ -73,6 +73,11 @@ public class Bestand implements BestandData {
         this.zielort = zielort;
     }
 
+    @Override
+    public boolean isMailRequired() {
+        return groesse.getBestandsgrenze() > 0 && anzahl <= groesse.getBestandsgrenze();
+    }
+
     public static BestandBuilder builder() {
         return new BestandBuilder();
     }
