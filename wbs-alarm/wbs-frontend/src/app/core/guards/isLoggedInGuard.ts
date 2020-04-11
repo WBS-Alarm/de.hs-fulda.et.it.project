@@ -15,11 +15,11 @@ import { GlobalRegistryService } from '../global-registry/global-registry.servic
 @Injectable()
 export class IsLoggedInGuard
 {
-    private alert:TerraAlertComponent = TerraAlertComponent.getInstance();
+    public alert:TerraAlertComponent = TerraAlertComponent.getInstance();
 
-    constructor(private globalRegistryService:GlobalRegistryService,
-                private userService:UsersService,
-                private router:Router)
+    constructor(public globalRegistryService:GlobalRegistryService,
+                public userService:UsersService,
+                public router:Router)
     {
 
     }

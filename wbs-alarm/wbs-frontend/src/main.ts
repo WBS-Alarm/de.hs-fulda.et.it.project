@@ -1,9 +1,10 @@
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppWbsKleiderkammerModule } from './app';
+import {environment} from "./environments/environment";
 
 
-if (process.env.ENV === 'production') {
+if(environment.production) {
   enableProdMode();
 }
 

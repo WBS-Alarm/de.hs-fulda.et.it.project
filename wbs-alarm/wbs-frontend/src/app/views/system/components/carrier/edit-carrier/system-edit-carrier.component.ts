@@ -1,5 +1,5 @@
-import {Component, OnInit} from '../../../../../../../node_modules/@angular/core';
-import {ActivatedRoute, Data} from "../../../../../../../node_modules/@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Data} from "@angular/router";
 import {TerraAlertComponent, TerraNodeTreeConfig} from "@plentymarkets/terra-components";
 import {UsersService} from "../../../../../core/service/rest/users/users.service";
 import {SystemGlobalSettingsService} from "../../../system-global-settings.service";
@@ -10,19 +10,19 @@ import {SystemCarrierInterface} from "../data/system-carrier.interface";
 
 @Component({
     selector: 'edit-carrier',
-    template: require('./system-edit-carrier.component.html'),
-    styles:   [require('./system-edit-carrier.component.scss')]
+    templateUrl: './system-edit-carrier.component.html',
+    styleUrls:   ['./system-edit-carrier.component.scss']
 })
 export class SystemEditCarrierComponent implements OnInit
 {
-    protected routeData$:Observable<Data>;
+    public routeData$:Observable<Data>;
 
-    private alert:TerraAlertComponent = TerraAlertComponent.getInstance();
+    public alert:TerraAlertComponent = TerraAlertComponent.getInstance();
 
-    constructor(private route:ActivatedRoute,
-                private carrierService:CarrierService,
-                private systemTreeConfig:TerraNodeTreeConfig<ExampleTreeData>,
-                private systemGlobalSettings:SystemGlobalSettingsService)
+    constructor(public route:ActivatedRoute,
+                public carrierService:CarrierService,
+                public systemTreeConfig:TerraNodeTreeConfig<ExampleTreeData>,
+                public systemGlobalSettings:SystemGlobalSettingsService)
     {
 
     }

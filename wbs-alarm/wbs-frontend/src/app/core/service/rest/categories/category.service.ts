@@ -7,10 +7,10 @@ import {SystemCategoryInterface} from "../../../../views/system/components/categ
 @Injectable()
 export class CategoryService
 {
-    private headers: HttpHeaders;
+    public headers: HttpHeaders;
 
-    constructor(private http: HttpClient,
-                private sitemapHelper: WbsSitemapHelper)
+    constructor(public http: HttpClient,
+                public sitemapHelper: WbsSitemapHelper)
     {
 
     }

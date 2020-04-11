@@ -8,10 +8,10 @@ import {SystemCarrierInterface} from "../../../../views/system/components/carrie
 @Injectable()
 export class CarrierService
 {
-    private headers: HttpHeaders;
+    public headers: HttpHeaders;
 
-    constructor(private http: HttpClient,
-                private sitemapHelper: WbsSitemapHelper)
+    constructor(public http: HttpClient,
+                public sitemapHelper: WbsSitemapHelper)
     {
 
     }

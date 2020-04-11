@@ -11,16 +11,16 @@ import { GlobalRegistryService } from '../../core/global-registry/global-registr
 
 @Component({
     selector: 'navigation-bar',
-    template: require('./navigation-bar.component.html'),
-    styles:   [require('./navigation-bar.component.scss')],
+    templateUrl: './navigation-bar.component.html',
+    styleUrls:   ['./navigation-bar.component.scss'],
 })
 export class NavigationBarComponent implements OnInit
 {
-    protected isLoginActive:boolean;
+    public isLoginActive:boolean;
 
-    private readonly gravatarUrl:string = 'https://www.gravatar.com/avatar/';
+    public readonly gravatarUrl:string = 'https://www.gravatar.com/avatar/';
 
-    private menu:Array<MenuDataInterface> = [
+    public menu:Array<MenuDataInterface> = [
         {
             name:      this.translation.translate('start'),
             url:       'plugin/start',
@@ -43,9 +43,9 @@ export class NavigationBarComponent implements OnInit
         }
     ];
 
-    constructor(private router:Router,
-                private translation:TranslationService,
-                private globalRegistryService:GlobalRegistryService)
+    constructor(public router:Router,
+                public translation:TranslationService,
+                public globalRegistryService:GlobalRegistryService)
     {
 
     }
@@ -57,7 +57,7 @@ export class NavigationBarComponent implements OnInit
         this.subscribeToRouter();
     }
 
-    protected get userImageLink():string
+    public get userImageLink():string
     {
         let hash:string = this.globalRegistryService.getGravatarHash();
 
@@ -74,7 +74,7 @@ export class NavigationBarComponent implements OnInit
 
     }
 
-    private subscribeToRouter():void
+    public subscribeToRouter():void
     {
         this.router.events.subscribe((value:any) =>
         {
@@ -85,12 +85,12 @@ export class NavigationBarComponent implements OnInit
         })
     }
 
-    protected navigate(url:string):void
+    public navigate(url:string):void
     {
         this.router.navigateByUrl(url);
     }
 
-    protected logout():void
+    public logout():void
     {
         console.log('Logout successful!')
     }
