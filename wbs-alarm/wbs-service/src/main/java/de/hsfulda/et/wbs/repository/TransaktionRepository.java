@@ -2,6 +2,8 @@ package de.hsfulda.et.wbs.repository;
 
 import de.hsfulda.et.wbs.core.data.TransaktionData;
 import de.hsfulda.et.wbs.entity.Transaktion;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -17,6 +19,6 @@ public interface TransaktionRepository extends CrudRepository<Transaktion, Long>
     @Query("SELECT t FROM Transaktion t where t.id = :id")
     Optional<TransaktionData> findByIdAsData(@Param("id") Long id);
 
-    @Query("SELECT t FROM Transaktion t JOIN t.von v JOIN v.traeger s where s.id = :traegerId")
-    List<TransaktionData> findAllAsDataByTraegerId(@Param("traegerId") Long traegerId);
+    @Query("SELECT t FROM Transaktion t JOIN t.von v JOIN v.traeger s where s.id = :traegerId ORDER BY t.datum DESC")
+    Page<TransaktionData> findAllAsDataByTraegerId(@Param("traegerId") Long traegerId, Pageable pageable);
 }
