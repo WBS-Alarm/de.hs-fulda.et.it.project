@@ -19,7 +19,7 @@ import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
 @RequestMapping(ResetPasswordResource.PATH)
 public class ResetPasswordResource {
 
-    public static final String PATH = CONTEXT_ROOT + "/public/reset";
+    public static final String PATH = CONTEXT_ROOT + "/public/reset-password";
 
     private final ResetPasswordAction postAction;
 
