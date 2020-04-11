@@ -54,6 +54,10 @@ import {SystemEditCarrierComponent} from "./views/system/components/carrier/edit
 import {SystemNewTargetplaceComponent} from "./views/system/components/targetplaces/new/system-new-targetplace.component";
 import {TranslationProvider} from "./core/localization/translation-provider";
 import {MatExpansionModule} from "@angular/material/expansion";
+import {MatRadioModule} from "@angular/material/radio";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatSelectModule} from "@angular/material/select";
+import {MatInputModule} from "@angular/material/input";
 
 
 @NgModule({
@@ -65,7 +69,11 @@ import {MatExpansionModule} from "@angular/material/expansion";
         TerraComponentsModule,
         BrowserAnimationsModule,
         routing,
-        MatExpansionModule
+        MatExpansionModule,
+        MatRadioModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatInputModule
     ],
     declarations: [
         AppWbsKleiderkammer,

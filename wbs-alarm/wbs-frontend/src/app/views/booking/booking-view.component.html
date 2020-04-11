@@ -1,66 +1,104 @@
-<terra-portlet>
-    <div class="mode-chooser">
-        <terra-radio-button inputCaption="Buchen"
-                            [inputValue]="'buchen'"
-                            [(ngModel)]="_modus"
-                            (ngModelChange)="leereTabelleUndAendereZielorte()">
-        </terra-radio-button>
-        <terra-radio-button inputCaption="Einkauf"
-                            [inputValue]="'einkauf'"
-                            [(ngModel)]="_modus"
-                            (ngModelChange)="leereTabelleUndAendereZielorte()">
-        </terra-radio-button>
-        <terra-radio-button inputCaption="Aussonderung"
-                            [inputValue]="'aussonderung'"
-                            [(ngModel)]="_modus"
-                            (ngModelChange)="leereTabelleUndAendereZielorte()">
-        </terra-radio-button>
-    </div>
-</terra-portlet>
+<mat-expansion-panel [hideToggle]="true" expanded="true">
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            Buchungsart auswählen
+        </mat-panel-title>
+    </mat-expansion-panel-header>
 
-<terra-portlet>
+    <div class="mode-chooser">
+        <mat-radio-group [(ngModel)]="_modus" (ngModelChange)="leereTabelleUndAendereZielorte()">
+            <mat-radio-button class="mode" [value]="'buchen'">
+                Buchen
+            </mat-radio-button>
+            <mat-radio-button class="mode" [value]="'einkauf'">
+                Einkauf
+            </mat-radio-button>
+            <mat-radio-button class="mode" [value]="'aussonderung'">
+                Aussonderung
+            </mat-radio-button>
+        </mat-radio-group>
+    </div>
+</mat-expansion-panel>
+
+<mat-expansion-panel>
+    <mat-expansion-panel-header>
+        Buchungsziel wählen
+    </mat-expansion-panel-header>
     <div class="headline">
         <terra-text-input class=element
                           [inputIsDisabled]="true"
                           [ngModel]="_traeger">
         </terra-text-input>
-        
-        <terra-select-box *ngIf="!(_modus==='einkauf')"
-                          class=element
-                          [inputName]="'von:'"
-                          [inputListBoxValues]="_zielorte"
-                          [(ngModel)]="_von">
-        </terra-select-box>
-        <terra-select-box *ngIf="!(_modus==='aussonderung')"
-                          class=element
-                          [inputName]="'nach:'"
-                          [inputListBoxValues]="_zielorte"
-                          [(ngModel)]="_nach">
-        </terra-select-box>
-    </div>
-</terra-portlet>
 
-<terra-portlet>
+        <mat-form-field *ngIf="!(_modus==='einkauf')">
+            <mat-label>von:</mat-label>
+            <mat-select [(value)]="_von">
+                <mat-option *ngFor="let zielort of _zielorte" [value]="zielort.value">{{zielort.caption}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="!(_modus==='aussonderung')">
+            <mat-label>nach:</mat-label>
+            <mat-select [(value)]="_nach">
+                <mat-option *ngFor="let zielort of _zielorte" [value]="zielort.value">{{zielort.caption}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</mat-expansion-panel>
+
+<mat-expansion-panel>
+    <mat-expansion-panel-header>
+        Buchungsdetails einstellen
+    </mat-expansion-panel-header>
     <div class="headline">
-        <terra-select-box class=element
-                          [inputName]="'Kategorie:'"
-                          [inputListBoxValues]="_kategorien"
-                          [(ngModel)]="_kategorie"
-                          (ngModelChange)="fuelleGroesse(_kategorie)">
-        </terra-select-box>
-        <terra-select-box class=element
-                          [inputName]="'Größe:'"
-                          [inputIsDisabled]="_groessen.length === 0"
-                          [inputListBoxValues]="_groessen"
-                          [(ngModel)]="_goresse">
-        </terra-select-box>
-        <terra-number-input class=element
+        <mat-form-field style="margin-right: 10px;">
+            <mat-label>Kategorie</mat-label>
+            <mat-select [(value)]="_kategorie" (selectionChange)="fuelleGroesse(_kategorie)">
+                <mat-option *ngFor="let kategorie of _kategorien" [value]="kategorie.value">{{kategorie.caption}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field style="margin-right: 10px;">
+            <mat-label>Größe</mat-label>
+            <mat-select [(value)]="_goresse" [disabled]="_groessen.length === 1">
+                <mat-option *ngFor="let groesse of _groessen" [value]="groesse.value">{{groesse.caption}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+<!--        <mat-form-field style="margin-right: 10px; display: flex">-->
+<!--            <mat-label>-->
+<!--                <input placeholder="Anzahl" matInput [value]="_anzahl">-->
+<!--            </mat-label>-->
+<!--        </mat-form-field>-->
+
+        <terra-number-input class="element"
                             [inputName]="'Anzahl'"
                             [(ngModel)]="_anzahl">
-        
         </terra-number-input>
     </div>
-</terra-portlet>
+</mat-expansion-panel>
+
+<!--<terra-portlet>-->
+<!--    <div class="headline">-->
+<!--        <terra-select-box class=element-->
+<!--                          [inputName]="'Kategorie:'"-->
+<!--                          [inputListBoxValues]="_kategorien"-->
+<!--                          [(ngModel)]="_kategorie"-->
+<!--                          (ngModelChange)="fuelleGroesse(_kategorie)">-->
+<!--        </terra-select-box>-->
+<!--        <terra-select-box class=element-->
+<!--                          [inputName]="'Größe:'"-->
+<!--                          [inputIsDisabled]="_groessen.length === 0"-->
+<!--                          [inputListBoxValues]="_groessen"-->
+<!--                          [(ngModel)]="_goresse">-->
+<!--        </terra-select-box>-->
+<!--        <terra-number-input class=element-->
+<!--                            [inputName]="'Anzahl'"-->
+<!--                            [(ngModel)]="_anzahl">-->
+<!--        -->
+<!--        </terra-number-input>-->
+<!--    </div>-->
+<!--</terra-portlet>-->
 
 <div>
     <terra-button inputCaption="In die Liste"
