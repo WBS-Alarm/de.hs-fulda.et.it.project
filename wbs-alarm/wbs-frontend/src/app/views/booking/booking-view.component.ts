@@ -14,6 +14,18 @@ import {UsersService} from '../../core/service/rest/users/users.service';
 import {CarrierService} from '../../core/service/rest/carrier/carrier.service';
 import {TransaktionService} from '../../core/service/rest/transaktions/transaktion.service';
 import {AlertType} from '@plentymarkets/terra-components/components/alert/alert-type.enum';
+import {MatTableDataSource} from "@angular/material/table";
+import {SelectionModel} from "@angular/cdk/collections";
+import {SystemZielortInterface} from "../system/components/targetplaces/data/system-zielort.interface";
+
+export interface RowData {
+    von:SystemZielortInterface;
+    nach:SystemZielortInterface;
+    kategorie:any;
+    groesse:any;
+    anzahl:number;
+}
+
 
 @Component({
     selector: 'booking',
@@ -66,6 +78,26 @@ export class BookingViewComponent implements OnInit
 
     @ViewChild('table', {static:true})
     public table:TerraSimpleTableComponent<any>;
+
+    private tableData:Array<RowData> = [];
+
+    public displayedColumns:Array<string> = ['select', 'von', 'nach', 'kategorie', 'größe', 'anzahl'];
+    public dataSource:MatTableDataSource<RowData> = new MatTableDataSource<RowData>(this.tableData);
+    public selection:SelectionModel<RowData> = new SelectionModel<RowData>(true, []);
+
+    /** Whether the number of selected elements matches the total number of rows. */
+    isAllSelected() {
+        let numSelected = this.selection.selected.length;
+        let numRows = this.dataSource.data.length;
+        return numSelected === numRows;
+    }
+
+    /** Selects all rows if they are not all selected; otherwise clear selection. */
+    masterToggle() {
+        this.isAllSelected() ?
+            this.selection.clear() :
+            this.dataSource.data.forEach(row => this.selection.select(row));
+    }
 
 
     constructor(public categoryService:CategoryService,
@@ -276,48 +308,15 @@ export class BookingViewComponent implements OnInit
 
     public addRow():void
     {
-        let vonCell:TerraSimpleTableCellInterface = {caption: ''};
+        this.tableData.push({
+            von: this._von,
+            nach: this._nach,
+            kategorie: this._kategorie,
+            groesse: this._goresse,
+            anzahl: this._anzahl
+        });
 
-        if(this._modus != 'einkauf')
-        {
-            vonCell = {
-                caption: this._von.name
-            };
-        }
-
-        let nachCell:TerraSimpleTableCellInterface = {caption: ''};
-
-        if(this._modus != 'aussonderung')
-        {
-            nachCell = {
-                caption: this._nach.name
-            };
-        }
-
-        let kategorieCell:TerraSimpleTableCellInterface = {
-            caption: this._kategorie.name
-        };
-        let groesseCell:TerraSimpleTableCellInterface = {
-            caption: this._goresse.name
-        };
-        let anzahlCell:TerraSimpleTableCellInterface = {
-            caption: this._anzahl
-        };
-
-        let row:TerraSimpleTableRowInterface<any>;
-
-        let cellList:Array<TerraSimpleTableCellInterface> = [];
-
-        cellList.push(vonCell, nachCell, kategorieCell, groesseCell, anzahlCell);
-
-
-        row = {
-            cellList: cellList,
-            disabled: false,
-            selected: false
-        };
-
-        this._rowList.push(row);
+        this.dataSource._updateChangeSubscription();
 
         this.addRowToBuchungsListe();
 
@@ -370,42 +369,24 @@ export class BookingViewComponent implements OnInit
         console.log(this.buchungsliste)
     }
 
-    public deleteRow():void
+    public deleteRows():void
     {
-        let newRowList:Array<TerraSimpleTableRowInterface<any>>;
-        let toBeDeletedList:Array<TerraSimpleTableRowInterface<any>>;
-
-        newRowList = this._rowList.filter((row:TerraSimpleTableRowInterface<any>) =>
+        this.selection.selected.forEach((row:RowData) =>
         {
-            return row.selected === false;
-        });
-
-        toBeDeletedList = this._rowList.filter((row:TerraSimpleTableRowInterface<any>) =>
-        {
-            return row.selected === true;
-        });
-
-        toBeDeletedList.forEach((row:TerraSimpleTableRowInterface<any>) =>
-        {
-            this.deleteFromBuchungsliste({
-                von:     row.cellList[0].caption.toString(),
-                nach:    row.cellList[1].caption.toString(),
-                groesse: row.cellList[3].caption.toString(),
-                anzahl:  +row.cellList[4].caption
-            })
-        });
-
-        this._rowList = newRowList;
-
-
+            this.deleteRow(row);
+        })
     }
 
-    public selectRow(event:any)
+    public deleteRow(row:RowData):void
     {
-        event.selected = true;
-    }
+        let idx:number = this.tableData.indexOf(row);
+        this.tableData.splice(idx, 1);
+        this.dataSource._updateChangeSubscription();
 
-    public deleteFromBuchungsliste(toBeDeleted:{ von:string, nach:string, groesse:string, anzahl:number }):void
+        this.deleteFromBuchungsliste(row);
+}
+
+    public deleteFromBuchungsliste(toBeDeleted:RowData):void
     {
         let vonId:number;
 
@@ -417,7 +398,7 @@ export class BookingViewComponent implements OnInit
         {
             vonId = this._zielorteKomplett.find((zielort:any) =>
             {
-                return zielort.caption === toBeDeleted.von
+                return zielort.caption === toBeDeleted.von.name
             }).value.id;
         }
 
@@ -432,13 +413,13 @@ export class BookingViewComponent implements OnInit
         {
             nachId = this._zielorteKomplett.find((zielort:any) =>
             {
-                return zielort.caption === toBeDeleted.nach
+                return zielort.caption === toBeDeleted.nach.name
             }).value.id;
         }
 
         let groesseId:number = this._groessen.find((groesse:any) =>
         {
-            return groesse.caption === toBeDeleted.groesse
+            return groesse.caption === toBeDeleted.groesse.name
         }).value.id;
 
         let tbdBuchungen:Array<{ von:number, nach:number, positions:Array<{ groesse:number, anzahl:number }> }>;
@@ -462,5 +443,7 @@ export class BookingViewComponent implements OnInit
         });
 
         this.buchungsliste = tbdBuchungen;
+
+        console.log(this.buchungsliste);
     }
 }

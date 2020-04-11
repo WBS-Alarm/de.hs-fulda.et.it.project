@@ -58,6 +58,10 @@ import {MatRadioModule} from "@angular/material/radio";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSelectModule} from "@angular/material/select";
 import {MatInputModule} from "@angular/material/input";
+import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
+import {MatTableModule} from "@angular/material/table";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 
 @NgModule({
@@ -73,7 +77,11 @@ import {MatInputModule} from "@angular/material/input";
         MatRadioModule,
         MatFormFieldModule,
         MatSelectModule,
-        MatInputModule
+        MatInputModule,
+        MatButtonModule,
+        MatIconModule,
+        MatTableModule,
+        MatCheckboxModule
     ],
     declarations: [
         AppWbsKleiderkammer,
