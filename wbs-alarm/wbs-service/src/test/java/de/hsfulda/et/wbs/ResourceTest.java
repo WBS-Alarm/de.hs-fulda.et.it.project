@@ -60,7 +60,11 @@ public abstract class ResourceTest {
         return getToken(username, "password");
     }
 
-    private String getToken(String username, String password) {
+    protected String getUUID(String name) {
+        return getBenutzer(name).getToken();
+    }
+
+    protected String getToken(String username, String password) {
         return "Bearer " + authentication.login(username, password)
                 .orElseThrow(() -> new RuntimeException("invalid login and/or password"));
     }

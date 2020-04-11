@@ -17,9 +17,11 @@ import java.io.UnsupportedEncodingException;
 @Service
 public class MailService {
 
+    @Value("${wbs.mail.active}")
+    private boolean active;
     @Value("${spring.mail.username}")
     private String fromMailAdress;
-    @Value("${spring.mail.personal}")
+    @Value("${wbs.mail.personal}")
     private String fromMailPersonal;
 
     private final JavaMailSender mailSender;
@@ -29,6 +31,9 @@ public class MailService {
     }
 
     public void send(Mail mail) throws MailConnectionException {
+        if (!active) {
+            return;
+        }
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message);
