@@ -62,6 +62,9 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {MatTableModule} from "@angular/material/table";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatListModule} from "@angular/material/list";
 
 
 @NgModule({
@@ -81,7 +84,10 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         MatButtonModule,
         MatIconModule,
         MatTableModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatListModule
     ],
     declarations: [
         AppWbsKleiderkammer,

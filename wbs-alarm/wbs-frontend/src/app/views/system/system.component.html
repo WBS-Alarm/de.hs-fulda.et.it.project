@@ -1,13 +1,43 @@
-<div class="container-fluid full-height">
-    <div class="row full-height">
-        <div class="tree-container col-sm-12 col-md-3 col-lg-2 ">
-            <terra-node-tree [inputConfig]="nodeTreeConfig">
-            </terra-node-tree>
-        </div>
-    
-    
-        <div class="outlet-container col-sm-12 col-md-9 col-lg-10">
-            <router-outlet></router-outlet>
-        </div>
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
+<!--    <mat-toolbar color="primary" class="example-toolbar">-->
+<!--        <button mat-button (click)="snav.toggle()">Menü anzeigen</button>-->
+<!--    </mat-toolbar>-->
+
+    <div class="toggle-container">
+        <span class="icon-collapse_rightpng toggle-icon" (click)="snav.toggle()"></span>
     </div>
+    <mat-sidenav-container class="example-sidenav-container"
+                           [style.marginTop.px]="mobileQuery.matches ? 0 : 0">
+        <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
+                     [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" class="more-width">
+            <mat-nav-list class="p-0">
+                <div class="tree-container">
+                    <terra-node-tree [inputConfig]="nodeTreeConfig">
+                    </terra-node-tree>
+                </div>
+            </mat-nav-list>
+        </mat-sidenav>
+
+        <mat-sidenav-content>
+                <router-outlet></router-outlet>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
 </div>
+
+
+
+
+
+<!--<div class="container-fluid full-height">-->
+<!--    <div class="row full-height">-->
+<!--        <div class="tree-container col-sm-12 col-md-3 col-lg-2 ">-->
+<!--            <terra-node-tree [inputConfig]="nodeTreeConfig">-->
+<!--            </terra-node-tree>-->
+<!--        </div>-->
+<!--    -->
+<!--    -->
+<!--        <div class="outlet-container col-sm-12 col-md-9 col-lg-10">-->
+<!--            <router-outlet></router-outlet>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
