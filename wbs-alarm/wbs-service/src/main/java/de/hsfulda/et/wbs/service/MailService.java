@@ -34,6 +34,7 @@ public class MailService {
         if (!active) {
             return;
         }
+
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message);

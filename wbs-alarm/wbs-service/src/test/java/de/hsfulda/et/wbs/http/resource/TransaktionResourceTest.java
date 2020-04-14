@@ -26,22 +26,40 @@ class TransaktionResourceTest extends ResourceTest {
         assertThat(resource).isNotNull();
     }
 
-    @DisplayName("Transaktionen werden zu Träger aufgelistet")
+    @DisplayName("Transaktionen werden zu Träger aufgelistet, Seitengröße 5")
+    @Test
+    void getTransaktionListSizeFive() throws Exception {
+        Long traegerId = getTraegerId(HE_TRAEGER);
+        mockMvc.perform(get(TransaktionListResource.PATH, traegerId).param("size", "5")
+                .header("Authorization", getToken("HelsaUser"))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.size", is(5)))
+                .andExpect(jsonPath("$.page", is(0)))
+                .andExpect(jsonPath("$.totalPages", is(1)))
+                .andExpect(jsonPath("$.totalElements", is(1)));
+    }
+
+    @DisplayName("Transaktionen werden zu Träger aufgelistet, Seitengröße 20")
     @Test
     void getTransaktionList() throws Exception {
         Long traegerId = getTraegerId(HE_TRAEGER);
         mockMvc.perform(get(TransaktionListResource.PATH, traegerId).header("Authorization", getToken("HelsaUser"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andDo(print());
+                .andDo(print())
+                .andExpect(jsonPath("$.size", is(20)))
+                .andExpect(jsonPath("$.page", is(0)))
+                .andExpect(jsonPath("$.totalPages", is(1)))
+                .andExpect(jsonPath("$.totalElements", is(1)));
     }
 
     @DisplayName("JSON kann interpretiert werden, invalide Daten.")
     @Test
     void putAendernEinesZielorts() throws Exception {
         Long traegerId = getTraegerId(HE_TRAEGER);
-        mockMvc.perform(post(TransaktionListResource.PATH, traegerId)
-                .header("Authorization", getToken("HelsaBuchung"))
+        mockMvc.perform(post(TransaktionListResource.PATH, traegerId).header("Authorization", getToken("HelsaBuchung"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"von\":-12,\"nach\":-10,\"positions\":[{\"groesse\":-1,\"anzahl\":1}]}"))
                 .andDo(print())

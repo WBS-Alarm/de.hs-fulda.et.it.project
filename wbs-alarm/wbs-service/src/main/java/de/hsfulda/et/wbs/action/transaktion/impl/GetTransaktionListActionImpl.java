@@ -5,9 +5,9 @@ import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.TransaktionData;
 import de.hsfulda.et.wbs.repository.TransaktionRepository;
 import de.hsfulda.et.wbs.service.AccessService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class GetTransaktionListActionImpl implements GetTransaktionListAction {
@@ -21,9 +21,9 @@ public class GetTransaktionListActionImpl implements GetTransaktionListAction {
     }
 
     @Override
-    public List<TransaktionData> perform(WbsUser user, Long traegerId) {
+    public Page<TransaktionData> perform(WbsUser user, Long traegerId, int page, int size) {
         return accessService.hasAccessOnTraeger(user, traegerId, () -> {
-            return transaktionen.findAllAsDataByTraegerId(traegerId);
+            return transaktionen.findAllAsDataByTraegerId(traegerId, PageRequest.of(page, size));
         });
     }
 }

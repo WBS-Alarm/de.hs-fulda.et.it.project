@@ -15,6 +15,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
 import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
 import static de.hsfulda.et.wbs.util.HeaderUtil.locationHeader;
@@ -44,8 +46,15 @@ public class TransaktionListResource {
      */
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")
-    HttpEntity<HalJsonResource> get(@AuthenticationPrincipal WbsUser user, @PathVariable("traegerId") Long traegerId) {
-        return new HttpEntity<>(new TransaktionListHalJson(user, getAction.perform(user, traegerId), traegerId));
+    HttpEntity<HalJsonResource> get(@AuthenticationPrincipal WbsUser user, @PathVariable("traegerId") Long traegerId,
+            @RequestParam(name = "page") Optional<Integer> offset,
+            @RequestParam(name = "size") Optional<Integer> size) {
+        int realPage = offset.orElse(0);
+        int realSize = size.orElse(20);
+
+        return new HttpEntity<>(
+                new TransaktionListHalJson(user, getAction.perform(user, traegerId, realPage, realSize), traegerId,
+                        realPage, realSize));
     }
 
     /**
