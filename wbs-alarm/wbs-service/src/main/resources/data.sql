@@ -161,3 +161,25 @@ values (5,
                (select id from benutzer where name = 'HelsaBuchung')));
 
 commit;
+
+#ddl
+create or replace view V_BESTAENDE as
+SELECT CONCAT(t.id, '_', z.id, '_', k.id, '_', g.id) as ID,
+       t.id                                          as traeger_id,
+       t.name                                        as traeger,
+       z.name                                        as zielort,
+       k.name                                        as kategorie,
+       g.name                                        as groesse,
+       b.anzahl                                      as anzahl
+from bestaende b
+         JOIN groessen g on g.id = b.groesse_id
+         JOIN kategorien k on k.id = g.id
+         JOIN zielorte z on z.id = b.zielort_id
+         JOIN traeger t on k.traeger_id = t.id
+order by t.name,
+         z.name,
+         k.name,
+         g.name,
+         b.anzahl;
+
+
