@@ -15,7 +15,7 @@ public class ExceptionMapper {
         return toResponse(HttpStatus.NOT_FOUND, exc);
     }
 
-    @ExceptionHandler({IllegalStateException.class})
+    @ExceptionHandler({IllegalStateException.class, MailDeliveryException.class})
     public final ResponseEntity<HalJsonResource> illegalStateException(Throwable exc) {
         return toResponse(HttpStatus.INTERNAL_SERVER_ERROR, exc);
     }

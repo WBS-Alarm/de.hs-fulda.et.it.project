@@ -8,6 +8,8 @@ public enum Relations {
     // @formatter:off
       REL_USER_LIST(       "benutzerList",    BenutzerListResource.PATH)
     , REL_BENUTZER(        "benutzer",        BenutzerResource.PATH)
+    , REL_FORGOT_PW(       "forgotPassword",  ForgotPasswordResource.PATH)
+    , REL_RESET_PW(        "resetPassword",   ResetPasswordResource.PATH)
     , REL_USER_CURRENT(    "current",         CurrentUserResource.PATH)
     , REL_USER_REGISTER(   "registerUser",    UserRegisterResource.PATH)
     , REL_AUTHORITIES(     "authorities",     AuthorityResource.PATH)

@@ -5,6 +5,7 @@ import de.hsfulda.et.wbs.core.data.BenutzerGrantedAuthData;
 import de.hsfulda.et.wbs.core.data.GrantedAuthorityData;
 import de.hsfulda.et.wbs.core.data.TraegerData;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class BenutzerGrantedAuthDataImpl implements BenutzerGrantedAuthData {
@@ -55,5 +56,15 @@ public class BenutzerGrantedAuthDataImpl implements BenutzerGrantedAuthData {
     @Override
     public Boolean getAktiv() {
         return benutzer.getAktiv();
+    }
+
+    @Override
+    public String getToken() {
+        return benutzer.getToken();
+    }
+
+    @Override
+    public LocalDateTime getValid() {
+        return benutzer.getValid();
     }
 }

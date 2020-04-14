@@ -5,6 +5,7 @@ import de.hsfulda.et.wbs.core.data.TraegerData;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -23,6 +24,8 @@ public class Benutzer implements BenutzerData {
     private String mail;
     private Boolean einkaeufer;
     private Boolean aktiv;
+    private String token;
+    private LocalDateTime valid;
 
     @ManyToOne
     @JoinColumn(name = "TRAEGER_ID")
@@ -89,6 +92,24 @@ public class Benutzer implements BenutzerData {
 
     public void setAktiv(Boolean aktiv) {
         this.aktiv = aktiv;
+    }
+
+    @Override
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    @Override
+    public LocalDateTime getValid() {
+        return valid;
+    }
+
+    public void setValid(LocalDateTime valid) {
+        this.valid = valid;
     }
 
     @Override
