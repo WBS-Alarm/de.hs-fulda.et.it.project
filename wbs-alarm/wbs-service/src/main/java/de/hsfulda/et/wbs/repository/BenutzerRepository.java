@@ -33,6 +33,13 @@ public interface BenutzerRepository extends CrudRepository<Benutzer, Long> {
             @Param("until") LocalDateTime until);
 
     @Modifying
-    @Query("update Benutzer b set b.aktiv = false where id = :id")
+    @Query("update Benutzer b set b.aktiv = false where b.id = :id")
     void deactivate(@Param("id") Long id);
+
+    @Query("select b from Benutzer b where b.token = :token")
+    Optional<BenutzerData> findByUsernameByToken(@Param("token") String token);
+
+    @Modifying(clearAutomatically = true)
+    @Query("update Benutzer b set b.password = :password, b.token = null, b.valid = null where b.id = :id")
+    void updateNewPassword(@Param("id") Long id, @Param("password") String password);
 }
