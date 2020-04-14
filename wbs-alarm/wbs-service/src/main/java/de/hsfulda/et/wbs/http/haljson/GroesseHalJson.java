@@ -35,5 +35,6 @@ public class GroesseHalJson extends HalJsonResource {
 
         addProperty("id", groesse.getId());
         addProperty("name", groesse.getName());
+        addProperty("bestandsgrenze", groesse.getBestandsgrenze());
     }
 }

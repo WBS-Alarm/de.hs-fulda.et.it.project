@@ -42,8 +42,8 @@ public class ForgotPasswordActionImpl implements ForgotPasswordAction {
                 }
 
                 @Override
-                public String getTo() {
-                    return user.getMail();
+                public String[] getTo() {
+                    return new String[]{user.getMail()};
                 }
 
                 @Override

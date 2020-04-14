@@ -18,8 +18,9 @@ public interface GroesseRepository extends CrudRepository<Groesse, Long> {
     Optional<GroesseData> findByIdAndAktivIsTrue(Long id);
 
     @Modifying(clearAutomatically = true)
-    @Query("update Groesse g set g.name = :name where g.id = :id")
-    void updateName(@Param("id") Long id, @Param("name") String name);
+    @Query("update Groesse g set g.name = :name, g.bestandsgrenze = :bestandsgrenze where g.id = :id")
+    void updateNameAndBestandsgrenze(@Param("id") Long id, @Param("name") String name,
+            @Param("bestandsgrenze") int bestandsgrenze);
 
     @Modifying
     @Query("update Groesse g set g.aktiv = false where g.id = :id")

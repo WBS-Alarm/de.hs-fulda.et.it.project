@@ -22,6 +22,10 @@ public interface BenutzerRepository extends CrudRepository<Benutzer, Long> {
     @Query("select b from Benutzer b join b.traeger t where t.id = :traegerId and b.aktiv = true")
     List<BenutzerData> findAllByTraegerId(@Param("traegerId") Long traegerId);
 
+    @Query("select b from Benutzer b join b.traeger t where t.id = (select ti.id from Traeger ti join ti.benutzer bi " +
+            "where bi.id = :userId) and b.einkaeufer = true and b .aktiv =  true")
+    List<BenutzerData> findAllEinkaeuferByUserId(@Param("userId") Long userId);
+
     @Modifying(clearAutomatically = true)
     @Query("update Benutzer b set b.einkaeufer = :einkaeufer, b.mail = :mail where b.id = :id")
     void updateEinkaeuferAndMail(@Param("id") Long id, @Param("einkaeufer") Boolean einkaeufer,

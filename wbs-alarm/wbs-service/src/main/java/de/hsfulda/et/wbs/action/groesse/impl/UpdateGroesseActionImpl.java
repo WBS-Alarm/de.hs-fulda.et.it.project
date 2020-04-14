@@ -36,7 +36,7 @@ public class UpdateGroesseActionImpl implements UpdateGroesseAction {
                 throw new ResourceNotFoundException("Größe mit der ID {0} nicht gefunden.", id);
             }
 
-            repo.updateName(id, groesse.getName());
+            repo.updateNameAndBestandsgrenze(id, groesse.getName(), groesse.getBestandsgrenze());
             return repo.findById(id)
                     .get();
         });

@@ -12,22 +12,34 @@ insert into zielorte(name, eingang, lager, auto, aktiv, erfasst, traeger_id)
 values ('Aussonderung', false, false, true, true, true, (select id from traeger where name = 'Feuerwehr'));
 
 insert into kategorien(name, aktiv, traeger_id)
-values('Polo-Hemd', true, (select id from traeger where name = 'Feuerwehr'));
+values ('Polo-Hemd', true, (select id from traeger where name = 'Feuerwehr'));
 
-insert into groessen(name, aktiv, kategorie_id)
-values('XXL', true, (select k.id from kategorien k where k.name = 'Polo-Hemd' and k.traeger_id = (select id from traeger where name = 'Feuerwehr')));
+insert into groessen(name, aktiv, bestandsgrenze, kategorie_id)
+values ('XXL', true, 0, (select k.id
+                         from kategorien k
+                         where k.name = 'Polo-Hemd'
+                           and k.traeger_id = (select id from traeger where name = 'Feuerwehr')));
 
 insert into bestaende(anzahl, groesse_id, zielort_id)
-values(10,
-   (select g.id from groessen g where g.name = 'XXL' and g.kategorie_id =
-       (select k.id from kategorien k where k.name = 'Polo-Hemd' and k.traeger_id =
-           (select id from traeger where name = 'Feuerwehr'))),
-   (select z.id from zielorte z where z.name = 'Wareneingang' and z.traeger_id =
-       (select id from traeger where name = 'Feuerwehr')));
+values (10,
+        (select g.id
+         from groessen g
+         where g.name = 'XXL'
+           and g.kategorie_id =
+               (select k.id
+                from kategorien k
+                where k.name = 'Polo-Hemd'
+                  and k.traeger_id =
+                      (select id from traeger where name = 'Feuerwehr'))),
+        (select z.id
+         from zielorte z
+         where z.name = 'Wareneingang'
+           and z.traeger_id =
+               (select id from traeger where name = 'Feuerwehr')));
 
 
 insert into traeger (name)
-values('Helsa');
+values ('Helsa');
 
 insert into zielorte(name, eingang, lager, auto, aktiv, erfasst, traeger_id)
 values ('Wäscherei', false, false, true, true, true, (select id from traeger where name = 'Helsa'));
@@ -39,28 +51,43 @@ insert into zielorte(name, eingang, lager, auto, aktiv, erfasst, traeger_id)
 values ('Aussonderung', false, false, true, true, true, (select id from traeger where name = 'Helsa'));
 
 insert into kategorien(name, aktiv, traeger_id)
-values('Polo-Hemd', true, (select id from traeger where name = 'Helsa'));
+values ('Polo-Hemd', true, (select id from traeger where name = 'Helsa'));
 
-insert into groessen(name, aktiv, kategorie_id)
-values('XXL', true, (select k.id from kategorien k where k.name = 'Polo-Hemd' and k.traeger_id = (select id from traeger where name = 'Helsa')));
+insert into groessen(name, aktiv, bestandsgrenze, kategorie_id)
+values ('XXL', true, 0, (select k.id
+                         from kategorien k
+                         where k.name = 'Polo-Hemd'
+                           and k.traeger_id = (select id from traeger where name = 'Helsa')));
 
 insert into bestaende(anzahl, groesse_id, zielort_id)
-values(10,
-   (select g.id from groessen g where g.name = 'XXL' and g.kategorie_id =
-       (select k.id from kategorien k where k.name = 'Polo-Hemd' and k.traeger_id =
-           (select id from traeger where name = 'Helsa'))),
-   (select z.id from zielorte z where z.name = 'Wareneingang' and z.traeger_id =
-       (select id from traeger where name = 'Helsa')));
+values (10,
+        (select g.id
+         from groessen g
+         where g.name = 'XXL'
+           and g.kategorie_id =
+               (select k.id
+                from kategorien k
+                where k.name = 'Polo-Hemd'
+                  and k.traeger_id =
+                      (select id from traeger where name = 'Helsa'))),
+        (select z.id
+         from zielorte z
+         where z.name = 'Wareneingang'
+           and z.traeger_id =
+               (select id from traeger where name = 'Helsa')));
 
 
 insert into benutzer (aktiv, einkaeufer, mail, password, name, traeger_id)
-values(true, false, 'superuser@domain.de', '$2a$12$7w0m4I2kjbQgM0hp0erh4OXqEoBxeYqNoaLUZKpiaISqnIcw91t3i', 'Superuser', (select id from traeger where name = 'Feuerwehr'));
+values (true, false, 'superuser@domain.de', '$2a$12$7w0m4I2kjbQgM0hp0erh4OXqEoBxeYqNoaLUZKpiaISqnIcw91t3i', 'Superuser',
+        (select id from traeger where name = 'Feuerwehr'));
 
 insert into benutzer (aktiv, einkaeufer, mail, password, name, traeger_id)
-values(true, false, 'leser@domain.de', '$2a$12$7w0m4I2kjbQgM0hp0erh4OXqEoBxeYqNoaLUZKpiaISqnIcw91t3i', 'Leser', (select id from traeger where name = 'Feuerwehr'));
+values (true, false, 'leser@domain.de', '$2a$12$7w0m4I2kjbQgM0hp0erh4OXqEoBxeYqNoaLUZKpiaISqnIcw91t3i', 'Leser',
+        (select id from traeger where name = 'Feuerwehr'));
 
 insert into benutzer (aktiv, einkaeufer, mail, password, name, traeger_id)
-values(true, false, 'helsaUser@domain.de', '$2a$12$7w0m4I2kjbQgM0hp0erh4OXqEoBxeYqNoaLUZKpiaISqnIcw91t3i', 'HelsaUser', (select id from traeger where name = 'Helsa'));
+values (true, false, 'helsaUser@domain.de', '$2a$12$7w0m4I2kjbQgM0hp0erh4OXqEoBxeYqNoaLUZKpiaISqnIcw91t3i', 'HelsaUser',
+        (select id from traeger where name = 'Helsa'));
 
 insert into benutzer (aktiv, einkaeufer, mail, password, name, traeger_id)
 values (true, false, 'helsaBuchung@domain.de', '$2a$12$7w0m4I2kjbQgM0hp0erh4OXqEoBxeYqNoaLUZKpiaISqnIcw91t3i',

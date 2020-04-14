@@ -12,4 +12,11 @@ public interface BestandData extends BestandCreateDto {
 
     ZielortData getZielort();
 
+    /**
+     * Muss eine Mail an den EInkäufer gesendet werden, mit dem Hinweis das der Bestand zur neige geht.
+     *
+     * @return <i><b>true</b></i>, wenn der Bestandsgrenze erreicht wurde.
+     */
+    boolean isMailRequired();
+
 }

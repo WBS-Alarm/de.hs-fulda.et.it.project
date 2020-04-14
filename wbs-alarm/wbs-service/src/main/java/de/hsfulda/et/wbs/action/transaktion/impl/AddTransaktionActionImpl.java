@@ -18,13 +18,16 @@ public class AddTransaktionActionImpl implements AddTransaktionAction {
     private final TransaktionValidaton validation;
     private final TransaktionExecution execution;
     private final TransaktionRepository transaktionen;
+    private final TransaktionMailService transaktionMailService;
     private final AccessService accessService;
 
     public AddTransaktionActionImpl(TransaktionValidaton validation, TransaktionExecution execution,
-            TransaktionRepository transaktionen, AccessService accessService) {
+            TransaktionRepository transaktionen, TransaktionMailService transaktionMailService,
+            AccessService accessService) {
         this.validation = validation;
         this.execution = execution;
         this.transaktionen = transaktionen;
+        this.transaktionMailService = transaktionMailService;
         this.accessService = accessService;
     }
 
@@ -34,7 +37,7 @@ public class AddTransaktionActionImpl implements AddTransaktionAction {
 
             validation.validateTransaktionDto(dto);
             Transaktion transaktion = execution.createTransaktion(user, dto);
-
+            transaktionMailService.sendMail(user, dto);
             return transaktionen.save(transaktion);
         });
     }
