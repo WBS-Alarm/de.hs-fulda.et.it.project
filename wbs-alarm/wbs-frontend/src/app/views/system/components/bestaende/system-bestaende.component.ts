@@ -10,6 +10,7 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import {
+    AlertService,
     TerraOverlayButtonInterface,
     TerraSelectBoxValueInterface
 } from '@plentymarkets/terra-components';
@@ -71,6 +72,7 @@ export class SystemBestaendeComponent implements OnInit
                 public groessenService:GroesseService,
                 public categoryService:CategoryService,
                 public dialog:MatDialog,
+                public alert:AlertService,
                 public bestandService:BestaendeService,
                 public systemGlobalSettingsService:SystemGlobalSettingsService)
     {
@@ -134,25 +136,13 @@ export class SystemBestaendeComponent implements OnInit
                 groesse: this._groesse,
                 anzahl: this._anzahl,
                 bestand: result.headers.get('Location').split('/wbs/bestand/')[1]
-            })
+            });
 
-            // this.alert.addAlert(
-            //     {
-            //         msg: 'Der Bestand wurde erfolgreich erfasst',
-            //         type: AlertType.success,
-            //         dismissOnTimeout: 0
-            //     }
-            // )
+            this.alert.success('Der Bestand wurde erfolgreich erfasst');
         },
             (error:any) =>
             {
-                // this.alert.addAlert(
-                //     {
-                //         msg: 'Der Bestand konnte nicht erfasst werden: ' + error,
-                //         type: AlertType.error,
-                //         dismissOnTimeout: 0
-                //     }
-                // )
+                this.alert.error('Der Bestand konnte nicht erfasst werden: ' + error);
             })
 
 
@@ -202,24 +192,13 @@ export class SystemBestaendeComponent implements OnInit
     {
         this.bestandService.aendereBestand(neuerBestand, this._bestandAendernBestand).subscribe((result:any) =>
         {
-            // this.alert.addAlert(
-            //     {
-            //         msg: 'Der Bestand wurde erfolgreich geändert',
-            //         type: AlertType.success,
-            //         dismissOnTimeout: 0
-            //     }
-            // )
+            this.alert.success('Der Bestand wurde erfolgreich geändert');
         },
-            (error:any) =>
-            {
-                // this.alert.addAlert(
-                //     {
-                //         msg: 'Der Bestand wurde nicht erfolgreich geändert: ' + error,
-                //         type: AlertType.error,
-                //         dismissOnTimeout: 0
-                //     }
-                // )
-            })
+        (error:any) =>
+        {
+            this.alert.error('Der Bestand wurde nicht erfolgreich geändert: ' + error);
+
+        });
     }
 
     public loescheBestand():void
@@ -229,11 +208,7 @@ export class SystemBestaendeComponent implements OnInit
         this.bestandService.loescheBestand(loeschBestand.bestand).subscribe(
             (result:any) =>
         {
-            // this.alert.addAlert({
-            //     msg: 'Der Bestand wurde gelöscht',
-            //     type: AlertType.success,
-            //     dismissOnTimeout: 0
-            // })
+            this.alert.success('Der Bestand wurde gelöscht');
 
             let idx:number = this.tableData.indexOf(loeschBestand);
 
@@ -241,12 +216,9 @@ export class SystemBestaendeComponent implements OnInit
             this.dataSource._updateChangeSubscription();
         },
             (error:any) =>
-            {
-                // this.alert.addAlert({
-                //     msg: 'Der Bestand wurde nicht gelöscht',
-                //     type: AlertType.error,
-                //     dismissOnTimeout: 0
-                // })
-            });
+        {
+            this.alert.error('Der Bestand wurde nicht gelöscht');
+
+        });
     }
 }

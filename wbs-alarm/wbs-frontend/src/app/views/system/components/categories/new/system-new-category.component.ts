@@ -2,6 +2,7 @@ import {Component} from "@angular/core";
 import {CarrierService} from "../../../../../core/service/rest/carrier/carrier.service";
 import {SystemGlobalSettingsService} from "../../../system-global-settings.service";
 import {
+    AlertService,
     TerraAlertComponent,
     TerraNodeTreeConfig
 } from "@plentymarkets/terra-components";
@@ -17,10 +18,9 @@ export class SystemNewCategoryComponent
 {
     public categoryName:string;
 
-    public alert:TerraAlertComponent = TerraAlertComponent.getInstance();
-
     constructor(public carrierService:CarrierService,
                 public systemGlobalSettings:SystemGlobalSettingsService,
+                public alert:AlertService,
                 public nodeTreeConfig:TerraNodeTreeConfig<ExampleTreeData>,
                 public router:Router)
     {
@@ -34,14 +34,7 @@ export class SystemNewCategoryComponent
         this.carrierService.createCategory(traegerId, this.categoryName).subscribe(
             (result:any) =>
             {
-                this.alert.addAlert(
-                    {
-                        msg:              'Kategorie wurde erstellt!',
-                        type:             'success',
-                        dismissOnTimeout: null,
-                        identifier:       'categoryCreated'
-                    }
-                );
+                this.alert.success('Kategorie wurde erstellt!');
 
                 this.nodeTreeConfig.addChildToNodeById(this.nodeTreeConfig.currentSelectedNode.id,
                     {
@@ -61,14 +54,7 @@ export class SystemNewCategoryComponent
             },
             (error:any) =>
             {
-                this.alert.addAlert(
-                    {
-                        msg:              'Die Kategorie konnte nicht erstellt werden!',
-                        type:             'danger',
-                        dismissOnTimeout: null,
-                        identifier:       'categoryNotCreated'
-                    }
-                )
+                this.alert.error('Die Kategorie konnte nicht erstellt werden!');
             }
         )
     }

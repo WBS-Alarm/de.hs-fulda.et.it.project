@@ -4,6 +4,7 @@ import {
 } from '@angular/core';
 import { AuthoritiesService } from '../../../../core/service/rest/authorities/authorities.service';
 import {
+    AlertService,
     TerraAlertComponent,
     TerraMultiCheckBoxValueInterface
 } from '@plentymarkets/terra-components';
@@ -34,6 +35,7 @@ export class SystemAuthoritiesCompontent implements OnInit
 
     constructor(public authorityService:AuthoritiesService,
                 public route:ActivatedRoute,
+                public alert:AlertService,
                 public userService:UsersService)
     {
 
@@ -91,22 +93,14 @@ export class SystemAuthoritiesCompontent implements OnInit
             {
                 this.authorityService.grantAuthorities(this.userId, value.value).subscribe((result:any) =>
                     {
-                        // this.alert.addAlert({
-                        //     type:             AlertType.success,
-                        //     msg:              'Die Berechtigungen wurden erfolgreich gespeichert',
-                        //     dismissOnTimeout: 0
-                        // })
+                        this.alert.success('Die Berechtigungen wurden erfolgreich gespeichert!')
                     },
                     (error:any) =>
                     {
-                        // this.alert.addAlert({
-                        //     type:             AlertType.error,
-                        //     msg:              'Beim Speichern der Berechtigungen ist ein Fehler aufgetreten!',
-                        //     dismissOnTimeout: 0
-                        // })
+                        this.alert.error('Beim Speichern der Berechtigungen ist ein Fehler aufgetreten');
                     })
             }
-        })
+        });
 
         this.removeBerechtigungen();
     }
