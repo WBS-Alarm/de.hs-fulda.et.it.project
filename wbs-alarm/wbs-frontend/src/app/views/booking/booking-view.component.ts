@@ -113,8 +113,6 @@ export class BookingViewComponent implements OnInit
     {
         this.loadCategories();
 
-        this.buildTableStructure();
-
         console.log(this._zielorteKomplett);
     }
 
@@ -138,15 +136,6 @@ export class BookingViewComponent implements OnInit
                     console.log(error)
                 })
         })
-
-
-        //this._rowList.forEach((row:TerraSimpleTableRowInterface<any>) =>
-        //{
-        //    row.cellList.forEach((cell:TerraSimpleTableCellInterface) =>
-        //    {
-        //        console.log(cell);
-        //    })
-        //})
     }
 
 
@@ -277,33 +266,6 @@ export class BookingViewComponent implements OnInit
 
             this._zielorte = this._zielorteKomplett;
         })
-    }
-
-    public buildTableStructure():void
-    {
-        let vonCell:TerraSimpleTableHeaderCellInterface = {
-            caption: 'Von',
-            width:   '100',
-        };
-
-        let nachCell:TerraSimpleTableHeaderCellInterface = {
-            caption: 'Nach',
-            width:   '100',
-        };
-        let kategorieCell:TerraSimpleTableHeaderCellInterface = {
-            caption: 'Kategorie',
-            width:   '100',
-        };
-        let groesseCell:TerraSimpleTableHeaderCellInterface = {
-            caption: 'Größe',
-            width:   '100',
-        };
-        let anzahlCell:TerraSimpleTableHeaderCellInterface = {
-            caption: 'Anzahl',
-            width:   '100',
-        };
-
-        this._headerList.push(vonCell, nachCell, kategorieCell, groesseCell, anzahlCell);
     }
 
     public addRow():void

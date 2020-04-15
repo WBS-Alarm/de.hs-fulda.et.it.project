@@ -10,22 +10,25 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import {
-    TerraAlertComponent,
-    TerraButtonInterface,
     TerraOverlayButtonInterface,
-    TerraOverlayComponent,
-    TerraPortletComponent,
-    TerraSelectBoxValueInterface,
-    TerraSimpleTableCellInterface,
-    TerraSimpleTableHeaderCellInterface,
-    TerraSimpleTableRowInterface
+    TerraSelectBoxValueInterface
 } from '@plentymarkets/terra-components';
 import { GroesseService } from '../../../../core/service/rest/groesse/groesse.service';
 import { CategoryService } from '../../../../core/service/rest/categories/category.service';
 import { SystemGlobalSettingsService } from '../../system-global-settings.service';
 import { isNullOrUndefined } from 'util';
 import { BestaendeService } from '../../../../core/service/rest/bestaende/bestaende.serice';
-import { AlertType } from '@plentymarkets/terra-components/components/alert/alert-type.enum';
+import {MatTableDataSource} from "@angular/material/table";
+import {SelectionModel} from "@angular/cdk/collections";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {BestandDialogComponent} from "./dialog/bestand-dialog.component";
+
+export interface BestandRow {
+    kategorie:any;
+    groesse:any;
+    anzahl:number;
+    bestand:any;
+}
 
 @Component({
     selector: 'system-bestaende',
@@ -35,9 +38,6 @@ import { AlertType } from '@plentymarkets/terra-components/components/alert/aler
 export class SystemBestaendeComponent implements OnInit
 {
     public routeData$:Observable<Data>;
-
-    public _headerList:Array<TerraSimpleTableHeaderCellInterface> = [];
-    public _rowList:Array<TerraSimpleTableRowInterface<any>> = [];
 
     public _kategorien:Array<TerraSelectBoxValueInterface> = [{caption: 'Bitte wählen', value: null}];
     public _groessen:Array<TerraSelectBoxValueInterface> = [{caption: 'Bitte wählen', value: null}];
@@ -58,48 +58,42 @@ export class SystemBestaendeComponent implements OnInit
     @Input()
     public gesperrt:boolean = false;
 
-    // public alert:TerraAlertComponent = TerraAlertComponent.getInstance();
+    @ViewChild('bearbeitenOverlay', {static:false})
+    public bearbeitenOverlay:any;
 
-    @ViewChild('bearbeitenOverlay', {static:true})
-    public bearbeitenOverlay:TerraOverlayComponent;
+    private tableData:Array<BestandRow> = [];
 
+    public displayedColumns:Array<string> = ['select', 'kategorie', 'größe', 'anzahl'];
+    public dataSource:MatTableDataSource<BestandRow> = new MatTableDataSource<BestandRow>(this.tableData);
+    public selection:SelectionModel<BestandRow> = new SelectionModel<BestandRow>(false, []);
 
     constructor(public route:ActivatedRoute,
                 public groessenService:GroesseService,
                 public categoryService:CategoryService,
+                public dialog:MatDialog,
                 public bestandService:BestaendeService,
                 public systemGlobalSettingsService:SystemGlobalSettingsService)
     {
-
     }
 
     public ngOnInit():void
     {
-        let tragerId:number = this.systemGlobalSettingsService.getTraegerId()
+        let tragerId:number = this.systemGlobalSettingsService.getTraegerId();
 
         this.routeData$ = this.route.data;
 
         this.route.data.subscribe((data:any) =>
         {
-            this._headerList = [];
-            this._rowList = [];
-
-            this.erstelleTabellenStruktur();
-
             data.bestaende._embedded.elemente.forEach((element:any) =>
             {
                 this.addRowToTable(
                     {
-                        kategorieId:element._embedded.kategorie[0].id,
-                        kategorie: element._embedded.kategorie[0].name,
-                        groesseId: element._embedded.groesse[0].id,
-                        groesse: element._embedded.groesse[0].name,
+                        kategorie: element._embedded.kategorie[0],
+                        groesse: element._embedded.groesse[0],
                         anzahl: element.anzahl,
-                        bestandId: element.id
+                        bestand: element.id
                     });
             })
-
-
         });
 
 
@@ -115,54 +109,20 @@ export class SystemBestaendeComponent implements OnInit
                 )
             });
         });
-
-        this.primaryButtonInterface = {
-            icon:          'icon-save',
-            caption:       'Änderungen speichern',
-            isDisabled:    false,
-            clickFunction: ():void => {
-                this.saveChangesToBestand(this._bestandAendernAnzahl);
-
-                this._rowList.find((row:TerraSimpleTableRowInterface<any>) =>
-                {
-                    return row.selected
-                }).cellList[4].caption = this._bestandAendernAnzahl;
-
-                this.bearbeitenOverlay.hideOverlay();
-            }
-
-        }
     }
 
-    public addRowToTable(bestand:{kategorieId:number, kategorie:string, groesseId:number, groesse:string, anzahl:number, bestandId:number}):void
+    public addRowToTable(bestand:BestandRow):void
     {
-        let kategorieIdCell:TerraSimpleTableCellInterface = {caption: bestand.kategorieId};
+        this.tableData.push(
+            {
+                kategorie: bestand.kategorie,
+                groesse: bestand.groesse,
+                anzahl: bestand.anzahl,
+                bestand: bestand.bestand
+            }
+        );
 
-        let kategorieCell:TerraSimpleTableCellInterface = {caption: bestand.kategorie};
-
-        let groesseIdCell:TerraSimpleTableCellInterface = {caption: bestand.groesseId};
-
-        let groesseCell:TerraSimpleTableCellInterface = {caption: bestand.groesse};
-
-        let anzahlCell:TerraSimpleTableCellInterface = {caption: bestand.anzahl};
-
-        let bestandIdCell:TerraSimpleTableCellInterface = {caption: bestand.bestandId || ''}
-
-        let row:TerraSimpleTableRowInterface<any>;
-
-        let cellList:Array<TerraSimpleTableCellInterface> = [];
-
-        cellList.push(kategorieIdCell, kategorieCell, groesseIdCell, groesseCell, anzahlCell, bestandIdCell);
-
-
-        row = {
-            cellList: cellList,
-            disabled: false,
-            selected: false
-        };
-
-        this._rowList.push(row);
-
+        this.dataSource._updateChangeSubscription();
     }
 
     public addBestand():void
@@ -170,12 +130,10 @@ export class SystemBestaendeComponent implements OnInit
         this.bestandService.erfasseBestaendeFuerZielort(this._groesse.id, this._anzahl, this.zielortId).subscribe((result:any) =>
         {
             this.addRowToTable({
-                kategorieId: this._kategorie.id,
-                kategorie: this._kategorie.name,
-                groesseId: this._groesse.id,
-                groesse: this._groesse.name,
+                kategorie: this._kategorie,
+                groesse: this._groesse,
                 anzahl: this._anzahl,
-                bestandId: result.headers.get('Location').split('/wbs/bestand/')[1]
+                bestand: result.headers.get('Location').split('/wbs/bestand/')[1]
             })
 
             // this.alert.addAlert(
@@ -198,49 +156,6 @@ export class SystemBestaendeComponent implements OnInit
             })
 
 
-    }
-
-    public selectRow(event:any):void
-    {
-        this._rowList.forEach((row:any) =>
-        {
-            row.selected = false;
-        });
-
-        event.selected = true;
-    }
-
-    public erstelleTabellenStruktur():void
-    {
-        let kategorieId:TerraSimpleTableHeaderCellInterface = {
-            caption: 'KATEGORIE-ID',
-            width:   '100',
-        };
-
-        let kategorieCaption:TerraSimpleTableHeaderCellInterface = {
-            caption: 'KATEGORIE',
-            width:   '100',
-        };
-        let groesseId:TerraSimpleTableHeaderCellInterface = {
-            caption: 'GROESSE-ID',
-            width:   '100',
-        };
-
-        let groesseCaption:TerraSimpleTableHeaderCellInterface = {
-            caption: 'GROESSE',
-            width:   '100',
-        };
-        let anzahl:TerraSimpleTableHeaderCellInterface = {
-            caption: 'ANZAHL',
-            width:   '100',
-        };
-        let bestand:TerraSimpleTableHeaderCellInterface = {
-            caption: 'BESTAND-ID',
-            width:   '100',
-        };
-
-
-        this._headerList.push(kategorieId, kategorieCaption, groesseId, groesseCaption, anzahl, bestand);
     }
 
     public ladeGroessen():void
@@ -266,16 +181,21 @@ export class SystemBestaendeComponent implements OnInit
 
     public aendereBestand():void
     {
-        let datensatz:TerraSimpleTableRowInterface<any> = this._rowList.find((row:TerraSimpleTableRowInterface<any>) =>
+        const editDialog:MatDialogRef<BestandDialogComponent> = this.dialog.open(BestandDialogComponent, {autoFocus:true});
+        this._bestandAendernAnzahl = this.selection.selected[0].anzahl;
+
+        this._bestandAendernBestand = this.selection.selected[0].bestand;
+
+        editDialog.afterClosed().subscribe((neuerBestand:number) =>
         {
-            return row.selected;
+            if(neuerBestand > 0)
+            {
+                this.saveChangesToBestand(neuerBestand);
+
+                this.selection.selected[0].anzahl = neuerBestand;
+                this.dataSource._updateChangeSubscription();
+            }
         });
-
-        this._bestandAendernAnzahl = +datensatz.cellList[4].caption;
-
-        this._bestandAendernBestand = +datensatz.cellList[5].caption;
-
-        this.bearbeitenOverlay.showOverlay();
     }
 
     public saveChangesToBestand(neuerBestand:number):void
@@ -304,14 +224,9 @@ export class SystemBestaendeComponent implements OnInit
 
     public loescheBestand():void
     {
-        let datensatz:TerraSimpleTableRowInterface<any> = this._rowList.find((row:TerraSimpleTableRowInterface<any>) =>
-        {
-            return row.selected;
-        });
+        let loeschBestand:BestandRow = this.selection.selected[0];
 
-        let bestandId:number = +datensatz.cellList[5].caption;
-
-        this.bestandService.loescheBestand(bestandId).subscribe(
+        this.bestandService.loescheBestand(loeschBestand.bestand).subscribe(
             (result:any) =>
         {
             // this.alert.addAlert({
@@ -319,6 +234,11 @@ export class SystemBestaendeComponent implements OnInit
             //     type: AlertType.success,
             //     dismissOnTimeout: 0
             // })
+
+            let idx:number = this.tableData.indexOf(loeschBestand);
+
+            this.tableData.splice(idx, 1);
+            this.dataSource._updateChangeSubscription();
         },
             (error:any) =>
             {
@@ -328,9 +248,5 @@ export class SystemBestaendeComponent implements OnInit
                 //     dismissOnTimeout: 0
                 // })
             });
-
-        let index:number = this._rowList.indexOf(datensatz);
-
-        this._rowList.splice(index, 1);
     }
 }

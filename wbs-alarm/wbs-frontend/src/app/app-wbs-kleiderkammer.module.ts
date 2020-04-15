@@ -65,9 +65,14 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
+import {BestandDialogComponent} from "./views/system/components/bestaende/dialog/bestand-dialog.component";
+import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 
 
 @NgModule({
+    entryComponents:[
+        BestandDialogComponent
+    ],
     imports: [
         BrowserModule,
         FormsModule,
@@ -86,6 +91,7 @@ import {MatListModule} from "@angular/material/list";
         MatTableModule,
         MatCheckboxModule,
         MatToolbarModule,
+        MatDialogModule,
         MatSidenavModule,
         MatListModule
     ],
@@ -110,6 +116,7 @@ import {MatListModule} from "@angular/material/list";
         SystemNewTargetplaceComponent,
         SystemTargetplacesComponent,
         SystemGroessenComponent,
+        BestandDialogComponent,
         NavigationBarComponent
     ],
     providers:    [

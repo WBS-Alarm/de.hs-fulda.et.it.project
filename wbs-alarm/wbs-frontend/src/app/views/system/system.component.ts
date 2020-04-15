@@ -1,7 +1,7 @@
 import {
     ChangeDetectorRef,
     Component,
-    OnInit
+    OnInit, ViewChild
 } from '@angular/core';
 import { TerraNodeTreeConfig } from "@plentymarkets/terra-components";
 import { TranslationService } from "angular-l10n";
@@ -11,6 +11,7 @@ import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import {SystemGlobalSettingsService} from "./system-global-settings.service";
 import {MediaMatcher} from "@angular/cdk/layout";
+import {MatSidenavContainer} from "@angular/material/sidenav";
 
 export interface resultData
 {
@@ -44,17 +45,10 @@ export interface ExampleTreeData
 export class SystemComponent implements OnInit
 {
     public mobileQuery:MediaQueryList;
-
-    public fillerNav = Array.from({length: 50}, (_, i) => `Nav Item ${i + 1}`);
-
-    public fillerContent = Array.from({length: 50}, () =>
-        `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-       labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-       laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-       voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-       cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`);
-
     private _mobileQueryListener: () => void;
+
+    @ViewChild('snav', {static:true})
+    public sidenav:any;
     
     constructor(public nodeTreeConfig:TerraNodeTreeConfig<ExampleTreeData>,
                 public translation:TranslationService,
@@ -72,6 +66,7 @@ export class SystemComponent implements OnInit
     public ngOnInit():void
     {
         this.createCompleteTree();
+        this.sidenav.toggle();
     }
 
     public createCompleteTree():void
