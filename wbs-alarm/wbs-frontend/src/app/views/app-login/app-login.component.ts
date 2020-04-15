@@ -1,11 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {Language, TranslationService} from 'angular-l10n';
-import {TerraAlertComponent, TerraSelectBoxValueInterface} from "@plentymarkets/terra-components";
+import {AlertService, TerraAlertComponent, TerraSelectBoxValueInterface} from "@plentymarkets/terra-components";
 import {LoginService} from "../../core/service/rest/login/login.service";
 import {WbsSitemapHelper} from "../../core/service/rest/sitemap/data/wbs-sitemap.helper";
 import {Router} from "@angular/router";
 import {GlobalRegistryService} from '../../core/global-registry/global-registry.service';
 import {UsersService} from '../../core/service/rest/users/users.service';
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {BestandDialogComponent} from "../system/components/bestaende/dialog/bestand-dialog.component";
+import {ResetPasswordDialogComponent} from "./reset-password/reset-password-dialog.component";
+import {isNullOrUndefined} from "util";
 
 
 @Component({
@@ -15,8 +19,6 @@ import {UsersService} from '../../core/service/rest/users/users.service';
 })
 export class AppLoginComponent implements OnInit
 {
-    public alert:TerraAlertComponent = TerraAlertComponent.getInstance();
-
     @Language()
     public lang:string;
 
@@ -36,9 +38,11 @@ export class AppLoginComponent implements OnInit
 
     constructor(public translation:TranslationService,
                 public loginService:LoginService,
+                public alert:AlertService,
                 public globalRegistryService:GlobalRegistryService,
                 public sitemapHelper:WbsSitemapHelper,
                 public userService:UsersService,
+                public dialog:MatDialog,
                 public router:Router)
     {
     }
@@ -92,12 +96,7 @@ export class AppLoginComponent implements OnInit
        this.loginService.login(this.user).subscribe(
            (result:string) =>
        {
-           this.alert.addAlert({
-               msg:              'Sie werden eingeloggt',
-               type:             'success',
-               dismissOnTimeout: null,
-               identifier:       'login'
-           });
+           this.alert.success('Sie werden eingeloggt');
 
 
            let today:Date = new Date(Date.now());
@@ -125,12 +124,27 @@ export class AppLoginComponent implements OnInit
        {
            console.log(error);
 
-           this.alert.addAlert({
-               msg:              'Falscher Benutzername oder Passwort',
-               type:             'danger',
-               dismissOnTimeout: null,
-               identifier:       'loginError'
-           });
+           this.alert.error('Falscher Benutzername oder Passwort');
        });
+    }
+
+    public resetPassword():void
+    {
+
+        const resetPasswordDialog:MatDialogRef<ResetPasswordDialogComponent> = this.dialog.open(ResetPasswordDialogComponent, {autoFocus:true});
+
+
+        resetPasswordDialog.afterClosed().subscribe((username:string) =>
+        {
+            if(!isNullOrUndefined(username) && username.length > 0)
+            {
+                this.loginService.resetPassword(username).subscribe((result:any) =>
+                {
+                    this.alert.success('Sie haben eine E-Mail mit dem neuen Passwort erhalten!')
+                });
+            }
+        });
+
+
     }
 }

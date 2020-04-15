@@ -67,11 +67,13 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
 import {BestandDialogComponent} from "./views/system/components/bestaende/dialog/bestand-dialog.component";
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
+import {ResetPasswordDialogComponent} from "./views/app-login/reset-password/reset-password-dialog.component";
 
 
 @NgModule({
     entryComponents:[
-        BestandDialogComponent
+        BestandDialogComponent,
+        ResetPasswordDialogComponent
     ],
     imports: [
         BrowserModule,
@@ -117,6 +119,7 @@ import {MatDialog, MatDialogModule} from "@angular/material/dialog";
         SystemTargetplacesComponent,
         SystemGroessenComponent,
         BestandDialogComponent,
+        ResetPasswordDialogComponent,
         NavigationBarComponent
     ],
     providers:    [
