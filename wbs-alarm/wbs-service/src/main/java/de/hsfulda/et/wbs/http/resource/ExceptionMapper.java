@@ -1,14 +1,20 @@
 package de.hsfulda.et.wbs.http.resource;
 
 import de.hsfulda.et.wbs.core.HalJsonResource;
+import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.exception.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class ExceptionMapper {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionMapper.class);
 
     @ExceptionHandler({ResourceNotFoundException.class})
     public final ResponseEntity<HalJsonResource> resourceNotFoundException(Throwable exc) {
@@ -16,7 +22,10 @@ public class ExceptionMapper {
     }
 
     @ExceptionHandler({IllegalStateException.class, MailDeliveryException.class})
-    public final ResponseEntity<HalJsonResource> illegalStateException(Throwable exc) {
+    public final ResponseEntity<HalJsonResource> illegalStateException(@AuthenticationPrincipal WbsUser user,
+            Throwable exc) {
+        LOGGER.error("Unerwarteter Fehler durch {}", user.getUsername());
+        LOGGER.error(exc.getMessage(), exc);
         return toResponse(HttpStatus.INTERNAL_SERVER_ERROR, exc);
     }
 
