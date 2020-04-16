@@ -34,7 +34,7 @@ public class ExceptionMapper {
         return toResponse(HttpStatus.BAD_REQUEST, exc);
     }
 
-    @ExceptionHandler({UserAlreadyExistsException.class, AuthorityAlreadyGrantedException.class, BestandAlreadyExistsException.class})
+    @ExceptionHandler({UserAlreadyExistsException.class, AuthorityAlreadyGrantedException.class, BestandAlreadyExistsException.class, ZielortDeletionException.class})
     public final ResponseEntity<HalJsonResource> alreadyExistsException(Throwable exc) {
         return toResponse(HttpStatus.CONFLICT, exc);
     }
