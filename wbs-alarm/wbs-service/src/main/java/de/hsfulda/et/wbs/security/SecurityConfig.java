@@ -28,11 +28,20 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private static final RequestMatcher PUBLIC_URLS = new OrRequestMatcher(
-            new AntPathRequestMatcher(CONTEXT_ROOT + "/public/**"), new AntPathRequestMatcher("/"),
-            new AntPathRequestMatcher("/index.html"), new AntPathRequestMatcher("/*.js"),
-            new AntPathRequestMatcher("/*.css"), new AntPathRequestMatcher("/assets/**"),
-            new AntPathRequestMatcher("/favicon.ico"));
+    // @formatter:off
+    private static final RequestMatcher PUBLIC_URLS =
+            new OrRequestMatcher(
+                    new AntPathRequestMatcher(CONTEXT_ROOT + "/public/**"),
+                    new AntPathRequestMatcher("/"),
+                    new AntPathRequestMatcher("/index.html"),
+                    new AntPathRequestMatcher("/*.js"),
+                    new AntPathRequestMatcher("/*.css"),
+                    new AntPathRequestMatcher("/*.woff"),
+                    new AntPathRequestMatcher("/*.svg"),
+                    new AntPathRequestMatcher("/*.ttf"),
+                    new AntPathRequestMatcher("/assets/**"),
+                    new AntPathRequestMatcher("/favicon.ico"));
+    // @formatter:on
 
     private static final RequestMatcher PROTECTED_URLS = new NegatedRequestMatcher(PUBLIC_URLS);
 
