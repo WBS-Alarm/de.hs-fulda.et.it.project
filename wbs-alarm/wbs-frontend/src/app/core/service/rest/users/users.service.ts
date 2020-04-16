@@ -16,13 +16,23 @@ export class UsersService
 
     }
 
-    public getOneUser(benutzerId:number):Observable<any>
+    public getOneUser(benutzerId?:number, url?:string):Observable<any>
     {
         this.headers = this.sitemapHelper.setAuthorization();
 
-        return this.http.get('/wbs/benutzer/' + benutzerId.toString(), {
-            headers: this.headers
-        })
+        if(benutzerId)
+        {
+            return this.http.get('/wbs/benutzer/' + benutzerId.toString(), {
+                headers: this.headers
+            })
+        }
+        else if (url)
+        {
+            return this.http.get(url, {
+                headers: this.headers
+            })
+        }
+
     }
 
     public getCurrentUsers():Observable<any>
@@ -53,7 +63,8 @@ export class UsersService
                 password: user.password
             },
             {
-                headers: this.headers
+                headers: this.headers,
+                observe: "response"
             })
     }
 
