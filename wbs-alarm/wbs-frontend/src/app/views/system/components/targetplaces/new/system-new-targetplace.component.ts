@@ -31,21 +31,30 @@ export class SystemNewTargetplaceComponent
                 {
                     this.alert.success('Der Zielort wurde angelegt!');
 
+                    let targetplaceId:string;
+
+                    result.headers.get('Location').split('/wbs/zielort/')[1];
+
+                    this.carrierService.getTargetPlace(result.headers.get('Location')).subscribe((targetplace:any) =>
+                    {
+                        this.systemGlobalSettings.setZielOrte([targetplace]);
+
+                        this.systemTreeConfig.addChildToNodeById(this.systemTreeConfig.currentSelectedNode.id,
+                            {
+                                id:        'zielort' + targetplace.id,
+                                name:      targetplace.name,
+                                isVisible: true,
+                                onClick: ():void =>
+                                {
+                                    this.router.navigateByUrl('plugin/system/carrier/' + this.systemGlobalSettings.getTraegerId() + '/targetplace/' + targetplace.id)
+                                }
+                            }
+                        )
+                    });
+
                     this.newTargetplaceName = '';
 
-                    this.systemGlobalSettings.setZielOrte([result]);
 
-                    this.systemTreeConfig.addChildToNodeById(this.systemTreeConfig.currentSelectedNode.id,
-                        {
-                            id:        'zielort' + result.id,
-                            name:      result.name,
-                            isVisible: true,
-                            onClick: ():void =>
-                                     {
-                                         this.router.navigateByUrl('plugin/system/carrier/' + this.systemGlobalSettings.getTraegerId() + '/targetplace/' + result.id)
-                                     }
-                        }
-                    )
                 },
                 (error:any) =>
                 {

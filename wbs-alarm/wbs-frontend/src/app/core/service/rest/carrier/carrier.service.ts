@@ -81,7 +81,8 @@ export class CarrierService
                 name: targetplaceName
             },
             {
-                headers: this.headers
+                headers: this.headers,
+                observe: 'response'
             })
     }
 
@@ -141,5 +142,12 @@ export class CarrierService
                 headers: this.headers,
                 observe: 'response'
             })
+    }
+
+    public getTargetPlace(url:string):Observable<any>
+    {
+        this.headers = this.sitemapHelper.setAuthorization();
+
+        return this.http.get(url, {headers:this.headers});
     }
 }
