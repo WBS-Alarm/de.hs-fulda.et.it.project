@@ -7,7 +7,6 @@ import {Router} from "@angular/router";
 import {GlobalRegistryService} from '../../core/global-registry/global-registry.service';
 import {UsersService} from '../../core/service/rest/users/users.service';
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {BestandDialogComponent} from "../system/components/bestaende/dialog/bestand-dialog.component";
 import {ResetPasswordDialogComponent} from "./reset-password/reset-password-dialog.component";
 import {isNullOrUndefined} from "util";
 
