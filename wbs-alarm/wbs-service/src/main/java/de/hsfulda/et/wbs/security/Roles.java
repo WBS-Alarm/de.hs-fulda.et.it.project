@@ -9,7 +9,7 @@ public enum Roles {
 
     // @formatter:off
     ADMIN(new String[]{Auth.ADMIN}, RoleName.ADMIN),
-    TR_MAN(new String[]{Auth.ADMIN, Auth.CONTROL}, RoleName.TRAEGER_MANAGER),
+    TR_MAN(new String[]{Auth.ADMIN, Auth.CONTROL, Auth.MANAGE}, RoleName.TRAEGER_MANAGER),
     AC_MAN(new String[]{Auth.WRITE},RoleName.ACCOUTANT),
     RE_ALL(new String[]{Auth.ADMIN, Auth.CONTROL, Auth.MANAGE, Auth.WRITE, Auth.READ}, RoleName.READ_ALL);
     // @formatter:on
