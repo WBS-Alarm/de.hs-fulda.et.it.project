@@ -10,7 +10,7 @@ import {
 } from '@plentymarkets/terra-components';
 import {
     ActivatedRoute,
-    Data
+    Data, Router
 } from '@angular/router';
 import { Observable } from "rxjs";
 import { SystemGlobalSettingsService } from '../../system-global-settings.service';
@@ -30,8 +30,11 @@ export class SystemTargetplacesComponent implements OnInit
     public routeData$:Observable<Data>;
     public gesperrt:boolean;
 
+    private traegerId:number;
+
     constructor(public carrierService:CarrierService,
                 public route:ActivatedRoute,
+                public router:Router,
                 public alert:AlertService,
                 public dialog:MatDialog,
                 public systemGlobalSettings:SystemGlobalSettingsService,
@@ -43,6 +46,11 @@ export class SystemTargetplacesComponent implements OnInit
     public ngOnInit():void
     {
         this.routeData$ = this.route.data;
+
+        this.route.params.subscribe((params:any) =>
+        {
+            this.traegerId = params.carrierId;
+        });
 
         this.route.data.subscribe((data:any) =>
         {
@@ -71,7 +79,9 @@ export class SystemTargetplacesComponent implements OnInit
             {
                 this.alert.success('Der Zielort wurde gelöscht!');
 
-                this.systemTreeConfig.removeNodeById(this.systemTreeConfig.currentSelectedNode.id)
+                this.systemTreeConfig.removeNodeById(this.systemTreeConfig.currentSelectedNode.id);
+
+                this.router.navigateByUrl('/plugin/system/carrier/' + this.traegerId + '/targetplace')
             },
             (error:any) =>
             {
