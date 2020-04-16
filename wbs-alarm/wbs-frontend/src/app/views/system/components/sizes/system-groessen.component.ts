@@ -69,6 +69,9 @@ export class SystemGroessenComponent implements OnInit
         {
             this.groessen = data.groesse._embedded.elemente;
 
+            this.tableData = [];
+            this.dataSource = new MatTableDataSource<GroesseRow>(this.tableData);
+
             this.groessen.forEach((groesse:any) =>
             {
                 this.groessenZurTabelleHinzufuegen(groesse);

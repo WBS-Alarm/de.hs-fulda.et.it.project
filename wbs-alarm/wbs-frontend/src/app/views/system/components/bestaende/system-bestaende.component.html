@@ -8,11 +8,13 @@
     
         <terra-button [inputCaption]="'Bestand ändern'"
                       [inputIcon]="'icon-edit'"
+                      [inputIsDisabled]="selection.selected.length > 0"
                       (outputClicked)="aendereBestand()">
         </terra-button>
         
         <terra-button [inputCaption]="'Bestand löschen'"
                       [inputIcon]="'icon-delete'"
+                      [inputIsDisabled]="selection.selected.length > 0"
                       (outputClicked)="loescheBestand()">
         </terra-button>
         

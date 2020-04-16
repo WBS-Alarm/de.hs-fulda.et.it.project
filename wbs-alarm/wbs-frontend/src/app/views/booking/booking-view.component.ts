@@ -17,6 +17,7 @@ import {AlertType} from '@plentymarkets/terra-components/components/alert/alert-
 import {MatTableDataSource} from "@angular/material/table";
 import {SelectionModel} from "@angular/cdk/collections";
 import {SystemZielortInterface} from "../system/components/targetplaces/data/system-zielort.interface";
+import {ActivatedRoute} from "@angular/router";
 
 export interface RowData {
     von:SystemZielortInterface;
@@ -103,6 +104,7 @@ export class BookingViewComponent implements OnInit
     constructor(public categoryService:CategoryService,
                 public userService:UsersService,
                 public alert:AlertService,
+                public route:ActivatedRoute,
                 public carrierService:CarrierService,
                 public globalRegistryService:GlobalRegistryService,
                 public transaktionService:TransaktionService)
@@ -114,6 +116,11 @@ export class BookingViewComponent implements OnInit
         this.loadCategories();
 
         console.log(this._zielorteKomplett);
+
+        this.route.data.subscribe((data:any) =>
+            {
+                this._traegerId = data.user._embedded.traeger[0].id;
+            })
     }
 
     public _buchen():void
@@ -213,7 +220,7 @@ export class BookingViewComponent implements OnInit
 
             this.loadZielorte(traegerId);
 
-            this.categoryService.getCategories(1).subscribe((kategorien:any) =>
+            this.categoryService.getCategories(this._traegerId).subscribe((kategorien:any) =>
             {
                 this.addCategoriesToSelectBox(kategorien._embedded.elemente);
             });

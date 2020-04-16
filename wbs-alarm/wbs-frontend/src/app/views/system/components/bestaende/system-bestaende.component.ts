@@ -194,21 +194,24 @@ export class SystemBestaendeComponent implements OnInit
 
     public aendereBestand():void
     {
-        const editDialog:MatDialogRef<BestandDialogComponent> = this.dialog.open(BestandDialogComponent, {autoFocus:true});
-        this._bestandAendernAnzahl = this.selection.selected[0].anzahl;
-
-        this._bestandAendernBestand = this.selection.selected[0].bestand;
-
-        editDialog.afterClosed().subscribe((neuerBestand:number) =>
+        if(this.selection.selected.length > 0)
         {
-            if(neuerBestand > 0)
-            {
-                this.saveChangesToBestand(neuerBestand);
+            const editDialog:MatDialogRef<BestandDialogComponent> = this.dialog.open(BestandDialogComponent, {autoFocus:true});
+            this._bestandAendernAnzahl = this.selection.selected[0].anzahl;
 
-                this.selection.selected[0].anzahl = neuerBestand;
-                this.dataSource._updateChangeSubscription();
-            }
-        });
+            this._bestandAendernBestand = this.selection.selected[0].bestand;
+
+            editDialog.afterClosed().subscribe((neuerBestand:number) =>
+            {
+                if(neuerBestand > 0)
+                {
+                    this.saveChangesToBestand(neuerBestand);
+
+                    this.selection.selected[0].anzahl = neuerBestand;
+                    this.dataSource._updateChangeSubscription();
+                }
+            });
+        }
     }
 
     public saveChangesToBestand(neuerBestand:number):void

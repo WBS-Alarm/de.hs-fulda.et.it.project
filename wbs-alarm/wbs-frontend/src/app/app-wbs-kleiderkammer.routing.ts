@@ -78,7 +78,11 @@ const appRoutes:Routes = [
                  canActivate: GUARDS,
                  data: {
                      label: 'booking.booking'
-                 }
+                 },
+                resolve:
+                    {
+                        user: StartUserResolver
+                    }
              },
             {
                 path: 'reports',
