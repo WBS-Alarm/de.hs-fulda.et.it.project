@@ -9,9 +9,7 @@ import {
     Data
 } from '@angular/router';
 import {
-    TerraSimpleTableCellInterface, TerraSimpleTableComponent,
-    TerraSimpleTableHeaderCellInterface,
-    TerraSimpleTableRowInterface
+    AlertService,
 } from '@plentymarkets/terra-components';
 import { GroesseService } from '../../../../core/service/rest/groesse/groesse.service';
 import {MatTableDataSource} from "@angular/material/table";
@@ -32,19 +30,10 @@ export class SystemGroessenComponent implements OnInit
 
     public routeData$:Observable<Data>;
 
-    public _headerList:Array<TerraSimpleTableHeaderCellInterface> = [];
-    public _rowList:Array<TerraSimpleTableRowInterface<any>> = [];
-
     public groessen:any;
 
     @Input()
     public categoryId:number;
-
-    // @Input()
-    // public alert:TerraAlertComponent;
-
-    @ViewChild('table', {static:true})
-    public table:TerraSimpleTableComponent<any>;
 
     private tableData:Array<GroesseRow> = [];
 
@@ -68,7 +57,8 @@ export class SystemGroessenComponent implements OnInit
 
 
     constructor(public route:ActivatedRoute,
-                public groessenService:GroesseService)
+                public groessenService:GroesseService,
+                private alert:AlertService)
     {}
 
     public ngOnInit():void
@@ -78,11 +68,6 @@ export class SystemGroessenComponent implements OnInit
         this.route.data.subscribe((data:any) =>
         {
             this.groessen = data.groesse._embedded.elemente;
-
-            this._headerList = [];
-            this._rowList = [];
-
-            // this.erstelleTabellenStruktur();
 
             this.groessen.forEach((groesse:any) =>
             {
@@ -97,21 +82,13 @@ export class SystemGroessenComponent implements OnInit
     {
         this.groessenService.addGroesseForTraeger(this.categoryId, this._groesse).subscribe((result:any) =>
         {
-            // this.alert.addAlert({
-            //         type:             AlertType.success,
-            //         msg:              'Die Größe wurde gespeichert.',
-            //         dismissOnTimeout: 0
-            // })
+            this.alert.success('Die Größe wurde gespeichert.');
 
-            this.groessenZurTabelleHinzufuegen(this._groesse);
+            this.groessenZurTabelleHinzufuegen({name: this._groesse});
         },
             (error:any) =>
             {
-                // this.alert.addAlert({
-                //     type: AlertType.success,
-                //     msg:  'Beim Speichern der Größe ist ein Fehler aufgetreten: ' + error.message,
-                //     dismissOnTimeout: 0
-                // })
+                this.alert.error('Die Größe konnte nicht gespeichert werden!')
             })
     }
 

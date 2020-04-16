@@ -53,7 +53,7 @@ export class BerichtViewComponent implements OnInit
     {
         this.berichtService.listBestaendeZuTraeger(this.trager.id).subscribe((bericht:any) =>
         {
-            bericht._embedded.elements.forech((element:any) =>
+            bericht._embedded.elements.forEach((element:any) =>
             {
                 this.tableData.push({
                     traeger: element.traeger,

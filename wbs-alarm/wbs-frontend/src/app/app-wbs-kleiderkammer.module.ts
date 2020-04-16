@@ -70,6 +70,8 @@ import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {ResetPasswordDialogComponent} from "./views/app-login/reset-password/reset-password-dialog.component";
 import {BerichtViewComponent} from "./views/reports/bericht-view.component";
 import {ReportService} from "./views/reports/service/report.service";
+import {NewPasswordComponent} from "./views/app-login/new-password/new-password.component";
+import {NewPasswordService} from "./views/app-login/new-password/service/new-password.service";
 
 
 @NgModule({
@@ -123,7 +125,8 @@ import {ReportService} from "./views/reports/service/report.service";
         BestandDialogComponent,
         ResetPasswordDialogComponent,
         BerichtViewComponent,
-        NavigationBarComponent
+        NavigationBarComponent,
+        NewPasswordComponent
     ],
     providers:    [
         {
@@ -165,6 +168,7 @@ import {ReportService} from "./views/reports/service/report.service";
         ReportService,
         StartUserResolver,
         SystemAuthorityUserResolver,
+        NewPasswordService,
         TerraNodeTreeConfig
     ],
     bootstrap:    [

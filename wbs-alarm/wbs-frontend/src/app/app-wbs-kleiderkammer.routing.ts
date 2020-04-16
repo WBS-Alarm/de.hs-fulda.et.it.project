@@ -31,6 +31,7 @@ import { SystemGroessenResolver } from './views/system/components/sizes/system-g
 import { SystemBestaendeResolver } from './views/system/components/bestaende/system-bestaende.resolver';
 import { StartUserResolver } from './views/start/start-user.resolver';
 import {BerichtViewComponent} from "./views/reports/bericht-view.component";
+import {NewPasswordComponent} from "./views/app-login/new-password/new-password.component";
 
 const appRoutes:Routes = [
     {
@@ -41,6 +42,10 @@ const appRoutes:Routes = [
     {
         path: 'login',
         component: AppLoginComponent
+    },
+    {
+        path: 'update-password/:token',
+        component: NewPasswordComponent
     },
     {
         path: 'plugin',
