@@ -35,6 +35,11 @@ export class NavigationBarComponent implements OnInit
             name:      this.translation.translate('system.system'),
             url:       'plugin/system',
             isVisible: true
+        },
+        {
+            name: 'Berichte',
+            url: 'plugin/reports',
+            isVisible: true
         }
     ];
 

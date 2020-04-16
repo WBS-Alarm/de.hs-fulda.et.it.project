@@ -30,6 +30,7 @@ import { SystemAuthorityUserResolver } from './views/system/components/user/reso
 import { SystemGroessenResolver } from './views/system/components/sizes/system-groessen.resolver';
 import { SystemBestaendeResolver } from './views/system/components/bestaende/system-bestaende.resolver';
 import { StartUserResolver } from './views/start/start-user.resolver';
+import {BerichtViewComponent} from "./views/reports/bericht-view.component";
 
 const appRoutes:Routes = [
     {
@@ -74,6 +75,17 @@ const appRoutes:Routes = [
                      label: 'booking.booking'
                  }
              },
+            {
+                path: 'reports',
+                component: BerichtViewComponent,
+                canActivate: GUARDS,
+                data: {
+                    label: 'report.report'
+                },
+                resolve: {
+                    user: StartUserResolver
+                }
+            },
             {
                 path: 'system',
                 component: SystemComponent,
