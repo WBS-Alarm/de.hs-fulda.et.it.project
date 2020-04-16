@@ -75,21 +75,6 @@ export class AppLoginComponent implements OnInit
         this.languageCaption = this.translation.translate('login.language', this.lang);
     }
 
-    // public initLanguageValues():void
-    // {
-    //     this.languages =
-    //         [
-    //             {
-    //                 caption: 'Deutsch',
-    //                 value: 'de'
-    //             },
-    //             {
-    //                 caption: 'English',
-    //                 value: 'en'
-    //             }
-    //         ];
-    // }
-
     public login():void
     {
        this.loginService.login(this.user).subscribe(
@@ -139,7 +124,7 @@ export class AppLoginComponent implements OnInit
             {
                 this.loginService.resetPassword(username).subscribe((result:any) =>
                 {
-                    this.alert.success('Sie haben eine E-Mail mit dem neuen Passwort erhalten!')
+                    this.alert.success('Sie haben eine E-Mail mit einem Link zum Erstellen eines neuen Passworts erhalten!')
                 });
             }
         });

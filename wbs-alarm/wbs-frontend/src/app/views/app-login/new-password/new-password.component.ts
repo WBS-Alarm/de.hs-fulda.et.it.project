@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { OnInit } from '@angular/core';
 import {AlertService} from "@plentymarkets/terra-components";
 import {NewPasswordService} from "./service/new-password.service";
@@ -14,8 +14,10 @@ export class NewPasswordComponent implements OnInit
     public token:string = '';
 
     public password:string ='';
+    public repeatPassword:string ='';
 
     constructor(private route:ActivatedRoute,
+                private router:Router,
                 private newPasswordService:NewPasswordService,
                 private alert:AlertService)
     {
@@ -31,9 +33,17 @@ export class NewPasswordComponent implements OnInit
 
     public newPassword():void
     {
-        this.newPasswordService.newPassword({token: this.token, password:this.password}).subscribe((result:any) =>
+        if(this.password === this.repeatPassword)
         {
-            this.alert.success('Ihr Passwort wurde zurückgesetzt!');
-        })
+            this.newPasswordService.newPassword({token: this.token, password:this.password}).subscribe((result:any) =>
+            {
+                this.alert.success('Ihr Passwort wurde zurückgesetzt!');
+                this.router.navigateByUrl('login');
+            })
+        }
+        else
+        {
+            this.alert.error('Die Passwörter stimmen nicht überein!')
+        }
     }
 }
