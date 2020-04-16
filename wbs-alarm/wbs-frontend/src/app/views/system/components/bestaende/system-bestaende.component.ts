@@ -65,7 +65,7 @@ export class SystemBestaendeComponent implements OnInit
     private tableData:Array<BestandRow> = [];
 
     public displayedColumns:Array<string> = ['select', 'kategorie', 'größe', 'anzahl'];
-    public dataSource:MatTableDataSource<BestandRow> = new MatTableDataSource<BestandRow>(this.tableData);
+    public dataSource:MatTableDataSource<BestandRow>;
     public selection:SelectionModel<BestandRow> = new SelectionModel<BestandRow>(false, []);
 
     public disabled:boolean = false;
@@ -86,8 +86,12 @@ export class SystemBestaendeComponent implements OnInit
 
         this.routeData$ = this.route.data;
 
+        this.dataSource = new MatTableDataSource<BestandRow>(this.tableData);
+
         this.route.data.subscribe((data:any) =>
         {
+            this.tableData = [];
+            this.dataSource = new MatTableDataSource<BestandRow>(this.tableData);
             data.bestaende._embedded.elemente.forEach((element:any) =>
             {
                 this.addRowToTable(
