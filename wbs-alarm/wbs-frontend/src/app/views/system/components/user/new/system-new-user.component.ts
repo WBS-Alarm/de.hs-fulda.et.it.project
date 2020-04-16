@@ -8,6 +8,7 @@ import {
     TerraNodeTreeConfig
 } from "@plentymarkets/terra-components";
 import { ExampleTreeData } from '../../../system.component';
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -26,7 +27,8 @@ export class SystemNewUserComponent
     constructor(public usersService:UsersService,
                 public alert:AlertService,
                 public systemGlobalSettings:SystemGlobalSettingsService,
-                public systemTreeConfig:TerraNodeTreeConfig<ExampleTreeData>)
+                public systemTreeConfig:TerraNodeTreeConfig<ExampleTreeData>,
+                public router:Router)
     {
 
     }
@@ -38,18 +40,39 @@ export class SystemNewUserComponent
         this.usersService.registerUser(traegerId, this.newUser).subscribe(
             (result:any) =>
             {
+                this.usersService.getOneUser(undefined, result.headers.get('Location')).subscribe((user:any) =>
+                {
+                    this.systemTreeConfig.addChildToNodeById(this.systemTreeConfig.currentSelectedNode.id,
+                       {
+                           id:        user.id,
+                           name:      user.username,
+                           isVisible: true,
+                           onClick: ():void =>
+                           {
+                               this.router.navigateByUrl('plugin/system/carrier/' + traegerId + '/user/' + user.id)
+                           },
+                           children:
+                               [
+                                   {
+                                       id: 'benutzer ' + user.id + '/authority/' + user.id,
+                                       name: 'Berechtigungen',
+                                       isVisible: true,
+                                       onClick: ():void =>
+                                       {
+                                           this.router.navigateByUrl('plugin/system/carrier/' + traegerId + '/user/' + user.id + '/authority/' + user.id)
+                                       },
+                                   }
+                               ]
+                       }
+                    );
+
+                    this.newUser.username = '';
+                    this.newUser.password = '';
+                });
+
                 this.alert.success('Der Benutzer wurde angelegt!');
 
-                //this.systemTreeConfig.addChildToNodeById(this.systemTreeConfig.currentSelectedNode.id,
-                //    {
-                //        id:        result.id,
-                //        name:      result.name,
-                //        isVisible: true
-                //    }
-                //);
 
-                this.newUser.username = '';
-                this.newUser.password = '';
             },
             (error:any) =>
             {

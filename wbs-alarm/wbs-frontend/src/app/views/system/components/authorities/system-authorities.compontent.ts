@@ -55,6 +55,8 @@ export class SystemAuthoritiesCompontent implements OnInit
 
             this.user1 = data.userWithAuthorities;
 
+            this.values = [];
+
             data.authority._embedded.authorities.forEach((authority:any) =>
             {
                 this.values.push(
@@ -87,7 +89,7 @@ export class SystemAuthoritiesCompontent implements OnInit
             let userHasAuthority:any = this.user1._embedded.authorities.find((authority:any) =>
             {
                 return authority.id === value.value;
-            })
+            });
 
             if(value.selected && isNullOrUndefined(userHasAuthority))
             {
