@@ -125,7 +125,7 @@ export class BookingViewComponent implements OnInit
                 {
                     this.alert.success('Die Buchung wurde erfolgreich durchgeführt');
 
-                    console.log('Erfolg')
+                    console.log('Erfolg');
                     console.log(result)
                 },
                 (error:any) =>
@@ -136,6 +136,7 @@ export class BookingViewComponent implements OnInit
                     console.log(error)
                 })
         })
+
     }
 
 
@@ -149,13 +150,22 @@ export class BookingViewComponent implements OnInit
         {
             this.categoryService.getGroesseForCategory(kategroie.id).subscribe((groessen) =>
             {
-                groessen._embedded.elemente.forEach((groesse) =>
+                if(groessen._embedded.elemente.length === 0)
                 {
-                    this._groessen.push({
-                        value:   groesse,
-                        caption: groesse.name
+                    this._groessen = [{caption:'Bitte wählen', value: null}];
+                }
+                else
+                {
+                    this._groessen = [];
+                    groessen._embedded.elemente.forEach((groesse) =>
+                    {
+                        this._groessen.push({
+                            value:   groesse,
+                            caption: groesse.name
+                        })
                     })
-                })
+                }
+
             });
         }
     }

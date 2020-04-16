@@ -25,10 +25,10 @@
         </mat-expansion-panel-header>
 
         <div *ngFor="let buchung of _buchungen">
-            <span>{{buchung.benutzer}} hat am {{buchung.date}} die Positionen {{buchung.positionen}} von {{buchung.von}} nach {{buchung.nach}} gebucht!</span>
+            <span>{{buchung.benutzer}} hat am {{buchung.date | date}} die Positionen {{buchung.positionen}} von {{buchung.von}} nach {{buchung.nach}} gebucht!</span>
         </div>
 
-        <div *ngIf="_buchungen">
+        <div *ngIf="!_buchungen">
             Es sind noch keine Buchungen im System getätigt worden!
         </div>
     </mat-expansion-panel>
