@@ -2,6 +2,7 @@
     <terra-portlet *ngIf="!gesperrt">
         <terra-button [inputCaption]="'Bestand erfassen'"
                       [inputIcon]="'icon-save'"
+                      [inputIsDisabled]="disabled"
                       (outputClicked)="addBestand()">
         </terra-button>
     
@@ -24,7 +25,7 @@
             </terra-select-box>
             
             <terra-select-box [inputName]="'Größen'"
-                              [inputIsDisabled]="_groessen.length === 0"
+                              [inputIsDisabled]="disabled"
                               [inputListBoxValues]="_groessen"
                               [(ngModel)]="_groesse">
             

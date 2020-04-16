@@ -68,6 +68,8 @@ export class SystemBestaendeComponent implements OnInit
     public dataSource:MatTableDataSource<BestandRow> = new MatTableDataSource<BestandRow>(this.tableData);
     public selection:SelectionModel<BestandRow> = new SelectionModel<BestandRow>(false, []);
 
+    public disabled:boolean = false;
+
     constructor(public route:ActivatedRoute,
                 public groessenService:GroesseService,
                 public categoryService:CategoryService,
@@ -148,14 +150,30 @@ export class SystemBestaendeComponent implements OnInit
 
     }
 
+    public tooltipForButton():string
+    {
+        if(this._groessen.length === 0)
+        {
+            return 'Für diese Kategorie sind noch keine Größen angelegt!';
+        }
+        else
+        {
+            return '';
+        }
+    }
+
     public ladeGroessen():void
     {
         if(!isNullOrUndefined(this._kategorie))
         {
-            this._groessen = [];
+            this._groessen = [{caption: 'Bitte wählen', value: null}];
+
+            this._groesse = {caption: 'Bitte wählen', value: null};
 
             this.groessenService.getGroessenForKategorie(this._kategorie.id).subscribe((result:any) =>
             {
+                this.disabled = result._embedded.elemente.length === 0;
+
                 result._embedded.elemente.forEach((groesse:any) =>
                 {
                     this._groessen.push(
@@ -166,6 +184,7 @@ export class SystemBestaendeComponent implements OnInit
                     )
                 })
             })
+
         }
     }
 
