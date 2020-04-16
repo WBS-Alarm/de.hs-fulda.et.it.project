@@ -15,6 +15,16 @@ export class CategoryService
 
     }
 
+    public getCategory(categoryId:number):Observable<any>
+    {
+        this.headers = this.sitemapHelper.setAuthorization();
+
+        return this.http.get('/wbs/kategorie/' + categoryId,
+            {
+                headers: this.headers
+            });
+    }
+
     public getCategories(traegerId:number):Observable<any>
     {
         this.headers = this.sitemapHelper.setAuthorization();

@@ -8,6 +8,7 @@ import {
 } from "@plentymarkets/terra-components";
 import { ExampleTreeData } from '../../../system.component';
 import { Router } from '@angular/router';
+import {CategoryService} from "../../../../../core/service/rest/categories/category.service";
 
 @Component({
     selector: 'system-new-categories',
@@ -19,6 +20,7 @@ export class SystemNewCategoryComponent
     public categoryName:string;
 
     constructor(public carrierService:CarrierService,
+                public categoryService:CategoryService,
                 public systemGlobalSettings:SystemGlobalSettingsService,
                 public alert:AlertService,
                 public nodeTreeConfig:TerraNodeTreeConfig<ExampleTreeData>,
@@ -36,19 +38,24 @@ export class SystemNewCategoryComponent
             {
                 this.alert.success('Kategorie wurde erstellt!');
 
+                let kategorieId:any = result.headers.get('Location').split('/wbs/kategorie/')[1];
+
                 this.nodeTreeConfig.addChildToNodeById(this.nodeTreeConfig.currentSelectedNode.id,
                     {
-                        id:        'kategorie' + result.id,
-                        name:      result.name,
+                        id:        'kategorie' + kategorieId,
+                        name:      this.categoryName,
                         isVisible: true,
                         onClick: ():void =>
                                    {
-                                       this.router.navigateByUrl('plugin/system/carrier/' + traegerId + '/category/' + result.id)
+                                       this.router.navigateByUrl('plugin/system/carrier/' + traegerId + '/category/' + kategorieId)
                                    }
                     }
                 );
 
-                this.systemGlobalSettings.setKategorien([result]);
+                this.categoryService.getCategory(kategorieId).subscribe((result:any) =>
+                {
+                    this.systemGlobalSettings.setKategorien([result]);
+                });
 
                 this.categoryName = '';
             },

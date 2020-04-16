@@ -138,7 +138,8 @@ export class CarrierService
                 name: categoryName
             },
             {
-                headers: this.headers
+                headers: this.headers,
+                observe: 'response'
             })
     }
 }
