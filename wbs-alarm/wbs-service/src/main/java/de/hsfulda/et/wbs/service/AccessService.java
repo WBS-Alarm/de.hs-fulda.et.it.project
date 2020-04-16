@@ -18,6 +18,9 @@ public class AccessService {
     }
 
     public <T> T hasAccessOnBenutzer(final WbsUser user, final Long benutzerId, final Supplier<T> supplier) {
+        if (user.isAdmin()) {
+            return evaluteCount(1L, benutzerId, "Benutzer", supplier);
+        }
 
         Long counts = repo.findTraegerByUserAndBenutzerId(user.getId(), benutzerId);
         return evaluteCount(counts, benutzerId, "Benutzer", supplier);

@@ -45,7 +45,7 @@ public class TraegerListResource {
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")
     HttpEntity<HalJsonResource> get(@AuthenticationPrincipal WbsUser user) {
-        return new HttpEntity<>(new TraegerListHalJson(user, getAction.perform()));
+        return new HttpEntity<>(new TraegerListHalJson(user, getAction.perform(user)));
     }
 
     /**

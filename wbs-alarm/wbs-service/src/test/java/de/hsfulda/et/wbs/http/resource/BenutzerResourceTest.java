@@ -62,8 +62,7 @@ class BenutzerResourceTest extends ResourceTest {
     @DisplayName("wird bei einem anderen Träger nicht angezeigt")
     @Test
     void getBenutzerAndererTraeger() throws Exception {
-        mockMvc.perform(get(BenutzerResource.PATH, getBenutzerId(HE_USER))
-                .header("Authorization", getTokenAsSuperuser())
+        mockMvc.perform(get(BenutzerResource.PATH, getBenutzerId(HE_USER)).header("Authorization", getToken(LE_USER))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
