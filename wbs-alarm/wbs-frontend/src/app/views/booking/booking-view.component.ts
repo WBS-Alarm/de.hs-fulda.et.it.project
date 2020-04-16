@@ -137,6 +137,9 @@ export class BookingViewComponent implements OnInit
                 })
         })
 
+        this.tableData = [];
+        this.dataSource = new MatTableDataSource<RowData>(this.tableData);
+        this.buchungsliste = [];
     }
 
 
