@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CarrierService} from "../../../../core/service/rest/carrier/carrier.service";
-import {TerraAlertComponent, TerraNodeTreeConfig} from "@plentymarkets/terra-components";
+import {AlertService, TerraAlertComponent, TerraNodeTreeConfig} from "@plentymarkets/terra-components";
 import {ExampleTreeData} from "../../system.component";
 import { Router } from '@angular/router';
 import { SystemGlobalSettingsService } from '../../system-global-settings.service';
@@ -14,11 +14,10 @@ export class SystemCarrierComponent implements OnInit
 {
     public newCarrierName:string;
 
-    public alert:TerraAlertComponent = TerraAlertComponent.getInstance();
-
     constructor(public carrierService:CarrierService,
                 public nodeTreeConfig:TerraNodeTreeConfig<ExampleTreeData>,
                 public router:Router,
+                public alert:AlertService,
                 public systemTreeSettings:SystemGlobalSettingsService)
     {
 
@@ -33,12 +32,7 @@ export class SystemCarrierComponent implements OnInit
     {
         this.carrierService.createCarrier(this.newCarrierName).subscribe((result:any) =>
             {
-                this.alert.addAlert({
-                    msg:              'Der Träger wurde angelegt!',
-                    type:             'success',
-                    dismissOnTimeout: null,
-                    identifier:       'carrierCreated'
-                });
+                this.alert.success('Der Träger wurde angelegt!');
 
                 this.newCarrierName = '';
 
@@ -57,12 +51,7 @@ export class SystemCarrierComponent implements OnInit
             },
             (error:any) =>
             {
-                this.alert.addAlert({
-                    msg:              'Beim Anlegen ist ein Fehler aufgetreten!',
-                    type:             'danger',
-                    dismissOnTimeout: null,
-                    identifier:       'carrierNotCreated'
-                })
+                this.alert.error('Beim Anlegen ist ein Fehler aufgetreten!');
             }
         )
     }

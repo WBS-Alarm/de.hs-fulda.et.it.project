@@ -53,17 +53,51 @@ import {SystemNewCategoryComponent} from "./views/system/components/categories/n
 import {SystemEditCarrierComponent} from "./views/system/components/carrier/edit-carrier/system-edit-carrier.component";
 import {SystemNewTargetplaceComponent} from "./views/system/components/targetplaces/new/system-new-targetplace.component";
 import {TranslationProvider} from "./core/localization/translation-provider";
+import {MatExpansionModule} from "@angular/material/expansion";
+import {MatRadioModule} from "@angular/material/radio";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatSelectModule} from "@angular/material/select";
+import {MatInputModule} from "@angular/material/input";
+import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
+import {MatTableModule} from "@angular/material/table";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatListModule} from "@angular/material/list";
+import {BestandDialogComponent} from "./views/system/components/bestaende/dialog/bestand-dialog.component";
+import {MatDialog, MatDialogModule} from "@angular/material/dialog";
+import {ResetPasswordDialogComponent} from "./views/app-login/reset-password/reset-password-dialog.component";
+import {BerichtViewComponent} from "./views/reports/bericht-view.component";
+import {ReportService} from "./views/reports/service/report.service";
 
 
 @NgModule({
-    imports:      [
+    entryComponents:[
+        BestandDialogComponent,
+        ResetPasswordDialogComponent
+    ],
+    imports: [
         BrowserModule,
         FormsModule,
         HttpClientModule,
-        TranslationModule.forRoot(l10nConfig, { translationProvider: TranslationProvider }),
+        TranslationModule.forRoot(l10nConfig, {translationProvider: TranslationProvider}),
         TerraComponentsModule,
         BrowserAnimationsModule,
-        routing
+        routing,
+        MatExpansionModule,
+        MatRadioModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatInputModule,
+        MatButtonModule,
+        MatIconModule,
+        MatTableModule,
+        MatCheckboxModule,
+        MatToolbarModule,
+        MatDialogModule,
+        MatSidenavModule,
+        MatListModule
     ],
     declarations: [
         AppWbsKleiderkammer,
@@ -86,6 +120,9 @@ import {TranslationProvider} from "./core/localization/translation-provider";
         SystemNewTargetplaceComponent,
         SystemTargetplacesComponent,
         SystemGroessenComponent,
+        BestandDialogComponent,
+        ResetPasswordDialogComponent,
+        BerichtViewComponent,
         NavigationBarComponent
     ],
     providers:    [
@@ -125,6 +162,7 @@ import {TranslationProvider} from "./core/localization/translation-provider";
         SystemCategoryResolver,
         SystemAuthorityResolver,
         SystemGroessenResolver,
+        ReportService,
         StartUserResolver,
         SystemAuthorityUserResolver,
         TerraNodeTreeConfig

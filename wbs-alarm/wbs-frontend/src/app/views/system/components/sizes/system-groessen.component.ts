@@ -1,7 +1,7 @@
 import {
     Component,
     Input,
-    OnInit
+    OnInit, ViewChild
 } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
@@ -9,12 +9,17 @@ import {
     Data
 } from '@angular/router';
 import {
-    TerraAlertComponent,
-    TerraSimpleTableCellInterface,
+    TerraSimpleTableCellInterface, TerraSimpleTableComponent,
     TerraSimpleTableHeaderCellInterface,
     TerraSimpleTableRowInterface
 } from '@plentymarkets/terra-components';
 import { GroesseService } from '../../../../core/service/rest/groesse/groesse.service';
+import {MatTableDataSource} from "@angular/material/table";
+import {SelectionModel} from "@angular/cdk/collections";
+
+export interface GroesseRow {
+    groesse:any;
+}
 
 @Component({
     selector: 'system-groessen',
@@ -38,6 +43,29 @@ export class SystemGroessenComponent implements OnInit
     // @Input()
     // public alert:TerraAlertComponent;
 
+    @ViewChild('table', {static:true})
+    public table:TerraSimpleTableComponent<any>;
+
+    private tableData:Array<GroesseRow> = [];
+
+    public displayedColumns:Array<string> = ['select', 'name'];
+    public dataSource:MatTableDataSource<GroesseRow> = new MatTableDataSource<GroesseRow>(this.tableData);
+    public selection:SelectionModel<GroesseRow> = new SelectionModel<GroesseRow>(true, []);
+
+    /** Whether the number of selected elements matches the total number of rows. */
+    isAllSelected() {
+        let numSelected = this.selection.selected.length;
+        let numRows = this.dataSource.data.length;
+        return numSelected === numRows;
+    }
+
+    /** Selects all rows if they are not all selected; otherwise clear selection. */
+    masterToggle() {
+        this.isAllSelected() ?
+            this.selection.clear() :
+            this.dataSource.data.forEach(row => this.selection.select(row));
+    }
+
 
     constructor(public route:ActivatedRoute,
                 public groessenService:GroesseService)
@@ -54,7 +82,7 @@ export class SystemGroessenComponent implements OnInit
             this._headerList = [];
             this._rowList = [];
 
-            this.erstelleTabellenStruktur();
+            // this.erstelleTabellenStruktur();
 
             this.groessen.forEach((groesse:any) =>
             {
@@ -75,7 +103,7 @@ export class SystemGroessenComponent implements OnInit
             //         dismissOnTimeout: 0
             // })
 
-            //this.groessenZurTabelleHinzufuegen(result);
+            this.groessenZurTabelleHinzufuegen(this._groesse);
         },
             (error:any) =>
             {
@@ -89,47 +117,12 @@ export class SystemGroessenComponent implements OnInit
 
     public groessenZurTabelleHinzufuegen(groesse:any):void
     {
+        this.tableData.push(
+            {
+                groesse: groesse
+            }
+        );
 
-            let idCell:TerraSimpleTableCellInterface = {caption: groesse.id};
-
-            let nameCell:TerraSimpleTableCellInterface = {
-                caption: groesse.name
-            };
-
-            let row:TerraSimpleTableRowInterface<any>;
-
-            let cellList:Array<TerraSimpleTableCellInterface> = [];
-
-            cellList.push(idCell, nameCell);
-
-
-            row = {
-                cellList: cellList,
-                disabled: false,
-                selected: false
-            };
-
-            this._rowList.push(row);
+        this.dataSource._updateChangeSubscription();
     }
-
-    public erstelleTabellenStruktur():void
-    {
-        let groesseId:TerraSimpleTableHeaderCellInterface = {
-            caption: 'ID',
-            width:   '100',
-        };
-
-        let groesseCaption:TerraSimpleTableHeaderCellInterface = {
-            caption: 'GROESSE',
-            width:   '100',
-        };
-
-        this._headerList.push(groesseId, groesseCaption);
-    }
-
-    public selectRow(event:any):void
-    {
-        event.selected = true;
-    }
-
 }

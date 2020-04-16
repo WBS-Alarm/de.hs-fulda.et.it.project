@@ -12,7 +12,7 @@ import {
     Data,
     Router
 } from '@angular/router';
-import { TerraAlertComponent } from '@plentymarkets/terra-components';
+import {AlertService, TerraAlertComponent} from '@plentymarkets/terra-components';
 import { GlobalRegistryService } from '../../core/global-registry/global-registry.service';
 import { TransaktionService } from '../../core/service/rest/transaktions/transaktion.service';
 import { Observable } from 'rxjs';
@@ -24,8 +24,6 @@ import { Observable } from 'rxjs';
 })
 export class StartComponent implements OnInit
 {
-    public alert:TerraAlertComponent = TerraAlertComponent.getInstance();
-
     @Language()
     public lang:string;
 
@@ -41,6 +39,7 @@ export class StartComponent implements OnInit
 
     constructor(public loginService:LoginService,
                 public router:Router,
+                public alert:AlertService,
                 public route:ActivatedRoute,
                 public globalRegistry:GlobalRegistryService,
                 public transaktionsService:TransaktionService)
@@ -87,12 +86,7 @@ export class StartComponent implements OnInit
         this.globalRegistry.setisLoggedIn(false);
         this.globalRegistry.isLoginActive = false;
 
-        this.alert.addAlert({
-            msg:              'Sie werden ausgeloggt',
-            type:             'success',
-            dismissOnTimeout: null,
-            identifier:       'logout'
-        });
+        this.alert.success('Sie werden ausgeloggt!');
 
         let body:HTMLElement = document.getElementById('body');
         let html:HTMLElement = document.getElementById('html');

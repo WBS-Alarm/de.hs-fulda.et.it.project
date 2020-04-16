@@ -42,4 +42,15 @@ export class LoginService
                 headers: this.headers
             })
     }
+
+    public resetPassword(username:string):Observable<any>
+    {
+        this.headers = this.sitemapHelper.setAuthorization();
+
+        return this.http.post('/wbs/public/forgot/' + username,
+            {},
+            {
+                headers:this.headers
+            });
+    }
 }

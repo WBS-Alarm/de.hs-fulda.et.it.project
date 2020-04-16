@@ -3,6 +3,7 @@ import {
     OnInit
 } from "@angular/core";
 import {
+    AlertService,
     TerraAlertComponent,
     TerraNodeTreeConfig
 } from "@plentymarkets/terra-components";
@@ -30,11 +31,9 @@ export class SystemUserComponent implements OnInit
 
     public mulitValues:any;
 
-
-    public alert:TerraAlertComponent = TerraAlertComponent.getInstance();
-
     constructor(public route:ActivatedRoute,
                 public usersService:UsersService,
+                public alert:AlertService,
                 public systemTreeConfig:TerraNodeTreeConfig<ExampleTreeData>,
                 public systemGlobalSettings:SystemGlobalSettingsService)
     {
@@ -55,25 +54,11 @@ export class SystemUserComponent implements OnInit
             user).subscribe(
             (result:any) =>
             {
-                this.alert.addAlert(
-                    {
-                        msg:              'Änderungen gespeichert!',
-                        type:             'success',
-                        dismissOnTimeout: null,
-                        identifier:       'userEdited'
-                    }
-                )
+                this.alert.success('Änderungen gespeichert!');
             },
             (error:any) =>
             {
-                this.alert.addAlert(
-                    {
-                        msg:              'Änderungen wurden nicht gespeichert!',
-                        type:             'danger',
-                        dismissOnTimeout: null,
-                        identifier:       'userNotEdited'
-                    }
-                )
+                this.alert.error('Änderungen wurden nicht gespeichert!');
             }
         )
     }
@@ -83,27 +68,13 @@ export class SystemUserComponent implements OnInit
         this.usersService.deleteUser(user.id).subscribe(
             (result:any) =>
         {
-            this.alert.addAlert(
-                {
-                    msg:              'Der Benutzer wurde gelöscht',
-                    type:             'success',
-                    dismissOnTimeout: null,
-                    identifier:       'userDeleted'
-                }
-            );
+            this.alert.success( 'Der Benutzer wurde gelöscht');
 
             this.systemTreeConfig.removeNodeById(this.systemTreeConfig.currentSelectedNode.id)
         },
             (error:any) =>
             {
-                this.alert.addAlert(
-                    {
-                        msg:              'Der Benutzer konnte nicht gelöscht werden',
-                        type:             'danger',
-                        dismissOnTimeout: null,
-                        identifier:       'userNotDeleted'
-                    }
-                )
+                this.alert.error('Der Benutzer konnte nicht gelöscht werden');
             })
     }
 }

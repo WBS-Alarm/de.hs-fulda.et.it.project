@@ -1,8 +1,12 @@
 <ng-container *ngIf="routeData$ | async as routeData">
 <div class="infos">
-    <terra-portlet [inputIsCollapsable]="true"
-                   [inputCollapsed]="false"
-                   [inputPortletHeader]="'Informationen über das Programm'">
+    <mat-expansion-panel class="panel" expanded="true">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Informationen über das Programm
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+
         <div class="infoText">
             Hallo und herzlich Willkommen in der digitalen Kleiderverwaltung! <br>
             Dieses Programm wurde im Rahmen eines Sofwtareprojekts an der Hochschule Fulda von Achim Rose und Tim Wieder geschrieben.
@@ -11,16 +15,31 @@
             <br>
             eingesehen werden
         </div>
-    
-    </terra-portlet>
-    
-    <terra-portlet [inputIsCollapsable]="true"
-                   [inputCollapsed]="false"
-                   [inputPortletHeader]="'Letzte Buchungen'">
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="panel">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Letzte Buchungen
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+
         <div *ngFor="let buchung of _buchungen">
             <span>{{buchung.benutzer}} hat am {{buchung.date}} die Positionen {{buchung.positionen}} von {{buchung.von}} nach {{buchung.nach}} gebucht!</span>
         </div>
-    </terra-portlet>
+
+        <div *ngIf="_buchungen">
+            Es sind noch keine Buchungen im System getätigt worden!
+        </div>
+    </mat-expansion-panel>
+
+<!--    <terra-portlet [inputIsCollapsable]="true"-->
+<!--                   [inputCollapsed]="false"-->
+<!--                   [inputPortletHeader]="'Letzte Buchungen'">-->
+<!--        <div *ngFor="let buchung of _buchungen">-->
+<!--            <span>{{buchung.benutzer}} hat am {{buchung.date}} die Positionen {{buchung.positionen}} von {{buchung.von}} nach {{buchung.nach}} gebucht!</span>-->
+<!--        </div>-->
+<!--    </terra-portlet>-->
 </div>
 
 <div class="bottom-line">

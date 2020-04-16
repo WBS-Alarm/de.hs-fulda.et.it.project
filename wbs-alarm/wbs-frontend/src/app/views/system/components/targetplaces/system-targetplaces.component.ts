@@ -4,6 +4,7 @@ import {
 } from '@angular/core';
 import { CarrierService } from '../../../../core/service/rest/carrier/carrier.service';
 import {
+    AlertService,
     TerraAlertComponent,
     TerraNodeTreeConfig
 } from '@plentymarkets/terra-components';
@@ -23,12 +24,11 @@ import { ExampleTreeData } from '../../system.component';
 })
 export class SystemTargetplacesComponent implements OnInit
 {
-    public alert:TerraAlertComponent = TerraAlertComponent.getInstance();
-
     public routeData$:Observable<Data>;
 
     constructor(public carrierService:CarrierService,
                 public route:ActivatedRoute,
+                public alert:AlertService,
                 public systemGlobalSettings:SystemGlobalSettingsService,
                 public systemTreeConfig:TerraNodeTreeConfig<ExampleTreeData>)
     {
@@ -45,27 +45,13 @@ export class SystemTargetplacesComponent implements OnInit
         this.carrierService.updateTargetplace(targetPlace).subscribe(
             (result:any) =>
             {
-                this.alert.addAlert(
-                    {
-                        msg:              'Änderungen gespeichert!',
-                        type:             'success',
-                        dismissOnTimeout: null,
-                        identifier:       'targetPlaceEdited'
-                    }
-                )
+                this.alert.success('Änderungen gespeichert!');
 
                 this.systemTreeConfig.currentSelectedNode.name = targetPlace.name;
             },
             (error:any) =>
             {
-                this.alert.addAlert(
-                    {
-                        msg:              'Änderungen konnten nicht gespeichert werden: ' + error.error.message,
-                        type:             'danger',
-                        dismissOnTimeout: null,
-                        identifier:       'targetPlaceNotEdited'
-                    }
-                )
+                this.alert.error('Änderungen konnten nicht gespeichert werden: ' + error.error.message);
             })
     }
 
@@ -73,27 +59,14 @@ export class SystemTargetplacesComponent implements OnInit
     {
         this.carrierService.deleteTargetplace(targetPlace).subscribe((result:any) =>
             {
-                this.alert.addAlert(
-                    {
-                        msg:              'Der Zielort wurde gelöscht!',
-                        type:             'success',
-                        dismissOnTimeout: null,
-                        identifier:       'targetPlaceDeleted'
-                    }
-                );
+                this.alert.success('Der Zielort wurde gelöscht!');
 
                 this.systemTreeConfig.removeNodeById(this.systemTreeConfig.currentSelectedNode.id)
             },
             (error:any) =>
             {
-                this.alert.addAlert(
-                    {
-                        msg:              'Der Zielort konnte nicht gelöscht werden!',
-                        type:             'danger',
-                        dismissOnTimeout: null,
-                        identifier:       'targetPlaceNotDeleted'
-                    }
-                )
+                this.alert.error('Der Zielort konnte nicht gelöscht werden!');
+
             })
     }
 
@@ -102,25 +75,11 @@ export class SystemTargetplacesComponent implements OnInit
         this.carrierService.lockTargetplace(targetPlace).subscribe(
             (result:any) =>
             {
-                this.alert.addAlert(
-                    {
-                        msg:              'Der Zielort wurde für die Erfassung gesperrt!',
-                        type:             'success',
-                        dismissOnTimeout: null,
-                        identifier:       'targetplaceLocked'
-                    }
-                )
+                this.alert.success('Der Zielort wurde für die Erfassung gesperrt!');
             },
             (error:any) =>
             {
-                this.alert.addAlert(
-                    {
-                        msg:              'Der Zielort konnte nicht für die Erfassung gesperrt werden!',
-                        type:             'success',
-                        dismissOnTimeout: null,
-                        identifier:       'targetPlaceNotLocked'
-                    }
-                )
+                this.alert.error('Der Zielort konnte nicht für die Erfassung gesperrt werden!');
             })
     }
 }

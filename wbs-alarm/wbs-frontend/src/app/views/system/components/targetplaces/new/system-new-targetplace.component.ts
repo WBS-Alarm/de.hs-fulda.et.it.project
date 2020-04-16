@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {TerraAlertComponent, TerraNodeTreeConfig} from '@plentymarkets/terra-components';
+import {AlertService, TerraAlertComponent, TerraNodeTreeConfig} from '@plentymarkets/terra-components';
 import {CarrierService} from '../../../../../core/service/rest/carrier/carrier.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SystemGlobalSettingsService} from '../../../system-global-settings.service';
@@ -14,11 +14,9 @@ export class SystemNewTargetplaceComponent
 {
     public newTargetplaceName:string = '';
 
-    public alert:TerraAlertComponent = TerraAlertComponent.getInstance();
-
-
-    constructor(public carrierService:CarrierService,
+     constructor(public carrierService:CarrierService,
                 public route:ActivatedRoute,
+                public alert:AlertService,
                 public router:Router,
                 public systemGlobalSettings:SystemGlobalSettingsService,
                 public systemTreeConfig:TerraNodeTreeConfig<ExampleTreeData>)
@@ -31,12 +29,7 @@ export class SystemNewTargetplaceComponent
         this.carrierService.createTargetplace(this.systemGlobalSettings.getTraegerId(), this.newTargetplaceName)
             .subscribe((result:any) =>
                 {
-                    this.alert.addAlert({
-                        msg:              'Der Zielort wurde angelegt!',
-                        type:             'success',
-                        dismissOnTimeout: null,
-                        identifier:       'targetPlaceCreated'
-                    });
+                    this.alert.success('Der Zielort wurde angelegt!');
 
                     this.newTargetplaceName = '';
 
@@ -56,12 +49,8 @@ export class SystemNewTargetplaceComponent
                 },
                 (error:any) =>
                 {
-                    this.alert.addAlert({
-                        msg:              'Der Zielort wurde nicht angelegt!',
-                        type:             'danger',
-                        dismissOnTimeout: null,
-                        identifier:       'targetPlaceNotCreated'
-                    })
+                    this.alert.error('Der Zielort wurde nicht angelegt!');
+
                 });
     }
 }

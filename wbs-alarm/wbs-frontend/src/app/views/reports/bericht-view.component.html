@@ -1,0 +1,17 @@
+<ng-container *ngIf="routeData$ | async as routeData">
+    <mat-expansion-panel expanded="true">
+        <mat-expansion-panel-header>
+            <mat-panel-title>Bestand zu einem Träger auflisten</mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-form-field>
+            <mat-label>Träger auswählen</mat-label>
+            <mat-select [(ngModel)]="trager">
+                <mat-option *ngFor="let selectedTraeger of traegers" [value]="selectedTraeger">
+                    {{selectedTraeger.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="createReport()">Bericht erzeugen</button>
+    </mat-expansion-panel>
+</ng-container>

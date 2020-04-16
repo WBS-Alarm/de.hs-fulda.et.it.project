@@ -1,6 +1,7 @@
 import {
+    ChangeDetectorRef,
     Component,
-    OnInit
+    OnInit, ViewChild
 } from '@angular/core';
 import { TerraNodeTreeConfig } from "@plentymarkets/terra-components";
 import { TranslationService } from "angular-l10n";
@@ -9,6 +10,8 @@ import { Observable } from "rxjs";
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import {SystemGlobalSettingsService} from "./system-global-settings.service";
+import {MediaMatcher} from "@angular/cdk/layout";
+import {MatSidenavContainer} from "@angular/material/sidenav";
 
 export interface resultData
 {
@@ -41,17 +44,29 @@ export interface ExampleTreeData
 })
 export class SystemComponent implements OnInit
 {
+    public mobileQuery:MediaQueryList;
+    private _mobileQueryListener: () => void;
+
+    @ViewChild('snav', {static:true})
+    public sidenav:any;
+    
     constructor(public nodeTreeConfig:TerraNodeTreeConfig<ExampleTreeData>,
                 public translation:TranslationService,
                 public router:Router,
                 public carrierService:CarrierService,
-                public systemsGlobalSettingsService:SystemGlobalSettingsService)
+                public systemsGlobalSettingsService:SystemGlobalSettingsService,
+                public changeDetectorRef:ChangeDetectorRef,
+                public media:MediaMatcher)
     {
+        this.mobileQuery = media.matchMedia('(max-width: 600px)');
+        this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+        this.mobileQuery.addListener(this._mobileQueryListener);
     }
 
     public ngOnInit():void
     {
         this.createCompleteTree();
+        this.sidenav.toggle();
     }
 
     public createCompleteTree():void

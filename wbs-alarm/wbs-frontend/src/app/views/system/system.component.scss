@@ -5,4 +5,126 @@
     background-color: var(--color-structure-11);
     padding: 0;
     overflow-y: auto;
+
+    ul
+    {
+        width: 99%
+    }
+}
+
+::ng-deep .terra-node-tree
+{
+    overflow-x: hidden;
+}
+
+.example-container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 64px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.example-is-mobile .example-toolbar {
+    position: fixed;
+    /* Make sure the toolbar will stay on top of the content as it scrolls past. */
+    z-index: 2;
+}
+
+h1.example-app-name {
+    margin-left: 8px;
+}
+
+.example-sidenav-container {
+    /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
+       causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
+    flex: 1;
+}
+
+.example-is-mobile .example-sidenav-container {
+    /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
+       `<body>` to be our scrolling element for mobile layouts. */
+    flex: 1 0 auto;
+}
+
+.more-width
+{
+    width: 21%;
+}
+
+.toggle-container
+{
+    position: absolute;
+    z-index: 6;
+    top: 40%;
+}
+
+.toggle-icon
+{
+    font-size: var(--font-size-7);
+    background-color: var(--color-structure-11);
+    opacity: 0.8;
+    color: white;
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 400px)
+{
+    .more-width
+    {
+        width: 100%;
+    }
+
+    .stick-to-nav
+    {
+        left: 94.4%;
+        animation: animateleft 0.4s;
+    }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px)
+{
+    .more-width
+    {
+        width: 100%;
+    }
+
+    .stick-to-nav
+    {
+        left: 94.4%;
+        animation: animateleft 0.4s;
+    }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px)
+{
+    .more-width
+    {
+        width: 15%;
+    }
+
+    .stick-to-nav
+    {
+        left: 15%;
+        animation: animateleft 0.4s;
+    }
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px)
+{
+    .more-width
+    {
+        width: 15%;
+    }
+
+    .stick-to-nav
+    {
+        left: 15%;
+        animation: animateleft 0.4s;
+    }
 }

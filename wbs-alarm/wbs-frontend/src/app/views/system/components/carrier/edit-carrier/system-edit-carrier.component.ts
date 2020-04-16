@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Data} from "@angular/router";
-import {TerraAlertComponent, TerraNodeTreeConfig} from "@plentymarkets/terra-components";
+import {AlertService, TerraAlertComponent, TerraNodeTreeConfig} from "@plentymarkets/terra-components";
 import {UsersService} from "../../../../../core/service/rest/users/users.service";
 import {SystemGlobalSettingsService} from "../../../system-global-settings.service";
 import {ExampleTreeData} from "../../../system.component";
@@ -17,10 +17,9 @@ export class SystemEditCarrierComponent implements OnInit
 {
     public routeData$:Observable<Data>;
 
-    public alert:TerraAlertComponent = TerraAlertComponent.getInstance();
-
     constructor(public route:ActivatedRoute,
                 public carrierService:CarrierService,
+                public alert:AlertService,
                 public systemTreeConfig:TerraNodeTreeConfig<ExampleTreeData>,
                 public systemGlobalSettings:SystemGlobalSettingsService)
     {
@@ -37,27 +36,13 @@ export class SystemEditCarrierComponent implements OnInit
         this.carrierService.updateCarrier(carrier).subscribe(
             (result:any) =>
             {
-                this.alert.addAlert(
-                    {
-                        msg:              'Änderungen gespeichert!',
-                        type:             'success',
-                        dismissOnTimeout: null,
-                        identifier:       'carrierEdited'
-                    }
-                )
+                this.alert.success('Änderungen gespeichert!');
 
                 this.systemTreeConfig.currentSelectedNode.name = carrier.name;
             },
             (error:any) =>
             {
-                this.alert.addAlert(
-                    {
-                        msg:              'Änderungen konnten nicht gespeichert werden!',
-                        type:             'danger',
-                        dismissOnTimeout: null,
-                        identifier:       'carrierNotEdited'
-                    }
-                )
+                this.alert.error('Änderungen konnten nicht gespeichert werden');
             })
     }
 
@@ -66,27 +51,13 @@ export class SystemEditCarrierComponent implements OnInit
         this.carrierService.deleteCarrier(carrier).subscribe(
             (result:any) =>
             {
-                this.alert.addAlert(
-                    {
-                        msg:              'Der Träger wurde gelöscht!',
-                        type:             'success',
-                        dismissOnTimeout: null,
-                        identifier:       'carrierDeleted'
-                    }
-                )
+                this.alert.success('Der Träger wurde gelöscht!');
 
                 this.systemTreeConfig.removeNodeById(this.systemTreeConfig.currentSelectedNode.id)
             },
             (error:any) =>
             {
-                this.alert.addAlert(
-                    {
-                        msg:              'Der Träger konnte nicht gelöscht werden!',
-                        type:             'danger',
-                        dismissOnTimeout: null,
-                        identifier:       'carrierNotDeleted'
-                    }
-                )
+                this.alert.error('Der Träger konnte nicht gelöscht werden!');
             }
         )
     }
