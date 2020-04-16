@@ -72,28 +72,4 @@ export class StartComponent implements OnInit
 
         })
     }
-
-    public logout():void
-    {
-        let today:Date = new Date(Date.now());
-
-        today.setTime(today.getTime() - 1);
-
-        let expires:string = 'expires=' + today.toUTCString();
-
-        document.cookie = 'loginToken=' +';' + expires;
-
-        this.globalRegistry.setisLoggedIn(false);
-        this.globalRegistry.isLoginActive = false;
-
-        this.alert.success('Sie werden ausgeloggt!');
-
-        let body:HTMLElement = document.getElementById('body');
-        let html:HTMLElement = document.getElementById('html');
-
-        body.classList.remove('isLoggedIn');
-        html.classList.remove('isLoggedIn');
-
-        this.router.navigate(['login']);
-    }
 }

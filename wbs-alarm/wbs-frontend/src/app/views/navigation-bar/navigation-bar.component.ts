@@ -8,6 +8,7 @@ import { isNullOrUndefined } from "util";
 import { MenuDataInterface } from "./data/menu-data.interface";
 import { TranslationService } from "angular-l10n";
 import { GlobalRegistryService } from '../../core/global-registry/global-registry.service';
+import {AlertService} from "@plentymarkets/terra-components";
 
 @Component({
     selector: 'navigation-bar',
@@ -43,8 +44,11 @@ export class NavigationBarComponent implements OnInit
         }
     ];
 
+    private logoutButton:any = document.getElementById('logout');
+
     constructor(public router:Router,
                 public translation:TranslationService,
+                public alert:AlertService,
                 public globalRegistryService:GlobalRegistryService)
     {
 
@@ -52,7 +56,7 @@ export class NavigationBarComponent implements OnInit
 
     public ngOnInit():void
     {
-        this.isLoginActive = this.router.isActive('login', true) && !this.globalRegistryService.getIsLoggedIn();
+       this.isLoginActive = this.router.isActive('login', true) && !this.globalRegistryService.getIsLoggedIn();
 
         this.subscribeToRouter();
     }
@@ -90,8 +94,27 @@ export class NavigationBarComponent implements OnInit
         this.router.navigateByUrl(url);
     }
 
-    public logout():void
+       public logout():void
     {
-        console.log('Logout successful!')
+        let today:Date = new Date(Date.now());
+
+        today.setTime(today.getTime() - 1);
+
+        let expires:string = 'expires=' + today.toUTCString();
+
+        document.cookie = 'loginToken=' +';' + expires;
+
+        this.globalRegistryService.setisLoggedIn(false);
+        this.globalRegistryService.isLoginActive = false;
+
+        this.alert.success('Sie werden ausgeloggt!');
+
+        let body:HTMLElement = document.getElementById('body');
+        let html:HTMLElement = document.getElementById('html');
+
+        body.classList.remove('isLoggedIn');
+        html.classList.remove('isLoggedIn');
+
+        this.router.navigate(['login']);
     }
 }

@@ -1,11 +1,10 @@
 <div *ngIf="!globalRegistryService.isLoginActive" class="navigation-bar">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="navbar-brand">WBS Kleiderkammer</div>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        
+
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item" *ngFor="let item of menu">
@@ -13,9 +12,11 @@
                 </li>
             </ul>
             <div class="form-inline my-2 my-lg-0 right">
-                <div class="icon icon-logout" (click)="logout()"></div>
+                <span id="logout" class="icon icon-logout logout" (click)="logout()">
+                </span>
                 <img id="user-icon" class="my-2 my-sm-0 user-icon" [src]="userImageLink"/>
             </div>
         </div>
     </nav>
 </div>
+
