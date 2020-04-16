@@ -1,9 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {
     AlertService,
-    TerraAlertComponent,
     TerraSelectBoxValueInterface,
-    TerraSimpleTableCellInterface,
     TerraSimpleTableComponent,
     TerraSimpleTableHeaderCellInterface,
     TerraSimpleTableRowInterface
@@ -13,7 +11,6 @@ import {GlobalRegistryService} from '../../core/global-registry/global-registry.
 import {UsersService} from '../../core/service/rest/users/users.service';
 import {CarrierService} from '../../core/service/rest/carrier/carrier.service';
 import {TransaktionService} from '../../core/service/rest/transaktions/transaktion.service';
-import {AlertType} from '@plentymarkets/terra-components/components/alert/alert-type.enum';
 import {MatTableDataSource} from "@angular/material/table";
 import {SelectionModel} from "@angular/cdk/collections";
 import {SystemZielortInterface} from "../system/components/targetplaces/data/system-zielort.interface";
@@ -35,7 +32,6 @@ export interface RowData {
 })
 export class BookingViewComponent implements OnInit
 {
-    public _traeger:string = 'Eschenstruth';
 
     public _zielorte:Array<TerraSelectBoxValueInterface> = [{
         value:   null,

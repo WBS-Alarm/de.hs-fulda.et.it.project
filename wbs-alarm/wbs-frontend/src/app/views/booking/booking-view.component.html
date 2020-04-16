@@ -25,11 +25,6 @@
         Buchungsziel wählen
     </mat-expansion-panel-header>
     <div class="headline">
-        <terra-text-input class=element
-                          [inputIsDisabled]="true"
-                          [ngModel]="_traeger">
-        </terra-text-input>
-
         <mat-form-field *ngIf="!(_modus==='einkauf')">
             <mat-label>von:</mat-label>
             <mat-select [(value)]="_von">

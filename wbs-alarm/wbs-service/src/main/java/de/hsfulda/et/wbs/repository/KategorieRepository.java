@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public interface KategorieRepository extends CrudRepository<Kategorie, Long> {
 
-    @Query("select z from Kategorie z join z.traeger t where t.id = :traegerId")
+    @Query("select z from Kategorie z join z.traeger t where t.id = :traegerId and z.aktiv = true")
     List<KategorieData> findAllByTraegerId(@Param("traegerId") Long traegerId);
 
     Optional<KategorieData> findByIdAndAktivIsTrue(Long id);

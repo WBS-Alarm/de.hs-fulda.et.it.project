@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public interface GroesseRepository extends CrudRepository<Groesse, Long> {
 
-    @Query("select z from Groesse z join z.kategorie t where t.id = :groesseId")
+    @Query("select z from Groesse z join z.kategorie t where t.id = :groesseId and z.aktiv = true")
     List<GroesseData> findAllByKategorieId(@Param("groesseId") Long groesseId);
 
     Optional<GroesseData> findByIdAndAktivIsTrue(Long id);
