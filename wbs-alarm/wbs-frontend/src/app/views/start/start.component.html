@@ -17,19 +17,51 @@
         </div>
     </mat-expansion-panel>
 
-    <mat-expansion-panel class="panel">
+    <mat-expansion-panel class="panel" expanded="true">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 Letzte Buchungen
             </mat-panel-title>
         </mat-expansion-panel-header>
 
-        <div *ngFor="let buchung of _buchungen">
-            <span>{{buchung.benutzer}} hat am {{buchung.date | date}} {{buchung.anzahl}} Kleidungsstücke von {{buchung.von}} nach {{buchung.nach}} gebucht!</span>
-        </div>
+        <div class="mat-elevation-z8">
+            <table class="w-100" mat-table [dataSource]="dataSource">
 
-        <div *ngIf="!_buchungen">
-            Es sind noch keine Buchungen im System getätigt worden!
+                <!-- Benutzer Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Benutzer </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+
+                <!-- Von Column -->
+                <ng-container matColumnDef="von">
+                    <th mat-header-cell *matHeaderCellDef> Von </th>
+                    <td mat-cell *matCellDef="let element"> {{element.von}} </td>
+                </ng-container>
+
+                <!-- Nach Column -->
+                <ng-container matColumnDef="nach">
+                    <th mat-header-cell *matHeaderCellDef> Nach </th>
+                    <td mat-cell *matCellDef="let element"> {{element.nach}} </td>
+                </ng-container>
+
+                <!-- Date Column -->
+                <ng-container matColumnDef="date">
+                    <th mat-header-cell *matHeaderCellDef> Gebucht am </th>
+                    <td mat-cell *matCellDef="let element"> {{element.date | date}} </td>
+                </ng-container>
+
+                <!-- Anzahl Column -->
+                <ng-container matColumnDef="anzahl">
+                    <th mat-header-cell *matHeaderCellDef> Anzahl </th>
+                    <td mat-cell *matCellDef="let element"> {{element.anzahl}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
         </div>
     </mat-expansion-panel>
 

@@ -60,7 +60,7 @@
 
         <mat-form-field style="margin-right: 10px;">
             <mat-label>Größe</mat-label>
-            <mat-select [(value)]="_goresse" [disabled]="_groessen.length === 1">
+            <mat-select [(value)]="_goresse" [disabled]="_groessen.length === 0">
                 <mat-option *ngFor="let groesse of _groessen" [value]="groesse.value">{{groesse.caption}}</mat-option>
             </mat-select>
         </mat-form-field>

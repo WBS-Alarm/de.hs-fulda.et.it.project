@@ -16,6 +16,9 @@ import { Observable } from "rxjs";
 import { SystemGlobalSettingsService } from '../../system-global-settings.service';
 import { SystemZielortInterface } from './data/system-zielort.interface';
 import { ExampleTreeData } from '../../system.component';
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {BestandDialogComponent} from "../bestaende/dialog/bestand-dialog.component";
+import {LockTargetplaceDialogComponent} from "./dialog/lock-targetplace-dialog.component";
 
 @Component({
     selector: 'system-targetplace',
@@ -25,10 +28,12 @@ import { ExampleTreeData } from '../../system.component';
 export class SystemTargetplacesComponent implements OnInit
 {
     public routeData$:Observable<Data>;
+    public gesperrt:boolean;
 
     constructor(public carrierService:CarrierService,
                 public route:ActivatedRoute,
                 public alert:AlertService,
+                public dialog:MatDialog,
                 public systemGlobalSettings:SystemGlobalSettingsService,
                 public systemTreeConfig:TerraNodeTreeConfig<ExampleTreeData>)
     {
@@ -38,6 +43,11 @@ export class SystemTargetplacesComponent implements OnInit
     public ngOnInit():void
     {
         this.routeData$ = this.route.data;
+
+        this.route.data.subscribe((data:any) =>
+        {
+            this.gesperrt = data.targetPlace.erfasst;
+        })
     }
 
     public save(targetPlace:SystemZielortInterface):void
@@ -72,14 +82,26 @@ export class SystemTargetplacesComponent implements OnInit
 
     public lock(targetPlace:SystemZielortInterface):void
     {
-        this.carrierService.lockTargetplace(targetPlace).subscribe(
-            (result:any) =>
+        const lockTargetPlaceDialog:MatDialogRef<LockTargetplaceDialogComponent> = this.dialog.open(LockTargetplaceDialogComponent, {autoFocus:true});
+
+        lockTargetPlaceDialog.afterClosed().subscribe((approved:boolean) =>
+        {
+            if(approved)
             {
-                this.alert.success('Der Zielort wurde für die Erfassung gesperrt!');
-            },
-            (error:any) =>
-            {
-                this.alert.error('Der Zielort konnte nicht für die Erfassung gesperrt werden!');
-            })
+                this.carrierService.lockTargetplace(targetPlace).subscribe(
+                    (result:any) =>
+                    {
+                        this.alert.success('Der Zielort wurde für die Erfassung gesperrt!');
+                        this.gesperrt = true;
+                    },
+                    (error:any) =>
+                    {
+                        this.alert.error('Der Zielort konnte nicht für die Erfassung gesperrt werden!');
+                    })
+            }
+        });
+
+
+
     }
 }

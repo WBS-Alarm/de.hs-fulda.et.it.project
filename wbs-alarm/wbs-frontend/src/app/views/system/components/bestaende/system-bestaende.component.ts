@@ -154,18 +154,6 @@ export class SystemBestaendeComponent implements OnInit
 
     }
 
-    public tooltipForButton():string
-    {
-        if(this._groessen.length === 0)
-        {
-            return 'Für diese Kategorie sind noch keine Größen angelegt!';
-        }
-        else
-        {
-            return '';
-        }
-    }
-
     public ladeGroessen():void
     {
         if(!isNullOrUndefined(this._kategorie))

@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>Zielort für Erfassung sperren</h2>
+
+<div mat-dialog-content>
+    <p>Sind Sie sich sicher, dass Sie den Zielort für die Erfassung sperren wollen? Danach können keine Bestände mehr eingetragen oder bearbeitet werden. Dieser Vorgang kann nicht rückgängig gemacht werden!</p>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button color="primary" (click)="dialogRef.close(true)">Sperren</button>
+    <button mat-raised-button color="warn" (click)="dialogRef.close()">Abbrechen</button>
+</div>

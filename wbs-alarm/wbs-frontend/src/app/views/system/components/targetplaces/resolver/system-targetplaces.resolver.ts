@@ -11,18 +11,20 @@ import { TranslationService } from "angular-l10n";
 import { Observable } from "rxjs";
 import { SystemGlobalSettingsService } from '../../../system-global-settings.service';
 import {SystemZielortInterface} from "../data/system-zielort.interface";
+import {CarrierService} from "../../../../../core/service/rest/carrier/carrier.service";
 
 @Injectable()
-export class SystemTargetplacesResolver implements Resolve<SystemZielortInterface>
+export class SystemTargetplacesResolver implements Resolve<Observable<any>>
 {
     constructor(public translation:TranslationService,
                 public userService:UsersService,
+                public carrierService:CarrierService,
                 public systemGloabalSettingsService:SystemGlobalSettingsService,
                 public router:Router)
     {
     }
 
-    public resolve(route:ActivatedRouteSnapshot):SystemZielortInterface
+    public resolve(route:ActivatedRouteSnapshot):Observable<any>
     {
         let targetPlaceId:number = +route.params['targetplaceId'];
 
@@ -31,6 +33,6 @@ export class SystemTargetplacesResolver implements Resolve<SystemZielortInterfac
             return;
         }
 
-        return this.systemGloabalSettingsService.getSingleZielort(targetPlaceId)
+        return this.carrierService.getTargetPlaceById(targetPlaceId);
     }
 }

@@ -150,4 +150,11 @@ export class CarrierService
 
         return this.http.get(url, {headers:this.headers});
     }
+
+    public getTargetPlaceById(id:number):Observable<any>
+    {
+        this.headers = this.sitemapHelper.setAuthorization();
+
+        return this.http.get('/wbs/zielort/' + id, {headers:this.headers})
+    }
 }

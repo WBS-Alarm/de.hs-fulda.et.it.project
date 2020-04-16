@@ -72,12 +72,16 @@ import {BerichtViewComponent} from "./views/reports/bericht-view.component";
 import {ReportService} from "./views/reports/service/report.service";
 import {NewPasswordComponent} from "./views/app-login/new-password/new-password.component";
 import {NewPasswordService} from "./views/app-login/new-password/service/new-password.service";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatSortModule} from "@angular/material/sort";
+import {LockTargetplaceDialogComponent} from "./views/system/components/targetplaces/dialog/lock-targetplace-dialog.component";
 
 
 @NgModule({
     entryComponents:[
         BestandDialogComponent,
-        ResetPasswordDialogComponent
+        ResetPasswordDialogComponent,
+        LockTargetplaceDialogComponent
     ],
     imports: [
         BrowserModule,
@@ -99,7 +103,9 @@ import {NewPasswordService} from "./views/app-login/new-password/service/new-pas
         MatToolbarModule,
         MatDialogModule,
         MatSidenavModule,
-        MatListModule
+        MatListModule,
+        MatPaginatorModule,
+        MatSortModule
     ],
     declarations: [
         AppWbsKleiderkammer,
@@ -126,7 +132,8 @@ import {NewPasswordService} from "./views/app-login/new-password/service/new-pas
         ResetPasswordDialogComponent,
         BerichtViewComponent,
         NavigationBarComponent,
-        NewPasswordComponent
+        NewPasswordComponent,
+        LockTargetplaceDialogComponent
     ],
     providers:    [
         {
