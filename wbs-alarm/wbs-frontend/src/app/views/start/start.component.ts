@@ -35,7 +35,7 @@ export class StartComponent implements OnInit
 
     public routeData$:Observable<Data>;
 
-    public _buchungen:Array<{benutzer:string, von:string, nach:string, date:Date}> = [];
+    public _buchungen:Array<{benutzer:string, von:string, nach:string, date:Date, anzahl:number}> = [];
 
     constructor(public loginService:LoginService,
                 public router:Router,
@@ -58,12 +58,22 @@ export class StartComponent implements OnInit
             {
                 result._embedded.elemente.forEach((element:any) =>
                 {
-                    let buchung:{benutzer:string, von:string, nach:string, date:Date} =
+                    let anzahl:number = 0
+
+                    element._embedded.positionen.forEach((position:any) =>
+                    {
+                        anzahl += position.anzahl
+                    });
+
+
+
+                    let buchung:{benutzer:string, von:string, nach:string, date:Date, anzahl:number} =
                         {
                             benutzer: element._embedded.benutzer[0].username,
                             date: element.datum,
                             nach: element._embedded.nach[0].name,
                             von: element._embedded.von[0].name,
+                            anzahl: anzahl
                     };
 
                     this._buchungen.push(buchung);

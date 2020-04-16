@@ -25,7 +25,7 @@
         </mat-expansion-panel-header>
 
         <div *ngFor="let buchung of _buchungen">
-            <span>{{buchung.benutzer}} hat am {{buchung.date | date}} die Positionen {{buchung.positionen}} von {{buchung.von}} nach {{buchung.nach}} gebucht!</span>
+            <span>{{buchung.benutzer}} hat am {{buchung.date | date}} {{buchung.anzahl}} Kleidungsstücke von {{buchung.von}} nach {{buchung.nach}} gebucht!</span>
         </div>
 
         <div *ngIf="!_buchungen">
@@ -33,12 +33,5 @@
         </div>
     </mat-expansion-panel>
 
-<!--    <terra-portlet [inputIsCollapsable]="true"-->
-<!--                   [inputCollapsed]="false"-->
-<!--                   [inputPortletHeader]="'Letzte Buchungen'">-->
-<!--        <div *ngFor="let buchung of _buchungen">-->
-<!--            <span>{{buchung.benutzer}} hat am {{buchung.date}} die Positionen {{buchung.positionen}} von {{buchung.von}} nach {{buchung.nach}} gebucht!</span>-->
-<!--        </div>-->
-<!--    </terra-portlet>-->
 </div>
 </ng-container>
