@@ -164,6 +164,7 @@ export class SystemGroessenComponent implements OnInit
                 this.saveGroesse(saveGroesse);
 
                 this.selection.selected[0] = saveGroesse;
+                this.selection.clear();
                 this.dataSource._updateChangeSubscription();
             }
         });
