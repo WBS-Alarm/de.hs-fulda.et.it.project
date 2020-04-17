@@ -63,7 +63,7 @@ public class ResetPasswordActionImpl implements ResetPasswordAction {
             public String getText() {
                 return "Hallo,\n\n" +
                         "dein Passwort wurde erfolgreich gesetzt. Wenn du dein Passwort nicht geändert hast, " +
-                        "wende dich bitte an uns." + "\n\n" + "Viel Spaß beim Buchen\n" + "Dein WBA-Alarm Team.";
+                        "wende dich bitte an uns." + "\n\n" + "Viel Spaß beim Buchen\n" + "Dein WBS-Alarm Team.";
             }
         });
     }

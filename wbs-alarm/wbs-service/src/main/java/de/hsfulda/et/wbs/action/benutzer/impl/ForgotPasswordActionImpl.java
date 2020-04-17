@@ -52,8 +52,8 @@ public class ForgotPasswordActionImpl implements ForgotPasswordAction {
                             "wenn du dein Passwort nicht vergessen hast, ignoriere diese E-Mail einfach oder " +
                             "wende dich an deinen Admin für WBS-Alarm.\n\n" +
                             "Ansonsten kannst du unter folgenden Link dein Passwort neu setzen. Der Link ist 10 " +
-                            "Minuten'gültig.\n" + "https://www.wbs-alarm.de/#/update-password/" + uuid + "\n\n" +
-                            "Viel Spaß beim Buchen\n" + "Dein WBA-Alarm Team.";
+                            "Minuten gültig.\n" + "https://www.wbs-alarm.de/#/update-password/" + uuid + "\n\n" +
+                            "Viel Spaß beim Buchen\n" + "Dein WBS-Alarm Team.";
                 }
             });
 

@@ -73,12 +73,13 @@ public class TransaktionMailService {
                                 ZielortData zielort = b.getZielort();
                                 GroesseData groesse = b.getGroesse();
                                 KategorieData kategorie = groesse.getKategorie();
-                                return " - " + zielort.getName() + " " + kategorie.getName() + " " + b.getGroesse()
-                                        .getName() + "\n";
+                                return " - " + zielort.getName() + ": " + kategorie.getName() + ", Größe: " +
+                                        b.getGroesse()
+                                                .getName() + "\n";
                             })
                             .collect(Collectors.joining());
-                    return "Hallo,\n in den folgenden Beständen wurden die Bestansgrenzen unterschritten:\n\n" +
-                            bestandsliste + "\n\n" + " Viel Spaß beim Buchen\n " + " Dein WBA -Alarm Team. ";
+                    return "Hallo,\n\nin den folgenden Beständen wurden die Bestansgrenzen unterschritten:\n\n" +
+                            bestandsliste + "\n\n" + " Viel Spaß beim Buchen\n " + " Dein WBS-Alarm Team. ";
 
                 }
             });
