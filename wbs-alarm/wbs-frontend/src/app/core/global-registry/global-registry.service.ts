@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UserDataInterface } from '../service/rest/users/user-data.interface';
+import {BehaviorSubject} from "rxjs";
 
 @Injectable()
 export class GlobalRegistryService
@@ -11,6 +12,8 @@ export class GlobalRegistryService
     public gravatarHash:string;
 
     public currentUser:any;
+
+    public toggled$:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
     constructor()
     {

@@ -12,6 +12,8 @@ import { Router } from '@angular/router';
 import {SystemGlobalSettingsService} from "./system-global-settings.service";
 import {MediaMatcher} from "@angular/cdk/layout";
 import {MatSidenavContainer} from "@angular/material/sidenav";
+import {NavigationBarComponent} from "../navigation-bar/navigation-bar.component";
+import {GlobalRegistryService} from "../../core/global-registry/global-registry.service";
 
 export interface resultData
 {
@@ -54,6 +56,7 @@ export class SystemComponent implements OnInit
                 public translation:TranslationService,
                 public router:Router,
                 public carrierService:CarrierService,
+                public globalRegistryService:GlobalRegistryService,
                 public systemsGlobalSettingsService:SystemGlobalSettingsService,
                 public changeDetectorRef:ChangeDetectorRef,
                 public media:MediaMatcher)
@@ -67,6 +70,17 @@ export class SystemComponent implements OnInit
     {
         this.createCompleteTree();
         this.sidenav.toggle();
+        this.globalRegistryService.toggled$.subscribe((value:boolean) =>
+        {
+            if(value)
+            {
+                document.getElementById('container').classList.add('big-top');
+            }
+            else
+            {
+                document.getElementById('container').classList.remove('big-top');
+            }
+        })
     }
 
     public createCompleteTree():void

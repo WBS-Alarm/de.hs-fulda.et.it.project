@@ -10,13 +10,14 @@ import { MenuDataInterface } from "./data/menu-data.interface";
 import { TranslationService } from "angular-l10n";
 import { GlobalRegistryService } from '../../core/global-registry/global-registry.service';
 import {AlertService} from "@plentymarkets/terra-components";
+import {BehaviorSubject} from "rxjs";
 
 @Component({
     selector: 'navigation-bar',
     templateUrl: './navigation-bar.component.html',
     styleUrls:   ['./navigation-bar.component.scss'],
 })
-export class NavigationBarComponent implements OnInit, AfterViewInit
+export class NavigationBarComponent implements OnInit
 {
     public isLoginActive:boolean;
 
@@ -60,28 +61,20 @@ export class NavigationBarComponent implements OnInit, AfterViewInit
         this.subscribeToRouter();
     }
 
-
-    public ngAfterViewInit():void
+    public toggleMenu():void
     {
-        setTimeout(()=>
+        let open = document.getElementById('navbarSupportedContent').classList.contains('show');
+
+        if(open)
         {
-            let button = document.getElementById('toggler-button');
-
-            button.onclick = function () {
-                let open = document.getElementById('navbarSupportedContent').classList.contains('show');
-
-                if(open)
-                {
-                    document.getElementById('navbarSupportedContent').classList.remove('show');
-                }
-                else
-                {
-                    document.getElementById('navbarSupportedContent').classList.add('show');
-                }
-
-            }
-        }, 200)
-
+            document.getElementById('navbarSupportedContent').classList.remove('show');
+            this.globalRegistryService.toggled$.next(false);
+        }
+        else
+        {
+            document.getElementById('navbarSupportedContent').classList.add('show');
+            this.globalRegistryService.toggled$.next(true);
+        }
     }
 
     public get userImageLink():string
@@ -98,7 +91,6 @@ export class NavigationBarComponent implements OnInit, AfterViewInit
         }
 
         return link;
-
     }
 
     public subscribeToRouter():void
