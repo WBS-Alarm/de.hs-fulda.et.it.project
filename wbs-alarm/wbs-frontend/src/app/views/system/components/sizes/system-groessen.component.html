@@ -4,10 +4,19 @@
         <terra-text-input [inputName]="'Größe eingeben'"
                           [(ngModel)]="_groesse">
         </terra-text-input>
+        <terra-number-input [inputName]="'Bestandswarnung'"
+                            [(ngModel)]="bestandswarnung">
+        </terra-number-input>
         
         <terra-button [inputCaption]="'Größe speichern'"
                       [inputIcon]="'icon-save'"
-                      (outputClicked)="addGroesse()"></terra-button>
+                      (outputClicked)="addGroesse()">
+        </terra-button>
+        <terra-button [inputCaption]="'Bestandswarnung erstellen'"
+                      [inputIcon]="'icon-edit'"
+                      [inputIsDisabled]="true"
+                      (outputClicked)="createBestandWarnung()">
+        </terra-button>
     </terra-portlet>
 
     <table mat-table [dataSource]="dataSource">
@@ -32,6 +41,12 @@
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Name </th>
             <td mat-cell *matCellDef="let element"> {{element.groesse.name}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="bestandsgrenze">
+            <th mat-header-cell *matHeaderCellDef> Bestandsgrenze </th>
+            <td mat-cell *matCellDef="let element"> {{element.groesse.bestandsgrenze}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

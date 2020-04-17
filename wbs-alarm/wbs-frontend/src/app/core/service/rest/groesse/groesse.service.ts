@@ -36,10 +36,19 @@ export class GroesseService
         let url:string = this.sitemapHelper.groesseList().replace('{kategorieId}', categoryId.toString());
 
         return this.http.post(url, {
-            name: groesse
+            name: groesse.name,
+            bestandsgrenze: groesse.bestandsgrenze
         }, {
-            headers: this.headers
+            headers: this.headers,
+            observe: "response"
         })
 
+    }
+
+    public getSingleGroesse(url:string):Observable<any>
+    {
+        this.headers = this.sitemapHelper.setAuthorization();
+
+        return this.http.get(url, {headers: this.headers});
     }
 }

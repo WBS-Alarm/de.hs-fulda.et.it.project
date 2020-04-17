@@ -27,6 +27,7 @@ export interface GroesseRow {
 export class SystemGroessenComponent implements OnInit
 {
     public _groesse:string;
+    public bestandswarnung:number = 0;
 
     public routeData$:Observable<Data>;
 
@@ -37,9 +38,9 @@ export class SystemGroessenComponent implements OnInit
 
     private tableData:Array<GroesseRow> = [];
 
-    public displayedColumns:Array<string> = ['select', 'name'];
+    public displayedColumns:Array<string> = ['select', 'name', 'bestandsgrenze'];
     public dataSource:MatTableDataSource<GroesseRow> = new MatTableDataSource<GroesseRow>(this.tableData);
-    public selection:SelectionModel<GroesseRow> = new SelectionModel<GroesseRow>(true, []);
+    public selection:SelectionModel<GroesseRow> = new SelectionModel<GroesseRow>(false, []);
 
     /** Whether the number of selected elements matches the total number of rows. */
     isAllSelected() {
@@ -83,11 +84,16 @@ export class SystemGroessenComponent implements OnInit
 
     public addGroesse():void
     {
-        this.groessenService.addGroesseForTraeger(this.categoryId, this._groesse).subscribe((result:any) =>
+        this.groessenService.addGroesseForTraeger(this.categoryId, {name: this._groesse, bestandsgrenze:this.bestandswarnung}).subscribe((result:any) =>
         {
             this.alert.success('Die Größe wurde gespeichert.');
 
-            this.groessenZurTabelleHinzufuegen({name: this._groesse});
+            let url:string = result.headers.get('Location');
+
+            this.groessenService.getSingleGroesse(url).subscribe((groesse:any) =>
+            {
+                this.groessenZurTabelleHinzufuegen(groesse);
+            })
         },
             (error:any) =>
             {
@@ -104,5 +110,10 @@ export class SystemGroessenComponent implements OnInit
         );
 
         this.dataSource._updateChangeSubscription();
+    }
+
+    public createBestandWarnung():void
+    {
+
     }
 }
