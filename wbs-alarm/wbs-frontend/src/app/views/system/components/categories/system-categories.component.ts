@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {ActivatedRoute, Data} from "@angular/router";
+import {ActivatedRoute, Data, Router} from "@angular/router";
 import {AlertService, TerraAlertComponent, TerraNodeTreeConfig} from "@plentymarkets/terra-components";
 import {SystemGlobalSettingsService} from "../../system-global-settings.service";
 import {ExampleTreeData} from "../../system.component";
@@ -16,9 +16,12 @@ export class SystemCategoriesComponent
 {
     public routeData$:Observable<Data>;
 
+    public traegerId:number;
+
     constructor(public route:ActivatedRoute,
                 public categoryService:CategoryService,
                 public alert:AlertService,
+                public router:Router,
                 public systemTreeConfig:TerraNodeTreeConfig<ExampleTreeData>,
                 public systemGlobalSettings:SystemGlobalSettingsService)
     {
@@ -27,7 +30,12 @@ export class SystemCategoriesComponent
 
     public ngOnInit():void
     {
-        this.routeData$ = this.route.data;
+        this.routeData$ = this.route.data
+
+        this.route.params.subscribe((params:any) =>
+        {
+            this.traegerId = params.carrierId;
+        })
     }
 
     public save(category:SystemCategoryInterface):void
@@ -54,7 +62,9 @@ export class SystemCategoriesComponent
             {
                 this.alert.success('Die Kategorie wurde gelöscht!');
 
-                this.systemTreeConfig.removeNodeById(this.systemTreeConfig.currentSelectedNode.id)
+                this.systemTreeConfig.removeNodeById(this.systemTreeConfig.currentSelectedNode.id);
+
+                this.router.navigateByUrl('/plugin/system/carrier/' + this.traegerId + '/category')
             },
             (error:any)=>
             {

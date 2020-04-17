@@ -13,7 +13,7 @@ import { SystemGlobalSettingsService } from "../../system-global-settings.servic
 import { ExampleTreeData } from "../../system.component";
 import {
     ActivatedRoute,
-    Data
+    Data, Router
 } from '@angular/router';
 import { Observable } from "rxjs";
 import { map } from 'rxjs/operators';
@@ -29,11 +29,12 @@ export class SystemUserComponent implements OnInit
 
     public routeData$:Observable<Data>;
 
-    public mulitValues:any;
+    public traegerId:number;
 
     constructor(public route:ActivatedRoute,
                 public usersService:UsersService,
                 public alert:AlertService,
+                public router:Router,
                 public systemTreeConfig:TerraNodeTreeConfig<ExampleTreeData>,
                 public systemGlobalSettings:SystemGlobalSettingsService)
     {
@@ -45,6 +46,11 @@ export class SystemUserComponent implements OnInit
         this.userId = +this.systemTreeConfig.currentSelectedNode.id.toString().replace('benutzer ', '');
 
         this.routeData$ = this.route.data;
+
+        this.route.params.subscribe((params:any) =>
+        {
+            this.traegerId = params.carrierId;
+        })
     }
 
 
@@ -70,7 +76,9 @@ export class SystemUserComponent implements OnInit
         {
             this.alert.success( 'Der Benutzer wurde gelöscht');
 
-            this.systemTreeConfig.removeNodeById(this.systemTreeConfig.currentSelectedNode.id)
+            this.systemTreeConfig.removeNodeById(this.systemTreeConfig.currentSelectedNode.id);
+
+            this.router.navigateByUrl('plugin/system/carrier/'+ this.traegerId +'/user');
         },
             (error:any) =>
             {
