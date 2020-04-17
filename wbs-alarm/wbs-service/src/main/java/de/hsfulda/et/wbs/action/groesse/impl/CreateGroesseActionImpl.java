@@ -40,6 +40,7 @@ public class CreateGroesseActionImpl implements CreateGroesseAction {
 
             Groesse saved = Groesse.builder()
                     .name(groesse.getName())
+                    .bestandsgrenze(groesse.getBestandsgrenze())
                     .aktiv(true)
                     .build();
 
