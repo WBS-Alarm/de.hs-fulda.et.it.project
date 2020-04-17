@@ -38,7 +38,8 @@ export class GroesseService
         return this.http.post(url, {
             name: groesse.name,
             bestandsgrenze: groesse.bestandsgrenze
-        }, {
+        },
+            {
             headers: this.headers,
             observe: "response"
         })
@@ -50,5 +51,28 @@ export class GroesseService
         this.headers = this.sitemapHelper.setAuthorization();
 
         return this.http.get(url, {headers: this.headers});
+    }
+
+    public updateGroesse(groesse:any):Observable<any>
+    {
+        this.headers = this.sitemapHelper.setAuthorization();
+
+        return this.http.put('wbs/groesse/' + groesse.id, {
+            name: groesse.name,
+            bestandsgrenze: groesse.bestandsgrenze
+        },
+            {
+                headers: this.headers
+            })
+    }
+
+    public deleteGroesse(groesse:any):Observable<any>
+    {
+        this.headers = this.sitemapHelper.setAuthorization();
+
+        return this.http.delete('wbs/groesse/' + groesse.id,
+            {
+                headers: this.headers
+            })
     }
 }

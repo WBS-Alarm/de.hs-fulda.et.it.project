@@ -14,8 +14,14 @@
         </terra-button>
         <terra-button [inputCaption]="'Bestandswarnung erstellen'"
                       [inputIcon]="'icon-edit'"
-                      [inputIsDisabled]="true"
+                      [inputIsDisabled]="selection.selected.length === 0"
                       (outputClicked)="createBestandWarnung()">
+        </terra-button>
+        <terra-button inputCaption="Größe löschen"
+                        inputIcon="icon-delete"
+                        [inputIsDisabled]="selection.selected.length === 0"
+                        (outputClicked)="deleteGroesse()">
+
         </terra-button>
     </terra-portlet>
 

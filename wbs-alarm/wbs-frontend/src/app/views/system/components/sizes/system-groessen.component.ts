@@ -14,6 +14,9 @@ import {
 import { GroesseService } from '../../../../core/service/rest/groesse/groesse.service';
 import {MatTableDataSource} from "@angular/material/table";
 import {SelectionModel} from "@angular/cdk/collections";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {BestandDialogComponent} from "../bestaende/dialog/bestand-dialog.component";
+import {GroessenUpdateDialogComponent} from "./dialog/groessen-update-dialog.component";
 
 export interface GroesseRow {
     groesse:any;
@@ -59,6 +62,7 @@ export class SystemGroessenComponent implements OnInit
 
     constructor(public route:ActivatedRoute,
                 public groessenService:GroesseService,
+                public dialog:MatDialog,
                 private alert:AlertService)
     {}
 
@@ -112,8 +116,55 @@ export class SystemGroessenComponent implements OnInit
         this.dataSource._updateChangeSubscription();
     }
 
+    public saveGroesse(groesse:any):void
+    {
+        this.groessenService.updateGroesse(groesse).subscribe(() =>
+        {
+            this.alert.success('Die Größe wurde erfolgreich gespeichert');
+        },
+            () =>
+            {
+                this.alert.error('Beim Speichern der Größe ist ein Fehler aufgetreten.')
+            });
+    }
+
+    public deleteGroesse():any
+    {
+        this.groessenService.deleteGroesse(this.selection.selected[0].groesse).subscribe(()=>
+        {
+            this.alert.success('Die Größe wurde gelöscht.');
+
+            let idx:number = this.tableData.indexOf(this.selection.selected[0]);
+
+            this.tableData.splice(idx, 1);
+            this.dataSource._updateChangeSubscription();
+        },
+            ()=>
+            {
+                this.alert.error('Die Größe wurde nicht gelöscht.')
+            });
+    }
+
     public createBestandWarnung():void
     {
+        let selected:any = this.selection.selected;
 
+        const editDialog:MatDialogRef<GroessenUpdateDialogComponent> = this.dialog.open(GroessenUpdateDialogComponent, {autoFocus:true, data: selected});
+
+        editDialog.afterClosed().subscribe((neueGroesse:any) =>
+        {
+            if(neueGroesse)
+            {
+                let saveGroesse = this.selection.selected[0].groesse;
+
+                saveGroesse.name = neueGroesse.name;
+                saveGroesse.bestandsgrenze = neueGroesse.bestandsgrenze;
+
+                this.saveGroesse(saveGroesse);
+
+                this.selection.selected[0] = saveGroesse;
+                this.dataSource._updateChangeSubscription();
+            }
+        });
     }
 }

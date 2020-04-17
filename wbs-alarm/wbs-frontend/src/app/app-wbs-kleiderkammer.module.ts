@@ -75,13 +75,15 @@ import {NewPasswordService} from "./views/app-login/new-password/service/new-pas
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSortModule} from "@angular/material/sort";
 import {LockTargetplaceDialogComponent} from "./views/system/components/targetplaces/dialog/lock-targetplace-dialog.component";
+import {GroessenUpdateDialogComponent} from "./views/system/components/sizes/dialog/groessen-update-dialog.component";
 
 
 @NgModule({
     entryComponents:[
         BestandDialogComponent,
         ResetPasswordDialogComponent,
-        LockTargetplaceDialogComponent
+        LockTargetplaceDialogComponent,
+        GroessenUpdateDialogComponent
     ],
     imports: [
         BrowserModule,
@@ -133,7 +135,8 @@ import {LockTargetplaceDialogComponent} from "./views/system/components/targetpl
         BerichtViewComponent,
         NavigationBarComponent,
         NewPasswordComponent,
-        LockTargetplaceDialogComponent
+        LockTargetplaceDialogComponent,
+        GroessenUpdateDialogComponent
     ],
     providers:    [
         {
