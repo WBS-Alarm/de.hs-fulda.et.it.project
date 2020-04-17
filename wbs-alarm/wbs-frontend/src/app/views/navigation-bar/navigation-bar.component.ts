@@ -1,4 +1,5 @@
 import {
+    AfterViewInit,
     Component,
     OnInit
 } from "@angular/core";
@@ -15,7 +16,7 @@ import {AlertService} from "@plentymarkets/terra-components";
     templateUrl: './navigation-bar.component.html',
     styleUrls:   ['./navigation-bar.component.scss'],
 })
-export class NavigationBarComponent implements OnInit
+export class NavigationBarComponent implements OnInit, AfterViewInit
 {
     public isLoginActive:boolean;
 
@@ -44,8 +45,6 @@ export class NavigationBarComponent implements OnInit
         }
     ];
 
-    private logoutButton:any = document.getElementById('logout');
-
     constructor(public router:Router,
                 public translation:TranslationService,
                 public alert:AlertService,
@@ -59,6 +58,30 @@ export class NavigationBarComponent implements OnInit
        this.isLoginActive = this.router.isActive('login', true) && !this.globalRegistryService.getIsLoggedIn();
 
         this.subscribeToRouter();
+    }
+
+
+    public ngAfterViewInit():void
+    {
+        setTimeout(()=>
+        {
+            let button = document.getElementById('toggler-button');
+
+            button.onclick = function () {
+                let open = document.getElementById('navbarSupportedContent').classList.contains('show');
+
+                if(open)
+                {
+                    document.getElementById('navbarSupportedContent').classList.remove('show');
+                }
+                else
+                {
+                    document.getElementById('navbarSupportedContent').classList.add('show');
+                }
+
+            }
+        }, 200)
+
     }
 
     public get userImageLink():string
@@ -117,4 +140,5 @@ export class NavigationBarComponent implements OnInit
 
         this.router.navigate(['login']);
     }
+
 }
