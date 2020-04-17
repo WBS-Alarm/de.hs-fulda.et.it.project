@@ -137,6 +137,7 @@ export class SystemGroessenComponent implements OnInit
             let idx:number = this.tableData.indexOf(this.selection.selected[0]);
 
             this.tableData.splice(idx, 1);
+            this.selection.clear();
             this.dataSource._updateChangeSubscription();
         },
             ()=>
