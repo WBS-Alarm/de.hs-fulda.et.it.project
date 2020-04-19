@@ -25,40 +25,60 @@
         </mat-expansion-panel-header>
 
         <div class="mat-elevation-z8">
-            <table class="w-100" mat-table [dataSource]="dataSource">
+            <table class="w-100" mat-table [dataSource]="dataSource" multiTemplateDataRows>
 
-                <!-- Benutzer Column -->
-                <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef> Benutzer </th>
-                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+<!--                &lt;!&ndash; Benutzer Column &ndash;&gt;-->
+<!--                <ng-container matColumnDef="name">-->
+<!--                    <th mat-header-cell *matHeaderCellDef> Benutzer </th>-->
+<!--                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>-->
+<!--                </ng-container>-->
+
+<!--                &lt;!&ndash; Von Column &ndash;&gt;-->
+<!--                <ng-container matColumnDef="von">-->
+<!--                    <th mat-header-cell *matHeaderCellDef> Von </th>-->
+<!--                    <td mat-cell *matCellDef="let element"> {{element.von}} </td>-->
+<!--                </ng-container>-->
+
+<!--                &lt;!&ndash; Nach Column &ndash;&gt;-->
+<!--                <ng-container matColumnDef="nach">-->
+<!--                    <th mat-header-cell *matHeaderCellDef> Nach </th>-->
+<!--                    <td mat-cell *matCellDef="let element"> {{element.nach}} </td>-->
+<!--                </ng-container>-->
+
+<!--                &lt;!&ndash; Date Column &ndash;&gt;-->
+<!--                <ng-container matColumnDef="date">-->
+<!--                    <th mat-header-cell *matHeaderCellDef> Gebucht am </th>-->
+<!--                    <td mat-cell *matCellDef="let element"> {{element.date | date}} </td>-->
+<!--                </ng-container>-->
+
+<!--                &lt;!&ndash; Anzahl Column &ndash;&gt;-->
+<!--                <ng-container matColumnDef="anzahl">-->
+<!--                    <th mat-header-cell *matHeaderCellDef> Anzahl </th>-->
+<!--                    <td mat-cell *matCellDef="let element"> {{element.anzahl}} </td>-->
+<!--                </ng-container>-->
+
+                <ng-container matColumnDef="{{column}}" *ngFor="let column of displayedColumns">
+                    <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+                    <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
                 </ng-container>
 
-                <!-- Von Column -->
-                <ng-container matColumnDef="von">
-                    <th mat-header-cell *matHeaderCellDef> Von </th>
-                    <td mat-cell *matCellDef="let element"> {{element.von}} </td>
-                </ng-container>
-
-                <!-- Nach Column -->
-                <ng-container matColumnDef="nach">
-                    <th mat-header-cell *matHeaderCellDef> Nach </th>
-                    <td mat-cell *matCellDef="let element"> {{element.nach}} </td>
-                </ng-container>
-
-                <!-- Date Column -->
-                <ng-container matColumnDef="date">
-                    <th mat-header-cell *matHeaderCellDef> Gebucht am </th>
-                    <td mat-cell *matCellDef="let element"> {{element.date | date}} </td>
-                </ng-container>
-
-                <!-- Anzahl Column -->
-                <ng-container matColumnDef="anzahl">
-                    <th mat-header-cell *matHeaderCellDef> Anzahl </th>
-                    <td mat-cell *matCellDef="let element"> {{element.anzahl}} </td>
+                <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+                <ng-container matColumnDef="expandedDetail">
+                    <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+                        <div class="example-element-detail"
+                             [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                            <div class="example-element-description">
+                                <div *ngFor="let position of element.positionen">{{ position.kategorie }} + {{ position.groesse }} + {{ position.anzahl }}</div>
+                            </div>
+                        </div>
+                    </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="example-element-row"
+                    [class.example-expanded-row]="expandedElement === row"
+                    (click)="expandedElement = expandedElement === row ? null : row"></tr>
+                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="expanded-detail-row" style="height: 0px;"></tr>
             </table>
 
             <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
