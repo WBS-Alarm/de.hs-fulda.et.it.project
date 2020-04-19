@@ -94,20 +94,17 @@ export class StartComponent implements OnInit
                 {
                     let anzahl:number = 0;
 
-                    let positionForList: {kategorie:string; groesse:string; anzahl:number } =
-                        {
-                            kategorie: '',
-                            groesse: '',
-                            anzahl: 0
-                        };
-
-
                     let positionenArray:Array<{kategorie:string; groesse:string; anzahl:number}> = [];
-
-
 
                     element._embedded.positionen.forEach((position:any) =>
                     {
+                        let positionForList: {kategorie:string; groesse:string; anzahl:number } =
+                            {
+                                kategorie: '',
+                                groesse: '',
+                                anzahl: 0
+                            };
+
                         positionForList.anzahl = position.anzahl;
 
                         position._embedded.groesse.forEach((groesse:any) =>
