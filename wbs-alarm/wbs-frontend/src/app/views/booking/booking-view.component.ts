@@ -133,7 +133,7 @@ export class BookingViewComponent implements OnInit
                 },
                 (error:any) =>
                 {
-                    this.alert.error('Beim der Buchung ist ein Fehler aufgetreten: ' + error.message);
+                    this.alert.error('Beim der Buchung ist ein Fehler aufgetreten: ' + error.error.message);
 
                     console.log('Fehler')
                     console.log(error)
