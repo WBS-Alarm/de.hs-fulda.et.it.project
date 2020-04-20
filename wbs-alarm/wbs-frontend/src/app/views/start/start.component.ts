@@ -25,11 +25,11 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
 
 export interface BuchungsuebersichtRow
 {
-     name:any;
-     von:any;
-     nach:any;
-     date:any;
-     anzahl:any;
+     Name:any;
+     Von:any;
+     Nach:any;
+     Datum:any;
+     Anzahl:any;
      positionen:any;
 }
 
@@ -60,7 +60,7 @@ export class StartComponent implements OnInit
 
     private tableData:Array<BuchungsuebersichtRow> = [];
 
-    public displayedColumns:Array<string> = ['von', 'nach', 'date', 'name', 'anzahl'];
+    public displayedColumns:Array<string> = ['Von', 'Nach', 'Datum', 'Name', 'Anzahl'];
     public dataSource:MatTableDataSource<BuchungsuebersichtRow> = new MatTableDataSource<BuchungsuebersichtRow>(this.tableData);
 
     @ViewChild(MatPaginator, {static: false})
@@ -105,6 +105,8 @@ export class StartComponent implements OnInit
                                 anzahl: 0
                             };
 
+                        anzahl += position.anzahl;
+
                         positionForList.anzahl = position.anzahl;
 
                         position._embedded.groesse.forEach((groesse:any) =>
@@ -121,15 +123,14 @@ export class StartComponent implements OnInit
                     });
 
                     this.tableData.push({
-                        date: new Date(element.datum).toLocaleString(),
-                        nach: element._embedded.nach[0].name,
-                        name: element._embedded.benutzer[0].username,
-                        von: element._embedded.von[0].name,
-                        anzahl: anzahl,
+                        Datum: new Date(element.datum).toLocaleString(),
+                        Nach: element._embedded.nach[0].name,
+                        Name: element._embedded.benutzer[0].username,
+                        Von: element._embedded.von[0].name,
+                        Anzahl: anzahl,
                         positionen: positionenArray
                     });
 
-                    console.log(this.tableData);
                     this.dataSource.paginator = this.paginator;
                     this.dataSource._updateChangeSubscription();
                 })
