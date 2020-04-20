@@ -21,20 +21,29 @@ import {HttpClient} from "@angular/common/http";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {catchError, map, startWith, switchMap} from "rxjs/operators";
+import {animate, state, style, transition, trigger} from "@angular/animations";
 
 export interface BuchungsuebersichtRow
 {
-     name:any;
-     von:any;
-     nach:any;
-     date:any;
-     anzahl:any;
+     Name:any;
+     Von:any;
+     Nach:any;
+     Datum:any;
+     Anzahl:any;
+     positionen:any;
 }
 
 @Component({
     selector: 'start',
     templateUrl: './start.component.html',
     styleUrls:   ['./start.component.scss'],
+    animations: [
+        trigger('detailExpand', [
+            state('collapsed', style({height: '0px', minHeight: '0'})),
+            state('expanded', style({height: '*'})),
+            transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+        ]),
+    ]
 })
 export class StartComponent implements OnInit
 {
@@ -51,7 +60,7 @@ export class StartComponent implements OnInit
 
     private tableData:Array<BuchungsuebersichtRow> = [];
 
-    public displayedColumns:Array<string> = ['von', 'nach', 'date', 'name', 'anzahl'];
+    public displayedColumns:Array<string> = ['Von', 'Nach', 'Datum', 'Name', 'Anzahl'];
     public dataSource:MatTableDataSource<BuchungsuebersichtRow> = new MatTableDataSource<BuchungsuebersichtRow>(this.tableData);
 
     @ViewChild(MatPaginator, {static: false})
@@ -59,6 +68,8 @@ export class StartComponent implements OnInit
 
     @ViewChild(MatSort, {static: false})
     public sort:MatSort;
+
+    public expandedElement:any | null;
 
     constructor(public router:Router,
                 public alert:AlertService,
@@ -83,18 +94,43 @@ export class StartComponent implements OnInit
                 {
                     let anzahl:number = 0;
 
+                    let positionenArray:Array<{kategorie:string; groesse:string; anzahl:number}> = [];
+
                     element._embedded.positionen.forEach((position:any) =>
                     {
-                        anzahl += position.anzahl
+                        let positionForList: {kategorie:string; groesse:string; anzahl:number } =
+                            {
+                                kategorie: '',
+                                groesse: '',
+                                anzahl: 0
+                            };
+
+                        anzahl += position.anzahl;
+
+                        positionForList.anzahl = position.anzahl;
+
+                        position._embedded.groesse.forEach((groesse:any) =>
+                        {
+                            positionForList.groesse = groesse.name;
+
+                            groesse._embedded.kategorie.forEach((kategorie:any) =>
+                            {
+                                positionForList.kategorie = kategorie.name;
+
+                                positionenArray.push(positionForList);
+                            })
+                        })
                     });
 
                     this.tableData.push({
-                        date: element.datum,
-                        nach: element._embedded.nach[0].name,
-                        name: element._embedded.benutzer[0].username,
-                        von: element._embedded.von[0].name,
-                        anzahl: anzahl
+                        Datum: new Date(element.datum).toLocaleString(),
+                        Nach: element._embedded.nach[0].name,
+                        Name: element._embedded.benutzer[0].username,
+                        Von: element._embedded.von[0].name,
+                        Anzahl: anzahl,
+                        positionen: positionenArray
                     });
+
                     this.dataSource.paginator = this.paginator;
                     this.dataSource._updateChangeSubscription();
                 })
