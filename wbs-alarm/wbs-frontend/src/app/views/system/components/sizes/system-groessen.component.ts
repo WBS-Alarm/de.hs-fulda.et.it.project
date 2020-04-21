@@ -1,25 +1,15 @@
-import {
-    Component,
-    Input,
-    OnInit, ViewChild
-} from '@angular/core';
-import { Observable } from 'rxjs';
-import {
-    ActivatedRoute,
-    Data
-} from '@angular/router';
-import {
-    AlertService,
-} from '@plentymarkets/terra-components';
-import { GroesseService } from '../../../../core/service/rest/groesse/groesse.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {Observable} from 'rxjs';
+import {ActivatedRoute, Data} from '@angular/router';
+import {AlertService,} from '@plentymarkets/terra-components';
+import {GroesseService} from '../../../../core/service/rest/groesse/groesse.service';
 import {MatTableDataSource} from "@angular/material/table";
 import {SelectionModel} from "@angular/cdk/collections";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {BestandDialogComponent} from "../bestaende/dialog/bestand-dialog.component";
 import {GroessenUpdateDialogComponent} from "./dialog/groessen-update-dialog.component";
 
 export interface GroesseRow {
-    groesse:any;
+    groesse: any;
 }
 
 @Component({
@@ -101,7 +91,7 @@ export class SystemGroessenComponent implements OnInit
         },
             (error:any) =>
             {
-                this.alert.error('Die Größe konnte nicht gespeichert werden!')
+                this.alert.error('Die Größe konnte nicht gespeichert werden! ' + error.error.message)
             })
     }
 
@@ -122,9 +112,8 @@ export class SystemGroessenComponent implements OnInit
         {
             this.alert.success('Die Größe wurde erfolgreich gespeichert');
         },
-            () =>
-            {
-                this.alert.error('Beim Speichern der Größe ist ein Fehler aufgetreten.')
+            (error: any) => {
+                this.alert.error('Beim Speichern der Größe ist ein Fehler aufgetreten. ' + error.error.message)
             });
     }
 
@@ -140,9 +129,8 @@ export class SystemGroessenComponent implements OnInit
             this.selection.clear();
             this.dataSource._updateChangeSubscription();
         },
-            ()=>
-            {
-                this.alert.error('Die Größe wurde nicht gelöscht.')
+            (error: any) => {
+                this.alert.error('Die Größe wurde nicht gelöscht. ' + error.error.message)
             });
     }
 

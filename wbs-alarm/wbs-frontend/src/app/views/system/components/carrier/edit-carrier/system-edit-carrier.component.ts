@@ -1,11 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Data} from "@angular/router";
-import {AlertService, TerraAlertComponent, TerraNodeTreeConfig} from "@plentymarkets/terra-components";
-import {UsersService} from "../../../../../core/service/rest/users/users.service";
+import {AlertService, TerraNodeTreeConfig} from "@plentymarkets/terra-components";
 import {SystemGlobalSettingsService} from "../../../system-global-settings.service";
 import {ExampleTreeData} from "../../../system.component";
 import {CarrierService} from "../../../../../core/service/rest/carrier/carrier.service";
-import { Observable } from "rxjs";
+import {Observable} from "rxjs";
 import {SystemCarrierInterface} from "../data/system-carrier.interface";
 
 @Component({
@@ -42,7 +41,7 @@ export class SystemEditCarrierComponent implements OnInit
             },
             (error:any) =>
             {
-                this.alert.error('Änderungen konnten nicht gespeichert werden');
+                this.alert.error('Änderungen konnten nicht gespeichert werden. ' + error.error.message);
             })
     }
 
@@ -57,7 +56,7 @@ export class SystemEditCarrierComponent implements OnInit
             },
             (error:any) =>
             {
-                this.alert.error('Der Träger konnte nicht gelöscht werden!');
+                this.alert.error('Der Träger konnte nicht gelöscht werden! ' + error.error.message);
             }
         )
     }

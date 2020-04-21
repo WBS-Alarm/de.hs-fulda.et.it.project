@@ -1,31 +1,19 @@
-import {
-    Component,
-    OnInit
-} from "@angular/core";
-import {
-    AlertService,
-    TerraAlertComponent,
-    TerraNodeTreeConfig
-} from "@plentymarkets/terra-components";
-import { UserDataInterface } from "../../../../core/service/rest/users/user-data.interface";
-import { UsersService } from "../../../../core/service/rest/users/users.service";
-import { SystemGlobalSettingsService } from "../../system-global-settings.service";
-import { ExampleTreeData } from "../../system.component";
-import {
-    ActivatedRoute,
-    Data, Router
-} from '@angular/router';
-import { Observable } from "rxjs";
-import { map } from 'rxjs/operators';
+import {Component, OnInit} from "@angular/core";
+import {AlertService, TerraNodeTreeConfig} from "@plentymarkets/terra-components";
+import {UserDataInterface} from "../../../../core/service/rest/users/user-data.interface";
+import {UsersService} from "../../../../core/service/rest/users/users.service";
+import {SystemGlobalSettingsService} from "../../system-global-settings.service";
+import {ExampleTreeData} from "../../system.component";
+import {ActivatedRoute, Data, Router} from '@angular/router';
+import {Observable} from "rxjs";
 
 @Component({
     selector: 'system-user',
     templateUrl: './system-user.component.html',
-    styleUrls:   ['./system-user.component.scss']
+    styleUrls: ['./system-user.component.scss']
 })
-export class SystemUserComponent implements OnInit
-{
-    public userId:number;
+export class SystemUserComponent implements OnInit {
+    public userId: number;
 
     public routeData$:Observable<Data>;
 
@@ -64,7 +52,7 @@ export class SystemUserComponent implements OnInit
             },
             (error:any) =>
             {
-                this.alert.error('Änderungen wurden nicht gespeichert!');
+                this.alert.error('Änderungen wurden nicht gespeichert! ' + error.error.message);
             }
         )
     }
@@ -82,7 +70,7 @@ export class SystemUserComponent implements OnInit
         },
             (error:any) =>
             {
-                this.alert.error('Der Benutzer konnte nicht gelöscht werden');
+                this.alert.error('Der Benutzer konnte nicht gelöscht werden. ' + error.error.message);
             })
     }
 }

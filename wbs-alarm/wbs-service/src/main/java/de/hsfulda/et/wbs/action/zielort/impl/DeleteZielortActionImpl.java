@@ -34,7 +34,7 @@ public class DeleteZielortActionImpl implements DeleteZielortAction {
 
             if (bestandRepository.countAllByZielortId(id) > 0L) {
                 throw new ZielortDeletionException(
-                        "Zielort kann nicht inaktiv gesetzt werden, da noch BEstände " + "vorhanden sind.");
+                        "Zielort kann nicht inaktiv gesetzt werden, da noch Bestände " + "vorhanden sind.");
             }
 
             repo.deactivate(id);

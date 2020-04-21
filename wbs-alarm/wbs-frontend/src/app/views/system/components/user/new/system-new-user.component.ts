@@ -2,22 +2,17 @@ import {Component} from "@angular/core";
 import {UserDataInterface} from "../../../../../core/service/rest/users/user-data.interface";
 import {UsersService} from "../../../../../core/service/rest/users/users.service";
 import {SystemGlobalSettingsService} from "../../../system-global-settings.service";
-import {
-    AlertService,
-    TerraAlertComponent,
-    TerraNodeTreeConfig
-} from "@plentymarkets/terra-components";
-import { ExampleTreeData } from '../../../system.component';
+import {AlertService, TerraNodeTreeConfig} from "@plentymarkets/terra-components";
+import {ExampleTreeData} from '../../../system.component';
 import {Router} from "@angular/router";
 
 
 @Component({
     selector: 'system-new-user',
     templateUrl: './system-new-user.component.html',
-    styleUrls:   ['./system-new-user.component.scss']
+    styleUrls: ['./system-new-user.component.scss']
 })
-export class SystemNewUserComponent
-{
+export class SystemNewUserComponent {
     public newUser:UserDataInterface =
         {
             username: '',
@@ -76,7 +71,7 @@ export class SystemNewUserComponent
             },
             (error:any) =>
             {
-                this.alert.error('Der Benutzer konnte nicht angelegt werden!');
+                this.alert.error('Der Benutzer konnte nicht angelegt werden! ' + error.error.message);
             })
     }
 }

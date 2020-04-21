@@ -78,7 +78,7 @@ class TransaktionValidaton {
                     "Die Größe mit der/den ID/s {0} wurde in den Positionen doppelt angegeben.", duplicates);
         }
 
-        // Der Wareneingang in den BEständen nicht aktualisiert.
+        // Der Wareneingang in den Beständen nicht aktualisiert.
         if (!vonZielort.isEingang()) {
             // Existiert genug Bestand für eine Position
             positions.forEach(p -> {

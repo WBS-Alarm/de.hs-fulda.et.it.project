@@ -1,23 +1,18 @@
 import {Component} from "@angular/core";
 import {CarrierService} from "../../../../../core/service/rest/carrier/carrier.service";
 import {SystemGlobalSettingsService} from "../../../system-global-settings.service";
-import {
-    AlertService,
-    TerraAlertComponent,
-    TerraNodeTreeConfig
-} from "@plentymarkets/terra-components";
-import { ExampleTreeData } from '../../../system.component';
-import { Router } from '@angular/router';
+import {AlertService, TerraNodeTreeConfig} from "@plentymarkets/terra-components";
+import {ExampleTreeData} from '../../../system.component';
+import {Router} from '@angular/router';
 import {CategoryService} from "../../../../../core/service/rest/categories/category.service";
 
 @Component({
     selector: 'system-new-categories',
     templateUrl: './system-new-category.component.html',
-    styleUrls:   ['./system-new-category.component.scss']
+    styleUrls: ['./system-new-category.component.scss']
 })
-export class SystemNewCategoryComponent
-{
-    public categoryName:string;
+export class SystemNewCategoryComponent {
+    public categoryName: string;
 
     constructor(public carrierService:CarrierService,
                 public categoryService:CategoryService,
@@ -61,7 +56,7 @@ export class SystemNewCategoryComponent
             },
             (error:any) =>
             {
-                this.alert.error('Die Kategorie konnte nicht erstellt werden!');
+                this.alert.error('Die Kategorie konnte nicht erstellt werden! ' + error.error.message);
             }
         )
     }

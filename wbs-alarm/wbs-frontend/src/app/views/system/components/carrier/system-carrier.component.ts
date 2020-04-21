@@ -1,18 +1,17 @@
 import {Component, OnInit} from '@angular/core';
 import {CarrierService} from "../../../../core/service/rest/carrier/carrier.service";
-import {AlertService, TerraAlertComponent, TerraNodeTreeConfig} from "@plentymarkets/terra-components";
+import {AlertService, TerraNodeTreeConfig} from "@plentymarkets/terra-components";
 import {ExampleTreeData} from "../../system.component";
-import { Router } from '@angular/router';
-import { SystemGlobalSettingsService } from '../../system-global-settings.service';
+import {Router} from '@angular/router';
+import {SystemGlobalSettingsService} from '../../system-global-settings.service';
 
 @Component({
     selector: 'carrier',
     templateUrl: './system-carrier.component.html',
-    styleUrls:   ['./system-carrier.component.scss']
+    styleUrls: ['./system-carrier.component.scss']
 })
-export class SystemCarrierComponent implements OnInit
-{
-    public newCarrierName:string;
+export class SystemCarrierComponent implements OnInit {
+    public newCarrierName: string;
 
     constructor(public carrierService:CarrierService,
                 public nodeTreeConfig:TerraNodeTreeConfig<ExampleTreeData>,
@@ -51,7 +50,7 @@ export class SystemCarrierComponent implements OnInit
             },
             (error:any) =>
             {
-                this.alert.error('Beim Anlegen ist ein Fehler aufgetreten!');
+                this.alert.error('Beim Anlegen ist ein Fehler aufgetreten!' + error.error.message);
             }
         )
     }

@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {ActivatedRoute, Data, Router} from "@angular/router";
-import {AlertService, TerraAlertComponent, TerraNodeTreeConfig} from "@plentymarkets/terra-components";
+import {AlertService, TerraNodeTreeConfig} from "@plentymarkets/terra-components";
 import {SystemGlobalSettingsService} from "../../system-global-settings.service";
 import {ExampleTreeData} from "../../system.component";
 import {Observable} from "rxjs";
@@ -49,7 +49,7 @@ export class SystemCategoriesComponent
         },
             (error:any) =>
             {
-                this.alert.error('Änderungen konnten nicht gespeichert werden!');
+                this.alert.error('Änderungen konnten nicht gespeichert werden! ' + error.error.message);
             })
 
 
@@ -68,7 +68,7 @@ export class SystemCategoriesComponent
             },
             (error:any)=>
             {
-                this.alert.error('Die Kategorie konnte nicht gelöscht werden!');
+                this.alert.error('Die Kategorie konnte nicht gelöscht werden! ' + error.error.message);
             })
     }
 }

@@ -1,34 +1,22 @@
-import {
-    Component,
-    Input,
-    OnInit,
-    ViewChild
-} from '@angular/core';
-import {
-    ActivatedRoute,
-    Data
-} from '@angular/router';
-import { Observable } from 'rxjs';
-import {
-    AlertService,
-    TerraOverlayButtonInterface,
-    TerraSelectBoxValueInterface
-} from '@plentymarkets/terra-components';
-import { GroesseService } from '../../../../core/service/rest/groesse/groesse.service';
-import { CategoryService } from '../../../../core/service/rest/categories/category.service';
-import { SystemGlobalSettingsService } from '../../system-global-settings.service';
-import { isNullOrUndefined } from 'util';
-import { BestaendeService } from '../../../../core/service/rest/bestaende/bestaende.serice';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute, Data} from '@angular/router';
+import {Observable} from 'rxjs';
+import {AlertService, TerraOverlayButtonInterface, TerraSelectBoxValueInterface} from '@plentymarkets/terra-components';
+import {GroesseService} from '../../../../core/service/rest/groesse/groesse.service';
+import {CategoryService} from '../../../../core/service/rest/categories/category.service';
+import {SystemGlobalSettingsService} from '../../system-global-settings.service';
+import {isNullOrUndefined} from 'util';
+import {BestaendeService} from '../../../../core/service/rest/bestaende/bestaende.serice';
 import {MatTableDataSource} from "@angular/material/table";
 import {SelectionModel} from "@angular/cdk/collections";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {BestandDialogComponent} from "./dialog/bestand-dialog.component";
 
 export interface BestandRow {
-    kategorie:any;
-    groesse:any;
-    anzahl:number;
-    bestand:any;
+    kategorie: any;
+    groesse: any;
+    anzahl: number;
+    bestand: any;
 }
 
 @Component({
@@ -148,7 +136,7 @@ export class SystemBestaendeComponent implements OnInit
         },
             (error:any) =>
             {
-                this.alert.error('Der Bestand konnte nicht erfasst werden: ' + error);
+                this.alert.error('Der Bestand konnte nicht erfasst werden: ' + error.error.message);
             })
 
 
@@ -210,7 +198,7 @@ export class SystemBestaendeComponent implements OnInit
         },
         (error:any) =>
         {
-            this.alert.error('Der Bestand wurde nicht erfolgreich geändert: ' + error);
+            this.alert.error('Der Bestand wurde nicht erfolgreich geändert: ' + error.error.message);
 
         });
     }
@@ -231,7 +219,7 @@ export class SystemBestaendeComponent implements OnInit
         },
             (error:any) =>
         {
-            this.alert.error('Der Bestand wurde nicht gelöscht');
+            this.alert.error('Der Bestand wurde nicht gelöscht. ' + error.error.message);
 
         });
     }
