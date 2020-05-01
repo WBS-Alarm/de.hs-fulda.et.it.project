@@ -182,3 +182,32 @@ order by t.name,
          g.name,
          b.anzahl;
 
+CREATE OR REPLACE VIEW V_KATEGORIEN AS
+SELECT CONCAT(t.id, '_', k.id) as ID,
+       t.id                                          as traeger_id,
+       t.name                                        as traeger,
+       k.name                                        as kategorie,
+       sum(b.anzahl)                                 as anzahl
+from bestaende b
+         RIGHT JOIN groessen g on g.id = b.groesse_id
+         RIGHT JOIN kategorien k on k.id = g.kategorie_id
+         JOIN traeger t on t.id = k.traeger_id
+group by CONCAT(t.id, '_', k.id), t.id, t.name, k.name
+order by t.name, k.name;
+
+CREATE OR REPLACE VIEW V_ZIELORTE AS
+SELECT CONCAT(t.id, '_', z.id, '_', k.id) as ID,
+       t.id                                          as traeger_id,
+       t.name                                        as traeger,
+       z.name                                        as zielort,
+       k.name                                        as kategorie,
+       sum(b.anzahl)                                 as anzahl
+from bestaende b
+         JOIN groessen g on g.id = b.groesse_id
+         JOIN zielorte z on z.id = b.zielort_id
+         JOIN kategorien k on k.id = g.kategorie_id
+         JOIN traeger t on t.id = k.traeger_id
+group by CONCAT(t.id, '_', z.id, '_', k.id), t.id, t.name, z.name, k.name
+order by t.name, z.name, k.name;
+
+

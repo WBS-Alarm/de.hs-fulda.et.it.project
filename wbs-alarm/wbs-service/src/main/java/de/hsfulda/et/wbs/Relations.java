@@ -3,6 +3,7 @@ package de.hsfulda.et.wbs;
 import de.hsfulda.et.wbs.http.resource.*;
 import de.hsfulda.et.wbs.http.resource.report.BestandReportResource;
 import de.hsfulda.et.wbs.http.resource.report.KategorieReportResource;
+import de.hsfulda.et.wbs.http.resource.report.ZielortReportResource;
 import de.hsfulda.et.wbs.security.resource.*;
 
 public enum Relations {
@@ -33,6 +34,7 @@ public enum Relations {
     , REL_EINKAUF(         "einkauf",         EinkaufResource.PATH)
     , REL_REP_BESTR(       "reportBestand",   BestandReportResource.PATH)
     , REL_REP_KATEG(       "reportKategorie", KategorieReportResource.PATH)
+    , REL_REP_ZIELORT(     "reportZielort",   ZielortReportResource.PATH)
     ;
     // @formatter:on
 
