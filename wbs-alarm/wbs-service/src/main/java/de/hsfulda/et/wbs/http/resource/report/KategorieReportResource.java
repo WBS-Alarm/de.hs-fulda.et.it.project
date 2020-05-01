@@ -1,9 +1,9 @@
 package de.hsfulda.et.wbs.http.resource.report;
 
-import de.hsfulda.et.wbs.action.report.GetBestandViewAction;
+import de.hsfulda.et.wbs.action.report.GetKategorieViewAction;
 import de.hsfulda.et.wbs.core.HalJsonResource;
 import de.hsfulda.et.wbs.core.WbsUser;
-import de.hsfulda.et.wbs.http.haljson.report.BestandReportHalJson;
+import de.hsfulda.et.wbs.http.haljson.report.KategorieReportHalJson;
 import org.springframework.http.HttpEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,19 +19,19 @@ import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
  * Auf der Resource Zielorte können alle Zielorte zu einem Träger abgerufen werden und neue Zielorte erstellt werden.
  */
 @RestController
-@RequestMapping(BestandReportResource.PATH)
-public class BestandReportResource {
+@RequestMapping(KategorieReportResource.PATH)
+public class KategorieReportResource {
 
-    public static final String PATH = CONTEXT_ROOT + "/report/{traegerId}/bestand";
+    public static final String PATH = CONTEXT_ROOT + "/report/{traegerId}/kategorie";
 
-    private final GetBestandViewAction getAction;
+    private final GetKategorieViewAction getAction;
 
-    public BestandReportResource(GetBestandViewAction getAction) {
+    public KategorieReportResource(GetKategorieViewAction getAction) {
         this.getAction = getAction;
     }
 
     /**
-     * Ermittlelt die Übersicht aller Bestände zu einem Träger
+     * Ermittlelt Kategorien und die Summe der Bestände, unabhängig der Kleidergröße, zu einem Träger.
      *
      * @param user Angemeldeter Benutzer.
      * @param traegerId ID des Trägres.
@@ -40,6 +40,6 @@ public class BestandReportResource {
     @GetMapping(produces = HAL_JSON)
     @PreAuthorize("hasAuthority('READ_ALL')")
     HttpEntity<HalJsonResource> get(@AuthenticationPrincipal WbsUser user, @PathVariable("traegerId") Long traegerId) {
-        return new HttpEntity<>(new BestandReportHalJson(getAction.perform(user, traegerId), traegerId));
+        return new HttpEntity<>(new KategorieReportHalJson(getAction.perform(user, traegerId), traegerId));
     }
 }
