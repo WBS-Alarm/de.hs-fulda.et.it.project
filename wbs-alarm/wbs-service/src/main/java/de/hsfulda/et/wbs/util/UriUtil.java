@@ -1,5 +1,6 @@
 package de.hsfulda.et.wbs.util;
 
+import de.hsfulda.et.wbs.Relations;
 import org.springframework.web.util.UriTemplate;
 
 public abstract class UriUtil {
@@ -7,8 +8,8 @@ public abstract class UriUtil {
     private UriUtil() {
     }
 
-    public static String build(String uri, Object... params) {
-        return new UriTemplate(uri).expand(params)
+    public static String build(Relations rel, Object... params) {
+        return new UriTemplate(rel.getSlashedHref()).expand(params)
                 .toString();
     }
 }

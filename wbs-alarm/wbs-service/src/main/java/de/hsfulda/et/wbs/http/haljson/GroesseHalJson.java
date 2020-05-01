@@ -5,8 +5,10 @@ import de.hsfulda.et.wbs.core.Link;
 import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.GroesseData;
 import de.hsfulda.et.wbs.core.data.KategorieData;
-import de.hsfulda.et.wbs.http.resource.GroesseListResource;
 import de.hsfulda.et.wbs.util.UriUtil;
+
+import static de.hsfulda.et.wbs.Relations.REL_GROESSE;
+import static de.hsfulda.et.wbs.Relations.REL_GROESSE_LIST;
 
 public class GroesseHalJson extends HalJsonResource {
 
@@ -23,12 +25,12 @@ public class GroesseHalJson extends HalJsonResource {
     }
 
     private void addGroesseProperties(WbsUser user, GroesseData groesse) {
-        String groesseResource = UriUtil.build("/kategorie/{id}", groesse.getId());
+        String groesseResource = UriUtil.build(REL_GROESSE, groesse.getId());
 
         addLink(Link.self(groesseResource));
         if (user.isTraegerManager()) {
             KategorieData kategorie = groesse.getKategorie();
-            addLink(Link.create("add", UriUtil.build(GroesseListResource.PATH, kategorie.getId())));
+            addLink(Link.create("add", UriUtil.build(REL_GROESSE_LIST, kategorie.getId())));
             addLink(Link.create("delete", groesseResource));
             addLink(Link.create("update", groesseResource));
         }

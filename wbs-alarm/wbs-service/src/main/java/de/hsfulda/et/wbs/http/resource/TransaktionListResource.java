@@ -12,12 +12,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
 import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
+import static de.hsfulda.et.wbs.Relations.REL_TRANSAKTION;
 import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
 import static de.hsfulda.et.wbs.util.HeaderUtil.locationHeader;
 
@@ -68,7 +68,6 @@ public class TransaktionListResource {
     HttpEntity<HalJsonResource> post(@AuthenticationPrincipal WbsUser user,
             @RequestBody TransaktionDtoImpl transaktion) {
         TransaktionData newTransaktion = postAction.perform(user, transaktion);
-        MultiValueMap<String, String> header = locationHeader(TransaktionResource.PATH, newTransaktion.getId());
-        return new ResponseEntity<>(header, HttpStatus.CREATED);
+        return new ResponseEntity<>(locationHeader(REL_TRANSAKTION, newTransaktion.getId()), HttpStatus.CREATED);
     }
 }

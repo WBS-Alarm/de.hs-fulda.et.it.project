@@ -5,10 +5,11 @@ import de.hsfulda.et.wbs.core.Link;
 import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.TraegerData;
 import de.hsfulda.et.wbs.http.resource.TraegerListResource;
-import de.hsfulda.et.wbs.http.resource.TraegerResource;
 import de.hsfulda.et.wbs.util.UriUtil;
 
 import java.util.stream.Collectors;
+
+import static de.hsfulda.et.wbs.Relations.REL_TRAEGER;
 
 public class TraegerHalJson extends HalJsonResource {
 
@@ -38,7 +39,7 @@ public class TraegerHalJson extends HalJsonResource {
     }
 
     private void addTraegerProperties(WbsUser user, TraegerData traeger) {
-        String traegerResource = UriUtil.build(TraegerResource.PATH, traeger.getId());
+        String traegerResource = UriUtil.build(REL_TRAEGER, traeger.getId());
 
         addLink(Link.self(traegerResource));
         if (user.isAdmin()) {

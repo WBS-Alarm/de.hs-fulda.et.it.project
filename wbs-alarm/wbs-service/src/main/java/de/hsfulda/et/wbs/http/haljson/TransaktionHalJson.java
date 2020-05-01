@@ -6,15 +6,14 @@ import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.TraegerData;
 import de.hsfulda.et.wbs.core.data.TransaktionData;
 import de.hsfulda.et.wbs.core.data.ZielortData;
-import de.hsfulda.et.wbs.http.resource.EinkaufResource;
-import de.hsfulda.et.wbs.http.resource.TransaktionListResource;
-import de.hsfulda.et.wbs.http.resource.TransaktionResource;
 import de.hsfulda.et.wbs.util.UriUtil;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.stream.Collectors;
+
+import static de.hsfulda.et.wbs.Relations.*;
 
 public class TransaktionHalJson extends HalJsonResource {
 
@@ -35,15 +34,15 @@ public class TransaktionHalJson extends HalJsonResource {
     }
 
     private void addTransaktionProperties(WbsUser user, TransaktionData transaktion) {
-        String traegerResource = UriUtil.build(TransaktionResource.PATH, transaktion.getId());
+        String traegerResource = UriUtil.build(REL_TRANSAKTION, transaktion.getId());
 
         addLink(Link.self(traegerResource));
 
         if (user.isAccountant()) {
             ZielortData von = transaktion.getVon();
             TraegerData traeger = von.getTraeger();
-            addLink(Link.create("add", UriUtil.build(TransaktionListResource.PATH, traeger.getId())));
-            addLink(Link.create("einkauf", UriUtil.build(EinkaufResource.PATH, traeger.getId())));
+            addLink(Link.create("add", UriUtil.build(REL_TRANSAKTION_LIST, traeger.getId())));
+            addLink(Link.create("einkauf", UriUtil.build(REL_EINKAUF, traeger.getId())));
         }
 
         addProperty("id", transaktion.getId());

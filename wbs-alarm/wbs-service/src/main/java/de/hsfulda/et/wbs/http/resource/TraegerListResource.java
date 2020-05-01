@@ -12,10 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
+import static de.hsfulda.et.wbs.Relations.REL_TRAEGER;
 import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
 import static de.hsfulda.et.wbs.util.HeaderUtil.locationHeader;
 
@@ -59,7 +59,6 @@ public class TraegerListResource {
     @PreAuthorize("hasAuthority('ADMIN')")
     HttpEntity<HalJsonResource> post(@AuthenticationPrincipal WbsUser user, @RequestBody TraegerDtoImpl traeger) {
         TraegerData newTraeger = postAction.perform(traeger);
-        MultiValueMap<String, String> header = locationHeader(TraegerResource.PATH, newTraeger.getId());
-        return new ResponseEntity<>(header, HttpStatus.CREATED);
+        return new ResponseEntity<>(locationHeader(REL_TRAEGER, newTraeger.getId()), HttpStatus.CREATED);
     }
 }

@@ -4,12 +4,13 @@ import de.hsfulda.et.wbs.core.HalJsonResource;
 import de.hsfulda.et.wbs.core.Link;
 import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.TransaktionData;
-import de.hsfulda.et.wbs.http.resource.TransaktionListResource;
 import de.hsfulda.et.wbs.util.UriUtil;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static de.hsfulda.et.wbs.Relations.REL_TRANSAKTION_LIST;
 
 public class TransaktionListHalJson extends HalJsonResource {
 
@@ -17,7 +18,7 @@ public class TransaktionListHalJson extends HalJsonResource {
 
     public TransaktionListHalJson(WbsUser user, Page<TransaktionData> transaktionen, Long traegerId, int page,
             int size) {
-        String selfUrl = UriUtil.build(TransaktionListResource.PATH, traegerId);
+        String selfUrl = UriUtil.build(REL_TRANSAKTION_LIST, traegerId);
         addLinks(selfUrl, page, size, transaktionen.getTotalPages());
 
         addProperty("page", page);
@@ -35,18 +36,18 @@ public class TransaktionListHalJson extends HalJsonResource {
     private void addLinks(String selfUrl, int page, int size, int totalPages) {
         addLink(Link.self(selfUrl + String.format(QUERY_OPTIONS, page, size)));
 
-        addNavigationLink(size, selfUrl, "first", 0);
-        addNavigationLink(size, selfUrl, "last", totalPages - 1);
+        addNavigationLink(selfUrl, "first", size, 0);
+        addNavigationLink(selfUrl, "last", size, totalPages - 1);
         if (page > 0) {
-            addNavigationLink(size, selfUrl, "prev", page - 1);
+            addNavigationLink(selfUrl, "prev", size, page - 1);
         }
 
         if ((totalPages - 1) < page) {
-            addNavigationLink(size, selfUrl, "next", page + 1);
+            addNavigationLink(selfUrl, "next", size, page + 1);
         }
     }
 
-    private void addNavigationLink(int size, String selfUrl, String prev, int i) {
-        addLink(Link.create(prev, selfUrl + String.format(QUERY_OPTIONS, i, size)));
+    private void addNavigationLink(String selfUrl, String rel, int size, int i) {
+        addLink(Link.create(rel, selfUrl + String.format(QUERY_OPTIONS, i, size)));
     }
 }

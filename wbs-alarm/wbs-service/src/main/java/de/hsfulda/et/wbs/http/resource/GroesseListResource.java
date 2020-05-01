@@ -12,10 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
+import static de.hsfulda.et.wbs.Relations.REL_GROESSE;
 import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
 import static de.hsfulda.et.wbs.util.HeaderUtil.locationHeader;
 
@@ -63,7 +63,6 @@ public class GroesseListResource {
     HttpEntity<HalJsonResource> post(@AuthenticationPrincipal WbsUser user,
             @PathVariable("kategorieId") Long kategorieId, @RequestBody GroesseDtoImpl groesse) {
         GroesseData newGroesse = postAction.perform(user, kategorieId, groesse);
-        MultiValueMap<String, String> header = locationHeader(GroesseResource.PATH, newGroesse.getId());
-        return new ResponseEntity<>(header, HttpStatus.CREATED);
+        return new ResponseEntity<>(locationHeader(REL_GROESSE, newGroesse.getId()), HttpStatus.CREATED);
     }
 }

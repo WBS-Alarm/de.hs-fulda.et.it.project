@@ -1,5 +1,6 @@
 package de.hsfulda.et.wbs.http.resource;
 
+import de.hsfulda.et.wbs.Relations;
 import de.hsfulda.et.wbs.action.zielort.CreateZielortAction;
 import de.hsfulda.et.wbs.action.zielort.GetZielortListAction;
 import de.hsfulda.et.wbs.core.HalJsonResource;
@@ -12,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
@@ -61,9 +61,7 @@ public class ZielortListResource {
     @PreAuthorize("hasAuthority('TRAEGER_MANAGER')")
     HttpEntity<HalJsonResource> post(@AuthenticationPrincipal WbsUser user, @PathVariable("traegerId") Long traegerId,
             @RequestBody ZielortDtoImpl zielort) {
-
         ZielortData newZielort = postAction.perform(user, traegerId, zielort);
-        MultiValueMap<String, String> header = locationHeader(ZielortResource.PATH, newZielort.getId());
-        return new ResponseEntity<>(header, HttpStatus.CREATED);
+        return new ResponseEntity<>(locationHeader(Relations.REL_ZIELORT, newZielort.getId()), HttpStatus.CREATED);
     }
 }

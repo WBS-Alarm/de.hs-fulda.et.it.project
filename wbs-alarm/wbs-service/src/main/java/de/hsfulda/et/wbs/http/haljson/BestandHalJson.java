@@ -5,9 +5,10 @@ import de.hsfulda.et.wbs.core.Link;
 import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.BestandData;
 import de.hsfulda.et.wbs.core.data.ZielortData;
-import de.hsfulda.et.wbs.http.resource.BestandListResource;
-import de.hsfulda.et.wbs.http.resource.BestandResource;
 import de.hsfulda.et.wbs.util.UriUtil;
+
+import static de.hsfulda.et.wbs.Relations.REL_BESTAND;
+import static de.hsfulda.et.wbs.Relations.REL_BESTAND_LIST;
 
 public class BestandHalJson extends HalJsonResource {
 
@@ -27,12 +28,12 @@ public class BestandHalJson extends HalJsonResource {
     }
 
     private void addBestandProperties(WbsUser user, BestandData bestand) {
-        String bestandResource = UriUtil.build(BestandResource.PATH, bestand.getId());
+        String bestandResource = UriUtil.build(REL_BESTAND, bestand.getId());
 
         addLink(Link.self(bestandResource));
         if (user.isTraegerManager()) {
             ZielortData zielort = bestand.getZielort();
-            addLink(Link.create("add", UriUtil.build(BestandListResource.PATH, zielort.getId())));
+            addLink(Link.create("add", UriUtil.build(REL_BESTAND_LIST, zielort.getId())));
             addLink(Link.create("delete", bestandResource));
             addLink(Link.create("update", bestandResource));
         }

@@ -1,5 +1,6 @@
 package de.hsfulda.et.wbs.http.resource;
 
+import de.hsfulda.et.wbs.Relations;
 import de.hsfulda.et.wbs.ResourceTest;
 import de.hsfulda.et.wbs.util.UriUtil;
 import org.junit.jupiter.api.DisplayName;
@@ -90,7 +91,7 @@ class TraegerListResourceTest extends ResourceTest {
         @DisplayName("wird angezeigt")
         @Test
         void getKassel() throws Exception {
-            String resourceLink = UriUtil.build(TraegerResource.PATH, getTraegerId("Kassel"));
+            String resourceLink = UriUtil.build(Relations.REL_TRAEGER, getTraegerId("Kassel"));
             mockMvc.perform(get(TraegerResource.PATH, getTraegerId("Kassel"))
                     .header("Authorization", getTokenAsSuperuser()))
                     .andExpect(status().isOk())

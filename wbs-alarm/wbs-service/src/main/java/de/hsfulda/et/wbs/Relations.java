@@ -49,4 +49,8 @@ public enum Relations {
     public String getHref() {
         return href;
     }
+
+    public String getSlashedHref() {
+        return "/" + href;
+    }
 }

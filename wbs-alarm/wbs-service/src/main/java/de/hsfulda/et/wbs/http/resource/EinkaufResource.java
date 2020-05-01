@@ -11,13 +11,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static de.hsfulda.et.wbs.Application.CONTEXT_ROOT;
+import static de.hsfulda.et.wbs.Relations.REL_TRANSAKTION;
 import static de.hsfulda.et.wbs.core.HalJsonResource.HAL_JSON;
 import static de.hsfulda.et.wbs.util.HeaderUtil.locationHeader;
 
@@ -50,9 +50,7 @@ public class EinkaufResource {
         List<PositionDto> dtos = positionen.stream()
                 .map(p -> (PositionDto) p)
                 .collect(Collectors.toList());
-
         TransaktionData newTransaktion = postAction.perform(user, traegerId, dtos);
-        MultiValueMap<String, String> header = locationHeader(TransaktionResource.PATH, newTransaktion.getId());
-        return new ResponseEntity<>(header, HttpStatus.CREATED);
+        return new ResponseEntity<>(locationHeader(REL_TRANSAKTION, newTransaktion.getId()), HttpStatus.CREATED);
     }
 }
