@@ -9,5 +9,5 @@ public interface BestandViewData {
 
     String getGroesse();
 
-    String getAnzahl();
+    Long getAnzahl();
 }
