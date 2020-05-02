@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {GlobalRegistryService} from "../../core/global-registry/global-registry.service";
-import {ActivatedRoute, Data, Route} from "@angular/router";
+import {ActivatedRoute, Data} from "@angular/router";
 import {ReportService} from "./service/report.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {Observable} from "rxjs";
@@ -45,14 +45,14 @@ export class BerichtViewComponent implements OnInit
     private tableDataKategorien:Array<AktuellUeberKategorienBerichtRow> = [];
     private tableDataBestaende:Array<AktuellUeberZielorteRow> = [];
 
-    public displayedColumns:Array<string> = ['traeger', 'kategorie', 'größe', 'zielort', 'anzahl'];
-    public dataSource:MatTableDataSource<BerichtRow> = new MatTableDataSource<BerichtRow>(this.tableData);
+    public displayedColumns: Array<string> = ['zielort', 'kategorie', 'größe', 'anzahl'];
+    public dataSource: MatTableDataSource<BerichtRow> = new MatTableDataSource<BerichtRow>(this.tableData);
 
-    public displayedColumnsKategorien:Array<string> = ['traeger', 'anzahl', 'kategorie'];
-    public dataSourceUeberKategorien:MatTableDataSource<AktuellUeberKategorienBerichtRow> = new MatTableDataSource<AktuellUeberKategorienBerichtRow>(this.tableDataKategorien);
+    public displayedColumnsKategorien: Array<string> = ['kategorie', 'anzahl'];
+    public dataSourceUeberKategorien: MatTableDataSource<AktuellUeberKategorienBerichtRow> = new MatTableDataSource<AktuellUeberKategorienBerichtRow>(this.tableDataKategorien);
 
-    public displayedColumnsBestaende:Array<string> = ['traeger', 'anzahl', 'kategorie', 'zielort'];
-    public dataSourceUeberBestaende:MatTableDataSource<AktuellUeberZielorteRow> = new MatTableDataSource<AktuellUeberZielorteRow>(this.tableDataBestaende);
+    public displayedColumnsBestaende: Array<string> = ['zielort', 'kategorie', 'anzahl'];
+    public dataSourceUeberBestaende: MatTableDataSource<AktuellUeberZielorteRow> = new MatTableDataSource<AktuellUeberZielorteRow>(this.tableDataBestaende);
 
     constructor(private globalRegistryService:GlobalRegistryService,
                 private route:ActivatedRoute,
