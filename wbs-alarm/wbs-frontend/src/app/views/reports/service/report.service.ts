@@ -20,4 +20,18 @@ export class ReportService
 
         return this.http.get('/wbs/report/'+ traegerId +'/bestand', {headers: this.headers})
     }
+
+    public listBestaendeUeberKategorien(traegerId:number):Observable<any>
+    {
+        this.headers = this.sitemapHelper.setAuthorization();
+
+        return this.http.get('/wbs/report/'+ traegerId +'/kategorie', {headers: this.headers})
+    }
+
+    public listBestaendeUeberZielort(traegerId:number):Observable<any>
+    {
+        this.headers = this.sitemapHelper.setAuthorization();
+
+        return this.http.get('/wbs/report/'+ traegerId +'/zielort', {headers: this.headers})
+    }
 }
