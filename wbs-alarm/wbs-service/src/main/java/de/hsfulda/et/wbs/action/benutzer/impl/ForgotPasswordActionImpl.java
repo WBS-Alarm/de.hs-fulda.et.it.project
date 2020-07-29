@@ -1,11 +1,11 @@
 package de.hsfulda.et.wbs.action.benutzer.impl;
 
+import de.hsfulda.et.wbs.action.MailService;
 import de.hsfulda.et.wbs.action.benutzer.ForgotPasswordAction;
 import de.hsfulda.et.wbs.core.Mail;
 import de.hsfulda.et.wbs.core.data.BenutzerData;
 import de.hsfulda.et.wbs.core.exception.MailConnectionException;
 import de.hsfulda.et.wbs.repository.BenutzerRepository;
-import de.hsfulda.et.wbs.service.MailService;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;

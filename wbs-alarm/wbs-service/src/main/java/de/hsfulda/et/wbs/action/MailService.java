@@ -1,4 +1,4 @@
-package de.hsfulda.et.wbs.service;
+package de.hsfulda.et.wbs.action;
 
 import de.hsfulda.et.wbs.core.Mail;
 import de.hsfulda.et.wbs.core.exception.MailConnectionException;

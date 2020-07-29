@@ -7,9 +7,6 @@ import de.hsfulda.et.wbs.core.exception.ResourceNotFoundException;
 import de.hsfulda.et.wbs.entity.Bestand;
 import de.hsfulda.et.wbs.entity.Groesse;
 import de.hsfulda.et.wbs.entity.Zielort;
-import de.hsfulda.et.wbs.repository.BestandRepository;
-import de.hsfulda.et.wbs.repository.GroesseRepository;
-import de.hsfulda.et.wbs.repository.ZielortRepository;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
@@ -19,39 +16,32 @@ import java.util.Optional;
 @Component
 public class CreateBestandForTransaktion {
 
-    private final BestandRepository repo;
-    private final ZielortRepository zielortRepository;
-    private final GroesseRepository groesseRepository;
+    private final TransaktionDao transaktionDao;
 
-    public CreateBestandForTransaktion(BestandRepository repo, ZielortRepository zielortRepository,
-                                       GroesseRepository groesseRepository) {
-
-        this.repo = repo;
-        this.zielortRepository = zielortRepository;
-        this.groesseRepository = groesseRepository;
+    public CreateBestandForTransaktion(TransaktionDao transaktionDao) {
+        this.transaktionDao = transaktionDao;
     }
 
     public BestandData perform(Long zielortId, BestandCreateDto bestand) {
         checkPreconditions(zielortId, bestand);
 
         // Durch die Prüfun g der Vorbedingen sind alle Informationen korrekt und vorhanden.
-        Optional<Zielort> zielort = zielortRepository.findById(zielortId);
-        Optional<Groesse> groesse = groesseRepository.findById(bestand.getGroesseId());
+        Zielort zielort = transaktionDao.getZielort(zielortId);
+        Groesse groesse = transaktionDao.getGroesse(bestand.getGroesseId());
 
         Bestand saved = Bestand.builder()
                 .anzahl(bestand.getAnzahl())
-                .groesse(groesse.get())
+                .groesse(groesse)
                 .build();
 
-        zielort.get()
-                .addBestand(saved);
-        return repo.save(saved);
+        zielort.addBestand(saved);
+        return transaktionDao.saveBestand(saved);
     }
 
     private void checkPreconditions(Long zielortId, BestandCreateDto bestand) {
         Long groesseId = bestand.getGroesseId();
 
-        if (!(groesseRepository.existsById(groesseId))) {
+        if (!(transaktionDao.existsGroesse(groesseId))) {
             throw new ResourceNotFoundException("Größe mit ID {0} nicht gefunden.", groesseId);
         }
 
@@ -59,7 +49,7 @@ public class CreateBestandForTransaktion {
             throw new IllegalArgumentException("Die Anzahl im Bestand darf nicht negativ sein.");
         }
 
-        Optional<BestandData> existing = repo.findByZielortIdAndGroesseIdAsData(zielortId, groesseId);
+        Optional<Bestand> existing = transaktionDao.getBestand(zielortId, groesseId);
         if (existing.isPresent()) {
             throw new BestandAlreadyExistsException("Bestand kann nicht angelegt werden. Dieser existiert bereits.");
         }

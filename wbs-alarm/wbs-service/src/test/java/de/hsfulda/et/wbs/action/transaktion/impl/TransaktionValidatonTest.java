@@ -27,7 +27,7 @@ import static org.mockito.Mockito.lenient;
 class TransaktionValidatonTest {
 
     @Mock
-    private TransaktionContext context;
+    private TransaktionDao context;
 
     @Mock
     private TransaktionDto dto;

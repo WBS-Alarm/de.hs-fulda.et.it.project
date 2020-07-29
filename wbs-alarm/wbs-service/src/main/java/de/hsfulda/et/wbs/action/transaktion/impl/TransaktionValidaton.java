@@ -19,10 +19,10 @@ import java.util.stream.Collectors;
 @Component
 class TransaktionValidaton {
 
-    private final TransaktionContext context;
+    private final TransaktionDao transaktionDao;
 
-    TransaktionValidaton(TransaktionContext context) {
-        this.context = context;
+    TransaktionValidaton(TransaktionDao transaktionDao) {
+        this.transaktionDao = transaktionDao;
     }
 
     /**
@@ -37,8 +37,8 @@ class TransaktionValidaton {
      * @param dto Übergebene Daten einer Transaktion.
      */
     void validateTransaktionDto(TransaktionDto dto) {
-        ZielortData vonZielort = context.getZielortData(dto.getVon());
-        ZielortData nachZielort = context.getZielortData(dto.getNach());
+        ZielortData vonZielort = transaktionDao.getZielortData(dto.getVon());
+        ZielortData nachZielort = transaktionDao.getZielortData(dto.getNach());
 
         if (!hasSameTraeger(vonZielort, nachZielort)) {
             throw new TransaktionValidationException("Die Zielorte {0} und {1} besitzen nicht den gleichen Träger.",
@@ -82,8 +82,8 @@ class TransaktionValidaton {
         if (!vonZielort.isEingang()) {
             // Existiert genug Bestand für eine Position
             positions.forEach(p -> {
-                BestandData bestand = context.getBestandData(vonZielort.getId(), p.getGroesse());
-                GroesseData groesse = context.getGroesseData(p.getGroesse());
+                BestandData bestand = transaktionDao.getBestandData(vonZielort.getId(), p.getGroesse());
+                GroesseData groesse = transaktionDao.getGroesseData(p.getGroesse());
 
                 if (bestand.getAnzahl() < p.getAnzahl()) {
                     KategorieData kategorie = groesse.getKategorie();
