@@ -1,5 +1,6 @@
 package de.hsfulda.et.wbs.action.transaktion.impl;
 
+import de.hsfulda.et.wbs.action.MailService;
 import de.hsfulda.et.wbs.core.Mail;
 import de.hsfulda.et.wbs.core.WbsUser;
 import de.hsfulda.et.wbs.core.data.BenutzerData;
@@ -10,9 +11,6 @@ import de.hsfulda.et.wbs.core.dto.BenutzerDto;
 import de.hsfulda.et.wbs.core.dto.TransaktionDto;
 import de.hsfulda.et.wbs.core.exception.MailConnectionException;
 import de.hsfulda.et.wbs.entity.Bestand;
-import de.hsfulda.et.wbs.repository.BenutzerRepository;
-import de.hsfulda.et.wbs.repository.BestandRepository;
-import de.hsfulda.et.wbs.service.MailService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,26 +21,23 @@ import java.util.stream.Collectors;
 public class TransaktionMailService {
 
     private final MailService mailService;
-    private final BenutzerRepository benutzerRepository;
-    private final BestandRepository bestandRepository;
+    private final TransaktionDao transaktionDao;
 
-    public TransaktionMailService(MailService mailService, BenutzerRepository benutzerRepository,
-            BestandRepository bestandRepository) {
+    public TransaktionMailService(MailService mailService, TransaktionDao transaktionDao) {
         this.mailService = mailService;
-        this.benutzerRepository = benutzerRepository;
-        this.bestandRepository = bestandRepository;
+        this.transaktionDao = transaktionDao;
     }
 
     public void sendMail(WbsUser user, TransaktionDto dto) {
 
-        List<BenutzerData> allEinkaeufer = benutzerRepository.findAllEinkaeuferByUserId(user.getId());
+        List<BenutzerData> allEinkaeufer = transaktionDao.getEinkaeufer(user.getId());
         if (allEinkaeufer.isEmpty()) {
             return;
         }
 
         List<Bestand> bestaende = dto.getPositions()
                 .stream()
-                .map(p -> bestandRepository.findByZielortIdAndGroesseId(dto.getVon(), p.getGroesse()))
+                .map(p -> transaktionDao.getBestand(dto.getVon(), p.getGroesse()))
                 .filter(b -> b.isPresent() && b.map(Bestand::isMailRequired)
                         .orElse(false))
                 .map(Optional::get)
