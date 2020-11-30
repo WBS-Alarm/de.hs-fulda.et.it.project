@@ -19,6 +19,6 @@ jobs:
       - name: Clean install
         run: npm run reinstall_win
 
-          # Do a clean install on unix
-          - name: Clean install
-            run: npm run reinstall_ux
+      # Do a clean install on unix
+      - name: Clean install
+        run: npm run reinstall_ux
