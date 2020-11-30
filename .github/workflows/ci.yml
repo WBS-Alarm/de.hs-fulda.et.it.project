@@ -25,6 +25,6 @@ jobs:
 
       # Do a run of the automated tests
       - name: Run tests
-        run: cd wbs-alarm/wbs-frontend/ && npm run test
+        run: cd wbs-alarm/wbs-frontend/ && npm run test-headless-coverage
 
 
