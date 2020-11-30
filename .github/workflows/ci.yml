@@ -15,10 +15,6 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Do a clean install on windows
-      - name: Clean install
-        run: npm run reinstall_win
-
       # Do a clean install on unix
       - name: Clean install
-        run: npm run reinstall_ux
+        run: cd wbs-alarm/wbs-frontend/ && npm run reinstall_ux
