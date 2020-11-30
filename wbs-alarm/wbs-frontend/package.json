@@ -11,6 +11,7 @@
 		"clean:dist": "npm run rimraf -- dist",
 		"rimraf": "rimraf",
 		"test": "ng test",
+		"test-headless": "ng test --browsers=ChromeHeadless",
 		"lint": "ng lint",
 		"reinstall_win": "rd /s /q \"node_modules\" && npm i",
 		"reinstall_ux": "rm -rf node_modules/ && npm i"

@@ -18,3 +18,11 @@ jobs:
       # Do a clean install on unix
       - name: Clean install
         run: cd wbs-alarm/wbs-frontend/ && npm run reinstall_ux
+
+      # Do a run of the automated tests
+      - name: Run tests
+        run: cd wbs-alarm/wbs-frontend/ && npm run test-headless
+
+      # Do a test build
+      - name: Run build
+        run: cd wbs-alarm/wbs-frontend/ && npm run build
