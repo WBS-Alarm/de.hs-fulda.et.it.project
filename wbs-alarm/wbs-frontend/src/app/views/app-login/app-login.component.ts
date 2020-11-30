@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Language, TranslationService} from 'angular-l10n';
-import {AlertService, TerraAlertComponent, TerraSelectBoxValueInterface} from "@plentymarkets/terra-components";
+import {AlertService, TerraSelectBoxValueInterface} from "@plentymarkets/terra-components";
 import {LoginService} from "../../core/service/rest/login/login.service";
 import {WbsSitemapHelper} from "../../core/service/rest/sitemap/data/wbs-sitemap.helper";
 import {Router} from "@angular/router";
