@@ -17,6 +17,6 @@ jobs:
         with:
           java-version: 1.8
       - name: Install with Maven
-        run: mvn install --file pom.xml
+        run: cd wbs/alarm/ && mvn install --file pom.xml
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
+        run: cd wbs/alarm/ && mvn -B package --file pom.xml
