@@ -14,8 +14,6 @@ jobs:
         image: mysql:5.7
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
-          MYSQL_USER: root
-          MYSQL_PASSWORD: PLEASECHANGEME!
           MYSQL_DATABASE: wbsalarm
         ports:
           - 3306
