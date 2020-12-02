@@ -14,7 +14,6 @@ jobs:
         image: mysql:5.7
         env:
           MYSQL_ROOT_PASSWORD: PLEASECHANGEME!
-          MYSQL_USER: root
           MYSQL_DATABASE: wbsalarm
         ports:
           - 3306
@@ -30,6 +29,5 @@ jobs:
         run: |
           sudo apt-get install -y mysql-client
           mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -uroot -pPLEASECHANGEME! -e "SHOW DATABASES"
-          mysql -e "SHOW DATABASES"
 
 
