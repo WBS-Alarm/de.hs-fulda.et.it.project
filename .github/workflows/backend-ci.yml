@@ -13,9 +13,10 @@ jobs:
       mysql:
         image: mysql:5.7
         env:
-          MYSQL_ROOT_PASSWORD: password
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: laravel_tags
         ports:
-          - 32574:3306
+          - 3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
@@ -24,7 +25,3 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-      - name: Verify MySQL connection from host
-        run: |
-        sudo apt-get install -y mysql-client
-        mysql --host 127.0.0.1 --port 32574 -uroot -ppassword
