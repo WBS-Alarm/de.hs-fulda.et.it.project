@@ -16,7 +16,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: PLEASECHANGEME!
           MYSQL_DATABASE: wbsalarm
         ports:
-          - 3306
+          - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
@@ -30,7 +30,9 @@ jobs:
           sudo apt-get install -y mysql-client
           mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -uroot -pPLEASECHANGEME! -e "SHOW DATABASES"
       - name: Install with Maven
-        run: cd wbs-alarm/ && mvn install --file pom.xml
+        run: |
+          mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -uroot -pPLEASECHANGEME!
+          cd wbs-alarm/ && mvn install --file pom.xml
       - name: Build with Maven
         run: cd wbs-alarm/ && mvn -B package --file pom.xml
 
