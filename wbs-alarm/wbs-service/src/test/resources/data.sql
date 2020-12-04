@@ -162,7 +162,7 @@ values (5,
 
 commit;
 
-#ddl
+
 create or replace view V_BESTAENDE as
 SELECT CONCAT(t.id, '_', z.id, '_', k.id, '_', g.id) as ID,
        t.id                                          as traeger_id,
