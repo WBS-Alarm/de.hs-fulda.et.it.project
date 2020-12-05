@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { UserDataInterface } from '../service/rest/users/user-data.interface';
-import {BehaviorSubject} from "rxjs";
+import { BehaviorSubject } from 'rxjs';
 
+/* tslint:disable */
 @Injectable()
 export class GlobalRegistryService
 {
@@ -52,18 +52,22 @@ export class GlobalRegistryService
 
     public getCookie(name:string):any
     {
-        let cookiename = name + "=";
+        let cookiename = name + '=';
         let decodedCookie = decodeURIComponent(document.cookie);
         let ca = decodedCookie.split(';');
-        for(var i = 0; i <ca.length; i++) {
+        for(var i = 0; i < ca.length; i++)
+        {
             var c = ca[i];
-            while (c.charAt(0) == ' ') {
+            while(c.charAt(0) == ' ')
+            {
                 c = c.substring(1);
             }
-            if (c.indexOf(cookiename) == 0) {
+            if(c.indexOf(cookiename) == 0)
+            {
                 return c.substring(cookiename.length, c.length);
             }
         }
-        return "";
+        return '';
     }
 }
+/* tslint:enable */

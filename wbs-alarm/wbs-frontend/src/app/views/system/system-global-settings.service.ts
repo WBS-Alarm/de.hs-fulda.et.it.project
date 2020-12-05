@@ -1,8 +1,8 @@
-import {Injectable} from "../../../../node_modules/@angular/core";
-import {UserDataInterface} from "../../core/service/rest/users/user-data.interface";
+import { Injectable } from '../../../../node_modules/@angular/core';
+import { UserDataInterface } from '../../core/service/rest/users/user-data.interface';
 import { SystemZielortInterface } from './components/targetplaces/data/system-zielort.interface';
-import {SystemCarrierInterface} from "./components/carrier/data/system-carrier.interface";
-import {SystemCategoryInterface} from "./components/categories/data/system-category.interface";
+import { SystemCarrierInterface } from './components/carrier/data/system-carrier.interface';
+import { SystemCategoryInterface } from './components/categories/data/system-category.interface';
 import { UsersService } from '../../core/service/rest/users/users.service';
 
 @Injectable()
@@ -25,17 +25,17 @@ export class SystemGlobalSettingsService
         return this.traegerId;
     }
 
-    public setTraegerId(id:number)
+    public setTraegerId(id:number):void
     {
         this.traegerId = id;
     }
 
     public getSingleTraeger(id:number):SystemCarrierInterface
     {
-        return this.traegers.find((traeger:SystemCarrierInterface) => id === traeger.id)
+        return this.traegers.find((traeger:SystemCarrierInterface) => id === traeger.id);
     }
 
-    public setBenutzer(benutzer:Array<any>)
+    public setBenutzer(benutzer:Array<any>):void
     {
         if(this.benutzer.indexOf(benutzer) === -1)
         {
@@ -47,7 +47,7 @@ export class SystemGlobalSettingsService
         }
     }
 
-    public setTraegers(traegers:Array<any>)
+    public setTraegers(traegers:Array<any>):void
     {
         if(this.traegers.indexOf(traegers) === -1)
         {
@@ -55,7 +55,7 @@ export class SystemGlobalSettingsService
         }
     }
 
-    public setZielOrte(zielorte:Array<any>)
+    public setZielOrte(zielorte:Array<any>):void
     {
         if(this.zielorte.indexOf(zielorte) === -1)
         {
@@ -67,10 +67,10 @@ export class SystemGlobalSettingsService
     {
         console.log(this.zielorte.find((zielort:any) => id === zielort.id));
 
-        return this.zielorte.find((zielort:any) => id === zielort.id)
+        return this.zielorte.find((zielort:any) => id === zielort.id);
     }
 
-    public setKategorien(kategorien:Array<any>)
+    public setKategorien(kategorien:Array<any>):void
     {
         if(this.kategorien.indexOf(kategorien) === -1)
         {
@@ -80,14 +80,14 @@ export class SystemGlobalSettingsService
 
     public getSingleCategory(categoryId:number):SystemCategoryInterface
     {
-        return this.kategorien.find((kategorie) => kategorie.id === categoryId);
+        return this.kategorien.find((kategorie:any) => kategorie.id === categoryId);
     }
 
     public getSingleUser(userId:number):UserDataInterface
     {
-        return this.benutzer.find((benutzer) =>
+        return this.benutzer.find((benutzer:any) =>
         {
             return benutzer.id === userId;
-        })
+        });
     }
 }

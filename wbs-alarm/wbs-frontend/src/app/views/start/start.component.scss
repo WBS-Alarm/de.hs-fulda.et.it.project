@@ -1,10 +1,8 @@
-.header
-{
+.header {
     height: 15vh;
     background-color: #d4d4d4;
     
-    h1
-    {
+    h1 {
         line-height: 15vh;
         text-align: center;
         margin: 0;
@@ -13,20 +11,17 @@
     }
 }
 
-h2, h3
-{
+h2, h3 {
     text-align: center;
 }
 
-.center
-{
+.center {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-img
-{
+img {
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -34,56 +29,45 @@ img
     padding: 12px 0;
 }
 
-.infos
-{
+.infos {
     width: 100%;
     display: inline-block;
 }
 
-.bottom-line
-{
+.bottom-line {
     width: 20%;
 }
 
-.panel
-{
+.panel {
     float: left;
     margin-bottom: 10px;
     margin-right: 10px;
 }
 
 // Small devices (landscape phones, 576px and up)
-@media (min-width: 400px)
-{
-    .panel
-    {
+@media (min-width: 400px) {
+    .panel {
         width: 100%;
     }
 }
 
 // Medium devices (tablets, 768px and up)
-@media (min-width: 768px)
-{
-    .panel
-    {
+@media (min-width: 768px) {
+    .panel {
         width: 100%;
     }
 }
 
 // Large devices (desktops, 992px and up)
-@media (min-width: 992px)
-{
-    .panel
-    {
+@media (min-width: 992px) {
+    .panel {
         width: 45%;
     }
 }
 
 // Extra large devices (large desktops, 1200px and up)
-@media (min-width: 1200px)
-{
-    .panel
-    {
+@media (min-width: 1200px) {
+    .panel {
         width: 45%;
     }
 }

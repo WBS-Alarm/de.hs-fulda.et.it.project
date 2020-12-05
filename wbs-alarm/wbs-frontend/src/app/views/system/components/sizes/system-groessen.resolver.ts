@@ -4,15 +4,11 @@ import {
     Resolve,
     Router
 } from '@angular/router';
-import {
-    TerraMultiCheckBoxValueInterface,
-    TerraSimpleTableRowInterface
-} from '@plentymarkets/terra-components';
 import { TranslationService } from 'angular-l10n';
 import { UsersService } from '../../../../core/service/rest/users/users.service';
 import { AuthoritiesService } from '../../../../core/service/rest/authorities/authorities.service';
 import { Observable } from 'rxjs';
-import { isNullOrUndefined } from "util";
+import { isNullOrUndefined } from 'util';
 import { GroesseService } from '../../../../core/service/rest/groesse/groesse.service';
 
 @Injectable()
@@ -39,5 +35,4 @@ export class SystemGroessenResolver implements Resolve<Observable<any>>
 
         return this.groessenService.getGroessenForKategorie(categoryId);
     }
-
 }

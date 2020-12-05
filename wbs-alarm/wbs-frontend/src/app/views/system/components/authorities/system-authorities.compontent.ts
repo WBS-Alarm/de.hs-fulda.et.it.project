@@ -1,18 +1,30 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthoritiesService} from '../../../../core/service/rest/authorities/authorities.service';
-import {AlertService, TerraMultiCheckBoxValueInterface} from '@plentymarkets/terra-components';
-import {UsersService} from '../../../../core/service/rest/users/users.service';
-import {isNullOrUndefined} from 'util';
-import {Observable} from 'rxjs';
-import {ActivatedRoute, Data} from '@angular/router';
+import {
+    Component,
+    OnInit
+} from '@angular/core';
+import { AuthoritiesService } from '../../../../core/service/rest/authorities/authorities.service';
+import {
+    AlertService,
+    TerraMultiCheckBoxValueInterface
+} from '@plentymarkets/terra-components';
+import { UsersService } from '../../../../core/service/rest/users/users.service';
+import { isNullOrUndefined } from 'util';
+import { Observable } from 'rxjs';
+import {
+    ActivatedRoute,
+    Data
+} from '@angular/router';
 
 @Component({
-    selector: 'system-authorities',
+    // tslint:disable-next-line:component-selector
+    selector:    'system-authorities',
     templateUrl: './system-authorities.compontent.html',
-    styleUrls: ['./system-authorities.compontent.scss']
+    styleUrls:   ['./system-authorities.compontent.scss']
 })
-export class SystemAuthoritiesCompontent implements OnInit {
-    public userId: number;
+// tslint:disable-next-line:component-class-suffix
+export class SystemAuthoritiesCompontent implements OnInit
+{
+    public userId:number;
 
     public user1:any;
 
@@ -29,7 +41,7 @@ export class SystemAuthoritiesCompontent implements OnInit {
 
     }
 
-    public ngOnInit()
+    public ngOnInit():void
     {
         this.routeData$ = this.route.data;
 
@@ -53,9 +65,9 @@ export class SystemAuthoritiesCompontent implements OnInit {
                         caption:  authority.bezeichnung,
                         selected: this.isSelected(authority)
                     }
-                )
-            })
-        })
+                );
+            });
+        });
     }
 
     public isSelected(authority:any):boolean
@@ -83,12 +95,12 @@ export class SystemAuthoritiesCompontent implements OnInit {
             {
                 this.authorityService.grantAuthorities(this.userId, value.value).subscribe((result:any) =>
                     {
-                        this.alert.success('Die Berechtigungen wurden erfolgreich gespeichert!')
+                        this.alert.success('Die Berechtigungen wurden erfolgreich gespeichert!');
                     },
                     (error:any) =>
                     {
                         this.alert.error('Beim Speichern der Berechtigungen ist ein Fehler aufgetreten. ' + error.error.message);
-                    })
+                    });
             }
         });
 
@@ -102,15 +114,15 @@ export class SystemAuthoritiesCompontent implements OnInit {
             let userHasAuthority:any = this.user1._embedded.authorities.find((authority:any) =>
             {
                 return authority.id === value.value;
-            })
+            });
 
             if(!value.selected && !isNullOrUndefined(userHasAuthority))
             {
                 this.authorityService.removeAuthorities(this.userId, value.value).subscribe((result:any) =>
                 {
                     console.log(result);
-                })
+                });
             }
-        })
+        });
     }
 }

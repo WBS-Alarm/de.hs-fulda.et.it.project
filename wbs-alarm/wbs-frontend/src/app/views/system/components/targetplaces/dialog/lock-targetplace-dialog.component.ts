@@ -1,13 +1,16 @@
-import {Component, OnDestroy, OnInit} from "@angular/core";
-import {MatDialogRef} from "@angular/material/dialog";
+import {
+    Component,
+    OnDestroy,
+    OnInit
+} from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 
-@Component(
-    {
-        selector:    'lock-targetplace-dialog',
-        templateUrl: './lock-targetplace-dialog.component.html'
-    }
-)
+@Component({
+    // tslint:disable-next-line:component-selector
+    selector:    'lock-targetplace-dialog',
+    templateUrl: './lock-targetplace-dialog.component.html'
+})
 export class LockTargetplaceDialogComponent implements OnInit, OnDestroy
 {
 
@@ -18,7 +21,7 @@ export class LockTargetplaceDialogComponent implements OnInit, OnDestroy
 
     public ngOnInit():void
     {
-
+        // Fix lint
     }
 
     public ngOnDestroy():void

@@ -1,15 +1,18 @@
-import {Injectable} from "@angular/core";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {WbsSitemapHelper} from "../../../core/service/rest/sitemap/data/wbs-sitemap.helper";
-import {Observable} from "rxjs";
+import { Injectable } from '@angular/core';
+import {
+    HttpClient,
+    HttpHeaders
+} from '@angular/common/http';
+import { WbsSitemapHelper } from '../../../core/service/rest/sitemap/data/wbs-sitemap.helper';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class ReportService
 {
-    public headers: HttpHeaders;
+    public headers:HttpHeaders;
 
-    constructor(public http: HttpClient,
-                public sitemapHelper: WbsSitemapHelper)
+    constructor(public http:HttpClient,
+                public sitemapHelper:WbsSitemapHelper)
     {
 
     }
@@ -18,20 +21,20 @@ export class ReportService
     {
         this.headers = this.sitemapHelper.setAuthorization();
 
-        return this.http.get('/wbs/report/'+ traegerId +'/bestand', {headers: this.headers})
+        return this.http.get('/wbs/report/' + traegerId + '/bestand', {headers: this.headers});
     }
 
     public listBestaendeUeberKategorien(traegerId:number):Observable<any>
     {
         this.headers = this.sitemapHelper.setAuthorization();
 
-        return this.http.get('/wbs/report/'+ traegerId +'/kategorie', {headers: this.headers})
+        return this.http.get('/wbs/report/' + traegerId + '/kategorie', {headers: this.headers});
     }
 
     public listBestaendeUeberZielort(traegerId:number):Observable<any>
     {
         this.headers = this.sitemapHelper.setAuthorization();
 
-        return this.http.get('/wbs/report/'+ traegerId +'/zielort', {headers: this.headers})
+        return this.http.get('/wbs/report/' + traegerId + '/zielort', {headers: this.headers});
     }
 }

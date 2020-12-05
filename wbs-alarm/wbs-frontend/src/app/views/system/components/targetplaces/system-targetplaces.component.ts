@@ -1,20 +1,35 @@
-import {Component, OnInit} from '@angular/core';
-import {CarrierService} from '../../../../core/service/rest/carrier/carrier.service';
-import {AlertService, TerraNodeTreeConfig} from '@plentymarkets/terra-components';
-import {ActivatedRoute, Data, Router} from '@angular/router';
-import {Observable} from "rxjs";
-import {SystemGlobalSettingsService} from '../../system-global-settings.service';
-import {SystemZielortInterface} from './data/system-zielort.interface';
-import {ExampleTreeData} from '../../system.component';
-import {MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {LockTargetplaceDialogComponent} from "./dialog/lock-targetplace-dialog.component";
+import {
+    Component,
+    OnInit
+} from '@angular/core';
+import { CarrierService } from '../../../../core/service/rest/carrier/carrier.service';
+import {
+    AlertService,
+    TerraNodeTreeConfig
+} from '@plentymarkets/terra-components';
+import {
+    ActivatedRoute,
+    Data,
+    Router
+} from '@angular/router';
+import { Observable } from 'rxjs';
+import { SystemGlobalSettingsService } from '../../system-global-settings.service';
+import { SystemZielortInterface } from './data/system-zielort.interface';
+import { ExampleTreeData } from '../../system.component';
+import {
+    MatDialog,
+    MatDialogRef
+} from '@angular/material/dialog';
+import { LockTargetplaceDialogComponent } from './dialog/lock-targetplace-dialog.component';
 
 @Component({
-    selector: 'system-targetplace',
+    // tslint:disable-next-line:component-selector
+    selector:    'system-targetplace',
     templateUrl: './system-targetplaces.component.html',
-    styleUrls: ['./system-targetplaces.component.scss']
+    styleUrls:   ['./system-targetplaces.component.scss']
 })
-export class SystemTargetplacesComponent implements OnInit {
+export class SystemTargetplacesComponent implements OnInit
+{
     public routeData$:Observable<Data>;
     public gesperrt:boolean;
 
@@ -43,7 +58,7 @@ export class SystemTargetplacesComponent implements OnInit {
         this.route.data.subscribe((data:any) =>
         {
             this.gesperrt = data.targetPlace.erfasst;
-        })
+        });
     }
 
     public save(targetPlace:SystemZielortInterface):void
@@ -58,7 +73,7 @@ export class SystemTargetplacesComponent implements OnInit {
             (error:any) =>
             {
                 this.alert.error('Änderungen konnten nicht gespeichert werden: ' + error.error.message);
-            })
+            });
     }
 
     public delete(targetPlace:SystemZielortInterface):void
@@ -69,18 +84,19 @@ export class SystemTargetplacesComponent implements OnInit {
 
                 this.systemTreeConfig.removeNodeById(this.systemTreeConfig.currentSelectedNode.id);
 
-                this.router.navigateByUrl('/plugin/system/carrier/' + this.traegerId + '/targetplace')
+                this.router.navigateByUrl('/plugin/system/carrier/' + this.traegerId + '/targetplace');
             },
             (error:any) =>
             {
                 this.alert.error('Der Zielort konnte nicht gelöscht werden! ' + error.error.message);
 
-            })
+            });
     }
 
     public lock(targetPlace:SystemZielortInterface):void
     {
-        const lockTargetPlaceDialog:MatDialogRef<LockTargetplaceDialogComponent> = this.dialog.open(LockTargetplaceDialogComponent, {autoFocus:true});
+        const lockTargetPlaceDialog:MatDialogRef<LockTargetplaceDialogComponent> = this.dialog.open(LockTargetplaceDialogComponent,
+            {autoFocus: true});
 
         lockTargetPlaceDialog.afterClosed().subscribe((approved:boolean) =>
         {
@@ -95,11 +111,8 @@ export class SystemTargetplacesComponent implements OnInit {
                     (error:any) =>
                     {
                         this.alert.error('Der Zielort konnte nicht für die Erfassung gesperrt werden! ' + error.error.message);
-                    })
+                    });
             }
         });
-
-
-
     }
 }

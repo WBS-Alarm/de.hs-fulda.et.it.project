@@ -11,9 +11,9 @@ import {
 @Injectable()
 export class WbsPreloadingStrategy implements PreloadingStrategy
 {
-    preloadedModules:string[] = [];
+    public preloadedModules:Array<string> = [];
 
-    preload(route:Route, load:() => Observable<any>):Observable<any>
+    public preload(route:Route, load:() => Observable<any>):Observable<any>
     {
         if(route.data && route.data['preload'])
         {

@@ -1,6 +1,5 @@
-import {HttpHeaders} from "@angular/common/http";
-import {isNullOrUndefined} from 'util';
-import { GlobalRegistryService } from '../../../../global-registry/global-registry.service';
+import { HttpHeaders } from '@angular/common/http';
+import { isNullOrUndefined } from 'util';
 
 export class WbsSitemapHelper
 {
@@ -169,20 +168,25 @@ export class WbsSitemapHelper
         return Object.values(this.siteMaps)[0]['bestand'][0].href;
     }
 
+    /* tslint:disable */
     public getCookie(name:string)
     {
-        let cookiename = name + "=";
+        let cookiename = name + '=';
         let decodedCookie = decodeURIComponent(document.cookie);
         let ca = decodedCookie.split(';');
-        for(var i = 0; i <ca.length; i++) {
+        for(var i = 0; i < ca.length; i++)
+        {
             var c = ca[i];
-            while (c.charAt(0) == ' ') {
+            while(c.charAt(0) == ' ')
+            {
                 c = c.substring(1);
             }
-            if (c.indexOf(cookiename) == 0) {
+            if(c.indexOf(cookiename) == 0)
+            {
                 return c.substring(cookiename.length, c.length);
             }
         }
-        return "";
+        return '';
     }
+    /* tslint:enable */
 }

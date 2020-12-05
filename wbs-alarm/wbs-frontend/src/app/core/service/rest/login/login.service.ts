@@ -15,15 +15,15 @@ export class LoginService
     constructor(public sitemapHelper:WbsSitemapHelper,
                 public http:HttpClient)
     {
-
+        // Fix lint
     }
 
     public login(user:any):Observable<any>
     {
         return this.http.post(this.sitemapHelper.getLogin(),
             {
-                "username": user.name,
-                "password": user.password
+                'username': user.name,
+                'password': user.password
             },
             {
                 responseType: 'text'
@@ -40,7 +40,7 @@ export class LoginService
         return this.http.get(this.sitemapHelper.getLogout(),
             {
                 headers: this.headers
-            })
+            });
     }
 
     public resetPassword(username:string):Observable<any>
@@ -50,7 +50,7 @@ export class LoginService
         return this.http.post('/wbs/public/forgot/' + username,
             {},
             {
-                headers:this.headers
+                headers: this.headers
             });
     }
 }

@@ -1,6 +1,6 @@
 export interface UserDataInterface
 {
-    id?:number
+    id?:number;
     username?:string;
     password?:string;
     mail?:string;

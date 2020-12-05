@@ -1,14 +1,10 @@
-import {
-    EventEmitter,
-    Injectable,
-    Output
-} from "@angular/core";
+import { Injectable } from '@angular/core';
 import { TerraAlertComponent } from '@plentymarkets/terra-components';
 import {
     ActivatedRouteSnapshot,
     Router,
     RouterStateSnapshot
-} from "@angular/router";
+} from '@angular/router';
 import { UsersService } from '../service/rest/users/users.service';
 import { GlobalRegistryService } from '../global-registry/global-registry.service';
 
@@ -21,7 +17,7 @@ export class IsLoggedInGuard
                 public userService:UsersService,
                 public router:Router)
     {
-
+        // Fix lint
     }
 
     public canActivate(route:ActivatedRouteSnapshot, state:RouterStateSnapshot):boolean

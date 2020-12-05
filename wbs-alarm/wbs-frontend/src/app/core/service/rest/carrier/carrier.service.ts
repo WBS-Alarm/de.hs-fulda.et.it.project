@@ -1,19 +1,22 @@
-import {HttpClient, HttpHeaders} from "../../../../../../node_modules/@angular/common/http";
-import {Injectable} from "../../../../../../node_modules/@angular/core";
-import {WbsSitemapHelper} from "../sitemap/data/wbs-sitemap.helper";
-import {Observable} from "rxjs";
+import {
+    HttpClient,
+    HttpHeaders
+} from '../../../../../../node_modules/@angular/common/http';
+import { Injectable } from '../../../../../../node_modules/@angular/core';
+import { WbsSitemapHelper } from '../sitemap/data/wbs-sitemap.helper';
+import { Observable } from 'rxjs';
 import { SystemZielortInterface } from '../../../../views/system/components/targetplaces/data/system-zielort.interface';
-import {SystemCarrierInterface} from "../../../../views/system/components/carrier/data/system-carrier.interface";
+import { SystemCarrierInterface } from '../../../../views/system/components/carrier/data/system-carrier.interface';
 
 @Injectable()
 export class CarrierService
 {
-    public headers: HttpHeaders;
+    public headers:HttpHeaders;
 
-    constructor(public http: HttpClient,
-                public sitemapHelper: WbsSitemapHelper)
+    constructor(public http:HttpClient,
+                public sitemapHelper:WbsSitemapHelper)
     {
-
+        // Fix lint
     }
 
     public getCarriers():Observable<any>
@@ -22,8 +25,8 @@ export class CarrierService
 
         return this.http.get(this.sitemapHelper.getCarrier(),
             {
-            headers: this.headers
-        })
+                headers: this.headers
+            });
     }
 
     public createCarrier(newCarrier:string):Observable<any>
@@ -36,7 +39,7 @@ export class CarrierService
             },
             {
                 headers: this.headers
-            })
+            });
     }
 
     public updateCarrier(carrier:SystemCarrierInterface):Observable<any>
@@ -49,7 +52,7 @@ export class CarrierService
             },
             {
                 headers: this.headers
-            })
+            });
     }
 
     public deleteCarrier(carrier:SystemCarrierInterface):Observable<any>
@@ -59,7 +62,7 @@ export class CarrierService
         return this.http.delete(this.sitemapHelper.getCarrierForId().replace('{id}', carrier.id.toString()),
             {
                 headers: this.headers
-            })
+            });
     }
 
     public getDetailsForCarrier(id:number):Observable<any>
@@ -67,9 +70,9 @@ export class CarrierService
         this.headers = this.sitemapHelper.setAuthorization();
 
         return this.http.get(this.sitemapHelper.getCarrierForId().replace('{id}', id.toString()),
-                        {
+            {
                 headers: this.headers
-            })
+            });
     }
 
     public createTargetplace(carrierId:number, targetplaceName:string):Observable<any>
@@ -83,7 +86,7 @@ export class CarrierService
             {
                 headers: this.headers,
                 observe: 'response'
-            })
+            });
     }
 
     public updateTargetplace(targetPlace:SystemZielortInterface):Observable<any>
@@ -96,7 +99,7 @@ export class CarrierService
             },
             {
                 headers: this.headers
-            })
+            });
     }
 
     public deleteTargetplace(targetPlace:SystemZielortInterface):Observable<any>
@@ -106,7 +109,7 @@ export class CarrierService
         return this.http.delete(this.sitemapHelper.zielort().replace('{id}', targetPlace.id.toString()),
             {
                 headers: this.headers
-            })
+            });
     }
 
     public lockTargetplace(targetplace:SystemZielortInterface):Observable<any>
@@ -117,7 +120,7 @@ export class CarrierService
             {},
             {
                 headers: this.headers
-            })
+            });
     }
 
     public listZielorteForTraeger(traegerId:number):Observable<any>
@@ -127,10 +130,10 @@ export class CarrierService
         return this.http.get(this.sitemapHelper.zielortForTraeger().replace('{traegerId}', traegerId.toString()),
             {
                 headers: this.headers
-            })
+            });
     }
 
-    public createCategory(carrierId:number, categoryName:string)
+    public createCategory(carrierId:number, categoryName:string):Observable<any>
     {
         this.headers = this.sitemapHelper.setAuthorization();
 
@@ -141,20 +144,20 @@ export class CarrierService
             {
                 headers: this.headers,
                 observe: 'response'
-            })
+            });
     }
 
     public getTargetPlace(url:string):Observable<any>
     {
         this.headers = this.sitemapHelper.setAuthorization();
 
-        return this.http.get(url, {headers:this.headers});
+        return this.http.get(url, {headers: this.headers});
     }
 
     public getTargetPlaceById(id:number):Observable<any>
     {
         this.headers = this.sitemapHelper.setAuthorization();
 
-        return this.http.get('/wbs/zielort/' + id, {headers:this.headers})
+        return this.http.get('/wbs/zielort/' + id, {headers: this.headers});
     }
 }

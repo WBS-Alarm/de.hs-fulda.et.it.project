@@ -1,17 +1,15 @@
-import { isNullOrUndefined } from "util";
+import { isNullOrUndefined } from 'util';
 import { Injectable } from '@angular/core';
 import {
     ActivatedRouteSnapshot,
     Resolve,
     Router
 } from '@angular/router';
-import { UserDataInterface } from '../../../../../core/service/rest/users/user-data.interface';
 import { UsersService } from '../../../../../core/service/rest/users/users.service';
-import { TranslationService } from "angular-l10n";
-import { Observable } from "rxjs";
+import { TranslationService } from 'angular-l10n';
+import { Observable } from 'rxjs';
 import { SystemGlobalSettingsService } from '../../../system-global-settings.service';
-import {SystemZielortInterface} from "../data/system-zielort.interface";
-import {CarrierService} from "../../../../../core/service/rest/carrier/carrier.service";
+import { CarrierService } from '../../../../../core/service/rest/carrier/carrier.service';
 
 @Injectable()
 export class SystemTargetplacesResolver implements Resolve<Observable<any>>

@@ -24,7 +24,7 @@ export class AuthoritiesService
         return this.http.get(this.sitemapHelper.authorities(),
             {
                 headers: this.headers
-            })
+            });
     }
 
     public grantAuthorities(userId:number, authorityId:number):Observable<any>

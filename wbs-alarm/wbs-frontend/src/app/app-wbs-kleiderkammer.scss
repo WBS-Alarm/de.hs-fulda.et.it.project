@@ -1,14 +1,12 @@
 body,
-html
-{
+html {
     margin: 0;
     padding: 0;
     height: 100%;
     //background: #60a3bc;
     background: var(--color-structure-3);
     
-    .isLoggedIn
-    {
+    .isLoggedIn {
         background: var(--color-structure-3);
     }
 }

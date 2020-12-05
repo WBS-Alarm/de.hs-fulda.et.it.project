@@ -3,43 +3,53 @@ import {
     EventEmitter,
     Input,
     OnInit,
-    Output, ViewChild
+    Output,
+    ViewChild
 } from '@angular/core';
 import { Language } from 'angular-l10n';
-import { LoginService } from '../../core/service/rest/login/login.service';
 import {
     ActivatedRoute,
     Data,
     Router
 } from '@angular/router';
-import {AlertService, TerraAlertComponent} from '@plentymarkets/terra-components';
+import { AlertService } from '@plentymarkets/terra-components';
 import { GlobalRegistryService } from '../../core/global-registry/global-registry.service';
 import { TransaktionService } from '../../core/service/rest/transaktions/transaktion.service';
-import {merge, Observable, of} from 'rxjs';
-import {MatTableDataSource} from "@angular/material/table";
-import {HttpClient} from "@angular/common/http";
-import {MatPaginator} from "@angular/material/paginator";
-import {MatSort} from "@angular/material/sort";
-import {catchError, map, startWith, switchMap} from "rxjs/operators";
-import {animate, state, style, transition, trigger} from "@angular/animations";
+import { Observable } from 'rxjs';
+import { MatTableDataSource } from '@angular/material/table';
+import { HttpClient } from '@angular/common/http';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import {
+    animate,
+    state,
+    style,
+    transition,
+    trigger
+} from '@angular/animations';
 
 export interface BuchungsuebersichtRow
 {
-     Name:any;
-     Von:any;
-     Nach:any;
-     Datum:any;
-     Anzahl:any;
-     positionen:any;
+    Name:any;
+    Von:any;
+    Nach:any;
+    Datum:any;
+    Anzahl:any;
+    positionen:any;
 }
-
+/* tslint:disable */
 @Component({
-    selector: 'start',
+    // tslint:disable-next-line:component-selector
+    selector:    'start',
     templateUrl: './start.component.html',
     styleUrls:   ['./start.component.scss'],
-    animations: [
+    animations:  [
         trigger('detailExpand', [
-            state('collapsed', style({height: '0px', minHeight: '0'})),
+            state('collapsed',
+                style({
+                    height:    '0px',
+                    minHeight: '0'
+                })),
             state('expanded', style({height: '*'})),
             transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
         ]),
@@ -58,9 +68,13 @@ export class StartComponent implements OnInit
 
     public routeData$:Observable<Data>;
 
-    private tableData:Array<BuchungsuebersichtRow> = [];
+    public tableData:Array<BuchungsuebersichtRow> = [];
 
-    public displayedColumns:Array<string> = ['Von', 'Nach', 'Datum', 'Name', 'Anzahl'];
+    public displayedColumns:Array<string> = ['Von',
+                                             'Nach',
+                                             'Datum',
+                                             'Name',
+                                             'Anzahl'];
     public dataSource:MatTableDataSource<BuchungsuebersichtRow> = new MatTableDataSource<BuchungsuebersichtRow>(this.tableData);
 
     @ViewChild(MatPaginator, {static: false})
@@ -86,7 +100,7 @@ export class StartComponent implements OnInit
 
         this.route.data.subscribe((data:any) =>
         {
-            let traegerId = data.user._embedded.traeger[0].id;
+            let traegerId:any = data.user._embedded.traeger[0].id;
 
             this.transaktionsService.getTransaktionenForTraeger(traegerId).subscribe((result:any) =>
             {
@@ -94,48 +108,61 @@ export class StartComponent implements OnInit
                 {
                     let anzahl:number = 0;
 
-                    let positionenArray:Array<{kategorie:string; groesse:string; anzahl:number}> = [];
+                    let positionenArray:Array<{ kategorie:string; groesse:string; anzahl:number }> = [];
 
                     element._embedded.positionen.forEach((position:any) =>
                     {
-                        let positionForList: {kategorie:string; groesse:string; anzahl:number } =
+                        let positionForList:{ kategorie:string; groesse:string; anzahl:number } =
                             {
                                 kategorie: '',
-                                groesse: '',
-                                anzahl: 0
+                                groesse:   '',
+                                anzahl:    0
                             };
 
                         anzahl += position.anzahl;
 
                         positionForList.anzahl = position.anzahl;
 
-                        position._embedded.groesse.forEach((groesse:any) =>
-                        {
-                            positionForList.groesse = groesse.name;
-
-                            groesse._embedded.kategorie.forEach((kategorie:any) =>
-                            {
-                                positionForList.kategorie = kategorie.name;
-
-                                positionenArray.push(positionForList);
-                            })
-                        })
+                        positionenArray = this.getGroessen(position, positionForList);
                     });
 
                     this.tableData.push({
-                        Datum: new Date(element.datum).toLocaleString(),
-                        Nach: element._embedded.nach[0].name,
-                        Name: element._embedded.benutzer[0].username,
-                        Von: element._embedded.von[0].name,
-                        Anzahl: anzahl,
+                        Datum:      new Date(element.datum).toLocaleString(),
+                        Nach:       element._embedded.nach[0].name,
+                        Name:       element._embedded.benutzer[0].username,
+                        Von:        element._embedded.von[0].name,
+                        Anzahl:     anzahl,
                         positionen: positionenArray
                     });
 
                     this.dataSource.paginator = this.paginator;
                     this.dataSource._updateChangeSubscription();
-                })
+                });
             });
 
-        })
+        });
+    }
+
+    private getGroessen(position:any, positionForList:any):Array<any>
+    {
+        let positionenArray:Array<any> = [];
+
+        position._embedded.groesse.forEach((groesse:any) =>
+        {
+            positionForList.groesse = groesse.name;
+
+            groesse._embedded.kategorie.forEach((kategorie:any) =>
+            {
+                positionForList.kategorie = kategorie.name;
+
+                positionenArray.push(positionForList);
+            });
+        });
+
+        return positionenArray;
     }
 }
+
+
+
+/* tslint:enable */

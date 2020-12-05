@@ -7,6 +7,7 @@ import {
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
+    // tslint:disable-next-line:component-selector
     selector:    'bestand-dialog',
     templateUrl: './bestand-dialog.component.html'
 })
@@ -20,7 +21,7 @@ export class BestandDialogComponent implements OnInit, OnDestroy
 
     public ngOnInit():void
     {
-
+        // Fix lint
     }
 
     public ngOnDestroy():void

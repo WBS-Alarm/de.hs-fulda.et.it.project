@@ -1,11 +1,13 @@
-import {Injectable} from "../../../../../../../node_modules/@angular/core";
-import {ActivatedRouteSnapshot, Router} from "../../../../../../../node_modules/@angular/router";
-import {SystemCarrierInterface} from "../../carrier/data/system-carrier.interface";
-import {UsersService} from "../../../../../core/service/rest/users/users.service";
-import {SystemGlobalSettingsService} from "../../../system-global-settings.service";
-import {isNullOrUndefined} from "util";
-import {TranslationService} from "angular-l10n";
-import {SystemCategoryInterface} from "../data/system-category.interface";
+import { Injectable } from '../../../../../../../node_modules/@angular/core';
+import {
+    ActivatedRouteSnapshot,
+    Router
+} from '../../../../../../../node_modules/@angular/router';
+import { UsersService } from '../../../../../core/service/rest/users/users.service';
+import { SystemGlobalSettingsService } from '../../../system-global-settings.service';
+import { isNullOrUndefined } from 'util';
+import { TranslationService } from 'angular-l10n';
+import { SystemCategoryInterface } from '../data/system-category.interface';
 
 @Injectable()
 export class SystemCategoryResolver
@@ -26,6 +28,6 @@ export class SystemCategoryResolver
             return;
         }
 
-        return this.systemGloabalSettingsService.getSingleCategory(categoryId)
+        return this.systemGloabalSettingsService.getSingleCategory(categoryId);
     }
 }

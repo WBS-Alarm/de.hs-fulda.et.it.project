@@ -1,16 +1,11 @@
 import {
     Injectable,
     Injector
-} from "@angular/core";
+} from '@angular/core';
 import { UsersService } from './users.service';
 import { GlobalRegistryService } from '../../../global-registry/global-registry.service';
-import {GetSitemapService} from "../sitemap/wbs-sitemap.service";
-import {WbsSitemapHelper} from "../sitemap/data/wbs-sitemap.helper";
-import {
-    Observable,
-    of
-} from 'rxjs';
-import { combineLatest } from 'rxjs/operators';
+import { GetSitemapService } from '../sitemap/wbs-sitemap.service';
+import { WbsSitemapHelper } from '../sitemap/data/wbs-sitemap.helper';
 
 
 @Injectable()
@@ -36,27 +31,6 @@ export class UserAndSystemDataService
         });
 
         return null;
-        //return combineLatest(
-        //    this.userService.getCurrentUsers(),
-        //    (userData) =>
-        //    {
-        //        if(userData)
-        //        {
-        //            console.log('user has permissions');
-        //
-        //            this.globalRegistryService.setisLoggedIn(true);
-        //            this.globalRegistryService.setGravatarHash(userData.gravatar);
-        //        }
-        //        else
-        //        {
-        //            this.redirectToLoginPage()
-        //        }
-        //    }
-        //).catch((error:Error) =>
-        //{
-        //    this.redirectToLoginPage();
-        //    return of(error);
-        //}).toPromise()
     }
 
     public redirectToLoginPage():void
@@ -69,9 +43,6 @@ export class UserAndSystemDataService
         }
         else
         {
-            //let url:string = window.location.protocol +
-            //                 '//' +
-            //                 window.location.host.slice(window.location.host.indexOf('.') + 1);
             let url:string = window.location.origin + '/#/login';
 
             window.location.replace(url);

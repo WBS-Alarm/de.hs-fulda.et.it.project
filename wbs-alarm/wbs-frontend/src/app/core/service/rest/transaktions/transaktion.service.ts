@@ -16,19 +16,20 @@ export class TransaktionService
     {
     }
 
-    public postTransaktion(traegerId:number, buchungen:{ von:number, nach:number, positions:Array<{ groesse:number, anzahl:number }>}):Observable<any>
+    public postTransaktion(traegerId:number,
+                           buchungen:{ von:number, nach:number, positions:Array<{ groesse:number, anzahl:number }> }):Observable<any>
     {
         this.headers = this.sitemapHelper.setAuthorization();
 
         return this.http.post(this.sitemapHelper.transaktionForTraeger().replace('{traegerId}', traegerId.toString()),
             {
-                von: buchungen.von,
-                nach: buchungen.nach,
+                von:       buchungen.von,
+                nach:      buchungen.nach,
                 positions: buchungen.positions
             },
             {
                 headers: this.headers
-            })
+            });
     }
 
     public getTransaktionenForTraeger(traegerId:number):Observable<any>
@@ -39,7 +40,6 @@ export class TransaktionService
             {
                 headers: this.headers
             }
-        )
+        );
     }
-
 }

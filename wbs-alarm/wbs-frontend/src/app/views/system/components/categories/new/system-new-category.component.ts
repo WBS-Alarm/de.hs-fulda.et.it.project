@@ -1,18 +1,23 @@
-import {Component} from "@angular/core";
-import {CarrierService} from "../../../../../core/service/rest/carrier/carrier.service";
-import {SystemGlobalSettingsService} from "../../../system-global-settings.service";
-import {AlertService, TerraNodeTreeConfig} from "@plentymarkets/terra-components";
-import {ExampleTreeData} from '../../../system.component';
-import {Router} from '@angular/router';
-import {CategoryService} from "../../../../../core/service/rest/categories/category.service";
+import { Component } from '@angular/core';
+import { CarrierService } from '../../../../../core/service/rest/carrier/carrier.service';
+import { SystemGlobalSettingsService } from '../../../system-global-settings.service';
+import {
+    AlertService,
+    TerraNodeTreeConfig
+} from '@plentymarkets/terra-components';
+import { ExampleTreeData } from '../../../system.component';
+import { Router } from '@angular/router';
+import { CategoryService } from '../../../../../core/service/rest/categories/category.service';
 
 @Component({
-    selector: 'system-new-categories',
+    // tslint:disable-next-line:component-selector
+    selector:    'system-new-categories',
     templateUrl: './system-new-category.component.html',
-    styleUrls: ['./system-new-category.component.scss']
+    styleUrls:   ['./system-new-category.component.scss']
 })
-export class SystemNewCategoryComponent {
-    public categoryName: string;
+export class SystemNewCategoryComponent
+{
+    public categoryName:string;
 
     constructor(public carrierService:CarrierService,
                 public categoryService:CategoryService,
@@ -24,7 +29,7 @@ export class SystemNewCategoryComponent {
 
     }
 
-    public save()
+    public save():void
     {
         let traegerId:number = this.systemGlobalSettings.getTraegerId();
 
@@ -40,16 +45,16 @@ export class SystemNewCategoryComponent {
                         id:        'kategorie' + kategorieId,
                         name:      this.categoryName,
                         isVisible: true,
-                        onClick: ():void =>
+                        onClick:   ():void =>
                                    {
-                                       this.router.navigateByUrl('plugin/system/carrier/' + traegerId + '/category/' + kategorieId)
+                                       this.router.navigateByUrl('plugin/system/carrier/' + traegerId + '/category/' + kategorieId);
                                    }
                     }
                 );
 
-                this.categoryService.getCategory(kategorieId).subscribe((result:any) =>
+                this.categoryService.getCategory(kategorieId).subscribe((resultCategories:any) =>
                 {
-                    this.systemGlobalSettings.setKategorien([result]);
+                    this.systemGlobalSettings.setKategorien([resultCategories]);
                 });
 
                 this.categoryName = '';
@@ -58,6 +63,6 @@ export class SystemNewCategoryComponent {
             {
                 this.alert.error('Die Kategorie konnte nicht erstellt werden! ' + error.error.message);
             }
-        )
+        );
     }
 }

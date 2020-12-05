@@ -26,7 +26,7 @@ export class GroesseService
         return this.http.get(url,
             {
                 headers: this.headers
-            })
+            });
     }
 
     public addGroesseForTraeger(categoryId:number, groesse:any):Observable<any>
@@ -36,13 +36,13 @@ export class GroesseService
         let url:string = this.sitemapHelper.groesseList().replace('{kategorieId}', categoryId.toString());
 
         return this.http.post(url, {
-            name: groesse.name,
-            bestandsgrenze: groesse.bestandsgrenze
-        },
+                name:           groesse.name,
+                bestandsgrenze: groesse.bestandsgrenze
+            },
             {
-            headers: this.headers,
-            observe: "response"
-        })
+                headers: this.headers,
+                observe: 'response'
+            });
 
     }
 
@@ -58,12 +58,12 @@ export class GroesseService
         this.headers = this.sitemapHelper.setAuthorization();
 
         return this.http.put('wbs/groesse/' + groesse.id, {
-            name: groesse.name,
-            bestandsgrenze: groesse.bestandsgrenze
-        },
+                name:           groesse.name,
+                bestandsgrenze: groesse.bestandsgrenze
+            },
             {
                 headers: this.headers
-            })
+            });
     }
 
     public deleteGroesse(groesse:any):Observable<any>
@@ -73,6 +73,6 @@ export class GroesseService
         return this.http.delete('wbs/groesse/' + groesse.id,
             {
                 headers: this.headers
-            })
+            });
     }
 }

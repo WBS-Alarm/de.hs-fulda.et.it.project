@@ -1,10 +1,14 @@
-import {ActivatedRouteSnapshot, Resolve, Router} from "../../../../../../../node_modules/@angular/router";
-import {Injectable} from "../../../../../../../node_modules/@angular/core";
-import {UsersService} from "../../../../../core/service/rest/users/users.service";
-import {SystemGlobalSettingsService} from "../../../system-global-settings.service";
-import {isNullOrUndefined} from "util";
-import {TranslationService} from "angular-l10n";
-import {SystemCarrierInterface} from "../data/system-carrier.interface";
+import {
+    ActivatedRouteSnapshot,
+    Resolve,
+    Router
+} from '../../../../../../../node_modules/@angular/router';
+import { Injectable } from '../../../../../../../node_modules/@angular/core';
+import { UsersService } from '../../../../../core/service/rest/users/users.service';
+import { SystemGlobalSettingsService } from '../../../system-global-settings.service';
+import { isNullOrUndefined } from 'util';
+import { TranslationService } from 'angular-l10n';
+import { SystemCarrierInterface } from '../data/system-carrier.interface';
 
 @Injectable()
 export class SystemCarrierResolver implements Resolve<SystemCarrierInterface>
@@ -25,8 +29,8 @@ export class SystemCarrierResolver implements Resolve<SystemCarrierInterface>
             return;
         }
 
-        let carrier:SystemCarrierInterface = this.systemGloabalSettingsService.getSingleTraeger(carrierId)
+        let carrier:SystemCarrierInterface = this.systemGloabalSettingsService.getSingleTraeger(carrierId);
 
-        return this.systemGloabalSettingsService.getSingleTraeger(carrierId)
+        return this.systemGloabalSettingsService.getSingleTraeger(carrierId);
     }
 }

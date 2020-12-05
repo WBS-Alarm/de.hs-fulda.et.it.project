@@ -4,7 +4,7 @@
             Buchungsart auswählen
         </mat-panel-title>
     </mat-expansion-panel-header>
-
+    
     <div class="mode-chooser">
         <mat-radio-group [(ngModel)]="_modus" (ngModelChange)="leereTabelleUndAendereZielorte()">
             <mat-radio-button class="mode" [value]="'buchen'">
@@ -31,7 +31,7 @@
                 <mat-option *ngFor="let zielort of _zielorte" [value]="zielort.value">{{zielort.caption}}</mat-option>
             </mat-select>
         </mat-form-field>
-
+        
         <mat-form-field *ngIf="!(_modus==='aussonderung')">
             <mat-label>nach:</mat-label>
             <mat-select [(value)]="_nach">
@@ -52,20 +52,20 @@
                 <mat-option *ngFor="let kategorie of _kategorien" [value]="kategorie.value">{{kategorie.caption}}</mat-option>
             </mat-select>
         </mat-form-field>
-
+        
         <mat-form-field style="margin-right: 10px;">
             <mat-label>Größe</mat-label>
             <mat-select [(value)]="_goresse" [disabled]="_groessen.length === 0">
                 <mat-option *ngFor="let groesse of _groessen" [value]="groesse.value">{{groesse.caption}}</mat-option>
             </mat-select>
         </mat-form-field>
-
-<!--        <mat-form-field style="margin-right: 10px; display: flex">-->
-<!--            <mat-label>-->
-<!--                <input placeholder="Anzahl" matInput [value]="_anzahl">-->
-<!--            </mat-label>-->
-<!--        </mat-form-field>-->
-
+        
+        <!--        <mat-form-field style="margin-right: 10px; display: flex">-->
+        <!--            <mat-label>-->
+        <!--                <input placeholder="Anzahl" matInput [value]="_anzahl">-->
+        <!--            </mat-label>-->
+        <!--        </mat-form-field>-->
+        
         <terra-number-input class="element"
                             [inputName]="'Anzahl'"
                             [(ngModel)]="_anzahl">
@@ -79,9 +79,9 @@
 </div>
 
 <div class="overview">
-
+    
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 warenkorb">
-
+        
         <!-- Checkbox Column -->
         <ng-container matColumnDef="select">
             <th mat-header-cell *matHeaderCellDef>
@@ -97,43 +97,43 @@
                 </mat-checkbox>
             </td>
         </ng-container>
-
+        
         <!-- Von Column -->
         <ng-container matColumnDef="von">
-            <th mat-header-cell *matHeaderCellDef> Von </th>
+            <th mat-header-cell *matHeaderCellDef> Von</th>
             <td mat-cell *matCellDef="let element"> {{element.von.name}} </td>
         </ng-container>
-
+        
         <!-- Nach Column -->
         <ng-container matColumnDef="nach">
-            <th mat-header-cell *matHeaderCellDef> Nach </th>
+            <th mat-header-cell *matHeaderCellDef> Nach</th>
             <td mat-cell *matCellDef="let element"> {{element.nach.name}} </td>
         </ng-container>
-
+        
         <!-- Kategorie Column -->
         <ng-container matColumnDef="kategorie">
-            <th mat-header-cell *matHeaderCellDef> Kategorie </th>
+            <th mat-header-cell *matHeaderCellDef> Kategorie</th>
             <td mat-cell *matCellDef="let element"> {{element.kategorie.name}} </td>
         </ng-container>
-
+        
         <!-- Größe Column -->
         <ng-container matColumnDef="größe">
-            <th mat-header-cell *matHeaderCellDef> Größe </th>
+            <th mat-header-cell *matHeaderCellDef> Größe</th>
             <td mat-cell *matCellDef="let element"> {{element.groesse.name}} </td>
         </ng-container>
-
+        
         <!-- Anzahl Column -->
         <ng-container matColumnDef="anzahl">
-            <th mat-header-cell *matHeaderCellDef> Anzahl </th>
+            <th mat-header-cell *matHeaderCellDef> Anzahl</th>
             <td mat-cell *matCellDef="let element"> {{element.anzahl}} </td>
         </ng-container>
-
+        
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"
             (click)="selection.toggle(row)">
         </tr>
     </table>
-
+    
     <div class="save-button">
         <terra-button inputCaption="Buchen"
                       (outputClicked)="_buchen()"
