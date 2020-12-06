@@ -43,7 +43,7 @@ jobs:
       # Test the application
       - name: Install with Maven
         run: |
-          mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -uroot -pPLEASECHANGEME!
+          mysql --host 127.0.0.1 --port 3306 -uroot -pPLEASECHANGEME!
           cd wbs-alarm/
           mvn install --file pom.xml
 
