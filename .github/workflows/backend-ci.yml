@@ -15,9 +15,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: PLEASECHANGEME!
           MYSQL_DATABASE: wbsalarm
         ports:
-          # Maps tcp port 3306 on service container to the host
           - 3306:3306
-        # Set health checks to wait until mysql has started
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
