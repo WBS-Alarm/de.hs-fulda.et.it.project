@@ -1,5 +1,4 @@
 # This workflow will build a Java project with Maven
-# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
 
 name: Backend-Integrity
 
@@ -16,7 +15,9 @@ jobs:
           MYSQL_ROOT_PASSWORD: PLEASECHANGEME!
           MYSQL_DATABASE: wbsalarm
         ports:
+          # Maps tcp port 3306 on service container to the host
           - 3306:3306
+        # Set health checks to wait until mysql has started
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
