@@ -9,8 +9,8 @@ import {
 } from 'angular-l10n';
 
 /**
- * @description This might be used to dynamically load the configuration data. The configuration must be completed before invoking the load method
- * of L10nLoader.
+ * @description This might be used to dynamically load the configuration data. The configuration must be completed before invoking the load
+ *     method of L10nLoader.
  * @link https://robisim74.github.io/angular-l10n/spec/configuration/#dynamic-settings)
  */
 @Injectable({
@@ -20,7 +20,8 @@ export class LocalizationLoader
 {
     constructor(public l10nLoader:L10nLoader,
                 @Inject(L10N_CONFIG) public config:L10nConfigRef)
-    {}
+    {
+    }
 
     public load():Promise<any>
     {
@@ -51,5 +52,4 @@ export class LocalizationLoader
 
         return lang;
     }
-
 }

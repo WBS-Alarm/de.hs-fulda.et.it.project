@@ -5,11 +5,8 @@ import {
     Router
 } from '@angular/router';
 import { TranslationService } from 'angular-l10n';
-import { UsersService } from '../../../../core/service/rest/users/users.service';
-import { SystemGlobalSettingsService } from '../../system-global-settings.service';
 import { Observable } from 'rxjs';
-import { SystemZielortInterface } from '../targetplaces/data/system-zielort.interface';
-import { isNullOrUndefined } from "util";
+import { isNullOrUndefined } from 'util';
 import { BestaendeService } from '../../../../core/service/rest/bestaende/bestaende.serice';
 
 @Injectable()

@@ -1,20 +1,32 @@
-import {Component, OnInit} from '@angular/core';
-import {Language, TranslationService} from 'angular-l10n';
-import {AlertService, TerraAlertComponent, TerraSelectBoxValueInterface} from "@plentymarkets/terra-components";
-import {LoginService} from "../../core/service/rest/login/login.service";
-import {WbsSitemapHelper} from "../../core/service/rest/sitemap/data/wbs-sitemap.helper";
-import {Router} from "@angular/router";
-import {GlobalRegistryService} from '../../core/global-registry/global-registry.service';
-import {UsersService} from '../../core/service/rest/users/users.service';
-import {MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {ResetPasswordDialogComponent} from "./reset-password/reset-password-dialog.component";
-import {isNullOrUndefined} from "util";
+import {
+    Component,
+    OnInit
+} from '@angular/core';
+import {
+    Language,
+    TranslationService
+} from 'angular-l10n';
+import {
+    AlertService,
+    TerraSelectBoxValueInterface
+} from '@plentymarkets/terra-components';
+import { LoginService } from '../../core/service/rest/login/login.service';
+import { WbsSitemapHelper } from '../../core/service/rest/sitemap/data/wbs-sitemap.helper';
+import { Router } from '@angular/router';
+import { GlobalRegistryService } from '../../core/global-registry/global-registry.service';
+import { UsersService } from '../../core/service/rest/users/users.service';
+import {
+    MatDialog,
+    MatDialogRef
+} from '@angular/material/dialog';
+import { ResetPasswordDialogComponent } from './reset-password/reset-password-dialog.component';
+import { isNullOrUndefined } from 'util';
 
 
 @Component({
-    selector: 'app-login',
+    selector:    'app-login',
     templateUrl: './app-login.component.html',
-    styleUrls: ['./app-login.component.scss']
+    styleUrls:   ['./app-login.component.scss']
 })
 export class AppLoginComponent implements OnInit
 {
@@ -23,7 +35,7 @@ export class AppLoginComponent implements OnInit
 
     public user:any =
         {
-            name: '',
+            name:     '',
             password: '',
             language: 'de'
         };
@@ -54,12 +66,14 @@ export class AppLoginComponent implements OnInit
         // this.initLanguageValues();
 
         // Get the input field
-        let input = document.getElementById('password');
+        let input:HTMLElement = document.getElementById('password');
 
         // Execute a function when the user releases a key on the keyboard
-        input.addEventListener('keyup', function(event) {
-            // Number 13 is the "Enter" key on the keyboard
-            if (event.keyCode === 13) {
+        input.addEventListener('keyup', (event:any) =>
+        {
+            // Number 13 is the 'Enter' key on the keyboard
+            if(event.keyCode === 13)
+            {
                 // Cancel the default action, if needed
                 event.preventDefault();
                 // Trigger the button element with a click
@@ -77,45 +91,47 @@ export class AppLoginComponent implements OnInit
 
     public login():void
     {
-       this.loginService.login(this.user).subscribe(
-           (result:string) =>
-       {
-           this.alert.success('Sie werden eingeloggt');
+        this.loginService.login(this.user).subscribe(
+            (result:string) =>
+            {
+                this.alert.success('Sie werden eingeloggt');
 
 
-           let today:Date = new Date(Date.now());
+                let today:Date = new Date(Date.now());
 
-           today.setTime(today.getTime() + 1*24*60*60*1000);
+                today.setTime(today.getTime() + 1 * 24 * 60 * 60 * 1000);
 
-           let expires:string = 'expires=' + today.toUTCString();
+                let expires:string = 'expires=' + today.toUTCString();
 
-           document.cookie = 'loginToken=' + result +  ';' + expires;
-           this.sitemapHelper.Bearer = result;
-           this.globalRegistryService.setisLoggedIn(true);
-           this.router.navigate(['plugin', 'start']);
+                document.cookie = 'loginToken=' + result + ';' + expires;
+                this.sitemapHelper.Bearer = result;
+                this.globalRegistryService.setisLoggedIn(true);
+                this.router.navigate(['plugin',
+                                      'start']);
 
-           this.globalRegistryService.isLoginActive = false;
+                this.globalRegistryService.isLoginActive = false;
 
-           this.userService.getCurrentUsers().subscribe(
-               (result:any) =>
-               {
-                   this.globalRegistryService.setGravatarHash(result.gravatar)
-                   this.globalRegistryService.currentUser = result;
-               }
-           )
-       },
-       (error:any) =>
-       {
-           console.log(error);
+                this.userService.getCurrentUsers().subscribe(
+                    (resultUser:any) =>
+                    {
+                        this.globalRegistryService.setGravatarHash(resultUser.gravatar);
+                        this.globalRegistryService.currentUser = resultUser;
+                    }
+                );
+            },
+            (error:any) =>
+            {
+                console.log(error);
 
-           this.alert.error('Falscher Benutzername oder Passwort');
-       });
+                this.alert.error('Falscher Benutzername oder Passwort');
+            });
     }
 
     public resetPassword():void
     {
 
-        const resetPasswordDialog:MatDialogRef<ResetPasswordDialogComponent> = this.dialog.open(ResetPasswordDialogComponent, {autoFocus:true});
+        const resetPasswordDialog:MatDialogRef<ResetPasswordDialogComponent> = this.dialog.open(ResetPasswordDialogComponent,
+            {autoFocus: true});
 
 
         resetPasswordDialog.afterClosed().subscribe((username:string) =>
@@ -124,7 +140,7 @@ export class AppLoginComponent implements OnInit
             {
                 this.loginService.resetPassword(username).subscribe((result:any) =>
                 {
-                    this.alert.success('Sie haben eine E-Mail mit einem Link zum Erstellen eines neuen Passworts erhalten!')
+                    this.alert.success('Sie haben eine E-Mail mit einem Link zum Erstellen eines neuen Passworts erhalten!');
                 });
             }
         });

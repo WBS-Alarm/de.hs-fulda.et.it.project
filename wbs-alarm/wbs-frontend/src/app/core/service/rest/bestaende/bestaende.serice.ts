@@ -26,7 +26,7 @@ export class BestaendeService
 
         return this.http.get(url, {
             headers: this.headers
-        })
+        });
     }
 
     public erfasseBestaendeFuerZielort(groesseId:number, anzahl:number, zielortId:number):Observable<any>
@@ -35,11 +35,15 @@ export class BestaendeService
 
         let url:string = this.sitemapHelper.bestandList().replace('{zielortId}', zielortId.toString());
 
-        return this.http.post(url, {anzahl: anzahl, groesseId: groesseId},
+        return this.http.post(url,
+            {
+                anzahl:    anzahl,
+                groesseId: groesseId
+            },
             {
                 headers: this.headers,
                 observe: 'response'
-        })
+            });
 
     }
 
@@ -49,7 +53,7 @@ export class BestaendeService
 
         let url:string = this.sitemapHelper.bestand().replace('{id}', bestandId.toString());
 
-        return this.http.put(url, {anzahl: neuerBestand}, {headers:this.headers} )
+        return this.http.put(url, {anzahl: neuerBestand}, {headers: this.headers});
     }
 
     public loescheBestand(bestandId:number):Observable<any>

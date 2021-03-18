@@ -9,10 +9,10 @@
                       (outputClicked)="deleteCarrier(routeData.carrier)">
         </terra-button>
     </terra-base-toolbar>
-
+    
     <div class="system-view-container">
         <terra-portlet
-                [inputPortletHeader]="'Träger bearbeiten'">
+            [inputPortletHeader]="'Träger bearbeiten'">
             <terra-text-input [inputName]="'Name'"
                               [(ngModel)]="routeData.carrier.name">
             </terra-text-input>

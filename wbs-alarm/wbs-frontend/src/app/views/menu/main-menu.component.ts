@@ -2,15 +2,16 @@ import {
     Component,
     OnInit
 } from '@angular/core';
-import { Language } from 'angular-l10n';
 import {
-    TerraNodeTreeConfig
-} from '@plentymarkets/terra-components';
+    Language,
+    TranslationService
+} from 'angular-l10n';
+import { TerraNodeTreeConfig } from '@plentymarkets/terra-components';
 import { Router } from '@angular/router';
-import { TranslationService } from 'angular-l10n';
 
 @Component({
-    selector: 'main-menu',
+    // tslint:disable-next-line:component-selector
+    selector:    'main-menu',
     templateUrl: './main-menu.component.html'
 })
 export class MainMenuComponent implements OnInit
@@ -36,16 +37,5 @@ export class MainMenuComponent implements OnInit
                            this.router.navigateByUrl('plugin/start');
                        }
         });
-
-        // this.treeConfig.addNode({
-        //     id:        'example',
-        //     name:      this.translation.translate('example'),
-        //     isVisible: true,
-        //     isActive:  this.router.isActive('plugin/example', true),
-        //     onClick:   ():void =>
-        //                {
-        //                    this.router.navigateByUrl('plugin/example');
-        //                }
-        // });
     }
 }

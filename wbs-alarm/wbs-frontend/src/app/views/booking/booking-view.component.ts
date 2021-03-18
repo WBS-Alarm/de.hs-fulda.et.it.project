@@ -1,4 +1,8 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {
+    Component,
+    OnInit,
+    ViewChild
+} from '@angular/core';
 import {
     AlertService,
     TerraSelectBoxValueInterface,
@@ -6,17 +10,18 @@ import {
     TerraSimpleTableHeaderCellInterface,
     TerraSimpleTableRowInterface
 } from '@plentymarkets/terra-components';
-import {CategoryService} from '../../core/service/rest/categories/category.service';
-import {GlobalRegistryService} from '../../core/global-registry/global-registry.service';
-import {UsersService} from '../../core/service/rest/users/users.service';
-import {CarrierService} from '../../core/service/rest/carrier/carrier.service';
-import {TransaktionService} from '../../core/service/rest/transaktions/transaktion.service';
-import {MatTableDataSource} from "@angular/material/table";
-import {SelectionModel} from "@angular/cdk/collections";
-import {SystemZielortInterface} from "../system/components/targetplaces/data/system-zielort.interface";
-import {ActivatedRoute} from "@angular/router";
+import { CategoryService } from '../../core/service/rest/categories/category.service';
+import { GlobalRegistryService } from '../../core/global-registry/global-registry.service';
+import { UsersService } from '../../core/service/rest/users/users.service';
+import { CarrierService } from '../../core/service/rest/carrier/carrier.service';
+import { TransaktionService } from '../../core/service/rest/transaktions/transaktion.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { SelectionModel } from '@angular/cdk/collections';
+import { SystemZielortInterface } from '../system/components/targetplaces/data/system-zielort.interface';
+import { ActivatedRoute } from '@angular/router';
 
-export interface RowData {
+export interface RowData
+{
     von:SystemZielortInterface;
     nach:SystemZielortInterface;
     kategorie:any;
@@ -24,12 +29,13 @@ export interface RowData {
     anzahl:number;
 }
 
-
+/* tslint:disable */
 @Component({
-    selector: 'booking',
+    selector:    'booking',
     templateUrl: './booking-view.component.html',
     styleUrls:   ['./booking-view.component.scss']
 })
+/* tslint:enable */
 export class BookingViewComponent implements OnInit
 {
 
@@ -73,28 +79,19 @@ export class BookingViewComponent implements OnInit
 
     public _traegerId:number;
 
-    @ViewChild('table', {static:true})
+    @ViewChild('table', {static: true})
     public table:TerraSimpleTableComponent<any>;
 
-    private tableData:Array<RowData> = [];
+    public tableData:Array<RowData> = [];
 
-    public displayedColumns:Array<string> = ['select', 'von', 'nach', 'kategorie', 'größe', 'anzahl'];
+    public displayedColumns:Array<string> = ['select',
+                                             'von',
+                                             'nach',
+                                             'kategorie',
+                                             'größe',
+                                             'anzahl'];
     public dataSource:MatTableDataSource<RowData> = new MatTableDataSource<RowData>(this.tableData);
     public selection:SelectionModel<RowData> = new SelectionModel<RowData>(true, []);
-
-    /** Whether the number of selected elements matches the total number of rows. */
-    isAllSelected() {
-        let numSelected = this.selection.selected.length;
-        let numRows = this.dataSource.data.length;
-        return numSelected === numRows;
-    }
-
-    /** Selects all rows if they are not all selected; otherwise clear selection. */
-    masterToggle() {
-        this.isAllSelected() ?
-            this.selection.clear() :
-            this.dataSource.data.forEach(row => this.selection.select(row));
-    }
 
 
     constructor(public categoryService:CategoryService,
@@ -107,6 +104,23 @@ export class BookingViewComponent implements OnInit
     {
     }
 
+    /** Whether the number of selected elements matches the total number of rows. */
+    public isAllSelected():boolean
+    {
+        let numSelected:number = this.selection.selected.length;
+        let numRows:number = this.dataSource.data.length;
+        return numSelected === numRows;
+    }
+
+    /** Selects all rows if they are not all selected; otherwise clear selection. */
+    public masterToggle():void
+    {
+        this.isAllSelected() ?
+            this.selection.clear() :
+            // tslint:disable-next-line:typedef
+            this.dataSource.data.forEach(row => this.selection.select(row));
+    }
+
     public ngOnInit():void
     {
         this.loadCategories();
@@ -114,9 +128,9 @@ export class BookingViewComponent implements OnInit
         console.log(this._zielorteKomplett);
 
         this.route.data.subscribe((data:any) =>
-            {
-                this._traegerId = data.user._embedded.traeger[0].id;
-            })
+        {
+            this._traegerId = data.user._embedded.traeger[0].id;
+        });
     }
 
     public _buchen():void
@@ -129,16 +143,16 @@ export class BookingViewComponent implements OnInit
                     this.alert.success('Die Buchung wurde erfolgreich durchgeführt');
 
                     console.log('Erfolg');
-                    console.log(result)
+                    console.log(result);
                 },
                 (error:any) =>
                 {
                     this.alert.error('Beim der Buchung ist ein Fehler aufgetreten: ' + error.error.message);
 
-                    console.log('Fehler')
-                    console.log(error)
-                })
-        })
+                    console.log('Fehler');
+                    console.log(error);
+                });
+        });
 
         this.tableData = [];
         this.dataSource = new MatTableDataSource<RowData>(this.tableData);
@@ -154,22 +168,25 @@ export class BookingViewComponent implements OnInit
         }
         else
         {
-            this.categoryService.getGroesseForCategory(kategroie.id).subscribe((groessen) =>
+            this.categoryService.getGroesseForCategory(kategroie.id).subscribe((groessen:any) =>
             {
                 if(groessen._embedded.elemente.length === 0)
                 {
-                    this._groessen = [{caption:'Bitte wählen', value: null}];
+                    this._groessen = [{
+                        caption: 'Bitte wählen',
+                        value:   null
+                    }];
                 }
                 else
                 {
                     this._groessen = [];
-                    groessen._embedded.elemente.forEach((groesse) =>
+                    groessen._embedded.elemente.forEach((groesse:any) =>
                     {
                         this._groessen.push({
                             value:   groesse,
                             caption: groesse.name
-                        })
-                    })
+                        });
+                    });
                 }
 
             });
@@ -178,7 +195,7 @@ export class BookingViewComponent implements OnInit
 
     public leereTabelleUndAendereZielorte():void
     {
-        //this._rowList = [];
+        // this._rowList = [];
 
         if(this._modus === 'buchen')
         {
@@ -190,7 +207,7 @@ export class BookingViewComponent implements OnInit
             this._von = this._zielorteKomplett.find((zielort:any) =>
             {
                 return zielort.caption === 'Wareneingang';
-            }).value
+            }).value;
         }
         else
         {
@@ -199,7 +216,7 @@ export class BookingViewComponent implements OnInit
             this._nach = this._zielorteKomplett.find((zielort:any) =>
             {
                 return zielort.caption === 'Aussonderung';
-            }).value
+            }).value;
         }
 
         this._rowList = [];
@@ -235,7 +252,7 @@ export class BookingViewComponent implements OnInit
                 {
                     this.addCategoriesToSelectBox(kategorien._embedded.elemente);
                 });
-            })
+            });
         }
     }
 
@@ -246,8 +263,8 @@ export class BookingViewComponent implements OnInit
             this._kategorien.push({
                 value:   kategorie,
                 caption: kategorie.name
-            })
-        })
+            });
+        });
     }
 
     public loadZielorte(traegerId:number):void
@@ -268,7 +285,7 @@ export class BookingViewComponent implements OnInit
                     this._zielorteEinkauf.push({
                         value:   zielort,
                         caption: zielort.name
-                    })
+                    });
                 }
 
                 if(!(zielort.name.indexOf('Aussonderung') > -1))
@@ -276,22 +293,22 @@ export class BookingViewComponent implements OnInit
                     this._zielorteAussonderung.push({
                         value:   zielort,
                         caption: zielort.name
-                    })
+                    });
                 }
             });
 
             this._zielorte = this._zielorteKomplett;
-        })
+        });
     }
 
     public addRow():void
     {
         this.tableData.push({
-            von: this._von,
-            nach: this._nach,
+            von:       this._von,
+            nach:      this._nach,
             kategorie: this._kategorie,
-            groesse: this._goresse,
-            anzahl: this._anzahl
+            groesse:   this._goresse,
+            anzahl:    this._anzahl
         });
 
         this.dataSource._updateChangeSubscription();
@@ -327,7 +344,7 @@ export class BookingViewComponent implements OnInit
                         groesse: this._goresse.id,
                         anzahl:  this._anzahl
                     }
-                )
+                );
             }
         }
         else
@@ -344,7 +361,7 @@ export class BookingViewComponent implements OnInit
             });
         }
 
-        console.log(this.buchungsliste)
+        console.log(this.buchungsliste);
     }
 
     public deleteRows():void
@@ -352,7 +369,7 @@ export class BookingViewComponent implements OnInit
         this.selection.selected.forEach((row:RowData) =>
         {
             this.deleteRow(row);
-        })
+        });
     }
 
     public deleteRow(row:RowData):void
@@ -362,7 +379,7 @@ export class BookingViewComponent implements OnInit
         this.dataSource._updateChangeSubscription();
 
         this.deleteFromBuchungsliste(row);
-}
+    }
 
     public deleteFromBuchungsliste(toBeDeleted:RowData):void
     {
@@ -370,13 +387,13 @@ export class BookingViewComponent implements OnInit
 
         if(this._modus === 'einkauf')
         {
-            vonId = this._von.id
+            vonId = this._von.id;
         }
         else
         {
             vonId = this._zielorteKomplett.find((zielort:any) =>
             {
-                return zielort.caption === toBeDeleted.von.name
+                return zielort.caption === toBeDeleted.von.name;
             }).value.id;
         }
 
@@ -391,13 +408,13 @@ export class BookingViewComponent implements OnInit
         {
             nachId = this._zielorteKomplett.find((zielort:any) =>
             {
-                return zielort.caption === toBeDeleted.nach.name
+                return zielort.caption === toBeDeleted.nach.name;
             }).value.id;
         }
 
         let groesseId:number = this._groessen.find((groesse:any) =>
         {
-            return groesse.caption === toBeDeleted.groesse.name
+            return groesse.caption === toBeDeleted.groesse.name;
         }).value.id;
 
         let tbdBuchungen:Array<{ von:number, nach:number, positions:Array<{ groesse:number, anzahl:number }> }>;
@@ -417,7 +434,7 @@ export class BookingViewComponent implements OnInit
             newPositions.forEach((position:{ groesse:number, anzahl:number }) =>
             {
                 position.anzahl -= toBeDeleted.anzahl;
-            })
+            });
         });
 
         this.buchungsliste = tbdBuchungen;

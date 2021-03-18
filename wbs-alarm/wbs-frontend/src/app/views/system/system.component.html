@@ -1,8 +1,8 @@
 <div id="container" class="example-container" [class.example-is-mobile]="mobileQuery.matches">
-<!--    <mat-toolbar color="primary" class="example-toolbar">-->
-<!--        <button mat-button (click)="snav.toggle()">Menü anzeigen</button>-->
-<!--    </mat-toolbar>-->
-
+    <!--    <mat-toolbar color="primary" class="example-toolbar">-->
+    <!--        <button mat-button (click)="snav.toggle()">Menü anzeigen</button>-->
+    <!--    </mat-toolbar>-->
+    
     <div [ngClass]="snav.opened ? 'stick-to-nav' : ''" class="toggle-container">
         <span [ngClass]="snav.opened ? 'icon-collapse_left' : 'icon-collapse_rightpng'" class="toggle-icon" (click)="snav.toggle()"></span>
     </div>
@@ -17,9 +17,9 @@
                 </div>
             </mat-nav-list>
         </mat-sidenav>
-
+        
         <mat-sidenav-content>
-                <router-outlet></router-outlet>
+            <router-outlet></router-outlet>
         </mat-sidenav-content>
     </mat-sidenav-container>
 </div>

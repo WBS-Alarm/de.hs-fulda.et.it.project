@@ -6,8 +6,6 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { TranslationService } from 'angular-l10n';
-import { BestaendeService } from '../../core/service/rest/bestaende/bestaende.serice';
-import { isNullOrUndefined } from "util";
 import { UsersService } from '../../core/service/rest/users/users.service';
 
 @Injectable()

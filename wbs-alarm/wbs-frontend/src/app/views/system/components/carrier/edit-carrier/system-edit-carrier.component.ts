@@ -1,14 +1,24 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Data} from "@angular/router";
-import {AlertService, TerraNodeTreeConfig} from "@plentymarkets/terra-components";
-import {SystemGlobalSettingsService} from "../../../system-global-settings.service";
-import {ExampleTreeData} from "../../../system.component";
-import {CarrierService} from "../../../../../core/service/rest/carrier/carrier.service";
-import {Observable} from "rxjs";
-import {SystemCarrierInterface} from "../data/system-carrier.interface";
+import {
+    Component,
+    OnInit
+} from '@angular/core';
+import {
+    ActivatedRoute,
+    Data
+} from '@angular/router';
+import {
+    AlertService,
+    TerraNodeTreeConfig
+} from '@plentymarkets/terra-components';
+import { SystemGlobalSettingsService } from '../../../system-global-settings.service';
+import { ExampleTreeData } from '../../../system.component';
+import { CarrierService } from '../../../../../core/service/rest/carrier/carrier.service';
+import { Observable } from 'rxjs';
+import { SystemCarrierInterface } from '../data/system-carrier.interface';
 
 @Component({
-    selector: 'edit-carrier',
+    // tslint:disable-next-line:component-selector
+    selector:    'edit-carrier',
     templateUrl: './system-edit-carrier.component.html',
     styleUrls:   ['./system-edit-carrier.component.scss']
 })
@@ -42,7 +52,7 @@ export class SystemEditCarrierComponent implements OnInit
             (error:any) =>
             {
                 this.alert.error('Änderungen konnten nicht gespeichert werden. ' + error.error.message);
-            })
+            });
     }
 
     public deleteCarrier(carrier:SystemCarrierInterface):void
@@ -52,12 +62,12 @@ export class SystemEditCarrierComponent implements OnInit
             {
                 this.alert.success('Der Träger wurde gelöscht!');
 
-                this.systemTreeConfig.removeNodeById(this.systemTreeConfig.currentSelectedNode.id)
+                this.systemTreeConfig.removeNodeById(this.systemTreeConfig.currentSelectedNode.id);
             },
             (error:any) =>
             {
                 this.alert.error('Der Träger konnte nicht gelöscht werden! ' + error.error.message);
             }
-        )
+        );
     }
 }

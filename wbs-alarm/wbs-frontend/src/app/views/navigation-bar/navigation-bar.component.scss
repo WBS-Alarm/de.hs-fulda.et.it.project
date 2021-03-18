@@ -1,35 +1,29 @@
-nav
-{
+nav {
     width: 100%;
 }
 
-.nav-item .nav-link
-{
+.nav-item .nav-link {
     cursor: pointer;
 }
 
-    .user-icon
-    {
-        background-color: white;
-        border-radius: 50%;
-        height: 100%;
-        top: 50%;
-        position: relative;
-        transform: translateY(-50%);
-    }
+.user-icon {
+    background-color: white;
+    border-radius: 50%;
+    height: 100%;
+    top: 50%;
+    position: relative;
+    transform: translateY(-50%);
+}
 
 
-.right
-{
+.right {
     height: 3rem;
-
-    &:hover
-    {
+    
+    &:hover {
     }
 }
 
-.logout
-{
+.logout {
     color: white;
     margin-right: 15px;
     cursor: pointer;

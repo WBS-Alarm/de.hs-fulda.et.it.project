@@ -1,12 +1,19 @@
-import {Component} from "@angular/core";
-import {AlertService, TerraAlertComponent, TerraNodeTreeConfig} from '@plentymarkets/terra-components';
-import {CarrierService} from '../../../../../core/service/rest/carrier/carrier.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {SystemGlobalSettingsService} from '../../../system-global-settings.service';
-import {ExampleTreeData} from '../../../system.component';
+import { Component } from '@angular/core';
+import {
+    AlertService,
+    TerraNodeTreeConfig
+} from '@plentymarkets/terra-components';
+import { CarrierService } from '../../../../../core/service/rest/carrier/carrier.service';
+import {
+    ActivatedRoute,
+    Router
+} from '@angular/router';
+import { SystemGlobalSettingsService } from '../../../system-global-settings.service';
+import { ExampleTreeData } from '../../../system.component';
 
 @Component({
-    selector: 'system-new-targetplace',
+    // tslint:disable-next-line:component-selector
+    selector:    'system-new-targetplace',
     templateUrl: './system-new-targetplace.component.html',
     styleUrls:   ['./system-new-targetplace.component.scss']
 })
@@ -14,7 +21,7 @@ export class SystemNewTargetplaceComponent
 {
     public newTargetplaceName:string = '';
 
-     constructor(public carrierService:CarrierService,
+    constructor(public carrierService:CarrierService,
                 public route:ActivatedRoute,
                 public alert:AlertService,
                 public router:Router,
@@ -33,8 +40,6 @@ export class SystemNewTargetplaceComponent
 
                     let targetplaceId:string;
 
-                    result.headers.get('Location').split('/wbs/zielort/')[1];
-
                     this.carrierService.getTargetPlace(result.headers.get('Location')).subscribe((targetplace:any) =>
                     {
                         this.systemGlobalSettings.setZielOrte([targetplace]);
@@ -44,12 +49,14 @@ export class SystemNewTargetplaceComponent
                                 id:        'zielort' + targetplace.id,
                                 name:      targetplace.name,
                                 isVisible: true,
-                                onClick: ():void =>
-                                {
-                                    this.router.navigateByUrl('plugin/system/carrier/' + this.systemGlobalSettings.getTraegerId() + '/targetplace/' + targetplace.id)
-                                }
+                                onClick:   ():void =>
+                                           {
+                                               this.router.navigateByUrl('plugin/system/carrier/' +
+                                                                         this.systemGlobalSettings.getTraegerId() + '/targetplace/'
+                                                                         + targetplace.id);
+                                           }
                             }
-                        )
+                        );
                     });
 
                     this.newTargetplaceName = '';

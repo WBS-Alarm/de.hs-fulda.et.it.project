@@ -1,130 +1,133 @@
 <ng-container *ngIf="routeData$ | async as routeData">
     <div class="mb-2">
-    <mat-expansion-panel expanded="true">
-        <mat-expansion-panel-header>
-            <mat-panel-title>Bestand zu einem Träger auflisten</mat-panel-title>
-        </mat-expansion-panel-header>
-        <mat-form-field>
-            <mat-label>Träger auswählen</mat-label>
-            <mat-select [(ngModel)]="trager">
-                <mat-option *ngFor="let selectedTraeger of traegers" [value]="selectedTraeger">
-                    {{selectedTraeger.name}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-
-        <button mat-raised-button class="ml-2" [disabled]="!trager" color="primary" (click)="createReport()">Bericht erzeugen</button>
-
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 bericht">
-
-            <!-- Zielort Column -->
-            <ng-container matColumnDef="zielort">
-                <th mat-header-cell *matHeaderCellDef> Zielort</th>
-                <td mat-cell *matCellDef="let element"> {{element.zielort}} </td>
-            </ng-container>
-
-            <!-- Kategorie Column -->
-            <ng-container matColumnDef="kategorie">
-                <th mat-header-cell *matHeaderCellDef> Kategorie</th>
-                <td mat-cell *matCellDef="let element"> {{element.kategorie}} </td>
-            </ng-container>
-
-            <!-- Größe Column -->
-            <ng-container matColumnDef="größe">
-                <th mat-header-cell *matHeaderCellDef> Größe </th>
-                <td mat-cell *matCellDef="let element"> {{element.groesse}} </td>
-            </ng-container>
-
-            <!-- Anzahl Column -->
-            <ng-container matColumnDef="anzahl">
-                <th mat-header-cell *matHeaderCellDef> Anzahl </th>
-                <td mat-cell *matCellDef="let element"> {{element.anzahl}} </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;">
-            </tr>
-        </table>
-    </mat-expansion-panel>
+        <mat-expansion-panel expanded="true">
+            <mat-expansion-panel-header>
+                <mat-panel-title>Bestand zu einem Träger auflisten</mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-form-field>
+                <mat-label>Träger auswählen</mat-label>
+                <mat-select [(ngModel)]="trager">
+                    <mat-option *ngFor="let selectedTraeger of traegers" [value]="selectedTraeger">
+                        {{selectedTraeger.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            
+            <button mat-raised-button class="ml-2" [disabled]="!trager" color="primary" (click)="createReport()">Bericht erzeugen</button>
+            
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 bericht">
+                
+                <!-- Zielort Column -->
+                <ng-container matColumnDef="zielort">
+                    <th mat-header-cell *matHeaderCellDef> Zielort</th>
+                    <td mat-cell *matCellDef="let element"> {{element.zielort}} </td>
+                </ng-container>
+                
+                <!-- Kategorie Column -->
+                <ng-container matColumnDef="kategorie">
+                    <th mat-header-cell *matHeaderCellDef> Kategorie</th>
+                    <td mat-cell *matCellDef="let element"> {{element.kategorie}} </td>
+                </ng-container>
+                
+                <!-- Größe Column -->
+                <ng-container matColumnDef="größe">
+                    <th mat-header-cell *matHeaderCellDef> Größe</th>
+                    <td mat-cell *matCellDef="let element"> {{element.groesse}} </td>
+                </ng-container>
+                
+                <!-- Anzahl Column -->
+                <ng-container matColumnDef="anzahl">
+                    <th mat-header-cell *matHeaderCellDef> Anzahl</th>
+                    <td mat-cell *matCellDef="let element"> {{element.anzahl}} </td>
+                </ng-container>
+                
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                </tr>
+            </table>
+        </mat-expansion-panel>
     </div>
-
+    
     <div class="mb-2">
-    <mat-expansion-panel expanded="false">
-        <mat-expansion-panel-header>
-            <mat-panel-title>Aktuelle Bestände über Zielorte anzeigen</mat-panel-title>
-        </mat-expansion-panel-header>
-        <mat-form-field>
-            <mat-label>Träger auswählen</mat-label>
-            <mat-select [(ngModel)]="trager">
-                <mat-option *ngFor="let selectedTraeger of traegers" [value]="selectedTraeger">
-                    {{selectedTraeger.name}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-
-        <button mat-raised-button class="ml-2" [disabled]="!trager" color="primary" (click)="createReportZielort()">Bericht erzeugen</button>
-
-        <table mat-table [dataSource]="dataSourceUeberBestaende" class="mat-elevation-z8 bericht">
-
-            <!-- Zielort Column -->
-            <ng-container matColumnDef="zielort">
-                <th mat-header-cell *matHeaderCellDef> Zielort</th>
-                <td mat-cell *matCellDef="let element"> {{element.zielort}} </td>
-            </ng-container>
-
-            <!-- Kategorie Column -->
-            <ng-container matColumnDef="kategorie">
-                <th mat-header-cell *matHeaderCellDef> Kategorie</th>
-                <td mat-cell *matCellDef="let element"> {{element.kategorie}} </td>
-            </ng-container>
-
-            <!-- Anzahl Column -->
-            <ng-container matColumnDef="anzahl">
-                <th mat-header-cell *matHeaderCellDef> Anzahl </th>
-                <td mat-cell *matCellDef="let element"> {{element.anzahl}} </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumnsBestaende"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumnsBestaende;">
-            </tr>
-        </table>
-    </mat-expansion-panel>
+        <mat-expansion-panel expanded="false">
+            <mat-expansion-panel-header>
+                <mat-panel-title>Aktuelle Bestände über Zielorte anzeigen</mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-form-field>
+                <mat-label>Träger auswählen</mat-label>
+                <mat-select [(ngModel)]="trager">
+                    <mat-option *ngFor="let selectedTraeger of traegers" [value]="selectedTraeger">
+                        {{selectedTraeger.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            
+            <button mat-raised-button class="ml-2" [disabled]="!trager" color="primary" (click)="createReportZielort()">Bericht erzeugen
+            </button>
+            
+            <table mat-table [dataSource]="dataSourceUeberBestaende" class="mat-elevation-z8 bericht">
+                
+                <!-- Zielort Column -->
+                <ng-container matColumnDef="zielort">
+                    <th mat-header-cell *matHeaderCellDef> Zielort</th>
+                    <td mat-cell *matCellDef="let element"> {{element.zielort}} </td>
+                </ng-container>
+                
+                <!-- Kategorie Column -->
+                <ng-container matColumnDef="kategorie">
+                    <th mat-header-cell *matHeaderCellDef> Kategorie</th>
+                    <td mat-cell *matCellDef="let element"> {{element.kategorie}} </td>
+                </ng-container>
+                
+                <!-- Anzahl Column -->
+                <ng-container matColumnDef="anzahl">
+                    <th mat-header-cell *matHeaderCellDef> Anzahl</th>
+                    <td mat-cell *matCellDef="let element"> {{element.anzahl}} </td>
+                </ng-container>
+                
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsBestaende"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsBestaende;">
+                </tr>
+            </table>
+        </mat-expansion-panel>
     </div>
-
-        <div class="mb-2">
-            <mat-expansion-panel expanded="false">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>Aktuelle Bestände über Kategorien eines Trägers anzeigen</mat-panel-title>
-                </mat-expansion-panel-header>
-                <mat-form-field>
-                    <mat-label>Träger auswählen</mat-label>
-                    <mat-select [(ngModel)]="trager">
-                        <mat-option *ngFor="let selectedTraeger of traegers" [value]="selectedTraeger">
-                            {{selectedTraeger.name}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-
-                <button mat-raised-button class="ml-2" [disabled]="!trager" color="primary" (click)="createReportKategorien()">Bericht erzeugen</button>
-
-                <table mat-table [dataSource]="dataSourceUeberKategorien" class="mat-elevation-z8 bericht">
-
-                    <!-- Kategorie Column -->
-                    <ng-container matColumnDef="kategorie">
-                        <th mat-header-cell *matHeaderCellDef> Kategorie </th>
-                        <td mat-cell *matCellDef="let element"> {{element.kategorie}} </td>
-                    </ng-container>
-
-                    <!-- Anzahl Column -->
-                    <ng-container matColumnDef="anzahl">
-                        <th mat-header-cell *matHeaderCellDef> Anzahl </th>
-                        <td mat-cell *matCellDef="let element"> {{element.anzahl}} </td>
-                    </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="displayedColumnsKategorien"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumnsKategorien;">
-                    </tr>
-                </table>
-            </mat-expansion-panel>
-        </div>
+    
+    <div class="mb-2">
+        <mat-expansion-panel expanded="false">
+            <mat-expansion-panel-header>
+                <mat-panel-title>Aktuelle Bestände über Kategorien eines Trägers anzeigen</mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-form-field>
+                <mat-label>Träger auswählen</mat-label>
+                <mat-select [(ngModel)]="trager">
+                    <mat-option *ngFor="let selectedTraeger of traegers" [value]="selectedTraeger">
+                        {{selectedTraeger.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            
+            <button mat-raised-button class="ml-2" [disabled]="!trager" color="primary" (click)="createReportKategorien()">Bericht
+                erzeugen
+            </button>
+            
+            <table mat-table [dataSource]="dataSourceUeberKategorien" class="mat-elevation-z8 bericht">
+                
+                <!-- Kategorie Column -->
+                <ng-container matColumnDef="kategorie">
+                    <th mat-header-cell *matHeaderCellDef> Kategorie</th>
+                    <td mat-cell *matCellDef="let element"> {{element.kategorie}} </td>
+                </ng-container>
+                
+                <!-- Anzahl Column -->
+                <ng-container matColumnDef="anzahl">
+                    <th mat-header-cell *matHeaderCellDef> Anzahl</th>
+                    <td mat-cell *matCellDef="let element"> {{element.anzahl}} </td>
+                </ng-container>
+                
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsKategorien"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsKategorien;">
+                </tr>
+            </table>
+        </mat-expansion-panel>
+    </div>
 </ng-container>

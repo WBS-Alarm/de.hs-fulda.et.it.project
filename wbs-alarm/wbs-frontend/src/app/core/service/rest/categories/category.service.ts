@@ -1,16 +1,19 @@
-import {Injectable} from "../../../../../../node_modules/@angular/core";
-import {WbsSitemapHelper} from "../sitemap/data/wbs-sitemap.helper";
-import {HttpClient, HttpHeaders} from "../../../../../../node_modules/@angular/common/http";
-import {Observable} from "rxjs";
-import {SystemCategoryInterface} from "../../../../views/system/components/categories/data/system-category.interface";
+import { Injectable } from '../../../../../../node_modules/@angular/core';
+import { WbsSitemapHelper } from '../sitemap/data/wbs-sitemap.helper';
+import {
+    HttpClient,
+    HttpHeaders
+} from '../../../../../../node_modules/@angular/common/http';
+import { Observable } from 'rxjs';
+import { SystemCategoryInterface } from '../../../../views/system/components/categories/data/system-category.interface';
 
 @Injectable()
 export class CategoryService
 {
-    public headers: HttpHeaders;
+    public headers:HttpHeaders;
 
-    constructor(public http: HttpClient,
-                public sitemapHelper: WbsSitemapHelper)
+    constructor(public http:HttpClient,
+                public sitemapHelper:WbsSitemapHelper)
     {
 
     }
@@ -42,7 +45,7 @@ export class CategoryService
         return this.http.delete(this.sitemapHelper.kategorie().replace('{id}', category.id.toString()),
             {
                 headers: this.headers
-            })
+            });
     }
 
     public editCategory(category:SystemCategoryInterface):Observable<any>
@@ -55,7 +58,7 @@ export class CategoryService
             },
             {
                 headers: this.headers
-            })
+            });
     }
 
     public getGroesseForCategory(kategorieId:number):Observable<any>
@@ -65,6 +68,6 @@ export class CategoryService
         return this.http.get(this.sitemapHelper.groesseForCategory().replace('{kategorieId}', kategorieId.toString()),
             {
                 headers: this.headers
-            })
+            });
     }
 }

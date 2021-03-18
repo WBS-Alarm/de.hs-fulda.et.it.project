@@ -4,7 +4,7 @@ import {
     Router
 } from '@angular/router';
 import { TranslationService } from 'angular-l10n';
-import { isNullOrUndefined } from "util";
+import { isNullOrUndefined } from 'util';
 import { TerraMultiCheckBoxValueInterface } from '@plentymarkets/terra-components';
 import { AuthoritiesService } from '../../../../../core/service/rest/authorities/authorities.service';
 import { Observable } from 'rxjs';
@@ -30,26 +30,26 @@ export class SystemAuthorityResolver implements Resolve<Array<TerraMultiCheckBox
             return;
         }
 
-        let returnValue:Array<TerraMultiCheckBoxValueInterface> = []
+        let returnValue:Array<TerraMultiCheckBoxValueInterface> = [];
 
-            this.authorityService.getAuthorities().subscribe((result:any) =>
-        {
-            result._embedded.authorities.forEach((authority:any) =>
+        this.authorityService.getAuthorities().subscribe((result:any) =>
             {
-                returnValue.push(
-                    {
-                        value:    authority.id,
-                        caption:  authority.bezeichnung,
-                        selected: false
-                    }
-                )
+                result._embedded.authorities.forEach((authority:any) =>
+                {
+                    returnValue.push(
+                        {
+                            value:    authority.id,
+                            caption:  authority.bezeichnung,
+                            selected: false
+                        }
+                    );
+                });
+            },
+            (error:any) =>
+            {
+                console.log(error);
             });
-        },
-        (error:any) =>
-        {
-            console.log(error)
-        })
 
-        return this.authorityService.getAuthorities()
+        return this.authorityService.getAuthorities();
     }
 }
