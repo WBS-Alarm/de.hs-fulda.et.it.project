@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { TerraAlertComponent } from '@plentymarkets/terra-components';
 import {
     ActivatedRouteSnapshot,
     Router,
@@ -7,14 +6,14 @@ import {
 } from '@angular/router';
 import { UsersService } from '../service/rest/users/users.service';
 import { GlobalRegistryService } from '../global-registry/global-registry.service';
+import { AlertService } from '@plentymarkets/terra-components';
 
 @Injectable()
 export class IsLoggedInGuard
 {
-    public alert:TerraAlertComponent = TerraAlertComponent.getInstance();
-
     constructor(public globalRegistryService:GlobalRegistryService,
                 public userService:UsersService,
+                public alert:AlertService,
                 public router:Router)
     {
         // Fix lint

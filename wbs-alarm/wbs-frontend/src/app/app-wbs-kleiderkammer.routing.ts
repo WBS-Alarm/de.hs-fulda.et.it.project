@@ -206,7 +206,7 @@ const appRoutes:Routes = [
 
 export const appRoutingProviders:Array<any> = [];
 
-export const routing:ModuleWithProviders =
+export const routing:ModuleWithProviders<RouterModule> =
     RouterModule.forRoot(appRoutes, {
     preloadingStrategy: WbsPreloadingStrategy,
     onSameUrlNavigation: 'reload',
