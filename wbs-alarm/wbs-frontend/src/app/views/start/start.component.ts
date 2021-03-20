@@ -77,10 +77,10 @@ export class StartComponent implements OnInit
                                              'Anzahl'];
     public dataSource:MatTableDataSource<BuchungsuebersichtRow> = new MatTableDataSource<BuchungsuebersichtRow>(this.tableData);
 
-    @ViewChild(MatPaginator, {static: false})
+    @ViewChild(MatPaginator)
     public paginator:MatPaginator;
 
-    @ViewChild(MatSort, {static: false})
+    @ViewChild(MatSort)
     public sort:MatSort;
 
     public expandedElement:any | null;

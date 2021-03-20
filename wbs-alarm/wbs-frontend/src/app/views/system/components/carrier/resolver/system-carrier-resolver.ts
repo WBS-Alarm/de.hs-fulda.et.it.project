@@ -2,8 +2,8 @@ import {
     ActivatedRouteSnapshot,
     Resolve,
     Router
-} from '../../../../../../../node_modules/@angular/router';
-import { Injectable } from '../../../../../../../node_modules/@angular/core';
+} from '@angular/router';
+import { Injectable } from '@angular/core';
 import { UsersService } from '../../../../../core/service/rest/users/users.service';
 import { SystemGlobalSettingsService } from '../../../system-global-settings.service';
 import { isNullOrUndefined } from 'util';

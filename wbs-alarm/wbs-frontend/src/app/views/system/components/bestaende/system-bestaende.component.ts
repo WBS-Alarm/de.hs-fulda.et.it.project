@@ -70,7 +70,7 @@ export class SystemBestaendeComponent implements OnInit
     @Input()
     public gesperrt:boolean = false;
 
-    @ViewChild('bearbeitenOverlay', {static: false})
+    @ViewChild('bearbeitenOverlay')
     public bearbeitenOverlay:any;
 
     public tableData:Array<BestandRow> = [];

@@ -1,6 +1,7 @@
-import { HttpClient } from '../../../../../../node_modules/@angular/common/http';
-import { Injectable } from '../../../../../../node_modules/@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+
 
 @Injectable()
 export class GetSitemapService

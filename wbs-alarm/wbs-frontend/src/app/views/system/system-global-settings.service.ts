@@ -1,9 +1,9 @@
-import { Injectable } from '../../../../node_modules/@angular/core';
 import { UserDataInterface } from '../../core/service/rest/users/user-data.interface';
 import { SystemZielortInterface } from './components/targetplaces/data/system-zielort.interface';
 import { SystemCarrierInterface } from './components/carrier/data/system-carrier.interface';
 import { SystemCategoryInterface } from './components/categories/data/system-category.interface';
 import { UsersService } from '../../core/service/rest/users/users.service';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class SystemGlobalSettingsService
