@@ -2,7 +2,9 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { AppLoginComponent } from './app-login.component';
 import { FormsModule } from '@angular/forms';
-import { LocalizationModule } from 'angular-l10n';
+import {
+    L10nTranslationModule
+} from 'angular-l10n';
 import { l10nConfig } from '../../core/localization/l10n.config';
 import { LoginService } from '../../core/service/rest/login/login.service';
 import { WbsSitemapHelper } from '../../core/service/rest/sitemap/data/wbs-sitemap.helper';
@@ -11,8 +13,9 @@ import { AlertService } from '@plentymarkets/terra-components';
 import { UsersService } from '../../core/service/rest/users/users.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { UserLanguage } from '../../core/localization/translation-provider';
 
-describe('Component: AppLoginComponent', () =>
+describe('Component: AppLoginComponent', ():any =>
 {
     let component:AppLoginComponent;
     let fixture:ComponentFixture<AppLoginComponent>;
@@ -21,12 +24,12 @@ describe('Component: AppLoginComponent', () =>
     const usersServiceStub:Partial<UsersService> = {};
     const router:Partial<Router> = {};
 
-    beforeEach(waitForAsync(() =>
+    beforeEach(waitForAsync(():any =>
     {
         TestBed.configureTestingModule({
             declarations: [AppLoginComponent],
             imports:      [FormsModule,
-                           LocalizationModule.forRoot(l10nConfig),
+                           L10nTranslationModule.forRoot(l10nConfig, { userLanguage: UserLanguage }),
                            MatDialogModule],
             providers:    [
                 {
@@ -48,14 +51,14 @@ describe('Component: AppLoginComponent', () =>
         });
     }));
 
-    beforeEach(() =>
+    beforeEach(():any =>
     {
         fixture = TestBed.createComponent(AppLoginComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
 
-    it('should create', () =>
+    it('should create', ():any =>
     {
         expect(component).toBeTruthy();
     });
