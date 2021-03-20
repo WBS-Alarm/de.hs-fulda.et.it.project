@@ -1,6 +1,6 @@
 import { L10nConfig } from 'angular-l10n';
-import { l10nPluginTerraBasic } from '../../translations/l10n-plugin-terra-basic';
 import { l10nTerraComponents } from '@plentymarkets/terra-components';
+import { l10nPluginTerraBasic } from '../../translations/l10n-wbs-alarm';
 
 export const l10nConfig:L10nConfig = {
     defaultLocale: {
