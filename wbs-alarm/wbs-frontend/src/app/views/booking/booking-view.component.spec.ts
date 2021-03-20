@@ -1,8 +1,4 @@
-import {
-    async,
-    ComponentFixture,
-    TestBed
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { UsersService } from '../../core/service/rest/users/users.service';
 import {
     ActivatedRoute,
@@ -51,7 +47,7 @@ describe('Component: BookingViewComponent', () =>
     const transaktionService:Partial<TransaktionService> = {};
     const router:Partial<Router> = {};
 
-    beforeEach(async(() =>
+    beforeEach(waitForAsync(() =>
     {
         TestBed.configureTestingModule({
             declarations: [BookingViewComponent],

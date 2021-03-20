@@ -208,7 +208,8 @@ export const appRoutingProviders:Array<any> = [];
 
 export const routing:ModuleWithProviders =
     RouterModule.forRoot(appRoutes, {
-        preloadingStrategy:  WbsPreloadingStrategy,
-        onSameUrlNavigation: 'reload',
-        useHash:             true
-    });
+    preloadingStrategy: WbsPreloadingStrategy,
+    onSameUrlNavigation: 'reload',
+    useHash: true,
+    relativeLinkResolution: 'legacy'
+});

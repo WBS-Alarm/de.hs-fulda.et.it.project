@@ -1,8 +1,4 @@
-import {
-    async,
-    ComponentFixture,
-    TestBed
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { AppLoginComponent } from './app-login.component';
 import { FormsModule } from '@angular/forms';
@@ -25,7 +21,7 @@ describe('Component: AppLoginComponent', () =>
     const usersServiceStub:Partial<UsersService> = {};
     const router:Partial<Router> = {};
 
-    beforeEach(async(() =>
+    beforeEach(waitForAsync(() =>
     {
         TestBed.configureTestingModule({
             declarations: [AppLoginComponent],
