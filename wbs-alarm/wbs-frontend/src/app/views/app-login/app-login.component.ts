@@ -65,7 +65,7 @@ export class AppLoginComponent implements OnInit
         let input:HTMLElement = document.getElementById('password');
 
         // Execute a function when the user releases a key on the keyboard
-        input.addEventListener('keyup', (event:any) =>
+        input.addEventListener('keyup', (event:any):any =>
         {
             // Number 13 is the 'Enter' key on the keyboard
             if(event.keyCode === 13)
@@ -88,7 +88,7 @@ export class AppLoginComponent implements OnInit
     public login():void
     {
         this.loginService.login(this.user).subscribe(
-            (result:string) =>
+            (result:string):any =>
             {
                 this.alert.success('Sie werden eingeloggt');
 
@@ -108,14 +108,14 @@ export class AppLoginComponent implements OnInit
                 this.globalRegistryService.isLoginActive = false;
 
                 this.userService.getCurrentUsers().subscribe(
-                    (resultUser:any) =>
+                    (resultUser:any):any =>
                     {
                         this.globalRegistryService.setGravatarHash(resultUser.gravatar);
                         this.globalRegistryService.currentUser = resultUser;
                     }
                 );
             },
-            (error:any) =>
+            (error:any):any =>
             {
                 console.log(error);
 
@@ -130,11 +130,11 @@ export class AppLoginComponent implements OnInit
             {autoFocus: true});
 
 
-        resetPasswordDialog.afterClosed().subscribe((username:string) =>
+        resetPasswordDialog.afterClosed().subscribe((username:string):any =>
         {
             if(!isNullOrUndefined(username) && username.length > 0)
             {
-                this.loginService.resetPassword(username).subscribe((result:any) =>
+                this.loginService.resetPassword(username).subscribe((result:any):any =>
                 {
                     this.alert.success('Sie haben eine E-Mail mit einem Link zum Erstellen eines neuen Passworts erhalten!');
                 });

@@ -43,13 +43,13 @@ export class SystemEditCarrierComponent implements OnInit
     public saveCarrier(carrier:SystemCarrierInterface):void
     {
         this.carrierService.updateCarrier(carrier).subscribe(
-            (result:any) =>
+            (result:any):any =>
             {
                 this.alert.success('Änderungen gespeichert!');
 
                 this.systemTreeConfig.currentSelectedNode.name = carrier.name;
             },
-            (error:any) =>
+            (error:any):any =>
             {
                 this.alert.error('Änderungen konnten nicht gespeichert werden. ' + error.error.message);
             });
@@ -58,13 +58,13 @@ export class SystemEditCarrierComponent implements OnInit
     public deleteCarrier(carrier:SystemCarrierInterface):void
     {
         this.carrierService.deleteCarrier(carrier).subscribe(
-            (result:any) =>
+            (result:any):any =>
             {
                 this.alert.success('Der Träger wurde gelöscht!');
 
                 this.systemTreeConfig.removeNodeById(this.systemTreeConfig.currentSelectedNode.id);
             },
-            (error:any) =>
+            (error:any):any =>
             {
                 this.alert.error('Der Träger konnte nicht gelöscht werden! ' + error.error.message);
             }

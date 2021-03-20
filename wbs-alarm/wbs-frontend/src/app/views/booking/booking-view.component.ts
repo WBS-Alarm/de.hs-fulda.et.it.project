@@ -127,7 +127,7 @@ export class BookingViewComponent implements OnInit
 
         console.log(this._zielorteKomplett);
 
-        this.route.data.subscribe((data:any) =>
+        this.route.data.subscribe((data:any):any =>
         {
             this._traegerId = data.user._embedded.traeger[0].id;
         });
@@ -135,17 +135,17 @@ export class BookingViewComponent implements OnInit
 
     public _buchen():void
     {
-        this.buchungsliste.forEach((buchung:any) =>
+        this.buchungsliste.forEach((buchung:any):any =>
         {
             this.transaktionService.postTransaktion(this._traegerId, buchung).subscribe(
-                (result:any) =>
+                (result:any):any =>
                 {
                     this.alert.success('Die Buchung wurde erfolgreich durchgeführt');
 
                     console.log('Erfolg');
                     console.log(result);
                 },
-                (error:any) =>
+                (error:any):any =>
                 {
                     this.alert.error('Beim der Buchung ist ein Fehler aufgetreten: ' + error.error.message);
 
@@ -168,7 +168,7 @@ export class BookingViewComponent implements OnInit
         }
         else
         {
-            this.categoryService.getGroesseForCategory(kategroie.id).subscribe((groessen:any) =>
+            this.categoryService.getGroesseForCategory(kategroie.id).subscribe((groessen:any):any =>
             {
                 if(groessen._embedded.elemente.length === 0)
                 {
@@ -180,7 +180,7 @@ export class BookingViewComponent implements OnInit
                 else
                 {
                     this._groessen = [];
-                    groessen._embedded.elemente.forEach((groesse:any) =>
+                    groessen._embedded.elemente.forEach((groesse:any):any =>
                     {
                         this._groessen.push({
                             value:   groesse,
@@ -204,7 +204,7 @@ export class BookingViewComponent implements OnInit
         else if(this._modus === 'einkauf')
         {
             this._zielorte = this._zielorteEinkauf;
-            this._von = this._zielorteKomplett.find((zielort:any) =>
+            this._von = this._zielorteKomplett.find((zielort:any):any =>
             {
                 return zielort.caption === 'Wareneingang';
             }).value;
@@ -213,7 +213,7 @@ export class BookingViewComponent implements OnInit
         {
             this._zielorte = this._zielorteAussonderung;
 
-            this._nach = this._zielorteKomplett.find((zielort:any) =>
+            this._nach = this._zielorteKomplett.find((zielort:any):any =>
             {
                 return zielort.caption === 'Aussonderung';
             }).value;
@@ -233,14 +233,14 @@ export class BookingViewComponent implements OnInit
 
             this.loadZielorte(traegerId);
 
-            this.categoryService.getCategories(this._traegerId).subscribe((kategorien:any) =>
+            this.categoryService.getCategories(this._traegerId).subscribe((kategorien:any):any =>
             {
                 this.addCategoriesToSelectBox(kategorien._embedded.elemente);
             });
         }
         else
         {
-            this.userService.getCurrentUsers().subscribe((user:any) =>
+            this.userService.getCurrentUsers().subscribe((user:any):any =>
             {
                 this.globalRegistryService.currentUser = user;
                 traegerId = user._embedded.traeger[0].id;
@@ -248,7 +248,7 @@ export class BookingViewComponent implements OnInit
 
                 this.loadZielorte(traegerId);
 
-                this.categoryService.getCategories(this._traegerId).subscribe((kategorien:any) =>
+                this.categoryService.getCategories(this._traegerId).subscribe((kategorien:any):any =>
                 {
                     this.addCategoriesToSelectBox(kategorien._embedded.elemente);
                 });
@@ -258,7 +258,7 @@ export class BookingViewComponent implements OnInit
 
     public addCategoriesToSelectBox(kategorien:Array<any>):void
     {
-        kategorien.forEach((kategorie:any) =>
+        kategorien.forEach((kategorie:any):any =>
         {
             this._kategorien.push({
                 value:   kategorie,
@@ -269,9 +269,9 @@ export class BookingViewComponent implements OnInit
 
     public loadZielorte(traegerId:number):void
     {
-        this.carrierService.listZielorteForTraeger(traegerId).subscribe((zielorte:any) =>
+        this.carrierService.listZielorteForTraeger(traegerId).subscribe((zielorte:any):any =>
         {
-            zielorte._embedded.elemente.forEach((zielort:any) =>
+            zielorte._embedded.elemente.forEach((zielort:any):any =>
             {
                 this._zielorteKomplett.push(
                     {
@@ -320,7 +320,7 @@ export class BookingViewComponent implements OnInit
     public addRowToBuchungsListe():void
     {
         let buchungsKombination:{ von:number, nach:number, positions:Array<{ groesse:number, anzahl:number }> } = this.buchungsliste.find(
-            (buchung:{ von:number, nach:number, positions:Array<{ groesse:number, anzahl:number }> }) =>
+            (buchung:{ von:number, nach:number, positions:Array<{ groesse:number, anzahl:number }> }):any =>
             {
                 return buchung.von === this._von.id && buchung.nach === this._nach.id;
             });
@@ -328,7 +328,7 @@ export class BookingViewComponent implements OnInit
         if(buchungsKombination)
         {
             let kombination:{ groesse:number, anzahl:number } =
-                buchungsKombination.positions.find((position:{ groesse:number, anzahl:number }) =>
+                buchungsKombination.positions.find((position:{ groesse:number, anzahl:number }):any =>
                 {
                     return position.groesse === this._goresse.id;
                 });
@@ -366,7 +366,7 @@ export class BookingViewComponent implements OnInit
 
     public deleteRows():void
     {
-        this.selection.selected.forEach((row:RowData) =>
+        this.selection.selected.forEach((row:RowData):any =>
         {
             this.deleteRow(row);
         });
@@ -391,7 +391,7 @@ export class BookingViewComponent implements OnInit
         }
         else
         {
-            vonId = this._zielorteKomplett.find((zielort:any) =>
+            vonId = this._zielorteKomplett.find((zielort:any):any =>
             {
                 return zielort.caption === toBeDeleted.von.name;
             }).value.id;
@@ -406,32 +406,32 @@ export class BookingViewComponent implements OnInit
         }
         else
         {
-            nachId = this._zielorteKomplett.find((zielort:any) =>
+            nachId = this._zielorteKomplett.find((zielort:any):any =>
             {
                 return zielort.caption === toBeDeleted.nach.name;
             }).value.id;
         }
 
-        let groesseId:number = this._groessen.find((groesse:any) =>
+        let groesseId:number = this._groessen.find((groesse:any):any =>
         {
             return groesse.caption === toBeDeleted.groesse.name;
         }).value.id;
 
         let tbdBuchungen:Array<{ von:number, nach:number, positions:Array<{ groesse:number, anzahl:number }> }>;
 
-        tbdBuchungen = this.buchungsliste.filter((buchung:{ von:number, nach:number, positions:Array<{ groesse:number, anzahl:number }> }) =>
+        tbdBuchungen = this.buchungsliste.filter((buchung:{ von:number, nach:number, positions:Array<{ groesse:number, anzahl:number }> }):any =>
         {
             return buchung.von === vonId && buchung.nach === nachId;
         });
 
-        tbdBuchungen.forEach((buchung:{ von:number, nach:number, positions:Array<{ groesse:number, anzahl:number }> }) =>
+        tbdBuchungen.forEach((buchung:{ von:number, nach:number, positions:Array<{ groesse:number, anzahl:number }> }):any =>
         {
-            let newPositions:Array<{ groesse:number, anzahl:number }> = buchung.positions.filter((position:{ groesse:number, anzahl:number }) =>
+            let newPositions:Array<{ groesse:number, anzahl:number }> = buchung.positions.filter((position:{ groesse:number, anzahl:number }):any =>
             {
                 return position.groesse === groesseId;
             });
 
-            newPositions.forEach((position:{ groesse:number, anzahl:number }) =>
+            newPositions.forEach((position:{ groesse:number, anzahl:number }):any =>
             {
                 position.anzahl -= toBeDeleted.anzahl;
             });

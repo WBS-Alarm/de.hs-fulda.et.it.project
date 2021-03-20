@@ -78,14 +78,14 @@ export class SystemGroessenComponent implements OnInit
     {
         this.routeData$ = this.route.data;
 
-        this.route.data.subscribe((data:any) =>
+        this.route.data.subscribe((data:any):any =>
         {
             this.groessen = data.groesse._embedded.elemente;
 
             this.tableData = [];
             this.dataSource = new MatTableDataSource<GroesseRow>(this.tableData);
 
-            this.groessen.forEach((groesse:any) =>
+            this.groessen.forEach((groesse:any):any =>
             {
                 this.groessenZurTabelleHinzufuegen(groesse);
             });
@@ -100,18 +100,18 @@ export class SystemGroessenComponent implements OnInit
             {
                 name:           this._groesse,
                 bestandsgrenze: this.bestandswarnung
-            }).subscribe((result:any) =>
+            }).subscribe((result:any):any =>
             {
                 this.alert.success('Die Größe wurde gespeichert.');
 
                 let url:string = result.headers.get('Location');
 
-                this.groessenService.getSingleGroesse(url).subscribe((groesse:any) =>
+                this.groessenService.getSingleGroesse(url).subscribe((groesse:any):any =>
                 {
                     this.groessenZurTabelleHinzufuegen(groesse);
                 });
             },
-            (error:any) =>
+            (error:any):any =>
             {
                 this.alert.error('Die Größe konnte nicht gespeichert werden! ' + error.error.message);
             });
@@ -130,11 +130,11 @@ export class SystemGroessenComponent implements OnInit
 
     public saveGroesse(groesse:any):void
     {
-        this.groessenService.updateGroesse(groesse).subscribe(() =>
+        this.groessenService.updateGroesse(groesse).subscribe(():any =>
             {
                 this.alert.success('Die Größe wurde erfolgreich gespeichert');
             },
-            (error:any) =>
+            (error:any):any =>
             {
                 this.alert.error('Beim Speichern der Größe ist ein Fehler aufgetreten. ' + error.error.message);
             });
@@ -142,7 +142,7 @@ export class SystemGroessenComponent implements OnInit
 
     public deleteGroesse():any
     {
-        this.groessenService.deleteGroesse(this.selection.selected[0].groesse).subscribe(() =>
+        this.groessenService.deleteGroesse(this.selection.selected[0].groesse).subscribe(():any =>
             {
                 this.alert.success('Die Größe wurde gelöscht.');
 
@@ -152,7 +152,7 @@ export class SystemGroessenComponent implements OnInit
                 this.selection.clear();
                 this.dataSource._updateChangeSubscription();
             },
-            (error:any) =>
+            (error:any):any =>
             {
                 this.alert.error('Die Größe wurde nicht gelöscht. ' + error.error.message);
             });
@@ -168,7 +168,7 @@ export class SystemGroessenComponent implements OnInit
                 data:      selected
             });
 
-        editDialog.afterClosed().subscribe((neueGroesse:any) =>
+        editDialog.afterClosed().subscribe((neueGroesse:any):any =>
         {
             if(neueGroesse)
             {

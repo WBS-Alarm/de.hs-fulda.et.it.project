@@ -31,7 +31,7 @@ export class NewPasswordComponent implements OnInit
 
     public ngOnInit():void
     {
-        this.route.params.subscribe((params:any) =>
+        this.route.params.subscribe((params:any):any =>
         {
             this.token = params.token;
         });
@@ -44,7 +44,7 @@ export class NewPasswordComponent implements OnInit
             this.newPasswordService.newPassword({
                 token:    this.token,
                 password: this.password
-            }).subscribe((result:any) =>
+            }).subscribe((result:any):any =>
             {
                 this.alert.success('Ihr Passwort wurde zurückgesetzt!');
                 this.router.navigateByUrl('login');

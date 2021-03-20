@@ -54,7 +54,7 @@ describe('Component: NewPasswordComponent', ():any =>
         });
     }));
 
-    beforeEach(() =>
+    beforeEach(():any =>
     {
         fixture = TestBed.createComponent(NewPasswordComponent);
         component = fixture.componentInstance;

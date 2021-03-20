@@ -80,7 +80,7 @@ export class BerichtViewComponent implements OnInit
     {
         this.routeData$ = this.route.data;
 
-        this.routeData$.subscribe((data:any) =>
+        this.routeData$.subscribe((data:any):any =>
         {
             this.traegerId = data.user._embedded.traeger[0].id;
             this.traegers = data.user._embedded.traeger;
@@ -95,9 +95,9 @@ export class BerichtViewComponent implements OnInit
         this.tableData = [];
         this.dataSource = new MatTableDataSource<BerichtRow>(this.tableData);
 
-        this.berichtService.listBestaendeZuTraeger(this.trager.id).subscribe((bericht:any) =>
+        this.berichtService.listBestaendeZuTraeger(this.trager.id).subscribe((bericht:any):any =>
         {
-            bericht._embedded.elements.forEach((element:any) =>
+            bericht._embedded.elements.forEach((element:any):any =>
             {
                 this.tableData.push({
                     traeger:   element.traeger,
@@ -117,9 +117,9 @@ export class BerichtViewComponent implements OnInit
         this.tableDataBestaende = [];
         this.dataSourceUeberBestaende = new MatTableDataSource<AktuellUeberZielorteRow>(this.tableDataBestaende);
 
-        this.berichtService.listBestaendeUeberZielort(this.trager.id).subscribe((bericht:any) =>
+        this.berichtService.listBestaendeUeberZielort(this.trager.id).subscribe((bericht:any):any =>
         {
-            bericht._embedded.elements.forEach((element:any) =>
+            bericht._embedded.elements.forEach((element:any):any =>
             {
                 this.tableDataBestaende.push({
                     traeger:   element.traeger,
@@ -138,9 +138,9 @@ export class BerichtViewComponent implements OnInit
         this.tableDataKategorien = [];
         this.dataSourceUeberKategorien = new MatTableDataSource<AktuellUeberKategorienBerichtRow>(this.tableDataKategorien);
 
-        this.berichtService.listBestaendeUeberKategorien(this.trager.id).subscribe((bericht:any) =>
+        this.berichtService.listBestaendeUeberKategorien(this.trager.id).subscribe((bericht:any):any =>
         {
-            bericht._embedded.elements.forEach((element:any) =>
+            bericht._embedded.elements.forEach((element:any):any =>
             {
                 this.tableDataKategorien.push({
                     traeger:   element.traeger,

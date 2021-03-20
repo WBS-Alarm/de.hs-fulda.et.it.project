@@ -34,9 +34,9 @@ export class SystemAuthorityResolver implements Resolve<Array<TerraMultiCheckBox
 
         let returnValue:Array<TerraMultiCheckBoxValueInterface> = [];
 
-        this.authorityService.getAuthorities().subscribe((result:any) =>
+        this.authorityService.getAuthorities().subscribe((result:any):any =>
             {
-                result._embedded.authorities.forEach((authority:any) =>
+                result._embedded.authorities.forEach((authority:any):any =>
                 {
                     returnValue.push(
                         {
@@ -47,7 +47,7 @@ export class SystemAuthorityResolver implements Resolve<Array<TerraMultiCheckBox
                     );
                 });
             },
-            (error:any) =>
+            (error:any):any =>
             {
                 console.log(error);
             });

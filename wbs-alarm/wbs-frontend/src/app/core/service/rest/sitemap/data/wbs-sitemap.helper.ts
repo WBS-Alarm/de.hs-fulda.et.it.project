@@ -1,6 +1,6 @@
 import { HttpHeaders } from '@angular/common/http';
 import { isNullOrUndefined } from 'util';
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class WbsSitemapHelper

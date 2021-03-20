@@ -95,7 +95,7 @@ export class NavigationBarComponent implements OnInit
 
     public subscribeToRouter():void
     {
-        this.router.events.subscribe((value:any) =>
+        this.router.events.subscribe((value:any):any =>
         {
             if(!isNullOrUndefined(value.url))
             {

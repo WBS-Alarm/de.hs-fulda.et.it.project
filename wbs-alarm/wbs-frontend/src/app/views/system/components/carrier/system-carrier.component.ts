@@ -37,7 +37,7 @@ export class SystemCarrierComponent implements OnInit
 
     public saveCarrier():void
     {
-        this.carrierService.createCarrier(this.newCarrierName).subscribe((result:any) =>
+        this.carrierService.createCarrier(this.newCarrierName).subscribe((result:any):any =>
             {
                 this.alert.success('Der Träger wurde angelegt!');
 
@@ -56,7 +56,7 @@ export class SystemCarrierComponent implements OnInit
                 this.systemTreeSettings.setTraegers([result]);
 
             },
-            (error:any) =>
+            (error:any):any =>
             {
                 this.alert.error('Beim Anlegen ist ein Fehler aufgetreten!' + error.error.message);
             }
