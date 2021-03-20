@@ -4,8 +4,8 @@ import {
     HttpClient,
     HttpHeaders
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { SystemCategoryInterface } from '../../../../views/system/components/categories/data/system-category.interface';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class CategoryService

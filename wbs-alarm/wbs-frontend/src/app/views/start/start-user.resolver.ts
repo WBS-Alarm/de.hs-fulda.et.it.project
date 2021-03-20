@@ -4,9 +4,9 @@ import {
     Resolve,
     Router
 } from '@angular/router';
-import { Observable } from 'rxjs';
 import { TranslationService } from 'angular-l10n';
 import { UsersService } from '../../core/service/rest/users/users.service';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class StartUserResolver implements Resolve<Observable<any>>

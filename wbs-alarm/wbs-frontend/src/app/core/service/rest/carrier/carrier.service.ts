@@ -4,9 +4,9 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { WbsSitemapHelper } from '../sitemap/data/wbs-sitemap.helper';
-import { Observable } from 'rxjs';
 import { SystemZielortInterface } from '../../../../views/system/components/targetplaces/data/system-zielort.interface';
 import { SystemCarrierInterface } from '../../../../views/system/components/carrier/data/system-carrier.interface';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class CarrierService

@@ -11,6 +11,7 @@ import { ReportService } from './service/report.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { Observable } from 'rxjs';
 
+
 export interface BerichtRow
 {
     traeger:any;
