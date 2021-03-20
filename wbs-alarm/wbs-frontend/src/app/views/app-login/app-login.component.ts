@@ -3,8 +3,7 @@ import {
     OnInit
 } from '@angular/core';
 import {
-    Language,
-    TranslationService
+    L10nTranslationService
 } from 'angular-l10n';
 import {
     AlertService,
@@ -30,9 +29,6 @@ import { isNullOrUndefined } from 'util';
 })
 export class AppLoginComponent implements OnInit
 {
-    @Language()
-    public lang:string;
-
     public user:any =
         {
             name:     '',
@@ -47,7 +43,7 @@ export class AppLoginComponent implements OnInit
 
     public languageCaption:string;
 
-    constructor(public translation:TranslationService,
+    constructor(public translation:L10nTranslationService,
                 public loginService:LoginService,
                 public alert:AlertService,
                 public globalRegistryService:GlobalRegistryService,
@@ -84,9 +80,9 @@ export class AppLoginComponent implements OnInit
 
     public initTranslations():void
     {
-        this.username = this.translation.translate('login.username', this.lang);
-        this.password = this.translation.translate('login.password', this.lang);
-        this.languageCaption = this.translation.translate('login.language', this.lang);
+        this.username = this.translation.translate('login.username');
+        this.password = this.translation.translate('login.password');
+        this.languageCaption = this.translation.translate('login.language');
     }
 
     public login():void

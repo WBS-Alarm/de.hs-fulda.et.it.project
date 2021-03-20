@@ -7,14 +7,16 @@ import {
 } from '@angular/router';
 import { UserDataInterface } from '../../../../../core/service/rest/users/user-data.interface';
 import { UsersService } from '../../../../../core/service/rest/users/users.service';
-import { TranslationService } from 'angular-l10n';
+import {
+    L10nTranslationService
+} from 'angular-l10n';
 import { Observable } from 'rxjs';
 import { SystemGlobalSettingsService } from '../../../system-global-settings.service';
 
 @Injectable()
 export class SystemAuthorityUserResolver implements Resolve<UserDataInterface>
 {
-    constructor(public translation:TranslationService,
+    constructor(public translation:L10nTranslationService,
                 public userService:UsersService,
                 public systemGloabalSettingsService:SystemGlobalSettingsService,
                 public router:Router)

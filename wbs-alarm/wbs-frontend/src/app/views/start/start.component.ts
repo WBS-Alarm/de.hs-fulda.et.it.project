@@ -6,7 +6,6 @@ import {
     Output,
     ViewChild
 } from '@angular/core';
-import { Language } from 'angular-l10n';
 import {
     ActivatedRoute,
     Data,
@@ -57,9 +56,6 @@ export interface BuchungsuebersichtRow
 })
 export class StartComponent implements OnInit
 {
-    @Language()
-    public lang:string;
-
     @Input()
     public myTitle:string;
 

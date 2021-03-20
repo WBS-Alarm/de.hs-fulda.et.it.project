@@ -4,7 +4,9 @@ import {
     Resolve,
     Router
 } from '@angular/router';
-import { TranslationService } from 'angular-l10n';
+import {
+    L10nTranslationService
+} from 'angular-l10n';
 import { Observable } from 'rxjs';
 import { isNullOrUndefined } from 'util';
 import { BestaendeService } from '../../../../core/service/rest/bestaende/bestaende.serice';
@@ -12,7 +14,7 @@ import { BestaendeService } from '../../../../core/service/rest/bestaende/bestae
 @Injectable()
 export class SystemBestaendeResolver implements Resolve<Observable<any>>
 {
-    constructor(public translation:TranslationService,
+    constructor(public translation:L10nTranslationService,
                 public bestaendeService:BestaendeService,
                 public router:Router)
     {

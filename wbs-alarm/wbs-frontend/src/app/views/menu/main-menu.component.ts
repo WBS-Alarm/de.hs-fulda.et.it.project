@@ -3,8 +3,8 @@ import {
     OnInit
 } from '@angular/core';
 import {
+    L10nTranslationService,
     Language,
-    TranslationService
 } from 'angular-l10n';
 import { TerraNodeTreeConfig } from '@plentymarkets/terra-components';
 import { Router } from '@angular/router';
@@ -21,7 +21,7 @@ export class MainMenuComponent implements OnInit
 
     constructor(public treeConfig:TerraNodeTreeConfig<{}>,
                 public router:Router,
-                public translation:TranslationService)
+                public translation:L10nTranslationService)
     {
     }
 

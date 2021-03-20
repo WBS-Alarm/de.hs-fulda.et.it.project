@@ -4,14 +4,16 @@ import {
     Resolve,
     Router
 } from '@angular/router';
-import { TranslationService } from 'angular-l10n';
+import {
+    L10nTranslationService
+} from 'angular-l10n';
 import { UsersService } from '../../core/service/rest/users/users.service';
 import { Observable } from 'rxjs';
 
 @Injectable()
 export class StartUserResolver implements Resolve<Observable<any>>
 {
-    constructor(public translation:TranslationService,
+    constructor(public translation:L10nTranslationService,
                 public userService:UsersService,
                 public router:Router)
     {

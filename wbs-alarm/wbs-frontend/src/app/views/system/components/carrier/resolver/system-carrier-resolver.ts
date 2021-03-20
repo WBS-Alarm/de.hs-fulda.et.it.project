@@ -7,13 +7,15 @@ import { Injectable } from '@angular/core';
 import { UsersService } from '../../../../../core/service/rest/users/users.service';
 import { SystemGlobalSettingsService } from '../../../system-global-settings.service';
 import { isNullOrUndefined } from 'util';
-import { TranslationService } from 'angular-l10n';
+import {
+    L10nTranslationService
+} from 'angular-l10n';
 import { SystemCarrierInterface } from '../data/system-carrier.interface';
 
 @Injectable()
 export class SystemCarrierResolver implements Resolve<SystemCarrierInterface>
 {
-    constructor(public translation:TranslationService,
+    constructor(public translation:L10nTranslationService,
                 public userService:UsersService,
                 public systemGloabalSettingsService:SystemGlobalSettingsService,
                 public router:Router)

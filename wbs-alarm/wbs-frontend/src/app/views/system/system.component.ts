@@ -5,7 +5,9 @@ import {
     ViewChild
 } from '@angular/core';
 import { TerraNodeTreeConfig } from '@plentymarkets/terra-components';
-import { TranslationService } from 'angular-l10n';
+import {
+    L10nTranslationService
+} from 'angular-l10n';
 import { CarrierService } from '../../core/service/rest/carrier/carrier.service';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -57,7 +59,7 @@ export class SystemComponent implements OnInit
     private _mobileQueryListener:() => void;
 
     constructor(public nodeTreeConfig:TerraNodeTreeConfig<ExampleTreeData>,
-                public translation:TranslationService,
+                public translation:L10nTranslationService,
                 public router:Router,
                 public carrierService:CarrierService,
                 public globalRegistryService:GlobalRegistryService,

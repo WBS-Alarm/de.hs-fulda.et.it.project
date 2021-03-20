@@ -3,7 +3,9 @@ import {
     Resolve,
     Router
 } from '@angular/router';
-import { TranslationService } from 'angular-l10n';
+import {
+    L10nTranslationService
+} from 'angular-l10n';
 import { isNullOrUndefined } from 'util';
 import { TerraMultiCheckBoxValueInterface } from '@plentymarkets/terra-components';
 import { AuthoritiesService } from '../../../../../core/service/rest/authorities/authorities.service';
@@ -14,7 +16,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class SystemAuthorityResolver implements Resolve<Array<TerraMultiCheckBoxValueInterface>>
 {
-    constructor(public translation:TranslationService,
+    constructor(public translation:L10nTranslationService,
                 public userService:UsersService,
                 public authorityService:AuthoritiesService,
                 public router:Router)

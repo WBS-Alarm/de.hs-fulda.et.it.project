@@ -6,7 +6,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { StartComponent } from './views/start/start.component';
 import {
     L10nLoader,
-    TranslationModule
+    L10nTranslationModule
 } from 'angular-l10n';
 import { FormsModule } from '@angular/forms';
 import { l10nConfig } from './core/localization/l10n.config';
@@ -64,7 +64,9 @@ import { SystemNewUserComponent } from './views/system/components/user/new/syste
 import { SystemNewCategoryComponent } from './views/system/components/categories/new/system-new-category.component';
 import { SystemEditCarrierComponent } from './views/system/components/carrier/edit-carrier/system-edit-carrier.component';
 import { SystemNewTargetplaceComponent } from './views/system/components/targetplaces/new/system-new-targetplace.component';
-import { TranslationProvider } from './core/localization/translation-provider';
+import {
+    UserLanguage
+} from './core/localization/translation-provider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -89,6 +91,10 @@ import { MatSortModule } from '@angular/material/sort';
 import { LockTargetplaceDialogComponent } from './views/system/components/targetplaces/dialog/lock-targetplace-dialog.component';
 import { GroessenUpdateDialogComponent } from './views/system/components/sizes/dialog/groessen-update-dialog.component';
 
+export function initL10n(l10nLoader:L10nLoader):Function
+{
+    return ():Promise<any> => l10nLoader.init();
+}
 
 @NgModule({
     entryComponents: [
@@ -101,7 +107,7 @@ import { GroessenUpdateDialogComponent } from './views/system/components/sizes/d
         BrowserModule,
         FormsModule,
         HttpClientModule,
-        TranslationModule.forRoot(l10nConfig, {translationProvider: TranslationProvider}),
+        L10nTranslationModule.forRoot(l10nConfig, { userLanguage: UserLanguage }),
         TerraComponentsModule,
         BrowserAnimationsModule,
         routing,
@@ -199,15 +205,6 @@ import { GroessenUpdateDialogComponent } from './views/system/components/sizes/d
 })
 export class AppWbsKleiderkammerModule
 {
-    constructor(public l10nLoader:L10nLoader)
-    {
-        this.l10nLoader.load();
-    }
-}
-
-export function initL10n(l10nLoader:L10nLoader):Function
-{
-    return ():Promise<any> => l10nLoader.load();
 }
 
 export function initUserAndSystemData(userAndSystemDataLoader:UserAndSystemDataService):Function

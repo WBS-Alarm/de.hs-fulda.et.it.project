@@ -6,14 +6,16 @@ import {
     Router
 } from '@angular/router';
 import { UsersService } from '../../../../../core/service/rest/users/users.service';
-import { TranslationService } from 'angular-l10n';
+import {
+    L10nTranslationService
+} from 'angular-l10n';
 import { Observable } from 'rxjs';
 import { SystemGlobalSettingsService } from '../../../system-global-settings.service';
 
 @Injectable()
 export class SystemUserResolver implements Resolve<Observable<any>>
 {
-    constructor(public translation:TranslationService,
+    constructor(public translation:L10nTranslationService,
                 public userService:UsersService,
                 public systemGloabalSettingsService:SystemGlobalSettingsService,
                 public router:Router)
