@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 import { UserLanguage } from '../../../core/localization/translation-provider';
 
 
-describe('Component: ResetPasswordDialogComponent', ():any =>
+xdescribe('Component: ResetPasswordDialogComponent', ():any =>
 {
     let component:ResetPasswordDialogComponent;
     let fixture:ComponentFixture<ResetPasswordDialogComponent>;
