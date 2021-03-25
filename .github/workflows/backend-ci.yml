@@ -1,6 +1,6 @@
 # This workflow will build a Java project with Maven
 
-name: Backend-Integrity
+name: Frontend + Backend-Integrity (full build)
 
 on: [pull_request]
 
