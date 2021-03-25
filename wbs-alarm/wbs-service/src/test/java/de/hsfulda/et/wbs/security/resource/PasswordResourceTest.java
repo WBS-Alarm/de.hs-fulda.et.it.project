@@ -32,7 +32,6 @@ class PasswordResourceTest extends ResourceTest {
     @Test
     void resetBOUser() throws Exception {
         mockMvc.perform(post(ForgotPasswordResource.PATH, BO_USER).contentType(MediaType.APPLICATION_JSON))
-                .andDo(print())
                 .andExpect(status().isOk());
     }
 
@@ -40,7 +39,6 @@ class PasswordResourceTest extends ResourceTest {
     @Test
     void resetUnknown() throws Exception {
         mockMvc.perform(post(ForgotPasswordResource.PATH, "unbekannt").contentType(MediaType.APPLICATION_JSON))
-                .andDo(print())
                 .andExpect(status().isOk());
     }
 
@@ -58,7 +56,6 @@ class PasswordResourceTest extends ResourceTest {
         void postNewPassword() throws Exception {
             mockMvc.perform(post(ResetPasswordResource.PATH).contentType(MediaType.APPLICATION_JSON)
                     .content("{\n \"token\": \"" + uuid + "\",\n \"password\": \"neues\" \n}"))
-                    .andDo(print())
                     .andExpect(status().isOk());
         }
 
@@ -88,7 +85,6 @@ class PasswordResourceTest extends ResourceTest {
         void postNoPasswort() throws Exception {
             mockMvc.perform(post(ResetPasswordResource.PATH).contentType(MediaType.APPLICATION_JSON)
                     .content("{\n \"token\": \"" + uuid + "\",\n \"password\": \"\" \n}"))
-                    .andDo(print())
                     .andExpect(status().isBadRequest());
         }
 
@@ -97,7 +93,6 @@ class PasswordResourceTest extends ResourceTest {
         void postNoToken() throws Exception {
             mockMvc.perform(post(ResetPasswordResource.PATH).contentType(MediaType.APPLICATION_JSON)
                     .content("{\n \"token\": \"\",\n \"password\": \"neues\" \n}"))
-                    .andDo(print())
                     .andExpect(status().isBadRequest());
         }
 
@@ -106,7 +101,6 @@ class PasswordResourceTest extends ResourceTest {
         void postInvalidToken() throws Exception {
             mockMvc.perform(post(ResetPasswordResource.PATH).contentType(MediaType.APPLICATION_JSON)
                     .content("{\n \"token\": \"1234-123-123\",\n \"password\": \"neues\" \n}"))
-                    .andDo(print())
                     .andExpect(status().isBadRequest());
         }
     }

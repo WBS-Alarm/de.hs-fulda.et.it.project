@@ -39,8 +39,7 @@ class BenutzerResourceTest extends ResourceTest {
         mockMvc.perform(get(BenutzerListResource.PATH, traegerId)
                 .header("Authorization", getTokenAsSuperuser())
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andDo(print());
+                .andExpect(status().isOk());
     }
 
     @DisplayName("wird bei gleichen Träger angezeigt")
@@ -51,7 +50,6 @@ class BenutzerResourceTest extends ResourceTest {
                 .header("Authorization", getTokenAsSuperuser())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andDo(print())
                 .andExpect(jsonPath("$._embedded.authorities[0].id", is(5)))
                 .andExpect(jsonPath("$._embedded.authorities[0].code", is("READ")))
                 .andExpect(jsonPath("$._embedded.traeger", notNullValue()))

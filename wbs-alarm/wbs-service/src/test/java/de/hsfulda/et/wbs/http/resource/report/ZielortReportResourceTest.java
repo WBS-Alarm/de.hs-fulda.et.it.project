@@ -29,7 +29,6 @@ class ZielortReportResourceTest extends ResourceTest {
         Long traegerId = getTraegerId(FW_TRAEGER);
         mockMvc.perform(get(ZielortReportResource.PATH, traegerId).header("Authorization", getTokenAsSuperuser())
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andDo(print());
+                .andExpect(status().isOk());
     }
 }
