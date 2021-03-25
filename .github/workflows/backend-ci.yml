@@ -1,6 +1,6 @@
 # This workflow will build a Java project with Maven
 
-name: WBS-Alarm Full Build with Tests (Frontend + Backend)
+name: Backend-Integrity
 
 on: [pull_request]
 
@@ -33,9 +33,10 @@ jobs:
         with:
           java-version: 1.8
 
-      # Build with maven (verify)
-      # with this frontend-ci is not necessary (doing the same, just double)
-      - name: Maven Verify
+      # Check if the project compiles correctly
+      - name: Test with Maven
         run: |
           cd wbs-alarm/
-          mvn verify --file pom.xml
+          mvn test --file pom.xml
+
+
