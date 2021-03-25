@@ -107,7 +107,6 @@
                         </configuration>
                     </execution>
 
-
                     <!-- npm run build -->
                     <execution>
                         <id>npm run build</id>
@@ -119,7 +118,39 @@
                             <executable>npm</executable>
                             <arguments>
                                 <argument>run</argument>
-                                <argument>just_build</argument>
+                                <argument>build</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+
+                    <!-- npm run test-headless-coverage -->
+                    <execution>
+                        <id>npm run test</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>npm</executable>
+                            <arguments>
+                                <argument>run</argument>
+                                <argument>test-headless-coverage</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+
+                    <!-- npm run lint -->
+                    <execution>
+                        <id>npm run lint</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>npm</executable>
+                            <arguments>
+                                <argument>run</argument>
+                                <argument>lint</argument>
                             </arguments>
                         </configuration>
                     </execution>
