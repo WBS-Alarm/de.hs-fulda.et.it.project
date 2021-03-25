@@ -37,6 +37,6 @@ jobs:
       - name: Test with Maven
         run: |
           cd wbs-alarm/
-          mvn verify --file pom.xml -Plocal
+          mvn verify -P on_ux,local --file pom.xml
 
 
