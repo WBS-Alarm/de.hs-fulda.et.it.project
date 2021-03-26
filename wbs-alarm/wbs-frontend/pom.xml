@@ -108,7 +108,6 @@
             </build>
         </profile>
 
-
         <profile>
             <id>local</id>
             <build>
@@ -171,11 +170,10 @@
                 <version>1.6.0</version>
                 <executions>
 
-
                     <!-- npm run build -->
                     <execution>
                         <id>npm run build</id>
-                        <phase>generate-sources</phase>
+                        <phase>compile</phase>
                         <goals>
                             <goal>exec</goal>
                         </goals>
@@ -184,38 +182,6 @@
                             <arguments>
                                 <argument>run</argument>
                                 <argument>build</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
-
-                    <!-- npm run test-headless-coverage -->
-                    <execution>
-                        <id>npm run test</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>npm</executable>
-                            <arguments>
-                                <argument>run</argument>
-                                <argument>test-headless-coverage</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
-
-                    <!-- npm run lint -->
-                    <execution>
-                        <id>npm run lint</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>npm</executable>
-                            <arguments>
-                                <argument>run</argument>
-                                <argument>lint</argument>
                             </arguments>
                         </configuration>
                     </execution>
