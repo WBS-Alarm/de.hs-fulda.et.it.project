@@ -39,6 +39,22 @@
                                     </arguments>
                                 </configuration>
                             </execution>
+
+                            <!-- npm ci -->
+                            <execution>
+                                <id>npm install</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>npm</executable>
+                                    <arguments>
+                                        <argument>run</argument>
+                                        <argument>reinstall_win</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
                         </executions>
                     </plugin>
                 </plugins>
@@ -67,6 +83,22 @@
                                     <arguments>
                                         <argument>run</argument>
                                         <argument>clean_all_ux</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+
+                            <!-- npm ci -->
+                            <execution>
+                                <id>npm install</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>npm</executable>
+                                    <arguments>
+                                        <argument>run</argument>
+                                        <argument>reinstall_ux</argument>
                                     </arguments>
                                 </configuration>
                             </execution>
@@ -139,21 +171,6 @@
                 <version>1.6.0</version>
                 <executions>
 
-                    <!-- npm ci -->
-                    <execution>
-                        <id>npm install</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>npm</executable>
-                            <arguments>
-                                <argument>run</argument>
-                                <argument>reinstall_ux</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
 
                     <!-- npm run build -->
                     <execution>
