@@ -5,7 +5,9 @@ import {
     ViewChild
 } from '@angular/core';
 import { TerraNodeTreeConfig } from '@plentymarkets/terra-components';
-import { TranslationService } from 'angular-l10n';
+import {
+    L10nTranslationService
+} from 'angular-l10n';
 import { CarrierService } from '../../core/service/rest/carrier/carrier.service';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -57,7 +59,7 @@ export class SystemComponent implements OnInit
     private _mobileQueryListener:() => void;
 
     constructor(public nodeTreeConfig:TerraNodeTreeConfig<ExampleTreeData>,
-                public translation:TranslationService,
+                public translation:L10nTranslationService,
                 public router:Router,
                 public carrierService:CarrierService,
                 public globalRegistryService:GlobalRegistryService,
@@ -74,7 +76,7 @@ export class SystemComponent implements OnInit
     {
         this.createCompleteTree();
         this.sidenav.toggle();
-        this.globalRegistryService.toggled$.subscribe((value:boolean) =>
+        this.globalRegistryService.toggled$.subscribe((value:boolean):any =>
         {
             if(value)
             {
@@ -109,11 +111,11 @@ export class SystemComponent implements OnInit
     public getCarriers():Observable<any>
     {
         return this.carrierService.getCarriers().pipe(
-            tap((result:resultData) =>
+            tap((result:resultData):any =>
             {
                 this.systemsGlobalSettingsService.setTraegers(result._embedded.elemente);
 
-                result._embedded.elemente.forEach((element:any) =>
+                result._embedded.elemente.forEach((element:any):any =>
                 {
                     this.nodeTreeConfig.addChildToNodeById(0, {
                         id:         element.id,
@@ -169,7 +171,7 @@ export class SystemComponent implements OnInit
     public getCarrierDetailForId(id:number, name:string):Observable<any>
     {
         return this.carrierService.getDetailsForCarrier(id).pipe(
-            tap((result:any) =>
+            tap((result:any):any =>
             {
                 console.log(result);
 
@@ -177,7 +179,7 @@ export class SystemComponent implements OnInit
                 this.systemsGlobalSettingsService.setKategorien(result._embedded.kategorien);
                 this.systemsGlobalSettingsService.setZielOrte(result._embedded.zielorte);
 
-                result._embedded.benutzer.forEach((benutzer:any) =>
+                result._embedded.benutzer.forEach((benutzer:any):any =>
                 {
                     this.nodeTreeConfig.addChildToNodeById(name + 11,
                         {
@@ -205,7 +207,7 @@ export class SystemComponent implements OnInit
                         });
                 });
 
-                result._embedded.zielorte.forEach((zielort:any) =>
+                result._embedded.zielorte.forEach((zielort:any):any =>
                 {
                     this.nodeTreeConfig.addChildToNodeById(name + 12,
                         {
@@ -219,7 +221,7 @@ export class SystemComponent implements OnInit
                         });
                 });
 
-                result._embedded.kategorien.forEach((kategorie:any) =>
+                result._embedded.kategorien.forEach((kategorie:any):any =>
                 {
                     this.nodeTreeConfig.addChildToNodeById(name + 13,
                         {

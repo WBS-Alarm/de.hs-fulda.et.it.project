@@ -4,8 +4,8 @@ import {
     HttpHeaders
 } from '@angular/common/http';
 import { WbsSitemapHelper } from '../sitemap/data/wbs-sitemap.helper';
-import { Observable } from 'rxjs';
 import { UserDataInterface } from './user-data.interface';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class UsersService

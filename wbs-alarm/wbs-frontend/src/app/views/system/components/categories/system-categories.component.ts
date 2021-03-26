@@ -43,7 +43,7 @@ export class SystemCategoriesComponent implements OnInit
     {
         this.routeData$ = this.route.data;
 
-        this.route.params.subscribe((params:any) =>
+        this.route.params.subscribe((params:any):any =>
         {
             this.traegerId = params.carrierId;
         });
@@ -52,13 +52,13 @@ export class SystemCategoriesComponent implements OnInit
     public save(category:SystemCategoryInterface):void
     {
         this.categoryService.editCategory(category).subscribe(
-            (result:any) =>
+            (result:any):any =>
             {
                 this.alert.success('Änderungen gespeichert!');
 
                 this.systemTreeConfig.currentSelectedNode.name = category.name;
             },
-            (error:any) =>
+            (error:any):any =>
             {
                 this.alert.error('Änderungen konnten nicht gespeichert werden! ' + error.error.message);
             });
@@ -69,7 +69,7 @@ export class SystemCategoriesComponent implements OnInit
     public delete(category:SystemCategoryInterface):void
     {
         this.categoryService.deleteCategory(category).subscribe(
-            (result:any) =>
+            (result:any):any =>
             {
                 this.alert.success('Die Kategorie wurde gelöscht!');
 
@@ -77,7 +77,7 @@ export class SystemCategoriesComponent implements OnInit
 
                 this.router.navigateByUrl('/plugin/system/carrier/' + this.traegerId + '/category');
             },
-            (error:any) =>
+            (error:any):any =>
             {
                 this.alert.error('Die Kategorie konnte nicht gelöscht werden! ' + error.error.message);
             });

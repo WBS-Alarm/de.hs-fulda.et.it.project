@@ -29,13 +29,13 @@ export class AppWbsKleiderkammer implements OnInit
     /* tslint:enable */
     public ngOnInit():void
     {
-        this.sitemapService.getSitemaps().subscribe((result:any) =>
+        this.sitemapService.getSitemaps().subscribe((result:any):any =>
         {
             this.sitemapHelper.sitemaps = result;
         });
 
         this.userService.getCurrentUsers().subscribe(
-            (result:any) =>
+            (result:any):any =>
             {
                 this.globalRegistry.currentUser = result;
             }

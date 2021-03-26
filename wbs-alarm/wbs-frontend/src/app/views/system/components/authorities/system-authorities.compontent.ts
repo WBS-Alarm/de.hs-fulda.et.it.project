@@ -46,7 +46,7 @@ export class SystemAuthoritiesCompontent implements OnInit
         this.routeData$ = this.route.data;
 
 
-        this.route.data.subscribe((data:Data) =>
+        this.route.data.subscribe((data:Data):any =>
         {
             console.log('Das ist die Route Data');
             console.log(data);
@@ -57,7 +57,7 @@ export class SystemAuthoritiesCompontent implements OnInit
 
             this.values = [];
 
-            data.authority._embedded.authorities.forEach((authority:any) =>
+            data.authority._embedded.authorities.forEach((authority:any):any =>
             {
                 this.values.push(
                     {
@@ -74,7 +74,7 @@ export class SystemAuthoritiesCompontent implements OnInit
     {
         let authorityFound:any;
 
-        authorityFound = this.user1._embedded.authorities.find((searchAuth:any) =>
+        authorityFound = this.user1._embedded.authorities.find((searchAuth:any):any =>
         {
             return searchAuth.id === authority.id;
         });
@@ -84,20 +84,20 @@ export class SystemAuthoritiesCompontent implements OnInit
 
     public saveBerechtigungen():void
     {
-        this.values.forEach((value:TerraMultiCheckBoxValueInterface) =>
+        this.values.forEach((value:TerraMultiCheckBoxValueInterface):any =>
         {
-            let userHasAuthority:any = this.user1._embedded.authorities.find((authority:any) =>
+            let userHasAuthority:any = this.user1._embedded.authorities.find((authority:any):any =>
             {
                 return authority.id === value.value;
             });
 
             if(value.selected && isNullOrUndefined(userHasAuthority))
             {
-                this.authorityService.grantAuthorities(this.userId, value.value).subscribe((result:any) =>
+                this.authorityService.grantAuthorities(this.userId, value.value).subscribe((result:any):any =>
                     {
                         this.alert.success('Die Berechtigungen wurden erfolgreich gespeichert!');
                     },
-                    (error:any) =>
+                    (error:any):any =>
                     {
                         this.alert.error('Beim Speichern der Berechtigungen ist ein Fehler aufgetreten. ' + error.error.message);
                     });
@@ -109,16 +109,16 @@ export class SystemAuthoritiesCompontent implements OnInit
 
     public removeBerechtigungen():void
     {
-        this.values.forEach((value:TerraMultiCheckBoxValueInterface) =>
+        this.values.forEach((value:TerraMultiCheckBoxValueInterface):any =>
         {
-            let userHasAuthority:any = this.user1._embedded.authorities.find((authority:any) =>
+            let userHasAuthority:any = this.user1._embedded.authorities.find((authority:any):any =>
             {
                 return authority.id === value.value;
             });
 
             if(!value.selected && !isNullOrUndefined(userHasAuthority))
             {
-                this.authorityService.removeAuthorities(this.userId, value.value).subscribe((result:any) =>
+                this.authorityService.removeAuthorities(this.userId, value.value).subscribe((result:any):any =>
                 {
                     console.log(result);
                 });

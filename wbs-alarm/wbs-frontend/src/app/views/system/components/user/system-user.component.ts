@@ -47,7 +47,7 @@ export class SystemUserComponent implements OnInit
 
         this.routeData$ = this.route.data;
 
-        this.route.params.subscribe((params:any) =>
+        this.route.params.subscribe((params:any):any =>
         {
             this.traegerId = params.carrierId;
         });
@@ -58,11 +58,11 @@ export class SystemUserComponent implements OnInit
     {
         this.usersService.editUser(+user.id,
             user).subscribe(
-            (result:any) =>
+            (result:any):any =>
             {
                 this.alert.success('Änderungen gespeichert!');
             },
-            (error:any) =>
+            (error:any):any =>
             {
                 this.alert.error('Änderungen wurden nicht gespeichert! ' + error.error.message);
             }
@@ -72,7 +72,7 @@ export class SystemUserComponent implements OnInit
     public delete(user:UserDataInterface):void
     {
         this.usersService.deleteUser(user.id).subscribe(
-            (result:any) =>
+            (result:any):any =>
             {
                 this.alert.success('Der Benutzer wurde gelöscht');
 
@@ -80,7 +80,7 @@ export class SystemUserComponent implements OnInit
 
                 this.router.navigateByUrl('plugin/system/carrier/' + this.traegerId + '/user');
             },
-            (error:any) =>
+            (error:any):any =>
             {
                 this.alert.error('Der Benutzer konnte nicht gelöscht werden. ' + error.error.message);
             });

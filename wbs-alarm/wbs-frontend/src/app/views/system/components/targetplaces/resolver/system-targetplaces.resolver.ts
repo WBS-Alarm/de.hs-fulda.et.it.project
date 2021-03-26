@@ -6,7 +6,9 @@ import {
     Router
 } from '@angular/router';
 import { UsersService } from '../../../../../core/service/rest/users/users.service';
-import { TranslationService } from 'angular-l10n';
+import {
+    L10nTranslationService
+} from 'angular-l10n';
 import { Observable } from 'rxjs';
 import { SystemGlobalSettingsService } from '../../../system-global-settings.service';
 import { CarrierService } from '../../../../../core/service/rest/carrier/carrier.service';
@@ -14,7 +16,7 @@ import { CarrierService } from '../../../../../core/service/rest/carrier/carrier
 @Injectable()
 export class SystemTargetplacesResolver implements Resolve<Observable<any>>
 {
-    constructor(public translation:TranslationService,
+    constructor(public translation:L10nTranslationService,
                 public userService:UsersService,
                 public carrierService:CarrierService,
                 public systemGloabalSettingsService:SystemGlobalSettingsService,

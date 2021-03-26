@@ -1,9 +1,9 @@
-import { Injectable } from '../../../../node_modules/@angular/core';
 import { UserDataInterface } from '../../core/service/rest/users/user-data.interface';
 import { SystemZielortInterface } from './components/targetplaces/data/system-zielort.interface';
 import { SystemCarrierInterface } from './components/carrier/data/system-carrier.interface';
 import { SystemCategoryInterface } from './components/categories/data/system-category.interface';
 import { UsersService } from '../../core/service/rest/users/users.service';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class SystemGlobalSettingsService
@@ -32,7 +32,7 @@ export class SystemGlobalSettingsService
 
     public getSingleTraeger(id:number):SystemCarrierInterface
     {
-        return this.traegers.find((traeger:SystemCarrierInterface) => id === traeger.id);
+        return this.traegers.find((traeger:SystemCarrierInterface):any => id === traeger.id);
     }
 
     public setBenutzer(benutzer:Array<any>):void
@@ -65,9 +65,9 @@ export class SystemGlobalSettingsService
 
     public getSingleZielort(id:number):SystemZielortInterface
     {
-        console.log(this.zielorte.find((zielort:any) => id === zielort.id));
+        console.log(this.zielorte.find((zielort:any):any => id === zielort.id));
 
-        return this.zielorte.find((zielort:any) => id === zielort.id);
+        return this.zielorte.find((zielort:any):any => id === zielort.id);
     }
 
     public setKategorien(kategorien:Array<any>):void
@@ -80,12 +80,12 @@ export class SystemGlobalSettingsService
 
     public getSingleCategory(categoryId:number):SystemCategoryInterface
     {
-        return this.kategorien.find((kategorie:any) => kategorie.id === categoryId);
+        return this.kategorien.find((kategorie:any):any => kategorie.id === categoryId);
     }
 
     public getSingleUser(userId:number):UserDataInterface
     {
-        return this.benutzer.find((benutzer:any) =>
+        return this.benutzer.find((benutzer:any):any =>
         {
             return benutzer.id === userId;
         });

@@ -4,7 +4,9 @@ import {
     Resolve,
     Router
 } from '@angular/router';
-import { TranslationService } from 'angular-l10n';
+import {
+    L10nTranslationService
+} from 'angular-l10n';
 import { UsersService } from '../../../../core/service/rest/users/users.service';
 import { AuthoritiesService } from '../../../../core/service/rest/authorities/authorities.service';
 import { Observable } from 'rxjs';
@@ -14,7 +16,7 @@ import { GroesseService } from '../../../../core/service/rest/groesse/groesse.se
 @Injectable()
 export class SystemGroessenResolver implements Resolve<Observable<any>>
 {
-    constructor(public translation:TranslationService,
+    constructor(public translation:L10nTranslationService,
                 public userService:UsersService,
                 public groessenService:GroesseService,
                 public authorityService:AuthoritiesService,

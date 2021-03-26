@@ -25,7 +25,7 @@ export class UserAndSystemDataService
 
     public load():Promise<void | Error>
     {
-        this.sitemapService.getSitemaps().subscribe((result:any) =>
+        this.sitemapService.getSitemaps().subscribe((result:any):any =>
         {
             this.sitemapHelper.sitemaps = result;
         });

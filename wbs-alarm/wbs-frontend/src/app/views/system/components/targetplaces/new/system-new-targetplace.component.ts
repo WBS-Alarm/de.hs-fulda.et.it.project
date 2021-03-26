@@ -34,13 +34,13 @@ export class SystemNewTargetplaceComponent
     public save():void
     {
         this.carrierService.createTargetplace(this.systemGlobalSettings.getTraegerId(), this.newTargetplaceName)
-            .subscribe((result:any) =>
+            .subscribe((result:any):any =>
                 {
                     this.alert.success('Der Zielort wurde angelegt!');
 
                     let targetplaceId:string;
 
-                    this.carrierService.getTargetPlace(result.headers.get('Location')).subscribe((targetplace:any) =>
+                    this.carrierService.getTargetPlace(result.headers.get('Location')).subscribe((targetplace:any):any =>
                     {
                         this.systemGlobalSettings.setZielOrte([targetplace]);
 
@@ -63,7 +63,7 @@ export class SystemNewTargetplaceComponent
 
 
                 },
-                (error:any) =>
+                (error:any):any =>
                 {
                     this.alert.error('Der Zielort wurde nicht angelegt!');
 

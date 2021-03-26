@@ -1,6 +1,7 @@
-/.idea/
-/node_modules/
-/dist/
-/node/
-/target/
+*/.idea
+*/node_modules
+*/dist
+*/node
+*/target
 *.iml
+*/coverage

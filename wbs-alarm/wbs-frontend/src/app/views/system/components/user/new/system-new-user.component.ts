@@ -38,9 +38,9 @@ export class SystemNewUserComponent
         let traegerId:number = this.systemGlobalSettings.getTraegerId();
 
         this.usersService.registerUser(traegerId, this.newUser).subscribe(
-            (result:any) =>
+            (result:any):any =>
             {
-                this.usersService.getOneUser(undefined, result.headers.get('Location')).subscribe((user:any) =>
+                this.usersService.getOneUser(undefined, result.headers.get('Location')).subscribe((user:any):any =>
                 {
                     this.systemTreeConfig.addChildToNodeById(this.systemTreeConfig.currentSelectedNode.id,
                         {
@@ -76,7 +76,7 @@ export class SystemNewUserComponent
 
 
             },
-            (error:any) =>
+            (error:any):any =>
             {
                 this.alert.error('Der Benutzer konnte nicht angelegt werden! ' + error.error.message);
             });

@@ -6,7 +6,6 @@ import {
     Output,
     ViewChild
 } from '@angular/core';
-import { Language } from 'angular-l10n';
 import {
     ActivatedRoute,
     Data,
@@ -57,9 +56,6 @@ export interface BuchungsuebersichtRow
 })
 export class StartComponent implements OnInit
 {
-    @Language()
-    public lang:string;
-
     @Input()
     public myTitle:string;
 
@@ -77,10 +73,10 @@ export class StartComponent implements OnInit
                                              'Anzahl'];
     public dataSource:MatTableDataSource<BuchungsuebersichtRow> = new MatTableDataSource<BuchungsuebersichtRow>(this.tableData);
 
-    @ViewChild(MatPaginator, {static: false})
+    @ViewChild(MatPaginator)
     public paginator:MatPaginator;
 
-    @ViewChild(MatSort, {static: false})
+    @ViewChild(MatSort)
     public sort:MatSort;
 
     public expandedElement:any | null;

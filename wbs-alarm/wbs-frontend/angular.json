@@ -17,34 +17,25 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/META-INF/resources",
             "deleteOutputPath": true,
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets",
-              {
-                "glob": "*.json",
-                "input": "./node_modules/@plentymarkets/terra-components/assets/lang/",
-                "output": "./assets/lang/terra-components/"
-              }
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "src/styles.scss",
               "node_modules/tippy.js/dist/tippy.css",
               "node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "node_modules/bootstrap/dist/css/bootstrap.css",
+              "node_modules/@plentymarkets/terra-icons/dist/style.css",
               "node_modules/@plentymarkets/terra-components/styles/styles.css",
-              "node_modules/@plentymarkets/terra-components/styles/icons.css",
+              "node_modules/@plentymarkets/terra-components/styles/function-groups.css",
               "node_modules/@plentymarkets/terra-components/styles/theme-loader.css"
             ],
-            "scripts": [
-              "node_modules/jquery/dist/jquery.min.js"
-            ],
-            "es5BrowserSupport": true
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -57,7 +48,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "vendorChunk": true,
@@ -97,27 +87,16 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
-            "styles": [
-              "src/styles.scss"
-            ],
+            "styles": ["src/styles.scss"],
             "scripts": [],
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ]
+            "assets": ["src/favicon.ico", "src/assets"]
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "src/environments/**"
-            ]
+            "tsConfig": ["src/tsconfig.app.json", "src/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "src/environments/**"]
           }
         }
       }

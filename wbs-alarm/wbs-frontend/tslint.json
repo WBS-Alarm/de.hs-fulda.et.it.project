@@ -14,6 +14,9 @@
 				"ptb"
 			],
 			"kebab-case"
-		]
+    ],
+    "deprecation": {
+      "severity": "warning"
+    }
 	}
 }

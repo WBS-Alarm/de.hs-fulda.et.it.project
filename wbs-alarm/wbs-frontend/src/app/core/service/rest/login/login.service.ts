@@ -1,10 +1,11 @@
-import { Injectable } from '../../../../../../node_modules/@angular/core';
+import { Injectable } from '@angular/core';
 import { WbsSitemapHelper } from '../sitemap/data/wbs-sitemap.helper';
 import {
     HttpClient,
     HttpHeaders
-} from '../../../../../../node_modules/@angular/common/http';
+} from '@angular/common/http';
 import { Observable } from 'rxjs';
+
 
 
 @Injectable()

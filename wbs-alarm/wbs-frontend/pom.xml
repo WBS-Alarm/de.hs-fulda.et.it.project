@@ -39,6 +39,22 @@
                                     </arguments>
                                 </configuration>
                             </execution>
+
+                            <!-- npm ci -->
+                            <execution>
+                                <id>npm install</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>npm</executable>
+                                    <arguments>
+                                        <argument>run</argument>
+                                        <argument>reinstall_win</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
                         </executions>
                     </plugin>
                 </plugins>
@@ -70,6 +86,69 @@
                                     </arguments>
                                 </configuration>
                             </execution>
+
+                            <!-- npm ci -->
+                            <execution>
+                                <id>npm install</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>npm</executable>
+                                    <arguments>
+                                        <argument>run</argument>
+                                        <argument>reinstall_ux</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>local</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <version>1.6.0</version>
+                        <executions>
+                            <!-- npm run test-headless-coverage -->
+                            <execution>
+                                <id>npm run test</id>
+                                <phase>test</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>npm</executable>
+                                    <arguments>
+                                        <argument>run</argument>
+                                        <argument>test-headless-coverage</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+
+                            <!-- npm run lint -->
+                            <execution>
+                                <id>npm run lint</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>npm</executable>
+                                    <arguments>
+                                        <argument>run</argument>
+                                        <argument>lint</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+
                         </executions>
                     </plugin>
                 </plugins>
@@ -85,33 +164,16 @@
         </resources>
 
         <plugins>
-
             <plugin>
                 <artifactId>exec-maven-plugin</artifactId>
                 <groupId>org.codehaus.mojo</groupId>
                 <version>1.6.0</version>
                 <executions>
 
-                    <!-- npm ci -->
-                    <execution>
-                        <id>npm install</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>npm</executable>
-                            <arguments>
-                                <argument>ci</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
-
-
                     <!-- npm run build -->
                     <execution>
                         <id>npm run build</id>
-                        <phase>generate-sources</phase>
+                        <phase>compile</phase>
                         <goals>
                             <goal>exec</goal>
                         </goals>
@@ -119,11 +181,10 @@
                             <executable>npm</executable>
                             <arguments>
                                 <argument>run</argument>
-                                <argument>just_build</argument>
+                                <argument>build</argument>
                             </arguments>
                         </configuration>
                     </execution>
-
                 </executions>
             </plugin>
         </plugins>

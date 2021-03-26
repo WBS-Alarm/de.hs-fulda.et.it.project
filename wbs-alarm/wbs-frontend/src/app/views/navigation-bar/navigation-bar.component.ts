@@ -5,7 +5,9 @@ import {
 import { Router } from '@angular/router';
 import { isNullOrUndefined } from 'util';
 import { MenuDataInterface } from './data/menu-data.interface';
-import { TranslationService } from 'angular-l10n';
+import {
+    L10nTranslationService
+} from 'angular-l10n';
 import { GlobalRegistryService } from '../../core/global-registry/global-registry.service';
 import { AlertService } from '@plentymarkets/terra-components';
 
@@ -45,7 +47,7 @@ export class NavigationBarComponent implements OnInit
     ];
 
     constructor(public router:Router,
-                public translation:TranslationService,
+                public translation:L10nTranslationService,
                 public alert:AlertService,
                 public globalRegistryService:GlobalRegistryService)
     {
@@ -93,7 +95,7 @@ export class NavigationBarComponent implements OnInit
 
     public subscribeToRouter():void
     {
-        this.router.events.subscribe((value:any) =>
+        this.router.events.subscribe((value:any):any =>
         {
             if(!isNullOrUndefined(value.url))
             {

@@ -1,11 +1,11 @@
-import { Injectable } from '../../../../../../node_modules/@angular/core';
+import { Injectable } from '@angular/core';
 import { WbsSitemapHelper } from '../sitemap/data/wbs-sitemap.helper';
 import {
     HttpClient,
     HttpHeaders
-} from '../../../../../../node_modules/@angular/common/http';
-import { Observable } from 'rxjs';
+} from '@angular/common/http';
 import { SystemCategoryInterface } from '../../../../views/system/components/categories/data/system-category.interface';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class CategoryService

@@ -34,7 +34,7 @@ export class SystemNewCategoryComponent
         let traegerId:number = this.systemGlobalSettings.getTraegerId();
 
         this.carrierService.createCategory(traegerId, this.categoryName).subscribe(
-            (result:any) =>
+            (result:any):any =>
             {
                 this.alert.success('Kategorie wurde erstellt!');
 
@@ -52,14 +52,14 @@ export class SystemNewCategoryComponent
                     }
                 );
 
-                this.categoryService.getCategory(kategorieId).subscribe((resultCategories:any) =>
+                this.categoryService.getCategory(kategorieId).subscribe((resultCategories:any):any =>
                 {
                     this.systemGlobalSettings.setKategorien([resultCategories]);
                 });
 
                 this.categoryName = '';
             },
-            (error:any) =>
+            (error:any):any =>
             {
                 this.alert.error('Die Kategorie konnte nicht erstellt werden! ' + error.error.message);
             }

@@ -1,18 +1,21 @@
-import { Injectable } from '../../../../../../../node_modules/@angular/core';
+import { Injectable } from '@angular/core';
 import {
     ActivatedRouteSnapshot,
     Router
-} from '../../../../../../../node_modules/@angular/router';
+} from '@angular/router';
 import { UsersService } from '../../../../../core/service/rest/users/users.service';
 import { SystemGlobalSettingsService } from '../../../system-global-settings.service';
 import { isNullOrUndefined } from 'util';
-import { TranslationService } from 'angular-l10n';
+import {
+    L10nTranslationService
+} from 'angular-l10n';
 import { SystemCategoryInterface } from '../data/system-category.interface';
+
 
 @Injectable()
 export class SystemCategoryResolver
 {
-    constructor(public translation:TranslationService,
+    constructor(public translation:L10nTranslationService,
                 public userService:UsersService,
                 public systemGloabalSettingsService:SystemGlobalSettingsService,
                 public router:Router)

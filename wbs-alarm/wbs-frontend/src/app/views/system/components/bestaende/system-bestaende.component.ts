@@ -70,7 +70,7 @@ export class SystemBestaendeComponent implements OnInit
     @Input()
     public gesperrt:boolean = false;
 
-    @ViewChild('bearbeitenOverlay', {static: false})
+    @ViewChild('bearbeitenOverlay')
     public bearbeitenOverlay:any;
 
     public tableData:Array<BestandRow> = [];
@@ -102,11 +102,11 @@ export class SystemBestaendeComponent implements OnInit
 
         this.dataSource = new MatTableDataSource<BestandRow>(this.tableData);
 
-        this.route.data.subscribe((data:any) =>
+        this.route.data.subscribe((data:any):any =>
         {
             this.tableData = [];
             this.dataSource = new MatTableDataSource<BestandRow>(this.tableData);
-            data.bestaende._embedded.elemente.forEach((element:any) =>
+            data.bestaende._embedded.elemente.forEach((element:any):any =>
             {
                 this.addRowToTable(
                     {
@@ -119,9 +119,9 @@ export class SystemBestaendeComponent implements OnInit
         });
 
 
-        this.categoryService.getCategories(tragerId).subscribe((result:any) =>
+        this.categoryService.getCategories(tragerId).subscribe((result:any):any =>
         {
-            result._embedded.elemente.forEach((kategorie:any) =>
+            result._embedded.elemente.forEach((kategorie:any):any =>
             {
                 this._kategorien.push(
                     {
@@ -149,7 +149,7 @@ export class SystemBestaendeComponent implements OnInit
 
     public addBestand():void
     {
-        this.bestandService.erfasseBestaendeFuerZielort(this._groesse.id, this._anzahl, this.zielortId).subscribe((result:any) =>
+        this.bestandService.erfasseBestaendeFuerZielort(this._groesse.id, this._anzahl, this.zielortId).subscribe((result:any):any =>
             {
                 this.addRowToTable({
                     kategorie: this._kategorie,
@@ -160,7 +160,7 @@ export class SystemBestaendeComponent implements OnInit
 
                 this.alert.success('Der Bestand wurde erfolgreich erfasst');
             },
-            (error:any) =>
+            (error:any):any =>
             {
                 this.alert.error('Der Bestand konnte nicht erfasst werden: ' + error.error.message);
             });
@@ -182,11 +182,11 @@ export class SystemBestaendeComponent implements OnInit
                 value:   null
             };
 
-            this.groessenService.getGroessenForKategorie(this._kategorie.id).subscribe((result:any) =>
+            this.groessenService.getGroessenForKategorie(this._kategorie.id).subscribe((result:any):any =>
             {
                 this.disabled = result._embedded.elemente.length === 0;
 
-                result._embedded.elemente.forEach((groesse:any) =>
+                result._embedded.elemente.forEach((groesse:any):any =>
                 {
                     this._groessen.push(
                         {
@@ -209,7 +209,7 @@ export class SystemBestaendeComponent implements OnInit
 
             this._bestandAendernBestand = this.selection.selected[0].bestand;
 
-            editDialog.afterClosed().subscribe((neuerBestand:number) =>
+            editDialog.afterClosed().subscribe((neuerBestand:number):any =>
             {
                 if(neuerBestand > 0)
                 {
@@ -224,11 +224,11 @@ export class SystemBestaendeComponent implements OnInit
 
     public saveChangesToBestand(neuerBestand:number):void
     {
-        this.bestandService.aendereBestand(neuerBestand, this._bestandAendernBestand).subscribe((result:any) =>
+        this.bestandService.aendereBestand(neuerBestand, this._bestandAendernBestand).subscribe((result:any):any =>
             {
                 this.alert.success('Der Bestand wurde erfolgreich geändert');
             },
-            (error:any) =>
+            (error:any):any =>
             {
                 this.alert.error('Der Bestand wurde nicht erfolgreich geändert: ' + error.error.message);
 
@@ -240,7 +240,7 @@ export class SystemBestaendeComponent implements OnInit
         let loeschBestand:BestandRow = this.selection.selected[0];
 
         this.bestandService.loescheBestand(loeschBestand.bestand).subscribe(
-            (result:any) =>
+            (result:any):any =>
             {
                 this.alert.success('Der Bestand wurde gelöscht');
 
@@ -249,7 +249,7 @@ export class SystemBestaendeComponent implements OnInit
                 this.tableData.splice(idx, 1);
                 this.dataSource._updateChangeSubscription();
             },
-            (error:any) =>
+            (error:any):any =>
             {
                 this.alert.error('Der Bestand wurde nicht gelöscht. ' + error.error.message);
 

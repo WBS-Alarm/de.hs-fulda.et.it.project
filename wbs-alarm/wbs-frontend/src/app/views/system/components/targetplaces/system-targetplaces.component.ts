@@ -50,12 +50,12 @@ export class SystemTargetplacesComponent implements OnInit
     {
         this.routeData$ = this.route.data;
 
-        this.route.params.subscribe((params:any) =>
+        this.route.params.subscribe((params:any):any =>
         {
             this.traegerId = params.carrierId;
         });
 
-        this.route.data.subscribe((data:any) =>
+        this.route.data.subscribe((data:any):any =>
         {
             this.gesperrt = data.targetPlace.erfasst;
         });
@@ -64,13 +64,13 @@ export class SystemTargetplacesComponent implements OnInit
     public save(targetPlace:SystemZielortInterface):void
     {
         this.carrierService.updateTargetplace(targetPlace).subscribe(
-            (result:any) =>
+            (result:any):any =>
             {
                 this.alert.success('Änderungen gespeichert!');
 
                 this.systemTreeConfig.currentSelectedNode.name = targetPlace.name;
             },
-            (error:any) =>
+            (error:any):any =>
             {
                 this.alert.error('Änderungen konnten nicht gespeichert werden: ' + error.error.message);
             });
@@ -78,7 +78,7 @@ export class SystemTargetplacesComponent implements OnInit
 
     public delete(targetPlace:SystemZielortInterface):void
     {
-        this.carrierService.deleteTargetplace(targetPlace).subscribe((result:any) =>
+        this.carrierService.deleteTargetplace(targetPlace).subscribe((result:any):any =>
             {
                 this.alert.success('Der Zielort wurde gelöscht!');
 
@@ -86,7 +86,7 @@ export class SystemTargetplacesComponent implements OnInit
 
                 this.router.navigateByUrl('/plugin/system/carrier/' + this.traegerId + '/targetplace');
             },
-            (error:any) =>
+            (error:any):any =>
             {
                 this.alert.error('Der Zielort konnte nicht gelöscht werden! ' + error.error.message);
 
@@ -98,17 +98,17 @@ export class SystemTargetplacesComponent implements OnInit
         const lockTargetPlaceDialog:MatDialogRef<LockTargetplaceDialogComponent> = this.dialog.open(LockTargetplaceDialogComponent,
             {autoFocus: true});
 
-        lockTargetPlaceDialog.afterClosed().subscribe((approved:boolean) =>
+        lockTargetPlaceDialog.afterClosed().subscribe((approved:boolean):any =>
         {
             if(approved)
             {
                 this.carrierService.lockTargetplace(targetPlace).subscribe(
-                    (result:any) =>
+                    (result:any):any =>
                     {
                         this.alert.success('Der Zielort wurde für die Erfassung gesperrt!');
                         this.gesperrt = true;
                     },
-                    (error:any) =>
+                    (error:any):any =>
                     {
                         this.alert.error('Der Zielort konnte nicht für die Erfassung gesperrt werden! ' + error.error.message);
                     });
