@@ -46,6 +46,9 @@
 ehthumbs.db
 Thumbs.db
 wbs-alarm/wbs-frontend/node
+wbs-alarm/wbs-frontend/node_modules
+wbs-alarm/wbs-frontend/coverage
+wbs-alarm/wbs-frontend/dist
 wbs-alarm/wbs-frontend/target
 wbs-alarm/wbs-service/target
 wbs-alarm/wbs-frontend/node/yarn/dist/README.md
